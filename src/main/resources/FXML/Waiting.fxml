@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../STYLES/Waiting.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <AnchorPane prefHeight="405.0" prefWidth="600.0" styleClass="WaitingBackground" stylesheets="@../STYLES/Waiting.css">
+            <children>
+                <Pane layoutX="71.0" layoutY="70.0" prefHeight="259.0" prefWidth="475.0">
+                    <children>
+                        <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="151.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../IMAGES/book.gif" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="75.0" fitWidth="205.0" layoutX="125.0" layoutY="174.0" pickOnBounds="true">
+                            <image>
+                                <Image url="@../IMAGES/icegif-1262.gif" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>
