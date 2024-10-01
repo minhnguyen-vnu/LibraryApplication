@@ -1,0 +1,66 @@
+.TitleContainer {
+    -fx-background-color: #40defa;
+    -fx-padding: 10;
+}
+
+.TitleLabel {
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-font-size: 20;
+    -fx-text-fill: #2e0b77;
+}
+
+.SignUpContainer {
+    -fx-background-color: #EEEEEE;
+    -fx-padding: 10;
+}
+
+.SignUpLabel {
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+}
+
+.TextField {
+    -fx-background-radius: 5;
+    -fx-background-color: #FFFFFF;
+    -fx-pref-height: 30;
+    -fx-font-size: 1.1em ;
+}
+
+.ErrorLabel {
+    -fx-text-fill: #FF0000;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-opacity: 0.4;
+}
+
+.SignUpButton {
+    -fx-background-color: #073bda;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: VnArabia;
+    -fx-pref-width: 80;
+    -fx-pref-height: 30;
+    -fx-font-size: 1.1em;
+}
+
+.ResetButton {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #25251b;
+    -fx-font-family: VnArabia;
+    -fx-pref-width: 60;
+    -fx-pref-height: 30;
+    -fx-font-size: 1.1em;
+}
+
+.SignUpButton:hover {
+    -fx-background-color: #285ffa;
+    -fx-text-fill: #70ef1e;
+    -fx-cursor: hand;
+}
+
+.ResetButton:hover {
+    -fx-background-color: #95adf6;
+    -fx-text-fill: #c11318;
+    -fx-cursor: hand;
+}
