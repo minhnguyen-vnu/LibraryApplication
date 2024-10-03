@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.SepiaTone?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.HiredBookController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <AnchorPane prefHeight="500.0" prefWidth="200.0" styleClass="MenuBackGround" stylesheets="@../STYLES/MenuBar.css">
+               <children>
+                  <Pane layoutY="46.0" prefHeight="60.0" prefWidth="200.0" styleClass="LibrarySymbolPane">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../IMAGES/Icon.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="80.0" layoutY="12.0" prefHeight="23.0" prefWidth="110.0" styleClass="LibraryName" text="Anchor" />
+                     </children>
+                  </Pane>
+                  <Button fx:id="go_to_library_btn" layoutY="150.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Library">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../IMAGES/LibraryStoreIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button layoutY="220.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Store">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../IMAGES/BookStoreIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="go_to_setting_btn" layoutY="290.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Setting">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../IMAGES/settingIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <AnchorPane prefHeight="500.0" prefWidth="606.0">
+         <children>
+            <HBox layoutX="52.0" layoutY="64.0">
+               <children>
+                  <Label fx:id="username_lbl" styleClass="MainTile" text="Username's" />
+                  <Label styleClass="MainTile" text=" Store" />
+               </children>
+            </HBox>
+            <TableView fx:id="Store_tbv" cacheShape="false" centerShape="false" layoutX="27.0" layoutY="209.0" prefHeight="252.0" prefWidth="555.0" scaleShape="false" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
+              <columns>
+                <TableColumn fx:id="Book_name_tb_cl" prefWidth="150.0" text="Book's name" />
+                <TableColumn fx:id="Author_tb_cl" prefWidth="150.0" text="Author" />
+                  <TableColumn fx:id="Book_ID_tb_cl" prefWidth="100.0" text="Book's ID" />
+                  <TableColumn fx:id="Borrow_day_tb_cl" prefWidth="120.0" text="Borrow day" />
+                  <TableColumn fx:id="Return_day_tb_cl" maxWidth="100.0" minWidth="67.60003662109375" prefWidth="120.0" text="Return day" />
+                  <TableColumn fx:id="Favorite_tb_cl" prefWidth="70.0" text="Favorite" />
+              </columns>
+            </TableView>
+            <DatePicker fx:id="clock" cache="true" editable="false" layoutX="460.0" layoutY="21.0" prefHeight="25.0" prefWidth="122.0">
+               <effect>
+                  <SepiaTone level="0.21" />
+               </effect>
+            </DatePicker>
+            <Pane layoutX="321.0" layoutY="137.0" prefHeight="70.0" prefWidth="200.0">
+               <children>
+                  <HBox layoutX="-1.0" layoutY="20.0">
+                     <children>
+                        <TextField fx:id="search_fld" promptText="Search book in store" styleClass="SearchBar" />
+                        <Button fx:id="search_btn" layoutY="-5.0" mnemonicParsing="false" styleClass="SearchButton">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../IMAGES/SearchBarIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>

@@ -19,3 +19,57 @@
     -fx-border-color: #42326e;
     -fx-border-width: 10;
 }
+
+.TableListView {
+    -fx-background-color: #f6eee3;
+    -fx-background-radius: 15;
+    -fx-border-radius: 5;
+    -fx-border-color: #42326e;
+    -fx-border-width: 10;
+}
+
+/* Style for the table header */
+.TableListView .column-header{
+    -fx-background-color: radial-gradient(center 50% 50%, radius 100%, #f4d96d, #e36e0f);
+    -fx-border-color: #42326e;
+    -fx-border-width: 2 0 2 0;
+}
+
+.TableListView .column-header .label {
+    -fx-text-fill: #4b8fdd;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+
+}
+
+/* Style for the table cells */
+.TableListView .table-cell {
+    -fx-text-fill: #000000;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 5px;
+    -fx-border-color: #9dafcc;
+    -fx-border-width: 0 0 1 1;
+}
+
+/* Alternate row color */
+TableListView .table-row-cell:odd {
+    -fx-background-color: #efd2d2;
+}
+
+/* Selected row color */
+.TableListView .table-row-cell:selected {
+    -fx-background-color: #aed39c;
+    -fx-text-fill: #000000;
+}
+
+.TableListView .table-row-cell:hover {
+    -fx-background-color: #596d8c;
+}
+
+.TableListView .table-cell:hover {
+    -fx-background-color: #f4d96d;
+    -fx-text-fill: #0d37c1;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+}
+
