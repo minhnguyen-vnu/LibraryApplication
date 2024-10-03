@@ -1,0 +1,21 @@
+.ListView .table-row-cell {
+    -fx-background-color: #f0f0f0;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+    -fx-text-fill: -fx-text-background-color;
+}
+
+.ListView .table-row-cell:odd {
+    -fx-background-color: #958686;
+}
+
+.ListView .table-row-cell:selected {
+    -fx-background-color: #aed39c;
+}
+
+.ListView {
+    -fx-background-radius: 15;
+    -fx-border-radius: 5;
+    -fx-border-color: #42326e;
+    -fx-border-width: 10;
+}

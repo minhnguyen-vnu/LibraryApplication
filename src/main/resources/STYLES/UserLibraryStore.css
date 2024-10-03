@@ -1,0 +1,41 @@
+/**/
+.WorldBackground {
+    -fx-background-color: #fff1e3;
+}
+
+/**/
+.MainTile {
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-text-fill: linear-gradient(from 10% 10% to 90% 100%, #4c72ef, #ef0923);
+    -fx-font-size: 50;
+}
+
+.SubTile {
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-text-fill: #e4a155;
+    -fx-font-size: 20;
+}
+
+/**/
+.SearchBar {
+    -fx-background-radius: 15;
+    -fx-background-color: #FFFFFF;
+
+
+    -fx-pref-height: 20;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-font-style: italic;
+    -fx-font-size: 15;
+    -fx-text-fill: #282c6a;
+}
+
+.SearchButton {
+    -fx-background-color: transparent;
+    -fx-opacity: 0.4;
+}
+
+.SearchButton:hover {
+    -fx-opacity: 1;
+}
