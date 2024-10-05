@@ -40,7 +40,6 @@ public class SignUpController implements Initializable {
     }
 
     public void signUp(){
-        System.out.println(Objects.equals(password_su.getText(), confirm_su.getText()));
         if(!Objects.equals(password_su.getText(), confirm_su.getText())){
             error_lbl.setText("Your Confirmation Password didn't match the Password");
             error_lbl.setStyle("-fx-text-fill: red");

@@ -11,4 +11,5 @@ module com.jmc.library {
     exports com.jmc.library;
     exports com.jmc.library.Models;
     exports com.jmc.library.View;
+    exports com.jmc.library.Controllers.Users;
 }

@@ -16,16 +16,16 @@ public class ViewFactory {
     private BorderPane signUpView;
     private final StringProperty selectedAuthenticatonMode;
 
-    public ViewFactory(){
+    public ViewFactory() {
         this.selectedAuthenticatonMode = new SimpleStringProperty("");
     }
 
-    public StringProperty getSelectedAuthenticatonMode(){
+    public StringProperty getSelectedAuthenticatonMode() {
         return selectedAuthenticatonMode;
     }
 
-    public BorderPane getSignUpView(){
-        if(signUpView == null){
+    public BorderPane getSignUpView() {
+        if (signUpView == null) {
             try {
                 signUpView = new FXMLLoader(getClass().getResource("/FXML/SignUp.fxml")).load();
             } catch (Exception e) {
@@ -35,8 +35,8 @@ public class ViewFactory {
         return signUpView;
     }
 
-    public BorderPane getLogInView(){
-        if(logInView == null){
+    public BorderPane getLogInView() {
+        if (logInView == null) {
             try {
                 logInView = new FXMLLoader(getClass().getResource("/FXML/Login.fxml")).load();
             } catch (Exception e) {
@@ -53,7 +53,17 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
-    void createStage(FXMLLoader loader){
+    public void showUserLibrary() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/UserLibrary.fxml"));
+        createStage(fxmlLoader);
+    }
+
+    public void showUserHiredBookList() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/HiredBook.fxml"));
+        createStage(fxmlLoader);
+    }
+
+    void createStage(FXMLLoader loader) {
         Scene scene = null;
         try {
             scene = new Scene(loader.load());
@@ -66,5 +76,7 @@ public class ViewFactory {
         stage.show();
     }
 
-    public void closeStage(Stage stage){stage.close();}
+    public void closeStage(Stage stage) {
+        stage.close();
+    }
 }
