@@ -1,5 +1,7 @@
 package com.jmc.library.Controllers.Users;
 
+import com.jmc.library.Assets.UserBook;
+import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -12,8 +14,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class HiredBookController implements Initializable {
-    public Button go_to_library_btn;
+public class HiredBookController extends User implements Initializable {
     public Button go_to_setting_btn;
     public Label username_lbl;
     public TableView<UserBook> Store_tbv;
@@ -27,16 +28,24 @@ public class HiredBookController implements Initializable {
     public Button search_btn;
     public ObservableList<UserBook> bookList;
     public TableColumn<UserBook, Double> total_cost_tb_cl;
+    public Button go_to_store_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addBinding();
         priceFormating();
+        setButtonListener();
 
         bookList.add(new UserBook("Java Programing", "Scott", 1, LocalDate.now(), LocalDate.of(2024, 6, 7), 13));
         bookList.add(new UserBook("C++ Programing", "Scoot", 2, LocalDate.now(), LocalDate.of(2024, 1, 1), 15));
 
+    }
+
+    private void setButtonListener() {
         search_btn.setOnAction(actionEvent -> searchBookByAuthor(search_fld.getText()));
+        go_to_store_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
+        });
     }
 
     private void addBinding() {

@@ -1,12 +1,14 @@
 package com.jmc.library.View;
 
 import com.jmc.library.Controllers.Authentication;
+import com.jmc.library.Controllers.Users.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,14 +16,22 @@ import java.io.IOException;
 public class ViewFactory {
     private BorderPane logInView;
     private BorderPane signUpView;
+    private HBox userLibrary;
+    private HBox userHiredBook;
     private final StringProperty selectedAuthenticatonMode;
+    private final StringProperty selectedUserMode;
 
     public ViewFactory() {
         this.selectedAuthenticatonMode = new SimpleStringProperty("");
+        this.selectedUserMode = new SimpleStringProperty("");
     }
 
     public StringProperty getSelectedAuthenticatonMode() {
         return selectedAuthenticatonMode;
+    }
+
+    public StringProperty getSelectedUserMode() {
+        return selectedUserMode;
     }
 
     public BorderPane getSignUpView() {
@@ -58,8 +68,32 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
-    public void showUserHiredBookList() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/HiredBook.fxml"));
+    public HBox getUserLibrary() {
+        if (userLibrary == null) {
+            try {
+                userLibrary = new FXMLLoader(getClass().getResource("/FXML/UserLibrary.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return userLibrary;
+    }
+
+    public HBox getUserHiredBook() {
+        if (userHiredBook == null) {
+            try {
+                userHiredBook = new FXMLLoader(getClass().getResource("/FXML/HiredBook.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return userHiredBook;
+    }
+
+    public void showUserWindow() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/User.fxml"));
+        User user = new User();
+        fxmlLoader.setController(user);
         createStage(fxmlLoader);
     }
 
