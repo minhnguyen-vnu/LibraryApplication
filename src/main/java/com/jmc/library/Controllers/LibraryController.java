@@ -1,6 +1,8 @@
-package com.jmc.library.Controllers.Users;
+package com.jmc.library.Controllers;
 
+import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.DBUtlis;
+import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -10,8 +12,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -19,8 +19,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 
-public class UserLibraryController implements Initializable {
-    public Button go_to_store_btn;
+public class LibraryController implements Initializable {
     public Button go_to_setting_btn;
     public DatePicker clock;
     public TextField search_fld;
@@ -35,14 +34,22 @@ public class UserLibraryController implements Initializable {
     public TableView<BookInfo> store_tb;
     public ObservableList<BookInfo> bookList;
     public Button search_btn;
+    public Button go_to_user_library_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setButtonListener();
         addBinding();
         formatting();
         showLibrary();
         addBookListListener();
+    }
+
+    private void setButtonListener(){
         search_btn.setOnAction(actionEvent -> searchBook(search_fld.getText()));
+        go_to_user_library_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
+        });
     }
 
     private void addBinding() {

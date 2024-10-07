@@ -37,14 +37,9 @@ public class LoginController implements Initializable {
     }
 
     public void login(){
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Connection con = DBUtlis.getConnection();
         try {
-            preparedStatement = con.prepareStatement("select * from users where username = ? and password = ?");
-            preparedStatement.setString(1, acc_address_fld.getText());
-            preparedStatement.setString(2, password_fld.getText());
-            resultSet = preparedStatement.executeQuery();
+            resultSet = DBUtlis.executeQuery("select * from users where username = ? and password = ?", acc_address_fld.getText(), password_fld.getText());
             if(resultSet.next()){
                 error_lbl.setText("Login Successfully");
                 error_lbl.setStyle("-fx-text-fill: green");
@@ -57,7 +52,7 @@ public class LoginController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            DBUtlis.closeResources(preparedStatement, resultSet, con);
+            DBUtlis.closeResources(null, resultSet, null);
         }
     }
 }

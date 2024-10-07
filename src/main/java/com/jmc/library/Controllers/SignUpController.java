@@ -45,19 +45,12 @@ public class SignUpController implements Initializable {
             error_lbl.setStyle("-fx-text-fill: red");
         }
         else {
-            PreparedStatement preparedStatement = null;
             ResultSet resultSet = null;
-            Connection con = DBUtlis.getConnection();
             try {
-                PreparedStatement checking = con.prepareStatement("select * from users where username = ?");
-                checking.setString(1, username_su.getText());
-                resultSet = checking.executeQuery();
+                resultSet = DBUtlis.executeQuery("select * from users where username = ?", username_su.getText());
 
                 if (!resultSet.next()) {
-                    preparedStatement = con.prepareStatement("insert into users values(?, ?)");
-                    preparedStatement.setString(1, username_su.getText());
-                    preparedStatement.setString(2, password_su.getText());
-                    preparedStatement.executeUpdate();
+                    DBUtlis.executeUpdate("insert into users values(?, ?)", username_su.getText(), password_su.getText());
                     error_lbl.setText("Account is created succesfully!");
                     error_lbl.setStyle("-fx-text-fill: green");
                 } else {
@@ -68,7 +61,7 @@ public class SignUpController implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {
-                DBUtlis.closeResources(preparedStatement, resultSet, con);
+                DBUtlis.closeResources(null, resultSet, null);
             }
         }
     }

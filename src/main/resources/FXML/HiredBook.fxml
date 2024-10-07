@@ -19,54 +19,45 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
-      prefWidth="800.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css"
-      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.jmc.library.Controllers.Users.HiredBookController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="712.0" prefWidth="1023.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.HiredBookController">
     <children>
         <VBox prefHeight="200.0" prefWidth="200.0">
             <children>
-                <AnchorPane prefHeight="500.0" prefWidth="200.0" styleClass="MenuBackGround"
-                            stylesheets="@../STYLES/MenuBar.css">
+                <AnchorPane prefHeight="713.0" prefWidth="203.0" styleClass="MenuBackGround" stylesheets="@../STYLES/MenuBar.css">
                     <children>
                         <Pane layoutY="46.0" prefHeight="60.0" prefWidth="200.0" styleClass="LibrarySymbolPane">
                             <children>
-                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="5.0"
-                                           pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../IMAGES/Icon.png"/>
+                                        <Image url="@../IMAGES/Icon.png" />
                                     </image>
                                 </ImageView>
-                                <Label layoutX="80.0" layoutY="12.0" prefHeight="23.0" prefWidth="110.0"
-                                       styleClass="LibraryName" text="Anchor"/>
+                                <Label layoutX="80.0" layoutY="12.0" prefHeight="23.0" prefWidth="110.0" styleClass="LibraryName" text="Anchor" />
                             </children>
                         </Pane>
-                        <Button fx:id="go_to_library_btn" layoutY="150.0" mnemonicParsing="false" prefHeight="50.0"
-                                prefWidth="200.0" styleClass="MenuButton" text="Library">
+                        <Button layoutY="150.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Library">
                             <graphic>
                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../IMAGES/LibraryStoreIcon.png"/>
+                                        <Image url="@../IMAGES/LibraryStoreIcon.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button layoutY="220.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0"
-                                styleClass="MenuButton" text="Store">
+                        <Button fx:id="go_to_store_btn" layoutY="220.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Store">
                             <graphic>
                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../IMAGES/BookStoreIcon.png"/>
+                                        <Image url="@../IMAGES/BookStoreIcon.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="go_to_setting_btn" layoutY="290.0" mnemonicParsing="false" prefHeight="50.0"
-                                prefWidth="200.0" styleClass="MenuButton" text="Setting">
+                        <Button fx:id="go_to_setting_btn" layoutY="290.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Setting">
                             <graphic>
                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../IMAGES/settingIcon.png"/>
+                                        <Image url="@../IMAGES/settingIcon.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
@@ -75,52 +66,44 @@
                 </AnchorPane>
             </children>
         </VBox>
-        <AnchorPane prefHeight="500.0" prefWidth="606.0">
+        <AnchorPane prefHeight="500.0" prefWidth="1023.0">
             <children>
-                <HBox layoutX="52.0" layoutY="64.0">
+                <HBox layoutX="52.0" layoutY="64.0" AnchorPane.bottomAnchor="522.0" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="166.0" AnchorPane.topAnchor="117.0">
                     <children>
-                        <Label fx:id="username_lbl" styleClass="MainTile" text="Username's"/>
-                        <Label styleClass="MainTile" text=" Store"/>
+                        <Label fx:id="username_lbl" styleClass="MainTile" text="Username's" />
+                        <Label styleClass="MainTile" text=" Store" />
                     </children>
                 </HBox>
-                <TableView fx:id="Store_tbv" cacheShape="false" centerShape="false" layoutX="27.0" layoutY="209.0"
-                           prefHeight="252.0" prefWidth="548.0" scaleShape="false" styleClass="TableListView"
-                           stylesheets="@../STYLES/TableView.css">
+                <TableView fx:id="Store_tbv" cacheShape="false" centerShape="false" layoutX="27.0" layoutY="209.0" prefHeight="357.0" prefWidth="739.0" scaleShape="false" styleClass="TableListView" stylesheets="@../STYLES/TableView.css" AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="313.0">
                     <columns>
-                        <TableColumn fx:id="book_name_tb_cl" prefWidth="150.0" text="Book's name"/>
-                        <TableColumn fx:id="author_tb_cl" prefWidth="150.0" text="Author"/>
-                        <TableColumn fx:id="book_ID_tb_cl" prefWidth="100.0" text="Book's ID"/>
-                        <TableColumn fx:id="picked_day_tb_cl" prefWidth="120.0" text="Picked day"/>
-                        <TableColumn fx:id="return_day_tb_cl" maxWidth="100.0" minWidth="67.60003662109375"
-                                     prefWidth="120.0" text="Return day"/>
-                        <TableColumn fx:id="total_cost_tb_cl" prefWidth="75.0" text="Cost"/>
+                        <TableColumn fx:id="book_name_tb_cl" prefWidth="125.0" text="Book's name" />
+                        <TableColumn fx:id="author_tb_cl" prefWidth="141.0" text="Author" />
+                        <TableColumn fx:id="book_ID_tb_cl" prefWidth="134.0" text="Book's ID" />
+                        <TableColumn fx:id="picked_day_tb_cl" prefWidth="120.0" text="Picked day" />
+                        <TableColumn fx:id="return_day_tb_cl" maxWidth="142.0" minWidth="67.60003662109375" prefWidth="100.0" text="Return day" />
+                        <TableColumn fx:id="total_cost_tb_cl" prefWidth="119.0" text="Cost" />
                     </columns>
                 </TableView>
-                <DatePicker fx:id="clock" cache="true" editable="false" layoutX="460.0" layoutY="21.0" prefHeight="25.0"
-                            prefWidth="122.0">
+                <DatePicker fx:id="clock" cache="true" editable="false" layoutX="562.0" layoutY="37.0" prefHeight="25.0" prefWidth="118.0" AnchorPane.bottomAnchor="667.0" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="148.0" AnchorPane.topAnchor="37.0">
                     <effect>
-                        <SepiaTone level="0.21"/>
+                        <SepiaTone level="0.21" />
                     </effect>
                 </DatePicker>
-                <Pane layoutX="321.0" layoutY="137.0" prefHeight="70.0" prefWidth="200.0">
-                    <children>
-                        <HBox layoutX="-1.0" layoutY="20.0">
-                            <children>
-                                <TextField fx:id="search_fld" promptText="Search book in store" styleClass="SearchBar"/>
-                                <Button fx:id="search_btn" layoutY="-5.0" mnemonicParsing="false"
-                                        styleClass="SearchButton">
-                                    <graphic>
-                                        <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true">
-                                            <image>
-                                                <Image url="@../IMAGES/SearchBarIcon.png"/>
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                            </children>
-                        </HBox>
-                    </children>
-                </Pane>
+                <Pane layoutX="321.0" layoutY="137.0" prefHeight="70.0" prefWidth="200.0" />
+                  <HBox layoutX="482.0" layoutY="234.0" AnchorPane.bottomAnchor="446.0" AnchorPane.leftAnchor="482.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="234.0">
+                      <children>
+                          <TextField fx:id="search_fld" promptText="Search book in store" styleClass="SearchBar" />
+                          <Button fx:id="search_btn" layoutY="-5.0" mnemonicParsing="false" styleClass="SearchButton">
+                              <graphic>
+                                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true">
+                                      <image>
+                                          <Image url="@../IMAGES/SearchBarIcon.png" />
+                                      </image>
+                                  </ImageView>
+                              </graphic>
+                          </Button>
+                      </children>
+                  </HBox>
             </children>
         </AnchorPane>
     </children>
