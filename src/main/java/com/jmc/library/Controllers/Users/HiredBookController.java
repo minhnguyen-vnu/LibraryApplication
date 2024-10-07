@@ -76,6 +76,7 @@ public class HiredBookController implements Initializable {
                 .filter(book -> book.getAuthorName().equalsIgnoreCase(authorName))
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
         Store_tbv.setItems(filteredList);
+        filteredList.clear();
     }
 
 }

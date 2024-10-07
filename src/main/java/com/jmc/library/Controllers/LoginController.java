@@ -56,6 +56,8 @@ public class LoginController implements Initializable {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            DBUtlis.closeResources(preparedStatement, resultSet, con);
         }
     }
 }

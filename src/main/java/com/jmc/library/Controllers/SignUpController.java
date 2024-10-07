@@ -68,27 +68,7 @@ public class SignUpController implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {
-                if (resultSet != null) {
-                    try {
-                        resultSet.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (preparedStatement != null) {
-                    try {
-                        preparedStatement.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
+                DBUtlis.closeResources(preparedStatement, resultSet, con);
             }
         }
     }

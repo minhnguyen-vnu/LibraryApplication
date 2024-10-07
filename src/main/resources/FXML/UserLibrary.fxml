@@ -23,119 +23,119 @@
 <?import javafx.scene.paint.Stop?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="712.0" prefWidth="1023.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserLibraryController">
-   <children>
-      <VBox prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <AnchorPane prefHeight="713.0" prefWidth="202.0" styleClass="MenuBackGround" stylesheets="@../STYLES/MenuBar.css">
-               <children>
-                  <Pane layoutY="46.0" prefHeight="60.0" prefWidth="200.0" styleClass="LibrarySymbolPane">
-                     <children>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../IMAGES/Icon.png" />
-                           </image>
+    <children>
+        <VBox prefHeight="200.0" prefWidth="200.0">
+            <children>
+                <AnchorPane prefHeight="713.0" prefWidth="202.0" styleClass="MenuBackGround" stylesheets="@../STYLES/MenuBar.css">
+                    <children>
+                        <Pane layoutY="46.0" prefHeight="60.0" prefWidth="200.0" styleClass="LibrarySymbolPane">
+                            <children>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../IMAGES/Icon.png" />
+                                    </image>
+                                </ImageView>
+                                <Label layoutX="80.0" layoutY="12.0" prefHeight="23.0" prefWidth="110.0" styleClass="LibraryName" text="Anchor">
+                                    <textFill>
+                                        <LinearGradient endX="0.551039704753681" endY="1.0" startX="0.5519849230977223" startY="0.506616242666551">
+                                            <stops>
+                                                <Stop>
+                                                    <color>
+                                                        <Color blue="0.35272905230522156" green="0.35272905230522156" red="0.49473685026168823" />
+                                                    </color>
+                                                </Stop>
+                                                <Stop offset="1.0">
+                                                    <color>
+                                                        <Color blue="1.0" green="1.0" red="1.0" />
+                                                    </color>
+                                                </Stop>
+                                            </stops>
+                                        </LinearGradient>
+                                    </textFill>
+                                </Label>
+                            </children>
+                        </Pane>
+                        <Button layoutY="150.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Library">
+                            <graphic>
+                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../IMAGES/LibraryStoreIcon.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="go_to_store_btn" layoutY="220.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Store">
+                            <graphic>
+                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../IMAGES/BookStoreIcon.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="go_to_setting_btn" layoutY="290.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Setting">
+                            <graphic>
+                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../IMAGES/settingIcon.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
+        <AnchorPane prefHeight="715.0" prefWidth="803.0">
+            <children>
+                <DatePicker fx:id="clock" cache="true" editable="false" layoutX="576.0" layoutY="47.0" prefHeight="25.0" prefWidth="122.0">
+                    <effect>
+                        <SepiaTone level="0.21" />
+                    </effect>
+                </DatePicker>
+                <Label layoutX="33.0" layoutY="251.0" styleClass="SubTile" text="List of books in your store" />
+                <HBox layoutX="227.0" layoutY="177.0" />
+                <HBox layoutX="59.0" layoutY="72.0" />
+                <TableView fx:id="store_tb" layoutX="33.0" layoutY="313.0" prefHeight="355.0" prefWidth="737.0" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
+                    <columns>
+                        <TableColumn fx:id="book_id_tb_cl" prefWidth="71.0" text="Book's ID" />
+                        <TableColumn fx:id="book_name_tb_cl" prefWidth="131.0" text="Book's name" />
+                        <TableColumn fx:id="author_tb_cl" prefWidth="102.0" text="Author " />
+                        <TableColumn fx:id="quantity_tb_cl" prefWidth="105.0" text="Quantity" />
+                        <TableColumn fx:id="least_price_tb_cl" prefWidth="126.0" text="Least Price" />
+                        <TableColumn fx:id="published_date_tb_cl" prefWidth="113.0" text="Published Date" />
+                        <TableColumn fx:id="hire_tb_cl" prefWidth="75.0" text="Hire" />
+                    </columns>
+                </TableView>
+                <Label layoutX="154.0" layoutY="117.0" styleClass="MainTile" text="Anchor Library Store">
+                    <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop>
+                                    <color>
+                                        <Color />
+                                    </color>
+                                </Stop>
+                                <Stop offset="1.0">
+                                    <color>
+                                        <Color blue="1.0" green="1.0" red="1.0" />
+                                    </color>
+                                </Stop>
+                            </stops>
+                        </LinearGradient>
+                    </textFill>
+                </Label>
+                <TextField fx:id="search_fld" layoutX="473.0" layoutY="235.0" promptText="Search book in store" styleClass="SearchBar" />
+                <Button fx:id="search_btn" layoutX="679.0" layoutY="230.0" mnemonicParsing="false" styleClass="SearchButton">
+                    <graphic>
+                        <ImageView fx:id="search_bar_btn" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true">
+                            <image>
+                                <Image url="@../IMAGES/SearchBarIcon.png" />
+                            </image>
                         </ImageView>
-                        <Label layoutX="80.0" layoutY="12.0" prefHeight="23.0" prefWidth="110.0" styleClass="LibraryName" text="Anchor">
-                           <textFill>
-                              <LinearGradient endX="0.551039704753681" endY="1.0" startX="0.5519849230977223" startY="0.506616242666551">
-                                 <stops>
-                                    <Stop>
-                                       <color>
-                                          <Color blue="0.35272905230522156" green="0.35272905230522156" red="0.49473685026168823" />
-                                       </color>
-                                    </Stop>
-                                    <Stop offset="1.0">
-                                       <color>
-                                          <Color blue="1.0" green="1.0" red="1.0" />
-                                       </color>
-                                    </Stop>
-                                 </stops>
-                              </LinearGradient>
-                           </textFill>
-                        </Label>
-                     </children>
-                  </Pane>
-                  <Button layoutY="150.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Library">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../IMAGES/LibraryStoreIcon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="go_to_store_btn" layoutY="220.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Store">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../IMAGES/BookStoreIcon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="go_to_setting_btn" layoutY="290.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Setting">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../IMAGES/settingIcon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children>
-            </AnchorPane>
-         </children>
-      </VBox>
-      <AnchorPane prefHeight="715.0" prefWidth="803.0">
-         <children>
-            <DatePicker fx:id="clock" cache="true" editable="false" layoutX="576.0" layoutY="47.0" prefHeight="25.0" prefWidth="122.0">
-               <effect>
-                  <SepiaTone level="0.21" />
-               </effect>
-            </DatePicker>
-            <Label layoutX="33.0" layoutY="251.0" styleClass="SubTile" text="List of books in your store" />
-            <HBox layoutX="227.0" layoutY="177.0">
-               <children>
-                  <Button fx:id="search_btn" layoutY="-5.0" mnemonicParsing="false" styleClass="SearchButton" />
-               </children>
-            </HBox>
-            <HBox layoutX="59.0" layoutY="72.0" />
-            <TableView fx:id="store_tb" layoutX="33.0" layoutY="313.0" prefHeight="355.0" prefWidth="737.0" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
-               <columns>
-                  <TableColumn fx:id="book_id_tb_cl" prefWidth="71.0" text="Book's ID" />
-                  <TableColumn fx:id="book_name_tb_cl" prefWidth="131.0" text="Book's name" />
-                  <TableColumn fx:id="author_tb_cl" prefWidth="102.0" text="Author " />
-                  <TableColumn fx:id="quantity_tb_cl" prefWidth="105.0" text="Quantity" />
-                  <TableColumn fx:id="least_price_tb_cl" prefWidth="126.0" text="Least Price" />
-                  <TableColumn fx:id="published_date_tb_cl" prefWidth="113.0" text="Published Date" />
-                  <TableColumn fx:id="hire_tb_cl" prefWidth="75.0" text="Hire" />
-               </columns>
-            </TableView>
-            <Label layoutX="154.0" layoutY="117.0" styleClass="MainTile" text="Anchor Library Store">
-               <textFill>
-                  <LinearGradient endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color blue="1.0" green="1.0" red="1.0" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </textFill>
-            </Label>
-            <TextField fx:id="search_fld" layoutX="473.0" layoutY="235.0" promptText="Search book in store" styleClass="SearchBar" />
-            <ImageView fx:id="search_bar_btn" fitHeight="35.0" fitWidth="35.0" layoutX="690.0" layoutY="234.0" pickOnBounds="true">
-               <image>
-                  <Image url="@../IMAGES/SearchBarIcon.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-   </children>
+                    </graphic>
+                </Button>
+            </children>
+        </AnchorPane>
+    </children>
 </HBox>

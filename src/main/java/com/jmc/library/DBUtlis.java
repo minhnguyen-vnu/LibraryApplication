@@ -1,7 +1,6 @@
 package com.jmc.library;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
 
 public class DBUtlis {
     static String User = "admin";
@@ -18,5 +17,57 @@ public class DBUtlis {
             e.printStackTrace();
         }
         return con;
+    }
+
+    public static void closeResources(PreparedStatement preparedStatement, ResultSet resultSet, Connection con) {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void executeUpdate(String query, Object... params) {
+        Connection con = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            con = getConnection();
+            try {
+                preparedStatement = con.prepareStatement(query);
+                for (int i = 0; i < params.length; i++) {
+                    preparedStatement.setObject(i + 1, params[i]);
+                }
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } finally {
+            closeResources(preparedStatement, null, con);
+        }
+    }
+
+    public static ResultSet executeQuery(String query, Object... params) throws SQLException {
+        Connection con = getConnection();
+        PreparedStatement preparedStatement = con.prepareStatement(query);
+        for (int i = 0; i < params.length; i++) {
+            preparedStatement.setObject(i + 1, params[i]);
+        }
+        return preparedStatement.executeQuery();
     }
 }
