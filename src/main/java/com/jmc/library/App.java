@@ -11,7 +11,7 @@ import java.io.IOException;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Model.getInstance().getViewFactory().showUserLibrary();
+        Model.getInstance().getViewFactory().showAdminLibrary();
     }
 
     public static void main(String[] args) {

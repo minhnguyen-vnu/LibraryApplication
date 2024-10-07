@@ -1,36 +1,47 @@
 
 /**/
 .MenuBackGround {
-    -fx-background-color: #c1faed;
-    -fx-background-radius: 15;
+    -fx-background-color: #0B0D1B;
+    /*-fx-background-radius: 10 0 0 10;*/
 }
 
 /**/
 .LibrarySymbolPane {
-    -fx-background-color: #33a58b;
-    -fx-background-radius: 15;
+    -fx-background-color: transparent;
 }
 
 .LibraryName {
     -fx-font-size: 30;
-    -fx-text-fill: linear-gradient(from 50% 90% to 50% 40%, #ea2d2d, #5420f4);
-    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
     -fx-font-style: italic;
 }
 
 /**/
 .MenuButton {
-    -fx-background-radius: 20;
-
-
-    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
-    -fx-background-color: #c1faed;
-    -fx-text-fill: #090808;
-    -fx-font-size: 20;
-    -fx-alignment: center;
+    -fx-font-family: "Calibri", sans-serif;
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 15;
+    -fx-alignment: CENTER-LEFT;
     -fx-pref-width: 200;
+    -fx-pref-height: 30;
+}
+
+.MenuButton .image-view {
+    -fx-pref-height: 15;
+    -fx-pref-width: 15;
+    -fx-blend-mode: src-over;
+    -fx-effect: innershadow(gaussian, #ffffff, 20, 10, 0, 0);
+}
+
+.MenuButton:hover .image-view {
+    -fx-blend-mode: src-atop;
+    -fx-effect: innershadow(gaussian, #ffffff, 20, 10, 0, 0);
 }
 
 .MenuButton:hover {
-    -fx-background-color: radial-gradient(center 50% 50%, radius 100%, #a3e8d9, #2b4fc6);
+    -fx-background-color: #6943CE;
 }
+
+

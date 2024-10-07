@@ -63,6 +63,11 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
+    public void showAdminLibrary() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Admin.fxml"));
+        createStage(fxmlLoader);
+    }
+
     void createStage(FXMLLoader loader) {
         Scene scene = null;
         try {
