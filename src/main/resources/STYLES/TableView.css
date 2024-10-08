@@ -28,6 +28,7 @@
     -fx-alignment: CENTER;
     -fx-background-color: #ffffff;
     -fx-border-color: transparent;
+    -fx-pref-height: 50;
 }
 
 

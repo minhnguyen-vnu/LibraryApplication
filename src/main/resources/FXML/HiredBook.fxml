@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -19,25 +14,25 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="712.0" prefWidth="1023.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserBookController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserBookController">
     <children>
         <VBox prefHeight="200.0" prefWidth="200.0">
             <children>
-                <AnchorPane prefHeight="713.0" prefWidth="203.0" styleClass="MenuBackGround" stylesheets="@../STYLES/MenuBar.css">
+                <AnchorPane prefHeight="588.0" prefWidth="200.0" styleClass="MenuBackGround" stylesheets="@../STYLES/MenuBar.css">
                     <children>
-                        <Pane layoutY="46.0" prefHeight="60.0" prefWidth="200.0" styleClass="LibrarySymbolPane">
+                        <Pane layoutY="10.0" prefHeight="60.0" prefWidth="200.0" styleClass="LibrarySymbolPane">
                             <children>
-                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../IMAGES/Icon.png" />
+                                        <Image url="@../IMAGES/LibraryIcon.png" />
                                     </image>
                                 </ImageView>
-                                <Label layoutX="80.0" layoutY="12.0" prefHeight="23.0" prefWidth="110.0" styleClass="LibraryName" text="Anchor" />
+                                <Label layoutX="60.0" layoutY="12.0" prefHeight="23.0" prefWidth="110.0" styleClass="LibraryName" text="Anchor" />
                             </children>
                         </Pane>
-                        <Button layoutY="150.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Library">
+                        <Button fx:id="go_to_library_btn" layoutY="150.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Library">
                             <graphic>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../IMAGES/LibraryStoreIcon.png" />
                                     </image>
@@ -46,7 +41,7 @@
                         </Button>
                         <Button fx:id="go_to_store_btn" layoutY="220.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Store">
                             <graphic>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../IMAGES/BookStoreIcon.png" />
                                     </image>
@@ -55,7 +50,7 @@
                         </Button>
                         <Button fx:id="go_to_setting_btn" layoutY="290.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Setting">
                             <graphic>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../IMAGES/settingIcon.png" />
                                     </image>
@@ -66,45 +61,67 @@
                 </AnchorPane>
             </children>
         </VBox>
-        <AnchorPane prefHeight="500.0" prefWidth="1023.0">
+        <VBox prefHeight="580.0" prefWidth="783.0">
             <children>
-                <HBox layoutX="52.0" layoutY="64.0" AnchorPane.bottomAnchor="522.0" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="166.0" AnchorPane.topAnchor="117.0">
+                <AnchorPane prefHeight="67.0" prefWidth="582.0" styleClass="SubBackground">
                     <children>
-                        <Label fx:id="username_lbl" styleClass="MainTile" text="Username's" />
-                        <Label styleClass="MainTile" text=" Store" />
+                        <HBox alignment="CENTER_RIGHT" layoutX="287.0" layoutY="7.0" prefHeight="50.0" prefWidth="488.0">
+                            <children>
+                                <Label fx:id="username_lbl" text="NguyenTungLamVoDichThienHaDuyNgaDocTon" HBox.hgrow="ALWAYS">
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                    <padding>
+                                        <Insets top="20.0" />
+                                    </padding>
+                                </Label>
+                                <Pane prefHeight="50.0" prefWidth="20.0" />
+                                <ImageView fx:id="account_avatar_img" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                            </children>
+                            <padding>
+                                <Insets right="20.0" />
+                            </padding>
+                        </HBox>
+                        <HBox layoutX="26.0" layoutY="12.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" styleClass="SearchBarContainer">
+                            <children>
+                                <Button fx:id="search_btn" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="30.0" styleClass="SearchButton">
+                                    <graphic>
+                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
+                                            <image>
+                                                <Image url="@../IMAGES/SearchBarIcon.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <padding>
+                                        <Insets left="10.0" />
+                                    </padding>
+                                </Button>
+                                <TextField fx:id="search_fld" prefHeight="40.0" prefWidth="220.0" promptText="Search book in store" styleClass="SearchBar" />
+                            </children>
+                        </HBox>
                     </children>
-                </HBox>
-                <TableView fx:id="Store_tbv" cacheShape="false" centerShape="false" layoutX="27.0" layoutY="209.0" prefHeight="357.0" prefWidth="739.0" scaleShape="false" styleClass="TableListView" stylesheets="@../STYLES/TableView.css" AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="313.0">
-                    <columns>
-                        <TableColumn fx:id="book_name_tb_cl" prefWidth="125.0" text="Book's name" />
-                        <TableColumn fx:id="author_tb_cl" prefWidth="141.0" text="Author" />
-                        <TableColumn fx:id="book_ID_tb_cl" prefWidth="134.0" text="Book's ID" />
-                        <TableColumn fx:id="picked_day_tb_cl" prefWidth="120.0" text="Picked day" />
-                        <TableColumn fx:id="return_day_tb_cl" maxWidth="142.0" minWidth="67.60003662109375" prefWidth="100.0" text="Return day" />
-                        <TableColumn fx:id="total_cost_tb_cl" prefWidth="119.0" text="Cost" />
-                    </columns>
-                </TableView>
-                <DatePicker fx:id="clock" cache="true" editable="false" layoutX="562.0" layoutY="37.0" prefHeight="25.0" prefWidth="118.0" AnchorPane.bottomAnchor="667.0" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="148.0" AnchorPane.topAnchor="37.0">
-                    <effect>
-                        <SepiaTone level="0.21" />
-                    </effect>
-                </DatePicker>
-                <Pane layoutX="321.0" layoutY="137.0" prefHeight="70.0" prefWidth="200.0" />
-                  <HBox layoutX="482.0" layoutY="234.0" AnchorPane.bottomAnchor="446.0" AnchorPane.leftAnchor="482.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="234.0">
-                      <children>
-                          <TextField fx:id="search_fld" promptText="Search book in store" styleClass="SearchBar" />
-                          <Button fx:id="search_btn" layoutY="-5.0" mnemonicParsing="false" styleClass="SearchButton">
-                              <graphic>
-                                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true">
-                                      <image>
-                                          <Image url="@../IMAGES/SearchBarIcon.png" />
-                                      </image>
-                                  </ImageView>
-                              </graphic>
-                          </Button>
-                      </children>
-                  </HBox>
+                </AnchorPane>
+                <AnchorPane prefHeight="523.0" prefWidth="780.0" styleClass="MainBackground">
+                    <children>
+                        <TableView fx:id="store_tb" cacheShape="false" centerShape="false" layoutX="21.0" layoutY="66.0" prefHeight="430.0" prefWidth="750.0" scaleShape="false" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
+                            <columns>
+                        <TableColumn fx:id="author_tb_cl" prefWidth="150.0" text="Author" />
+                                <TableColumn fx:id="book_name_tb_cl" prefWidth="150.0" text="name" />
+                                <TableColumn fx:id="book_id_tb_cl" prefWidth="120.0" text="ID" />
+                                <TableColumn fx:id="picked_day_tb_cl" prefWidth="120.0" text="Picked day" />
+                                <TableColumn fx:id="return_day_tb_cl" maxWidth="187.199951171875" minWidth="67.60003662109375" prefWidth="120.0" text="Return day" />
+                                <TableColumn fx:id="total_cost_tb_cl" prefWidth="150.0" text="Cost" />
+                            </columns>
+                        </TableView>
+                        <Button layoutX="561.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="150.0" styleClass="MainButton" text="Check out" />
+                        <Button layoutX="725.0" layoutY="14.0" minWidth="-Infinity" mnemonicParsing="false" prefWidth="35.0" styleClass="MainButton">
+                            <graphic>
+                                <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="20" />
+                            </graphic>
+                        </Button>
+                    </children>
+                </AnchorPane>
             </children>
-        </AnchorPane>
+        </VBox>
     </children>
 </HBox>

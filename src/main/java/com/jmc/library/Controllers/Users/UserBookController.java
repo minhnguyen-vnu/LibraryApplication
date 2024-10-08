@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -18,18 +19,19 @@ import java.util.stream.Collectors;
 public class UserBookController extends User implements Initializable {
     public Button go_to_setting_btn;
     public Label username_lbl;
-    public TableView<UserBookInfo> Store_tbv;
+    public TableView<UserBookInfo> store_tb;
     public TableColumn<UserBookInfo, String> book_name_tb_cl;
     public TableColumn<UserBookInfo, String> author_tb_cl;
-    public TableColumn<UserBookInfo, Integer> book_ID_tb_cl;
+    public TableColumn<UserBookInfo, Integer> book_id_tb_cl;
     public TableColumn<UserBookInfo, LocalDate> return_day_tb_cl;
     public TableColumn<UserBookInfo, LocalDate> picked_day_tb_cl;
-    public DatePicker clock;
     public TextField search_fld;
     public Button search_btn;
 
     public TableColumn<UserBookInfo, Double> total_cost_tb_cl;
     public Button go_to_store_btn;
+    public Button go_to_library_btn;
+    public ImageView account_avatar_img;
 
     public UserBookController() {
         super(null, null);
@@ -45,6 +47,8 @@ public class UserBookController extends User implements Initializable {
         priceFormating();
         setButtonListener();
 
+//        username_lbl.setText(getUsername());
+        account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png").toExternalForm()).getImage());
         bookList.add(new UserBookInfo("Java Programing", "Scott", 1, LocalDate.now(), LocalDate.of(2024, 6, 7), 13));
         bookList.add(new UserBookInfo("C++ Programing", "Scoot", 2, LocalDate.now(), LocalDate.of(2024, 1, 1), 15));
 
@@ -61,12 +65,12 @@ public class UserBookController extends User implements Initializable {
     private void addBinding() {
         book_name_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookName"));
         author_tb_cl.setCellValueFactory(new PropertyValueFactory<>("authorName"));
-        book_ID_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookId"));
+        book_id_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookId"));
         picked_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("pickedDate"));
         return_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
         total_cost_tb_cl.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
 
-        Store_tbv.setItems(bookList);
+        store_tb.setItems(bookList);
     }
 
     private void priceFormating() {
@@ -92,7 +96,7 @@ public class UserBookController extends User implements Initializable {
         ObservableList<UserBookInfo> filteredList = bookList.stream()
                 .filter(book -> book.getAuthorName().equalsIgnoreCase(authorName))
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
-        Store_tbv.setItems(filteredList);
+        store_tb.setItems(filteredList);
         filteredList.clear();
     }
 
