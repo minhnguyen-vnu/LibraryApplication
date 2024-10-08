@@ -1,32 +1,27 @@
 package com.jmc.library.Controllers.Users;
 
-import com.jmc.library.Models.Model;
-import javafx.collections.ObservableList;
-import javafx.fxml.Initializable;
-import javafx.scene.layout.BorderPane;
+public class User {
+    private String username;
+    private String token;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+    public User(String username, String token) {
+        this.username = username;
+        this.token = token;
+    }
 
-public class User implements Initializable {
-    public BorderPane user_parent;
-//    ObservableList<BookInfo>
+    public String getToken(){
+        return token;
+    }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        Model.getInstance().getViewFactory().getSelectedUserMode().addListener(((observableValue, oldVal, newVal) -> {
-            try {
-                if (user_parent != null) {
-                    switch (newVal) {
-                        case "User Library" -> user_parent.setCenter(Model.getInstance().getViewFactory().getUserHiredBook());
-                        default -> user_parent.setCenter(Model.getInstance().getViewFactory().getUserLibrary());
-                    }
-                } else {
-                    System.err.println("Parent BorderPane is not initialized.");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }));
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

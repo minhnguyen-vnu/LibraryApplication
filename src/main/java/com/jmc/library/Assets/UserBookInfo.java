@@ -2,14 +2,14 @@ package com.jmc.library.Assets;
 
 import java.time.LocalDate;
 
-public class UserBook {
+public class UserBookInfo {
     private String bookName;
     private String authorName;
     private int bookId;
     private LocalDate returnDate, pickedDate;
     private double totalCost;
 
-    public UserBook(String bookName, String authorName, int bookId, LocalDate pickedDate, LocalDate returnDate, double totalCost) {
+    public UserBookInfo(String bookName, String authorName, int bookId, LocalDate pickedDate, LocalDate returnDate, double totalCost) {
         this.bookName = bookName;
         this.authorName = authorName;
         this.bookId = bookId;

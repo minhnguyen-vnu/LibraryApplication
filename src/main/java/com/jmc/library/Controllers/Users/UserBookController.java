@@ -1,6 +1,7 @@
 package com.jmc.library.Controllers.Users;
 
-import com.jmc.library.Assets.UserBook;
+import com.jmc.library.Assets.UserBookInfo;
+import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,21 +15,25 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class HiredBookController extends User implements Initializable {
+public class UserBookController extends User implements Initializable {
     public Button go_to_setting_btn;
     public Label username_lbl;
-    public TableView<UserBook> Store_tbv;
-    public TableColumn<UserBook, String> book_name_tb_cl;
-    public TableColumn<UserBook, String> author_tb_cl;
-    public TableColumn<UserBook, Integer> book_ID_tb_cl;
-    public TableColumn<UserBook, LocalDate> return_day_tb_cl;
-    public TableColumn<UserBook, LocalDate> picked_day_tb_cl;
+    public TableView<UserBookInfo> Store_tbv;
+    public TableColumn<UserBookInfo, String> book_name_tb_cl;
+    public TableColumn<UserBookInfo, String> author_tb_cl;
+    public TableColumn<UserBookInfo, Integer> book_ID_tb_cl;
+    public TableColumn<UserBookInfo, LocalDate> return_day_tb_cl;
+    public TableColumn<UserBookInfo, LocalDate> picked_day_tb_cl;
     public DatePicker clock;
     public TextField search_fld;
     public Button search_btn;
-    public ObservableList<UserBook> bookList;
-    public TableColumn<UserBook, Double> total_cost_tb_cl;
+    public ObservableList<UserBookInfo> bookList;
+    public TableColumn<UserBookInfo, Double> total_cost_tb_cl;
     public Button go_to_store_btn;
+
+    public UserBookController(String username, String token) {
+        super(username, token);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -36,15 +41,16 @@ public class HiredBookController extends User implements Initializable {
         priceFormating();
         setButtonListener();
 
-        bookList.add(new UserBook("Java Programing", "Scott", 1, LocalDate.now(), LocalDate.of(2024, 6, 7), 13));
-        bookList.add(new UserBook("C++ Programing", "Scoot", 2, LocalDate.now(), LocalDate.of(2024, 1, 1), 15));
+        bookList.add(new UserBookInfo("Java Programing", "Scott", 1, LocalDate.now(), LocalDate.of(2024, 6, 7), 13));
+        bookList.add(new UserBookInfo("C++ Programing", "Scoot", 2, LocalDate.now(), LocalDate.of(2024, 1, 1), 15));
 
     }
 
     private void setButtonListener() {
         search_btn.setOnAction(actionEvent -> searchBookByAuthor(search_fld.getText()));
         go_to_store_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("Store");
+            LibraryModel.getInstance().getLibraryController().receiveRequest(getUsername(), getToken());
         });
     }
 
@@ -62,10 +68,10 @@ public class HiredBookController extends User implements Initializable {
     }
 
     private void priceFormating() {
-        total_cost_tb_cl.setCellFactory(new Callback<TableColumn<UserBook, Double>, TableCell<UserBook, Double>>() {
+        total_cost_tb_cl.setCellFactory(new Callback<TableColumn<UserBookInfo, Double>, TableCell<UserBookInfo, Double>>() {
             @Override
-            public TableCell<UserBook, Double> call(TableColumn<UserBook, Double> param) {
-                return new TableCell<UserBook, Double>() {
+            public TableCell<UserBookInfo, Double> call(TableColumn<UserBookInfo, Double> param) {
+                return new TableCell<UserBookInfo, Double>() {
                     @Override
                     protected void updateItem(Double item, boolean empty) {
                         super.updateItem(item, empty);
@@ -81,7 +87,7 @@ public class HiredBookController extends User implements Initializable {
     }
 
     private void searchBookByAuthor(String authorName) {
-        ObservableList<UserBook> filteredList = bookList.stream()
+        ObservableList<UserBookInfo> filteredList = bookList.stream()
                 .filter(book -> book.getAuthorName().equalsIgnoreCase(authorName))
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
         Store_tbv.setItems(filteredList);

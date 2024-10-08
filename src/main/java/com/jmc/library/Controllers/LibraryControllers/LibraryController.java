@@ -1,4 +1,4 @@
-package com.jmc.library.Controllers;
+package com.jmc.library.Controllers.LibraryControllers;
 
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.DBUtlis;
@@ -35,6 +35,7 @@ public class LibraryController implements Initializable {
     public ObservableList<BookInfo> bookList;
     public Button search_btn;
     public Button go_to_user_library_btn;
+    String username, usertoken;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,6 +83,7 @@ public class LibraryController implements Initializable {
                                 "where bookId = ?;", book.getBookId());
                         book.setQuantityInStock(book.getQuantityInStock() - 1);
                         getTableView().refresh();
+
                     });
                 }
             }
@@ -151,5 +153,10 @@ public class LibraryController implements Initializable {
                 filteredList.clear();
             }
         });
+    }
+
+    public void receiveRequest(String username, String usertoken) {
+        this.username = username;
+        this.usertoken = usertoken;
     }
 }

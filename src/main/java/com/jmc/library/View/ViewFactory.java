@@ -1,10 +1,9 @@
 package com.jmc.library.View;
 
 import com.jmc.library.Controllers.Authentication;
-import com.jmc.library.Controllers.Users.User;
+import com.jmc.library.Controllers.Users.UserView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -64,14 +63,14 @@ public class ViewFactory {
     }
 
     public void showUserLibrary() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/UserLibrary.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Library.fxml"));
         createStage(fxmlLoader);
     }
 
     public HBox getUserLibrary() {
         if (userLibrary == null) {
             try {
-                userLibrary = new FXMLLoader(getClass().getResource("/FXML/UserLibrary.fxml")).load();
+                userLibrary = new FXMLLoader(getClass().getResource("/FXML/Library.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -91,8 +90,8 @@ public class ViewFactory {
     }
 
     public void showUserWindow() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/User.fxml"));
-        User user = new User();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/UserView.fxml"));
+        UserView user = new UserView();
         fxmlLoader.setController(user);
         createStage(fxmlLoader);
     }

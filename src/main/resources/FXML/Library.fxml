@@ -22,7 +22,7 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="712.0" prefWidth="1023.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.LibraryController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="712.0" prefWidth="1023.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.LibraryControllers.LibraryController">
     <children>
         <VBox prefHeight="200.0" prefWidth="200.0">
             <children>
