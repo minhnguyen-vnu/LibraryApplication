@@ -29,8 +29,8 @@
 }
 
 .MenuButton .image-view {
-    -fx-pref-height: 15;
-    -fx-pref-width: 15;
+    -fx-fit-to-height: 15;
+    -fx-fit-to-width: 15;
     -fx-blend-mode: src-over;
     -fx-effect: innershadow(gaussian, #ffffff, 20, 10, 0, 0);
 }

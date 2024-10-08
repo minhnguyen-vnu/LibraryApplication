@@ -1,5 +1,6 @@
 package com.jmc.library.Controllers.Admin;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -44,11 +45,12 @@ public class AdminTableItiem {
 
     private HBox createHBoxWithImageAndText(String imagePath, String text) {
         ImageView imageView = new ImageView(new Image(imagePath));
-        imageView.setFitWidth(20);
-        imageView.setFitHeight(20);
+        imageView.setFitWidth(30);
+        imageView.setFitHeight(30);
         HBox hBox = new HBox();
         hBox.getChildren().add(imageView);
         hBox.getChildren().add(new Label(text));
+        hBox.setAlignment(Pos.CENTER);
         return hBox;
     }
 

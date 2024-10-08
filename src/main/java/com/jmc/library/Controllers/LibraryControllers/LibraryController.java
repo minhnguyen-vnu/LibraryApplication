@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 
 public class LibraryController implements Initializable {
     public Button go_to_setting_btn;
-    public DatePicker clock;
     public TextField search_fld;
     public ImageView search_bar_btn;
     public TableColumn<BookInfo, Integer> book_id_tb_cl;
@@ -106,6 +105,7 @@ public class LibraryController implements Initializable {
 
     private void showLibrary() {
         bookList.clear();
+        store_tb.setItems(bookList);
         try {
             ResultSet resultSet = DBUtlis.executeQuery("select * from bookStore");
             while (resultSet.next()) {
@@ -143,6 +143,7 @@ public class LibraryController implements Initializable {
     }
 
     private void searchBookById(String text) {
+
         if(text.contains(" ")){
             return;
         }

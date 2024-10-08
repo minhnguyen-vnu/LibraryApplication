@@ -1,11 +1,14 @@
 package com.jmc.library.Controllers.Admin;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
@@ -29,12 +32,17 @@ public class AdminController implements Initializable {
     public TableColumn<AdminTableItiem, Button> action_tb_cl;
 
     public ObservableList<AdminTableItiem> adminItems;
+    public Label account_name_lbl;
+    public ImageView account_avatar_img;
+    public FontAwesomeIconView add_book_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addBinding();
         addAdminItemsListener();
         store_tb.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png").toExternalForm()).getImage());
+        account_name_lbl.setText("NguyenTungLamVoDichThienHaDuyNgaDocTon");
 
         adminItems.add(new AdminTableItiem(new CheckBox(), "/IMAGES/actionIcon.png", "The Great Gatsby", "1", "2021-10-10", "2021-10-20", "10.00", "/IMAGES/avatar.png"));
         search_btn.setOnAction(actionEvent -> searchAdminItem(search_fld.getText()));
@@ -74,6 +82,8 @@ public class AdminController implements Initializable {
                             setGraphic(null);
                         } else {
                             setGraphic(item);
+                            setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                            setAlignment(Pos.CENTER); // Center the content of the cell
                         }
                     }
                 };
