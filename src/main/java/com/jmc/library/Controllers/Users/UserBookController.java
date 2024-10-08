@@ -27,9 +27,13 @@ public class UserBookController extends User implements Initializable {
     public DatePicker clock;
     public TextField search_fld;
     public Button search_btn;
-    public ObservableList<UserBookInfo> bookList;
+
     public TableColumn<UserBookInfo, Double> total_cost_tb_cl;
     public Button go_to_store_btn;
+
+    public UserBookController() {
+        super(null, null);
+    }
 
     public UserBookController(String username, String token) {
         super(username, token);
@@ -50,13 +54,11 @@ public class UserBookController extends User implements Initializable {
         search_btn.setOnAction(actionEvent -> searchBookByAuthor(search_fld.getText()));
         go_to_store_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("Store");
-            LibraryModel.getInstance().getLibraryController().receiveRequest(getUsername(), getToken());
+//            LibraryModel.getInstance().getLibraryController().receiveRequest(getUsername(), getToken());
         });
     }
 
     private void addBinding() {
-        bookList = FXCollections.observableArrayList();
-
         book_name_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookName"));
         author_tb_cl.setCellValueFactory(new PropertyValueFactory<>("authorName"));
         book_ID_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookId"));

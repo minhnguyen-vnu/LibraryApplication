@@ -1,6 +1,8 @@
 package com.jmc.library.Controllers.LibraryControllers;
 
 import com.jmc.library.Assets.BookInfo;
+import com.jmc.library.Assets.UserBookInfo;
+import com.jmc.library.Controllers.Users.User;
 import com.jmc.library.DBUtlis;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
@@ -11,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
+import java.lang.constant.ModuleDesc;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,7 +38,8 @@ public class LibraryController implements Initializable {
     public ObservableList<BookInfo> bookList;
     public Button search_btn;
     public Button go_to_user_library_btn;
-    String username, usertoken;
+    private String username, usertoken;
+    private ObservableList<UserBookInfo> userList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -55,6 +59,7 @@ public class LibraryController implements Initializable {
 
     private void addBinding() {
         bookList = FXCollections.observableArrayList();
+        userList = FXCollections.observableArrayList();
         store_tb.setItems(bookList);
 
         book_id_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookId"));
@@ -83,7 +88,6 @@ public class LibraryController implements Initializable {
                                 "where bookId = ?;", book.getBookId());
                         book.setQuantityInStock(book.getQuantityInStock() - 1);
                         getTableView().refresh();
-
                     });
                 }
             }
@@ -155,8 +159,9 @@ public class LibraryController implements Initializable {
         });
     }
 
-    public void receiveRequest(String username, String usertoken) {
+    public void receiveRequest(String username, String usertoken, ObservableList<UserBookInfo> userList) {
         this.username = username;
         this.usertoken = usertoken;
+        this.userList = userList;
     }
 }

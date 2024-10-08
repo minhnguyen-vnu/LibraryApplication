@@ -14,4 +14,5 @@ module com.jmc.library {
     exports com.jmc.library.Controllers.Users;
     exports com.jmc.library.Assets;
     exports com.jmc.library.Controllers.LibraryControllers;
+    exports com.jmc.library.Controllers.Admin;
 }
