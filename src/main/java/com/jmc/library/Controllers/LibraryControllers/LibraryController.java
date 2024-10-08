@@ -106,6 +106,7 @@ public class LibraryController implements Initializable {
 
     private void showLibrary() {
         bookList.clear();
+        store_tb.setItems(bookList);
         try {
             ResultSet resultSet = DBUtlis.executeQuery("select * from bookStore");
             while (resultSet.next()) {
