@@ -1,6 +1,9 @@
 /**/
 .WorldBackground {
-    -fx-background-color: #fff1e3;
+    /*-fx-background-color: #0B0D1B;*/
+    -fx-border-color: #41445B;
+    -fx-border-width: 10;
+    /*-fx-border-radius: 15;*/
 }
 
 /**/
@@ -19,12 +22,15 @@
 }
 
 /**/
+.SearchBarContainer {
+    -fx-background-color: #F1F3F6;
+    -fx-background-radius: 15;
+}
+
 .SearchBar {
     -fx-background-radius: 15;
-    -fx-background-color: #FFFFFF;
-
-
-    -fx-pref-height: 20;
+    -fx-background-color: transparent;
+    -fx-pref-height: 40;
     -fx-font-family: "Comic Sans MS", cursive, sans-serif;
     -fx-font-style: italic;
     -fx-font-size: 15;
@@ -38,4 +44,25 @@
 
 .SearchButton:hover {
     -fx-opacity: 1;
+}
+/**/
+.SubBackground {
+    -fx-background-color: #ffffff;
+    /*-fx-background-radius: 0 15 0 0;*/
+}
+.MainBackground {
+    -fx-background-color: #F1F3F6;
+    /*-fx-background-radius: 0 0 15 0;*/
+}
+/*Style button for Main scene*/
+
+.MainButton {
+    -fx-font-family: "Calibri", sans-serif;
+    -fx-background-color: #6943CE;
+    -fx-background-radius: 8;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 15;
+    -fx-alignment: CENTER;
+    -fx-pref-width: 150;
+    -fx-pref-height: 35;
 }

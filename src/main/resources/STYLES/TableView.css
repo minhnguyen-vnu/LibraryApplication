@@ -1,75 +1,97 @@
-.ListView .table-row-cell {
-    -fx-background-color: #f0f0f0;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0.0em;
-    -fx-text-fill: -fx-text-background-color;
-}
-
-.ListView .table-row-cell:odd {
-    -fx-background-color: #958686;
-}
-
-.ListView .table-row-cell:selected {
-    -fx-background-color: #aed39c;
-}
-
-.ListView {
-    -fx-background-radius: 15;
-    -fx-border-radius: 5;
-    -fx-border-color: #42326e;
-    -fx-border-width: 10;
-}
 
 .TableListView {
-    -fx-background-color: #f6eee3;
-    -fx-background-radius: 15;
-    -fx-border-radius: 5;
-    -fx-border-color: #42326e;
-    -fx-border-width: 10;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 0 0 15 15;
+    -fx-alignment: center;
+    -fx-padding: 0.0em;
 }
 
 /* Style for the table header */
 .TableListView .column-header{
-    -fx-background-color: radial-gradient(center 50% 50%, radius 100%, #f4d96d, #e36e0f);
-    -fx-border-color: #42326e;
-    -fx-border-width: 2 0 2 0;
+    -fx-background-color: #ffffff;
+    -fx-opacity: 0.8;
+    -fx-background-insets: 0;
 }
 
 .TableListView .column-header .label {
-    -fx-text-fill: #4b8fdd;
+    -fx-text-fill: #1b1a1a;
     -fx-font-weight: bold;
+    -fx-font-size: 12;
     -fx-alignment: CENTER;
+    -fx-background-color: transparent;
 
 }
 
 /* Style for the table cells */
 .TableListView .table-cell {
     -fx-text-fill: #000000;
-    -fx-alignment: CENTER_LEFT;
-    -fx-padding: 5px;
-    -fx-border-color: #9dafcc;
-    -fx-border-width: 0 0 1 1;
+    -fx-alignment: CENTER;
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
 }
 
-/* Alternate row color */
-TableListView .table-row-cell:odd {
-    -fx-background-color: #efd2d2;
+
+.TableListView .table-cell:odd {
+    -fx-background-color: #ffffff;
 }
 
-/* Selected row color */
-.TableListView .table-row-cell:selected {
-    -fx-background-color: #aed39c;
+.TableListView .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+}
+
+/* Style for the scroll bar */
+.TableListView .scroll-bar {
+    -fx-pref-width: 0;
+    -fx-opacity: 0;
+}
+
+/* Style for the CheckBox */
+
+.table-cell .check-box {
+    -fx-background-color: transparent;
+}
+
+.table-cell .check-box:selected {
+    -fx-background-color: transparent;
+}
+
+/* Custom CheckBox icon */
+.check-box .box {
+    -fx-pref-height: 15;
+    -fx-pref-width: 15;
+    -fx-background-color: transparent;
+    -fx-background-radius: 30;
+    -fx-border-color: #b6b8bc;
+    -fx-border-radius: 25;
+    -fx-border-width: 1px;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #bce0ea;
+}
+
+.check-box:hover .box {
+    -fx-background-color: #ccfaee;
+}
+
+.table-cell .button {
+    -fx-background-color: transparent;
+}
+
+.table-cell .button .image-view {
+
+    -fx-blend-mode: src-over;
+}
+
+.table-cell .button:hover .image-view {
+    -fx-blend-mode: src-atop;
+    -fx-effect: innershadow(gaussian, #810a0a, 20, 10, 0, 0);
+}
+
+.table-cell .label {
+    -fx-padding: 0 0 0 10;
     -fx-text-fill: #000000;
-}
-
-.TableListView .table-row-cell:hover {
-    -fx-background-color: #596d8c;
-}
-
-.TableListView .table-cell:hover {
-    -fx-background-color: #f4d96d;
-    -fx-text-fill: #0d37c1;
-    -fx-font-weight: bold;
-    -fx-font-size: 14;
+    -fx-font-size: 12;
 }
 
