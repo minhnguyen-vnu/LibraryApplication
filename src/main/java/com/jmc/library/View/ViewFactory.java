@@ -62,11 +62,6 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
-    public void showUserLibrary() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Library.fxml"));
-        createStage(fxmlLoader);
-    }
-
     public HBox getUserLibrary() {
         if (userLibrary == null) {
             try {

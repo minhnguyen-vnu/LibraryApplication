@@ -30,4 +30,8 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public ObservableList<UserBookInfo> getBookList() {
+        return bookList;
+    }
 }

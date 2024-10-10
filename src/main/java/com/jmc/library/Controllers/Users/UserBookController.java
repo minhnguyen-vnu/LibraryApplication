@@ -1,9 +1,11 @@
 package com.jmc.library.Controllers.Users;
 
+import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -47,18 +49,18 @@ public class UserBookController extends User implements Initializable {
         priceFormating();
         setButtonListener();
 
-//        username_lbl.setText(getUsername());
         account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png").toExternalForm()).getImage());
         bookList.add(new UserBookInfo("Java Programing", "Scott", 1, LocalDate.now(), LocalDate.of(2024, 6, 7), 13));
         bookList.add(new UserBookInfo("C++ Programing", "Scoot", 2, LocalDate.now(), LocalDate.of(2024, 1, 1), 15));
 
+        System.out.println(1);
     }
 
     private void setButtonListener() {
         search_btn.setOnAction(actionEvent -> searchBookByAuthor(search_fld.getText()));
         go_to_store_btn.setOnAction(actionEvent -> {
+            LibraryModel.getInstance().getLibraryController().receiveRequest(getUsername(), getToken(), getBookList());
             Model.getInstance().getViewFactory().getSelectedUserMode().set("Store");
-//            LibraryModel.getInstance().getLibraryController().receiveRequest(getUsername(), getToken());
         });
     }
 
@@ -99,5 +101,4 @@ public class UserBookController extends User implements Initializable {
         store_tb.setItems(filteredList);
         filteredList.clear();
     }
-
 }

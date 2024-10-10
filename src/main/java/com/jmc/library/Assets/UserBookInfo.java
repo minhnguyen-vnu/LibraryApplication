@@ -65,4 +65,16 @@ public class UserBookInfo {
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
+
+    @Override
+    public String toString() {
+        return "UserBookInfo{" +
+                "bookName='" + bookName + '\'' +
+                ", authorName='" + authorName + '\'' +
+                ", bookId=" + bookId +
+                ", returnDate=" + returnDate +
+                ", pickedDate=" + pickedDate +
+                ", totalCost=" + totalCost +
+                '}';
+    }
 }

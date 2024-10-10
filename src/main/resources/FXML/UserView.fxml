@@ -8,9 +8,6 @@
 
 <BorderPane fx:id="user_parent" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            prefHeight="400.0" prefWidth="600.0">
-    <center>
-        <fx:include source="HiredBook.fxml"/>
-    </center>
+            prefHeight="757.0" prefWidth="1134.0">
 
 </BorderPane>

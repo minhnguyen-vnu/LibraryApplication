@@ -15,11 +15,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.LibraryControllers.LibraryController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="757.0" prefWidth="1134.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.LibraryControllers.LibraryController">
     <children>
         <VBox prefHeight="200.0" prefWidth="200.0">
             <children>
-                <AnchorPane prefHeight="588.0" prefWidth="200.0" styleClass="MenuBackGround" stylesheets="@../STYLES/MenuBar.css">
+                <AnchorPane prefHeight="741.0" prefWidth="200.0" styleClass="MenuBackGround" stylesheets="@../STYLES/MenuBar.css">
                     <children>
                         <Pane layoutY="10.0" prefHeight="60.0" prefWidth="200.0" styleClass="LibrarySymbolPane">
                             <children>
@@ -62,13 +62,13 @@
                 </AnchorPane>
             </children>
         </VBox>
-        <VBox prefHeight="580.0" prefWidth="783.0">
+        <VBox prefHeight="737.0" prefWidth="915.0">
             <children>
                 <AnchorPane prefHeight="67.0" prefWidth="582.0" styleClass="SubBackground">
                     <children>
                         <HBox alignment="CENTER_RIGHT" layoutX="287.0" layoutY="7.0" prefHeight="50.0" prefWidth="488.0">
                             <children>
-                                <Label fx:id="username_lbl" text="NguyenTungLamVoDichThienHaDuyNgaDocTon" HBox.hgrow="ALWAYS">
+                                <Label fx:id="username_lbl" text="NguyenLeMinh" HBox.hgrow="ALWAYS">
                                     <opaqueInsets>
                                         <Insets />
                                     </opaqueInsets>
@@ -102,25 +102,25 @@
                         </HBox>
                     </children>
                 </AnchorPane>
-                <AnchorPane prefHeight="523.0" prefWidth="780.0" styleClass="MainBackground">
+                <AnchorPane prefHeight="661.0" prefWidth="914.0" styleClass="MainBackground">
                     <children>
-                        <TableView fx:id="store_tb" layoutX="21.0" layoutY="66.0" prefHeight="430.0" prefWidth="750.0" styleClass="TableListView" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="73.0">
+                        <TableView fx:id="store_tb" layoutX="33.0" layoutY="74.0" prefHeight="428.0" prefWidth="847.0" styleClass="TableListView" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="74.0">
                         <columns>
-                           <TableColumn fx:id="book_id_tb_cl" prefWidth="71.0" text="Book's ID" />
-                           <TableColumn fx:id="book_name_tb_cl" prefWidth="131.0" text="Book's name" />
-                           <TableColumn fx:id="author_tb_cl" prefWidth="102.0" text="Author " />
-                           <TableColumn fx:id="quantity_tb_cl" prefWidth="105.0" text="Quantity" />
-                           <TableColumn fx:id="least_price_tb_cl" prefWidth="126.0" text="Least Price" />
-                           <TableColumn fx:id="published_date_tb_cl" prefWidth="113.0" text="Published Date" />
-                           <TableColumn fx:id="hire_tb_cl" prefWidth="75.0" text="Hire" />
+                           <TableColumn fx:id="book_id_tb_cl" prefWidth="111.0" text="Book's ID" />
+                           <TableColumn fx:id="book_name_tb_cl" prefWidth="125.0" text="Book's name" />
+                           <TableColumn fx:id="author_tb_cl" prefWidth="177.0" text="Author " />
+                           <TableColumn fx:id="quantity_tb_cl" prefWidth="75.0" text="Quantity" />
+                           <TableColumn fx:id="least_price_tb_cl" prefWidth="114.0" text="Least Price" />
+                           <TableColumn fx:id="published_date_tb_cl" prefWidth="114.0" text="Published Date" />
+                           <TableColumn fx:id="hire_tb_cl" prefWidth="131.0" text="Hire" />
                         </columns>
                      <stylesheets>
                         <URL value="@../STYLES/TableView.css" />
                         <URL value="@../STYLES/TableView.css" />
                      </stylesheets>
                         </TableView>
-                        <Button layoutX="561.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="150.0" styleClass="MainButton" text="Check out" />
-                        <Button layoutX="725.0" layoutY="14.0" minWidth="-Infinity" mnemonicParsing="false" prefWidth="35.0" styleClass="MainButton">
+                        <Button layoutX="649.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="150.0" styleClass="MainButton" text="Check out" AnchorPane.bottomAnchor="612.0" AnchorPane.leftAnchor="649.0" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="14.0" />
+                        <Button layoutX="835.0" layoutY="14.0" minWidth="-Infinity" mnemonicParsing="false" prefWidth="35.0" styleClass="MainButton" AnchorPane.bottomAnchor="612.0" AnchorPane.leftAnchor="835.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="14.0">
                             <graphic>
                                 <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="20" />
                             </graphic>
