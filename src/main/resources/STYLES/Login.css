@@ -1,80 +1,107 @@
-.login_container {
-    -fx-background-color: #EEEEEE;
+.WorldBackground {
+    /*-fx-background-color: #0B0D1B;*/
+    -fx-border-color: #41445B;
+    -fx-border-width: 10;
+    /*-fx-border-radius: 15;*/
 }
 
-/* Logo Container Styles */
-
-.login_logo_container {
-    -fx-background-color: #6CABDD;
-    -fx-alignment: center;
+.WelcomeBackGround {
+    -fx-background-color: #0B0D1B;
+    /*-fx-background-radius: 10 0 0 10;*/
 }
 
-.login_logo_container Text {
-    -fx-font-size: 2em;
-    -fx-fill: #FFFFFF;
+.MainBackground {
+    -fx-background-color: #F1F3F6;
+}
+
+.WelcomeText {
+    -fx-font-size: 30;
+    -fx-text-fill: #ffffff;
     -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-font-style: italic;
 }
-
 
 /* Account Selector ChoiceBox Style */
+
+.tile {
+    -fx-text-fill: #000000;
+    -fx-font-size: 1.5em;
+    -fx-font-weight: bold;
+}
 .acc_selector {
-    -fx-background-color: #6CABDD;
+    -fx-background-color: transparent;
 }
 
 .acc_selector .label {
-    -fx-text-fill: #132A13;
-    -fx-font-size: 1.1em;
+    -fx-text-fill: #000000;
+    -fx-font-size: 1.5em;
+    -fx-font-weight: bold;
+    -fx-text-decoration: underline;
 }
 
 .acc_selector .arrow {
-    -fx-background-color: #132A13;
+    -fx-background-color: transparent;
 }
 
 #choice-box-popup-menu {
-    -fx-background-color: #ECF39E;
+    -fx-background-color: #9277af;
 }
 
 /* Login Form Style */
 
-.login_form_container {
-    -fx-spacing: 15;
-    -fx-alignment: top_left;
+
+.instructions_panel {
+    -fx-background-color: #F1F3F6;
 }
 
-.login_form_container {
-    -fx-font-size: 1.1em;
-    -fx-font-weight: bold;
-}
-
-.input_field {
-    -fx-background-color: #FFFFFF;
-    -fx-pref-height: 35;
+.instructions_lbl {
+    -fx-text-fill: #272525;
     -fx-font-size: 1.2em;
 }
 
-.login_form_container Button {
-    -fx-background-color: #00A20E;
-    -fx-text-fill: #FFFFFF;
-    -fx-pref-width: 150;
-    -fx-pref-height: 35;
-    -fx-font-size: 1.1em;
+.redStar {
+    -fx-text-fill: red;
+    -fx-font-size: 1.2em;
 }
 
-.login_form_container Button:hover {
-    -fx-cursor: hand;
+.input_field {
+    -fx-background-color:transparent;
+    -fx-border-radius: 10;
+    -fx-border-color: #151414;
+    -fx-border-width: 1;
+    -fx-pref-height: 50;
+    -fx-pref-width: 400;
+
+    -fx-font-size: 1.5em;
+}
+
+.LoginButton {
+    -fx-pref-width: 400;
+    -fx-font-family: "Calibri", sans-serif;
+    -fx-background-color: #6943CE;
+    -fx-background-radius: 8;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20;
+    -fx-alignment: CENTER;
+    -fx-pref-height: 50;
+}
+
+.LoginButton:hover {
+    -fx-background-color: #5c4cef;
 }
 
 .error_lbl {
     -fx-text-fill: red;
 }
 
-.sign_up_lbl {
+.link_lbl {
+    -fx-background-color: transparent;
     -fx-text-fill: #87ceeb;
     -fx-underline: true;
     -fx-font-size: 14px;
     -fx-cursor: hand;
 }
 
-.sign_up_lbl:hover {
+.link_lbl:hover {
     -fx-text-fill: blue;
 }

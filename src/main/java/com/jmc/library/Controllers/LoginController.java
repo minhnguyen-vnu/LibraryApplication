@@ -5,6 +5,7 @@ import com.jmc.library.Models.Model;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.text.TextFlow;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -19,8 +20,9 @@ public class LoginController implements Initializable {
     public PasswordField password_fld;
     public Button login_btn;
     public Label error_lbl;
-    public Label signup_btn;
+    public Label signup_lbl;
     public Button register;
+    public TextFlow welcome_text_txt_flw;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -33,7 +35,7 @@ public class LoginController implements Initializable {
 
     void addListener(){
         login_btn.setOnAction(event -> login());
-        signup_btn.setOnMouseClicked(mouseEvent -> onSignUp());
+        signup_lbl.setOnMouseClicked(mouseEvent -> onSignUp());
     }
 
     public void login(){

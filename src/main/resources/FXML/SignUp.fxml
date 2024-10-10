@@ -1,59 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.TextFlow?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" styleClass="login_container" stylesheets="@../STYLES/Login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.SignUpController">
-    <center>
-        <AnchorPane prefHeight="400.0" prefWidth="500.0" styleClass="login_form_container" stylesheets="@../STYLES/Login.css" BorderPane.alignment="CENTER">
-           <children>
-               <Label layoutX="71.0" layoutY="43.0" text="Account type" textFill="#92999e" AnchorPane.bottomAnchor="338.0" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="43.0" />
-               <Label layoutX="57.0" layoutY="121.0" text="Username" AnchorPane.bottomAnchor="263.0" AnchorPane.leftAnchor="49.0" AnchorPane.rightAnchor="268.0" AnchorPane.topAnchor="117.0">
-                   <font>
-                       <Font name="System Bold" size="14.0" />
-                   </font>
-               </Label>
-               <Label layoutX="59.0" layoutY="175.0" prefHeight="20.0" prefWidth="73.0" text="Password" AnchorPane.bottomAnchor="205.0" AnchorPane.leftAnchor="49.0" AnchorPane.rightAnchor="317.0" AnchorPane.topAnchor="175.0">
-                   <font>
-                       <Font name="System Bold" size="14.0" />
-                   </font>
-               </Label>
-               <ChoiceBox fx:id="acc_selector" layoutX="186.0" layoutY="39.0" maxHeight="20.0" maxWidth="100.0" prefHeight="20.0" prefWidth="100.0" styleClass="acc_selector" stylesheets="@../STYLES/Login.css" AnchorPane.bottomAnchor="334.0" AnchorPane.leftAnchor="159.0" AnchorPane.rightAnchor="141.0" AnchorPane.topAnchor="39.0" />
-               <TextField fx:id="username_su" layoutX="142.0" layoutY="113.0" promptText="Type your username here" styleClass="input_field" stylesheets="@../STYLES/Login.css" AnchorPane.bottomAnchor="256.0" AnchorPane.leftAnchor="142.0" AnchorPane.rightAnchor="109.0" AnchorPane.topAnchor="109.0" />
-               <PasswordField fx:id="password_su" layoutX="142.0" layoutY="167.0" promptText="Type your password here" styleClass="input_field" stylesheets="@../STYLES/Login.css" />
-               <Button fx:id="sign_up_btn" layoutX="161.0" layoutY="277.0" mnemonicParsing="false" text="Sign up" />
-               <Label fx:id="error_lbl" alignment="CENTER" layoutX="88.0" layoutY="321.0" styleClass="error_lbl" stylesheets="@../STYLES/Login.css" text="" />
-               <Label layoutX="14.0" layoutY="229.0" prefHeight="19.0" prefWidth="122.0" text="Confirm Password" />
-               <Label fx:id="back_lbl" layoutX="183.0" layoutY="360.0" styleClass="sign_up_lbl" text="Back to Login" />
-            <PasswordField fx:id="confirm_su" layoutX="142.0" layoutY="221.0" promptText="Confirm your password" styleClass="input_field" />
-           </children>
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/Login.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.SignUpController">
+    <children>
+        <AnchorPane prefHeight="750.0" prefWidth="650.0" styleClass="WelcomeBackGround">
+            <children>
+                <ImageView fitHeight="280.0" fitWidth="312.0" layoutX="78.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../IMAGES/LoginArt.png" />
+                    </image>
+                </ImageView>
+                <TextFlow fx:id="welcome_text_txt_flw" layoutX="39.0" layoutY="248.0" prefHeight="124.0" prefWidth="326.0" styleClass="WelcomeText" />
+            </children>
         </AnchorPane>
-    </center>
-    <left>
-        <AnchorPane prefHeight="400.0" prefWidth="261.0" styleClass="login_logo_container" stylesheets="@../STYLES/Login.css" BorderPane.alignment="CENTER">
-           <children>
-               <Text layoutX="72.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wellcome to" AnchorPane.bottomAnchor="245.0" AnchorPane.leftAnchor="61.0" AnchorPane.rightAnchor="60.91015625" AnchorPane.topAnchor="120.0" />
-               <Text layoutX="65.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Anchor Library" AnchorPane.bottomAnchor="118.00390625" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="45.34765625" AnchorPane.topAnchor="248.55078125" />
-               <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="100.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="160.0">
-                  <image>
-                      <Image url="@../IMAGES/Icon.png" />
-                  </image>
-               </ImageView>
-           </children>
-        </AnchorPane>
-    </left>
-</BorderPane>
+        <AnchorPane prefHeight="750.0" prefWidth="1100.0" styleClass="MainBackground">
+            <children>
+                <HBox alignment="CENTER" layoutX="261.0" layoutY="121.0">
+                    <children>
+                        <Label styleClass="tile" text="TY VE BO KHAC NGHI" />
+                    </children>
+                </HBox>
+                <TextField fx:id="username_su" layoutX="261.0" layoutY="216.0" styleClass="input_field" />
+                <Pane layoutX="295.0" layoutY="207.0" styleClass="instructions_panel">
+                    <children>
+                        <HBox>
+                            <children>
+                                <Label styleClass="instructions_lbl" text="Username" />
+                                <Label styleClass="redStar" text=" *" textFill="#ff0101" />
+                            </children>
+                        </HBox>
+                    </children>
+                </Pane>
+                <PasswordField fx:id="password_su" layoutX="261.0" layoutY="311.0" styleClass="input_field" />
+                <Pane layoutX="295.0" layoutY="300.0" styleClass="instructions_panel">
+                    <children>
+                        <HBox>
+                            <children>
+                                <Label styleClass="instructions_lbl" text="Password" />
+                                <Label styleClass="redStar" text=" *" textFill="#ff0101" />
+                            </children>
+                        </HBox>
+                    </children>
+                </Pane>
+                <Button fx:id="sign_up_btn" layoutX="261.0" layoutY="471.0" mnemonicParsing="false" styleClass="LoginButton" text="Sign Up" />
+                <Label fx:id="error_lbl" layoutX="261.0" layoutY="561.0" styleClass="error_lbl" />
+            <PasswordField fx:id="confirm_su" layoutX="261.0" layoutY="392.0" styleClass="input_field" />
+            <Pane layoutX="295.0" layoutY="381.0" styleClass="instructions_panel">
+               <children>
+                  <HBox>
+                     <children>
+                        <Label styleClass="instructions_lbl" text="Confirm password" />
+                        <Label styleClass="redStar" text=" *" textFill="#ff0101" />
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+            <Label fx:id="back_lbl" layoutX="586.0" layoutY="568.0" styleClass="link_lbl" text="Back to Log In" />
+            </children></AnchorPane>
+    </children>
+</HBox>

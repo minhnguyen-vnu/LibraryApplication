@@ -22,15 +22,13 @@
     -fx-font-family: "Calibri", sans-serif;
     -fx-background-color: transparent;
     -fx-text-fill: #ffffff;
-    -fx-font-size: 15;
+    -fx-font-size: 20;
     -fx-alignment: CENTER-LEFT;
     -fx-pref-width: 200;
-    -fx-pref-height: 30;
+    -fx-pref-height: 35;
 }
 
 .MenuButton .image-view {
-    -fx-fit-to-height: 15;
-    -fx-fit-to-width: 15;
     -fx-blend-mode: src-over;
     -fx-effect: innershadow(gaussian, #ffffff, 20, 10, 0, 0);
 }

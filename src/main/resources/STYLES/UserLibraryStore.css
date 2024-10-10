@@ -6,20 +6,7 @@
     /*-fx-border-radius: 15;*/
 }
 
-/**/
-.MainTile {
-    -fx-font-weight: bold;
-    -fx-font-style: italic;
-    -fx-text-fill: linear-gradient(from 10% 10% to 90% 100%, #4c72ef, #ef0923);
-    -fx-font-size: 50;
-}
 
-.SubTile {
-    -fx-font-weight: bold;
-    -fx-font-style: italic;
-    -fx-text-fill: #e4a155;
-    -fx-font-size: 20;
-}
 
 /**/
 .SearchBarContainer {

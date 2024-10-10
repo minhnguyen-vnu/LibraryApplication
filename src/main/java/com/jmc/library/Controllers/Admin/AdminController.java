@@ -35,6 +35,7 @@ public class AdminController implements Initializable {
     public Label account_name_lbl;
     public ImageView account_avatar_img;
     public FontAwesomeIconView add_book_btn;
+    public Button log_out_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

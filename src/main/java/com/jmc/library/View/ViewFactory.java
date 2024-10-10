@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ViewFactory {
-    private BorderPane logInView;
-    private BorderPane signUpView;
+    private HBox logInView;
+    private HBox signUpView;
     private HBox userLibrary;
     private HBox userHiredBook;
     private final StringProperty selectedAuthenticatonMode;
@@ -33,7 +33,7 @@ public class ViewFactory {
         return selectedUserMode;
     }
 
-    public BorderPane getSignUpView() {
+    public HBox getSignUpView() {
         if (signUpView == null) {
             try {
                 signUpView = new FXMLLoader(getClass().getResource("/FXML/SignUp.fxml")).load();
@@ -44,7 +44,7 @@ public class ViewFactory {
         return signUpView;
     }
 
-    public BorderPane getLogInView() {
+    public HBox getLogInView() {
         if (logInView == null) {
             try {
                 logInView = new FXMLLoader(getClass().getResource("/FXML/Login.fxml")).load();

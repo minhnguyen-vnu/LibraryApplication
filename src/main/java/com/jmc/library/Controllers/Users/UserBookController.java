@@ -32,6 +32,7 @@ public class UserBookController extends User implements Initializable {
     public Button go_to_store_btn;
     public Button go_to_library_btn;
     public ImageView account_avatar_img;
+    public Button log_out_btn;
 
     public UserBookController() {
         super(null, null);

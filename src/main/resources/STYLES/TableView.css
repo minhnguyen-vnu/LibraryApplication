@@ -11,12 +11,13 @@
     -fx-background-color: #ffffff;
     -fx-opacity: 0.8;
     -fx-background-insets: 0;
+    -fx-pref-height: 40;
 }
 
 .TableListView .column-header .label {
     -fx-text-fill: #1b1a1a;
     -fx-font-weight: bold;
-    -fx-font-size: 12;
+    -fx-font-size: 15;
     -fx-alignment: CENTER;
     -fx-background-color: transparent;
 

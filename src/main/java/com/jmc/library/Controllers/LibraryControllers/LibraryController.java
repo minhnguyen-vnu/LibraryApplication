@@ -37,6 +37,7 @@ public class LibraryController implements Initializable {
     public ObservableList<BookInfo> bookList;
     public Button search_btn;
     public Button go_to_user_library_btn;
+    public Button log_out_btn;
     private String username, usertoken;
     private ObservableList<UserBookInfo> userList;
 
