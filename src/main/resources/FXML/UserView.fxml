@@ -8,6 +8,6 @@
 
 <BorderPane fx:id="user_parent" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            prefHeight="757.0" prefWidth="1134.0">
+            prefHeight="750.0" prefWidth="1300.0">
 
 </BorderPane>

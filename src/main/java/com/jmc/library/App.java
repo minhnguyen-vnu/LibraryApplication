@@ -12,7 +12,8 @@ import java.sql.SQLOutput;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Model.getInstance().getViewFactory().showAuthenticationWindow();
+        Model.getInstance().getViewFactory().showUserWindow();
+        Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
     }
 
     public static void main(String[] args) {
