@@ -13,7 +13,6 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Model.getInstance().getViewFactory().showAuthenticationWindow();
-
     }
 
     public static void main(String[] args) {

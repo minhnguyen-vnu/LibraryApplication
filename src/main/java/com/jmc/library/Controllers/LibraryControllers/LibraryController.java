@@ -4,6 +4,7 @@ import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.Users.User;
 import com.jmc.library.DBUtlis;
+import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -53,6 +54,8 @@ public class LibraryController implements Initializable {
     private void setButtonListener(){
         search_btn.setOnAction(actionEvent -> searchBook(search_fld.getText()));
         go_to_user_library_btn.setOnAction(actionEvent -> {
+            System.out.println(LibraryModel.getInstance().getUserList());
+            System.out.println(System.identityHashCode(LibraryModel.getInstance().getUserList()));
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
         });
     }
@@ -88,6 +91,8 @@ public class LibraryController implements Initializable {
                                 "where bookId = ?;", book.getBookId());
                         book.setQuantityInStock(book.getQuantityInStock() - 1);
                         getTableView().refresh();
+                        UserBookInfo userBookInfo = new UserBookInfo(book.getBookName(), book.getAuthorName(),  book.getBookId(), LocalDate.now(), LocalDate.of(2025, 10, 1), 100);
+                        addBookforUser(userBookInfo);
                     });
                 }
             }
@@ -144,7 +149,6 @@ public class LibraryController implements Initializable {
     }
 
     private void searchBookById(String text) {
-
         if(text.contains(" ")){
             return;
         }
@@ -162,8 +166,10 @@ public class LibraryController implements Initializable {
     }
 
     public void receiveRequest(String username, String usertoken, ObservableList<UserBookInfo> userList) {
-        this.username = username;
-        this.usertoken = usertoken;
-        this.userList = userList;
+        LibraryModel.getInstance().setUser(username, usertoken, userList);
+    }
+
+    private void addBookforUser(UserBookInfo addedBook){
+        LibraryModel.getInstance().getUserList().add(addedBook);
     }
 }

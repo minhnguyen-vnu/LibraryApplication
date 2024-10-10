@@ -43,9 +43,20 @@ public class AdminController implements Initializable {
         addAdminItemsListener();
         store_tb.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png").toExternalForm()).getImage());
-        account_name_lbl.setText("NguyenTungLamVoDichThienHaDuyNgaDocTon");
+        account_name_lbl.setText("Nguyen");
 
         adminItems.add(new AdminTableItiem(new CheckBox(), "/IMAGES/actionIcon.png", "The Great Gatsby", "1", "2021-10-10", "2021-10-20", "10.00", "/IMAGES/avatar.png"));
+        adminItems.add(new AdminTableItiem(new CheckBox(), "/IMAGES/actionIcon.png", "The Great Gatsby", "1", "2021-10-10", "2021-10-20", "10.00", "/IMAGES/avatar.png"));
+        adminItems.add(new AdminTableItiem(new CheckBox(), "/IMAGES/actionIcon.png", "The Great Gatsby", "1", "2021-10-10", "2021-10-20", "10.00", "/IMAGES/avatar.png"));
+        adminItems.add(new AdminTableItiem(new CheckBox(), "/IMAGES/actionIcon.png", "The Great Gatsby", "1", "2021-10-10", "2021-10-20", "10.00", "/IMAGES/avatar.png"));
+        adminItems.add(new AdminTableItiem(new CheckBox(), "/IMAGES/actionIcon.png", "The Great Gatsby", "1", "2021-10-10", "2021-10-20", "10.00", "/IMAGES/avatar.png"));
+        adminItems.add(new AdminTableItiem(new CheckBox(), "/IMAGES/actionIcon.png", "The Great Gatsby", "1", "2021-10-10", "2021-10-20", "10.00", "/IMAGES/avatar.png"));
+        adminItems.add(new AdminTableItiem(new CheckBox(), "/IMAGES/actionIcon.png", "The Great Gatsby", "1", "2021-10-10", "2021-10-20", "10.00", "/IMAGES/avatar.png"));
+        adminItems.add(new AdminTableItiem(new CheckBox(), "/IMAGES/actionIcon.png", "The Great Gatsby", "1", "2021-10-10", "2021-10-20", "10.00", "/IMAGES/avatar.png"));
+        adminItems.add(new AdminTableItiem(new CheckBox(), "/IMAGES/actionIcon.png", "The Great Gatsby", "1", "2021-10-10", "2021-10-20", "10.00", "/IMAGES/avatar.png"));
+        adminItems.add(new AdminTableItiem(new CheckBox(), "/IMAGES/actionIcon.png", "The Great Gatsby", "1", "2021-10-10", "2021-10-20", "10.00", "/IMAGES/avatar.png"));
+        adminItems.add(new AdminTableItiem(new CheckBox(), "/IMAGES/actionIcon.png", "The Great Gatsby", "1", "2021-10-10", "2021-10-20", "10.00", "/IMAGES/avatar.png"));
+
         search_btn.setOnAction(actionEvent -> searchAdminItem(search_fld.getText()));
     }
 
