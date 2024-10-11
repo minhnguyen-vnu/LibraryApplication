@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ChoiceBox?>
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.LibraryControllers.LibraryController">
     <children>
         <VBox prefHeight="200.0" prefWidth="200.0">
@@ -138,6 +139,39 @@
                                 <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="20" />
                             </graphic>
                         </Button>
+                        <HBox layoutX="42.0" layoutY="14.0">
+                            <children>
+                                <Button fx:id="go_to_dashboard_btn" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="IconButton">
+                                    <graphic>
+                                        <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../IMAGES/GoBackIcon.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Label prefHeight="42.0" styleClass="Title" text="Hired book list">
+                                    <HBox.margin>
+                                        <Insets left="20.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="409.0" layoutY="17.0" styleClass="ShowRow">
+                            <children>
+                                <Label text="Show ">
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                                <ChoiceBox fx:id="num_row_shown" />
+                                <Label text=" rows">
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
                     </children>
                 </AnchorPane>
             </children>

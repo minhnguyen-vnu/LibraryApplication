@@ -44,6 +44,11 @@ public class LibraryController implements Initializable {
     public Label username_lbl;
     public ImageView account_avatar_img;
     public TableColumn<BookInfo,CheckBox> add_to_cart_tb_cl;
+    /**
+     * The number of rows that will be shown in the table
+     */
+    public ChoiceBox num_row_shown;
+    public Button go_to_dashboard_btn;
     private String username, usertoken;
     private ObservableList<UserBookInfo> userList;
 

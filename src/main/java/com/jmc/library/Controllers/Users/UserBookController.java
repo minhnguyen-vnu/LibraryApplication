@@ -35,6 +35,11 @@ public class UserBookController extends User implements Initializable {
     public Button go_to_library_btn;
     public ImageView account_avatar_img;
     public Button log_out_btn;
+    public Button go_to_dashboard_btn;
+    /**
+     * The number of rows that will be shown in the table
+     */
+    public ChoiceBox num_row_shown;
 
     public UserBookController() {
         super(null, null);
