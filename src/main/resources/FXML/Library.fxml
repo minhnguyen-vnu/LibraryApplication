@@ -122,6 +122,7 @@
                            <TableColumn fx:id="least_price_tb_cl" prefWidth="126.0" text="Least Price" />
                            <TableColumn fx:id="published_date_tb_cl" prefWidth="113.0" text="Published Date" />
                            <TableColumn fx:id="hire_tb_cl" prefWidth="75.0" text="Hire" />
+                        <TableColumn fx:id="add_to_cart_tb_cl" prefWidth="75.0" text="Add to cart" />
                         </columns>
                      <stylesheets>
                         <URL value="@../STYLES/TableView.css" />

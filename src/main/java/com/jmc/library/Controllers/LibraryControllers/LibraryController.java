@@ -2,6 +2,7 @@ package com.jmc.library.Controllers.LibraryControllers;
 
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.UserBookInfo;
+import com.jmc.library.Controllers.Admin.AdminTableItiem;
 import com.jmc.library.Controllers.Users.User;
 import com.jmc.library.DBUtlis;
 import com.jmc.library.Models.LibraryModel;
@@ -13,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.util.Callback;
 
 import java.lang.constant.ModuleDesc;
 import java.net.URL;
@@ -39,6 +41,9 @@ public class LibraryController implements Initializable {
     public Button search_btn;
     public Button go_to_user_library_btn;
     public Button log_out_btn;
+    public Label username_lbl;
+    public ImageView account_avatar_img;
+    public TableColumn<BookInfo,CheckBox> add_to_cart_tb_cl;
     private String username, usertoken;
     private ObservableList<UserBookInfo> userList;
 
@@ -71,6 +76,7 @@ public class LibraryController implements Initializable {
         quantity_tb_cl.setCellValueFactory(new PropertyValueFactory<>("quantityInStock"));
         least_price_tb_cl.setCellValueFactory(new PropertyValueFactory<>("leastPrice"));
         published_date_tb_cl.setCellValueFactory(new PropertyValueFactory<>("publishedDate"));
+        add_to_cart_tb_cl.setCellValueFactory(new PropertyValueFactory<>("add_to_cart"));
     }
 
     private void formatting() {
@@ -96,6 +102,19 @@ public class LibraryController implements Initializable {
                     });
                 }
             }
+        });
+        add_to_cart_tb_cl.setCellFactory(param->new TableCell<>(){
+            private CheckBox checkBox = new CheckBox();
+            @Override
+            protected void updateItem(CheckBox item, boolean empty) {
+                super.updateItem(item, empty);
+                if(empty){
+                    setGraphic(null);
+                } else {
+                    setGraphic(checkBox);
+                }
+            }
+
         });
     }
 
