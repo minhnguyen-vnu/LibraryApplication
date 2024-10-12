@@ -43,6 +43,50 @@
 }
 /*Style button for Main scene*/
 
+.Title {
+    -fx-font-size: 30;
+    -fx-text-fill: #000000;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-font-weight: bold;
+}
+
+.ShowRow {
+    -fx-background-color: transparent;
+}
+
+.ShowRow .label {
+    -fx-font-size: 20;
+    -fx-text-fill: #000000;
+    -fx-font-family: "Calibri", sans-serif;
+}
+
+.ShowRow .choice-box {
+    -fx-font-size: 20;
+    -fx-text-fill: #000000;
+    -fx-background-color: #ffffff;
+}
+
+.ShowRow .arrow {
+    -fx-font-size: 15;
+}
+
+#check-box-menu-popup {
+    -fx-background-color: #ffffff;
+}
+
+.IconButton {
+    -fx-background-color: transparent;
+    -fx-pref-height: 40;
+    -fx-pref-width: 40;
+}
+
+.IconButton .image-view {
+}
+
+.IconButton:hover .image-view {
+    -fx-blend-mode: difference;
+}
+
 .MainButton {
     -fx-font-family: "Calibri", sans-serif;
     -fx-background-color: #6943CE;

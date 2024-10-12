@@ -95,6 +95,23 @@ public class ViewFactory {
         fxmlLoader.setController(user);
         createStage(fxmlLoader);
     }
+    /**
+     * this method is not complete
+     * it is just a placeholder
+     */
+    public void showAdminWindow() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Admin.fxml"));
+        createStage(fxmlLoader);
+    }
+
+    /**
+     * this method is not complete
+     * it is just a placeholder
+     */
+    public void showUserDashboard() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/UserDashboard.fxml"));
+        createStage(fxmlLoader);
+    }
 
     public void showAdminLibrary() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Admin.fxml"));
