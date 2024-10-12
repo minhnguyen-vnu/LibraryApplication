@@ -9,6 +9,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/Login.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.SignUpController">
@@ -25,11 +27,7 @@
         </AnchorPane>
         <AnchorPane prefHeight="750.0" prefWidth="1100.0" styleClass="MainBackground">
             <children>
-                <HBox alignment="CENTER" layoutX="261.0" layoutY="121.0">
-                    <children>
-                        <Label styleClass="tile" text="TY VE BO KHAC NGHI" />
-                    </children>
-                </HBox>
+                <HBox alignment="CENTER" layoutX="261.0" layoutY="121.0" />
                 <TextField fx:id="username_su" layoutX="261.0" layoutY="216.0" styleClass="input_field" />
                 <Pane layoutX="295.0" layoutY="207.0" styleClass="instructions_panel">
                     <children>
@@ -53,7 +51,7 @@
                     </children>
                 </Pane>
                 <Button fx:id="sign_up_btn" layoutX="261.0" layoutY="471.0" mnemonicParsing="false" styleClass="LoginButton" text="Sign Up" />
-                <Label fx:id="error_lbl" layoutX="261.0" layoutY="561.0" styleClass="error_lbl" />
+                <Label fx:id="error_lbl" layoutX="261.0" layoutY="561.0" prefHeight="17.0" prefWidth="400.0" styleClass="error_lbl" />
             <PasswordField fx:id="confirm_su" layoutX="261.0" layoutY="392.0" styleClass="input_field" />
             <Pane layoutX="295.0" layoutY="381.0" styleClass="instructions_panel">
                <children>
@@ -65,7 +63,13 @@
                   </HBox>
                </children>
             </Pane>
-            <Label fx:id="back_lbl" layoutX="586.0" layoutY="568.0" styleClass="link_lbl" text="Back to Log In" />
+            <Label fx:id="back_lbl" layoutX="488.0" layoutY="598.0" styleClass="link_lbl" text="Back to Log In" />
+            <Text layoutX="324.0" layoutY="613.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already have the account?">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Text>
+                  <Label layoutX="389.0" layoutY="121.0" styleClass="tile" text="Account Register" />
             </children></AnchorPane>
     </children>
 </HBox>

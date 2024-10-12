@@ -35,32 +35,23 @@ public class UserBookController extends User implements Initializable {
     public Button go_to_library_btn;
     public ImageView account_avatar_img;
     public Button log_out_btn;
-
-    public UserBookController() {
-        super(null, null);
-    }
-
-    public UserBookController(String username, String token) {
-        super(username, token);
-    }
+    public ObservableList<UserBookInfo> bookList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        bookList = LibraryModel.getInstance().getUser().getBookList();
+
         addBinding();
         priceFormating();
         setButtonListener();
 
-        account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png").toExternalForm()).getImage());
-        bookList.add(new UserBookInfo("Java Programing", "Scott", 1, LocalDate.now(), LocalDate.of(2024, 6, 7), 13));
-        bookList.add(new UserBookInfo("C++ Programing", "Scoot", 2, LocalDate.now(), LocalDate.of(2024, 1, 1), 15));
 
-        System.out.println(1);
+        account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png").toExternalForm()).getImage());
     }
 
     private void setButtonListener() {
         search_btn.setOnAction(actionEvent -> searchBookByAuthor(search_fld.getText()));
         go_to_store_btn.setOnAction(actionEvent -> {
-            LibraryModel.getInstance().getLibraryController().receiveRequest(getUsername(), getToken(), getBookList());
             Model.getInstance().getViewFactory().getSelectedUserMode().set("Store");
         });
     }

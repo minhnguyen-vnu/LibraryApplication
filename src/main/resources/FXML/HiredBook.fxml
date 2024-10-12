@@ -114,11 +114,11 @@
                     <children>
                         <TableView fx:id="store_tb" cacheShape="false" centerShape="false" layoutX="50.0" layoutY="70.0" prefHeight="550.0" prefWidth="960.0" scaleShape="false" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
                             <columns>
-                                <TableColumn fx:id="book_name_tb_cl" prefWidth="150.0" text="name" />
-                        <TableColumn fx:id="author_tb_cl" prefWidth="150.0" text="Author" />
-                                <TableColumn fx:id="book_id_tb_cl" prefWidth="120.0" text="ID" />
-                                <TableColumn fx:id="picked_day_tb_cl" prefWidth="120.0" text="Picked day" />
-                                <TableColumn fx:id="return_day_tb_cl" maxWidth="187.199951171875" minWidth="67.60003662109375" prefWidth="120.0" text="Return day" />
+                                <TableColumn fx:id="book_name_tb_cl" prefWidth="150.0" text="Book's name" />
+                        <TableColumn fx:id="author_tb_cl" prefWidth="150.0" text="Author's name" />
+                                <TableColumn fx:id="book_id_tb_cl" prefWidth="120.0" text="Book's ID" />
+                                <TableColumn fx:id="picked_day_tb_cl" prefWidth="120.0" text="Picked Date" />
+                                <TableColumn fx:id="return_day_tb_cl" maxWidth="187.199951171875" minWidth="67.60003662109375" prefWidth="120.0" text="Return Date" />
                                 <TableColumn fx:id="total_cost_tb_cl" prefWidth="150.0" text="Cost" />
                             </columns>
                      <columnResizePolicy>
