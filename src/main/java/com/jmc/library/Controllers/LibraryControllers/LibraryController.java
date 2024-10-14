@@ -21,6 +21,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -50,7 +51,7 @@ public class LibraryController implements Initializable {
     public ChoiceBox num_row_shown;
     public Button go_to_dashboard_btn;
     private String username, usertoken;
-    private ObservableList<UserBookInfo> userList;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,15 +65,12 @@ public class LibraryController implements Initializable {
     private void setButtonListener(){
         search_btn.setOnAction(actionEvent -> searchBook(search_fld.getText()));
         go_to_user_library_btn.setOnAction(actionEvent -> {
-            System.out.println(LibraryModel.getInstance().getUserList());
-            System.out.println(System.identityHashCode(LibraryModel.getInstance().getUserList()));
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
         });
     }
 
     private void addBinding() {
         bookList = FXCollections.observableArrayList();
-        userList = FXCollections.observableArrayList();
         store_tb.setItems(bookList);
 
         book_id_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookId"));
@@ -97,12 +95,30 @@ public class LibraryController implements Initializable {
                     setGraphic(hireButton);
                     hireButton.setOnAction(event -> {
                         BookInfo book = getTableView().getItems().get(getIndex());
+                        try {
+                            ResultSet resultSet = DBUtlis.executeQuery("select\n" +
+                                    "    username,\n" +
+                                    "    bookId\n" +
+                                    "from userRequest\n" +
+                                    "where username = ? and bookId = ?;", LibraryModel.getInstance().getUser().getUsername(), book.getBookId());
+                            if (resultSet.next()){
+                                System.out.println("You already have this book");
+                                return;
+                            }
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
                         DBUtlis.executeUpdate("update bookStore\n" +
                                 "set quantityInStock = quantityInStock - 1\n" +
                                 "where bookId = ?;", book.getBookId());
                         book.setQuantityInStock(book.getQuantityInStock() - 1);
+                        LocalDate expiryDate = LocalDate.of(2024, 12, 19);
+                        long daysBetween = ChronoUnit.DAYS.between(LocalDate.now(), expiryDate);
+                        DBUtlis.executeUpdate("insert into userRequest\n" +
+                                "values(?, ?, ?, ?, ?, ?); ", book.getBookId(), book.getBookName(), LibraryModel.getInstance().getUser().getUsername(),
+                                LocalDate.now(), expiryDate, book.getLeastPrice() * daysBetween);
                         getTableView().refresh();
-                        UserBookInfo userBookInfo = new UserBookInfo(book.getBookName(), book.getAuthorName(),  book.getBookId(), LocalDate.now(), LocalDate.of(2025, 10, 1), 100);
+                        UserBookInfo userBookInfo = new UserBookInfo(book.getBookName(), book.getAuthorName(),  book.getBookId(), LocalDate.now(), expiryDate, book.getLeastPrice() * daysBetween);
                         addBookforUser(userBookInfo);
                     });
                 }
@@ -189,11 +205,7 @@ public class LibraryController implements Initializable {
         });
     }
 
-    public void receiveRequest(String username, String usertoken, ObservableList<UserBookInfo> userList) {
-        LibraryModel.getInstance().setUser(username, usertoken, userList);
-    }
-
     private void addBookforUser(UserBookInfo addedBook){
-        LibraryModel.getInstance().getUserList().add(addedBook);
+        LibraryModel.getInstance().getUser().getBookList().add(addedBook);
     }
 }
