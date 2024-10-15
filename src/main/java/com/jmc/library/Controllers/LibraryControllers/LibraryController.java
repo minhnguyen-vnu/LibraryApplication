@@ -1,72 +1,39 @@
 package com.jmc.library.Controllers.LibraryControllers;
 
 import com.jmc.library.Assets.BookInfo;
-import com.jmc.library.Assets.UserBookInfo;
-import com.jmc.library.Controllers.Admin.AdminTableItiem;
-import com.jmc.library.Controllers.Users.User;
 import com.jmc.library.DBUtlis;
-import com.jmc.library.Models.LibraryModel;
-import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.util.Callback;
 
-import java.lang.constant.ModuleDesc;
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-
-public class LibraryController implements Initializable {
-    public Button go_to_setting_btn;
+public class LibraryController {
     public TextField search_fld;
-    public ImageView search_bar_btn;
     public TableColumn<BookInfo, Integer> book_id_tb_cl;
     public TableColumn<BookInfo, String> book_name_tb_cl;
     public TableColumn<BookInfo, String> author_tb_cl;
     public TableColumn<BookInfo, Integer> quantity_tb_cl;
     public TableColumn<BookInfo, Double> least_price_tb_cl;
-    public TableColumn<BookInfo, Button> hire_tb_cl;
     public TableColumn<BookInfo, LocalDate> published_date_tb_cl;
     public TableView<BookInfo> store_tb;
     public ObservableList<BookInfo> bookList;
     public Button search_btn;
-    public Button go_to_user_library_btn;
-    public Button log_out_btn;
-    public Label username_lbl;
-    public ImageView account_avatar_img;
-    public TableColumn<BookInfo, Boolean> add_to_cart_tb_cl;
-    public ChoiceBox num_row_shown;
-    public Button go_to_dashboard_btn;
-    private String username, usertoken;
 
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        setButtonListener();
-        addBinding();
-        formatting();
-        showLibrary();
-        addBookListListener();
-    }
-
-    private void setButtonListener(){
+    protected void initialAction(){
         search_btn.setOnAction(actionEvent -> searchBook(search_fld.getText()));
-        go_to_user_library_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
-        });
     }
 
-    private void addBinding() {
+    protected void addBinding(){
         bookList = FXCollections.observableArrayList();
         store_tb.setItems(bookList);
 
@@ -76,83 +43,9 @@ public class LibraryController implements Initializable {
         quantity_tb_cl.setCellValueFactory(new PropertyValueFactory<>("quantityInStock"));
         least_price_tb_cl.setCellValueFactory(new PropertyValueFactory<>("leastPrice"));
         published_date_tb_cl.setCellValueFactory(new PropertyValueFactory<>("publishedDate"));
-        add_to_cart_tb_cl.setCellValueFactory(new PropertyValueFactory<>("inCart"));
     }
 
-    private void formatting() {
-        hire_tb_cl.setCellFactory(param -> new TableCell<>() {
-            private final Button hireButton = new Button("Hire");
-
-            @Override
-            protected void updateItem(Button item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(hireButton);
-                    hireButton.setOnAction(event -> {
-                        BookInfo book = getTableView().getItems().get(getIndex());
-                        try {
-                            ResultSet resultSet = DBUtlis.executeQuery("select\n" +
-                                    "    username,\n" +
-                                    "    bookId\n" +
-                                    "from userRequest\n" +
-                                    "where username = ? and bookId = ?;", LibraryModel.getInstance().getUser().getUsername(), book.getBookId());
-                            if (resultSet.next()){
-                                System.out.println("You already have this book");
-                                return;
-                            }
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
-                        DBUtlis.executeUpdate("update bookStore\n" +
-                                "set quantityInStock = quantityInStock - 1\n" +
-                                "where bookId = ?;", book.getBookId());
-                        book.setQuantityInStock(book.getQuantityInStock() - 1);
-                        LocalDate expiryDate = LocalDate.of(2024, 12, 19);
-                        long daysBetween = ChronoUnit.DAYS.between(LocalDate.now(), expiryDate);
-                        DBUtlis.executeUpdate("insert into userRequest\n" +
-                                "values(?, ?, ?, ?, ?, ?); ", book.getBookId(), book.getBookName(), LibraryModel.getInstance().getUser().getUsername(),
-                                LocalDate.now(), expiryDate, book.getLeastPrice() * daysBetween);
-                        getTableView().refresh();
-                        UserBookInfo userBookInfo = new UserBookInfo(book.getBookName(), book.getAuthorName(),  book.getBookId(), LocalDate.now(), expiryDate, book.getLeastPrice() * daysBetween);
-                        addBookforUser(userBookInfo);
-                    });
-                }
-            }
-        });
-        add_to_cart_tb_cl.setCellFactory(param -> new TableCell<BookInfo, Boolean>() {
-            private final CheckBox checkBox = new CheckBox("Cart");
-
-            @Override
-            protected void updateItem(Boolean item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    BookInfo book = getTableView().getItems().get(getIndex());
-//                    checkBox.setSelected(book.isInCart());
-                    checkBox.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-                        book.setInCart(isNowSelected);
-//                        System.out.println(isNowSelected);
-                    });
-                    setGraphic(checkBox);
-                }
-            }
-        });
-    }
-
-    private void addBookListListener() {
-        bookList.addListener((ListChangeListener<BookInfo>) change -> {
-            while (change.next()) {
-                if (change.wasAdded() || change.wasRemoved()) {
-                    store_tb.refresh();
-                }
-            }
-        });
-    }
-
-    private void showLibrary() {
+    protected void showLibrary() {
         bookList.clear();
         store_tb.setItems(bookList);
         try {
@@ -191,6 +84,7 @@ public class LibraryController implements Initializable {
         });
     }
 
+
     private void searchBookById(String text) {
         if(text.contains(" ")){
             return;
@@ -198,17 +92,13 @@ public class LibraryController implements Initializable {
 
         int bookId = Integer.parseInt(text);
         ObservableList<BookInfo> filteredList = bookList.stream()
-                    .filter(book -> book.getBookId() == bookId)
-                    .collect(Collectors.toCollection(FXCollections::observableArrayList));
+                .filter(book -> book.getBookId() == bookId)
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
         store_tb.setItems(filteredList);
         store_tb.getItems().addListener((ListChangeListener<BookInfo>) change -> {
             if (!change.next() || change.wasAdded() || change.wasRemoved()) {
                 filteredList.clear();
             }
         });
-    }
-
-    private void addBookforUser(UserBookInfo addedBook){
-        LibraryModel.getInstance().getUser().getBookList().add(addedBook);
     }
 }

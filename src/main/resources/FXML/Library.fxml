@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.ChoiceBox?>
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.LibraryControllers.LibraryController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.LibraryControllers.UserLibraryController">
     <children>
         <VBox prefHeight="200.0" prefWidth="200.0">
             <children>

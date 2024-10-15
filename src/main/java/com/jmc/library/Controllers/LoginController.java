@@ -1,6 +1,5 @@
 package com.jmc.library.Controllers;
 
-import com.jmc.library.Controllers.LibraryControllers.LibraryController;
 import com.jmc.library.DBUtlis;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
@@ -11,8 +10,6 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;

@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -62,11 +61,6 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
-    public void showUserLibrary() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Library.fxml"));
-        createStage(fxmlLoader);
-    }
-
     public HBox getUserLibrary() {
         if (userLibrary == null) {
             try {
@@ -95,26 +89,19 @@ public class ViewFactory {
         fxmlLoader.setController(user);
         createStage(fxmlLoader);
     }
-    /**
-     * this method is not complete
-     * it is just a placeholder
-     */
+
     public void showAdminWindow() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Admin.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/AdminLibrary.fxml"));
         createStage(fxmlLoader);
     }
 
-    /**
-     * this method is not complete
-     * it is just a placeholder
-     */
     public void showUserDashboard() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/UserDashboard.fxml"));
         createStage(fxmlLoader);
     }
 
     public void showAdminLibrary() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Admin.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/AdminLibrary.fxml"));
         createStage(fxmlLoader);
     }
 
