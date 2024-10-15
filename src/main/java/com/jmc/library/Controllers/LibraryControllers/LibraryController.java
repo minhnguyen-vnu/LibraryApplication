@@ -44,10 +44,7 @@ public class LibraryController implements Initializable {
     public Button log_out_btn;
     public Label username_lbl;
     public ImageView account_avatar_img;
-    public TableColumn<BookInfo,CheckBox> add_to_cart_tb_cl;
-    /**
-     * The number of rows that will be shown in the table
-     */
+    public TableColumn<BookInfo, Boolean> add_to_cart_tb_cl;
     public ChoiceBox num_row_shown;
     public Button go_to_dashboard_btn;
     private String username, usertoken;
@@ -79,7 +76,7 @@ public class LibraryController implements Initializable {
         quantity_tb_cl.setCellValueFactory(new PropertyValueFactory<>("quantityInStock"));
         least_price_tb_cl.setCellValueFactory(new PropertyValueFactory<>("leastPrice"));
         published_date_tb_cl.setCellValueFactory(new PropertyValueFactory<>("publishedDate"));
-        add_to_cart_tb_cl.setCellValueFactory(new PropertyValueFactory<>("add_to_cart"));
+        add_to_cart_tb_cl.setCellValueFactory(new PropertyValueFactory<>("inCart"));
     }
 
     private void formatting() {
@@ -124,18 +121,24 @@ public class LibraryController implements Initializable {
                 }
             }
         });
-        add_to_cart_tb_cl.setCellFactory(param->new TableCell<>(){
-            private CheckBox checkBox = new CheckBox();
+        add_to_cart_tb_cl.setCellFactory(param -> new TableCell<BookInfo, Boolean>() {
+            private final CheckBox checkBox = new CheckBox("Cart");
+
             @Override
-            protected void updateItem(CheckBox item, boolean empty) {
+            protected void updateItem(Boolean item, boolean empty) {
                 super.updateItem(item, empty);
-                if(empty){
+                if (empty) {
                     setGraphic(null);
                 } else {
+                    BookInfo book = getTableView().getItems().get(getIndex());
+//                    checkBox.setSelected(book.isInCart());
+                    checkBox.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+                        book.setInCart(isNowSelected);
+//                        System.out.println(isNowSelected);
+                    });
                     setGraphic(checkBox);
                 }
             }
-
         });
     }
 

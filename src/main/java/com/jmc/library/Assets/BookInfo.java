@@ -9,6 +9,7 @@ public class BookInfo {
     private int quantityInStock;
     private double leastPrice;
     private LocalDate publishedDate;
+    private boolean inCart;
 
     public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate) {
         this.bookId = bookId;
@@ -66,4 +67,8 @@ public class BookInfo {
     public void setPublishedDate(LocalDate publishedDate) {
         this.publishedDate = publishedDate;
     }
+
+    public boolean isInCart() { return inCart; }
+
+    public void setInCart(boolean inCart) { this.inCart = inCart; }
 }
