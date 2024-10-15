@@ -1,0 +1,21 @@
+.BarBackground {
+    -fx-background-color: #0B0D1B;
+}
+
+.SearchField {
+    -fx-background-color: transparent;
+    -fx-border-color: #6943CE;
+    -fx-border-width: 0 0 1 0;
+
+    -fx-padding: 5;
+    -fx-font-size: 14;
+    -fx-font-family: "Arial";
+    -fx-text-fill: #000000;
+}
+
+.SearchTitle {
+    -fx-font-size: 13;
+    -fx-text-fill: #fafafa;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+}
