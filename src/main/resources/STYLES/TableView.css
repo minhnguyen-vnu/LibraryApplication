@@ -42,6 +42,10 @@
     -fx-border-color: transparent;
 }
 
+.TableListView .table-row-cell:hover{
+    -fx-background-color: #d1d1d1;
+}
+
 /* Style for the scroll bar */
 .TableListView .scroll-bar {
     -fx-pref-width: 0;
