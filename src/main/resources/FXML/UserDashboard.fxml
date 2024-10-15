@@ -15,8 +15,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserDashboardController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserDashboardController">
     <children>
         <VBox prefHeight="200.0" prefWidth="200.0">
             <children>
@@ -113,67 +114,82 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane prefHeight="650.0" prefWidth="1080.0" styleClass="MainBackground">
-               <children>
-                  <HBox layoutX="74.0" layoutY="49.0">
-                     <children>
-                        <Label text="Welcome " />
-                        <Label fx:id="welcome_username_lbl" text="Username" />
-                     </children>
-                  </HBox>
-                  <AnchorPane layoutX="20.0" layoutY="106.0" prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <ListView fx:id="hot_book_list" layoutY="52.0" prefHeight="155.0" prefWidth="200.0" />
-                        <Label layoutX="14.0" layoutY="24.0" text="Hot book" />
-                        <Label fx:id="view_all_lbl" layoutX="134.0" layoutY="24.0" text="view all" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="242.0" layoutY="113.0" prefHeight="200.0" prefWidth="400.0">
-                     <children>
-                        <ImageView fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label layoutX="14.0" layoutY="14.0" text="total read book" />
-                        <Label fx:id="total_read_book_lbl" layoutX="124.0" layoutY="100.0" text="2000+" />
-                        <HBox layoutX="50.0" layoutY="168.0">
-                           <children>
-                              <Label fx:id="new_books_read_lbl" text="200" />
-                              <Label text=" new read book" />
-                           </children>
+                    <children>
+                        <HBox layoutX="26.0" layoutY="27.0">
+                            <children>
+                                <Label styleClass="BigTitleText" stylesheets="@../STYLES/Dashboard.css" text="Welcome " />
+                                <Label fx:id="welcome_username_lbl" styleClass="BigTitleText" stylesheets="@../STYLES/Dashboard.css" text="Username" />
+                            </children>
                         </HBox>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="665.0" layoutY="113.0" prefHeight="200.0" prefWidth="400.0">
-                     <children>
-                        <ImageView fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label fx:id="total_hired_book_lbl" layoutX="133.0" layoutY="92.0" text="2000+" />
-                        <Label text="number of hired book" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="20.0" layoutY="345.0" prefHeight="280.0" prefWidth="400.0">
-                     <children>
-                        <LineChart fx:id="over_view_line_chart" layoutY="50.0" prefHeight="230.0" prefWidth="480.0">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </LineChart>
-                        <Label layoutX="14.0" layoutY="26.0" text="Over view" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="566.0" layoutY="345.0" prefHeight="280.0" prefWidth="400.0">
-                     <children>
-                        <BarChart fx:id="read_and_hired_bar_chart" layoutY="50.0" prefHeight="230.0" prefWidth="480.0">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </BarChart>
-                        <Label layoutX="14.0" layoutY="23.0" text="Total book readed, hired each month" />
-                     </children>
-                  </AnchorPane>
-               </children>
+                        <AnchorPane layoutX="21.0" layoutY="117.0" prefHeight="172.0" prefWidth="200.0" styleClass="HotBookList" stylesheets="@../STYLES/Dashboard.css">
+                            <children>
+                                <ListView fx:id="hot_book_list" layoutY="52.0" prefHeight="126.0" prefWidth="200.0" />
+                                <Label layoutX="14.0" layoutY="24.0" text="Hot book">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font></Label>
+                                <Label fx:id="view_all_lbl" layoutX="134.0" layoutY="24.0" styleClass="LinkLabel" text="view all" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="242.0" layoutY="113.0" prefHeight="200.0" prefWidth="400.0" styleClass="DarkCountBoard" stylesheets="@../STYLES/Dashboard.css">
+                            <children>
+                                <ImageView fitHeight="200.0" fitWidth="400.0" pickOnBounds="true">
+                                    <image>
+                                        <Image url="@../IMAGES/DashboardBoardBG.png" />
+                                    </image></ImageView>
+                                <Label layoutX="14.0" layoutY="14.0" styleClass="TitleText" text="total read book" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="17.0" />
+                                    </font></Label>
+                                <Label fx:id="total_read_book_lbl" layoutX="16.0" layoutY="64.0" styleClass="CountNumber" text="2000+" textFill="WHITE">
+                                    <font>
+                                        <Font size="50.0" />
+                                    </font></Label>
+                                <HBox layoutX="53.0" layoutY="166.0">
+                                    <children>
+                                        <Label fx:id="new_books_read_lbl" styleClass="SmallCountText" text="200" textFill="WHITE" />
+                                        <Label styleClass="SmallCountText" text=" new read book" textFill="WHITE" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="665.0" layoutY="113.0" prefHeight="200.0" prefWidth="400.0" styleClass="LightCountBoard" stylesheets="@../STYLES/Dashboard.css">
+                            <children>
+                                <ImageView fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../IMAGES/LightDashBoardBG.png" />
+                                    </image></ImageView>
+                                <Label fx:id="total_hired_book_lbl" layoutX="29.0" layoutY="56.0" styleClass="CountNumber" text="2000+" />
+                                <Label layoutX="22.0" layoutY="14.0" styleClass="TitleText" text="number of hired book" textFill="#716f6f" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="20.0" layoutY="345.0" prefHeight="280.0" prefWidth="400.0" styleClass="LightCountBoard" stylesheets="@../STYLES/Dashboard.css">
+                            <children>
+                                <LineChart fx:id="over_view_line_chart" layoutY="50.0" prefHeight="230.0" prefWidth="480.0" styleClass="LineChart">
+                                    <xAxis>
+                                        <CategoryAxis side="BOTTOM" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis side="LEFT" />
+                                    </yAxis>
+                                </LineChart>
+                                <Label layoutX="14.0" layoutY="14.0" styleClass="TitleText" text="Over view" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="566.0" layoutY="345.0" prefHeight="280.0" prefWidth="400.0" styleClass="LightCountBoard" stylesheets="@../STYLES/Dashboard.css">
+                            <children>
+                                <BarChart fx:id="read_and_hired_bar_chart" layoutY="50.0" prefHeight="230.0" prefWidth="480.0" styleClass="BarChart">
+                                    <xAxis>
+                                        <CategoryAxis side="BOTTOM" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis side="LEFT" />
+                                    </yAxis>
+                                </BarChart>
+                                <Label layoutX="14.0" layoutY="14.0" styleClass="TitleText" text="Total book read &amp; hired" />
+                            </children>
+                        </AnchorPane>
+                    </children>
                 </AnchorPane>
             </children>
         </VBox>
