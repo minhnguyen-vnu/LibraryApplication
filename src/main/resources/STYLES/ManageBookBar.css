@@ -1,21 +1,80 @@
+
+.BorderContainer {
+    -fx-border-color: #41445B;
+    -fx-border-width: 10;
+}
+
+/*--------*/
 .BarBackground {
     -fx-background-color: #0B0D1B;
 }
+
+.SearchIcon {
+    -fx-fill: #ffffff;
+    -fx-set-size: 20;
+}
+
 
 .SearchField {
     -fx-background-color: transparent;
     -fx-border-color: #6943CE;
     -fx-border-width: 0 0 1 0;
+    -fx-pref-width: 250;
+    -fx-pref-height: 40;
 
     -fx-padding: 5;
     -fx-font-size: 14;
     -fx-font-family: "Arial";
-    -fx-text-fill: #000000;
+    -fx-text-fill: #d1fafa;
 }
 
 .SearchTitle {
     -fx-font-size: 13;
     -fx-text-fill: #fafafa;
     -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 10 0;
+}
+
+.ManageBarButton {
+    -fx-background-color: #6943CE;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+    -fx-pref-width: 100;
+    -fx-pref-height: 40;
+}
+
+.ManageBarButton:hover {
+    -fx-background-color: #775ac6;
+    -fx-text-fill: #88dddd;
+}
+
+.TextButton {
+    -fx-font-family: "Calibri", sans-serif;
+    -fx-background-color: transparent;
+    -fx-text-fill: #567bf6;
+    -fx-font-size: 20;
+    -fx-alignment: CENTER-LEFT;
+}
+
+.TextButton:hover {
+    -fx-text-fill: #88dddd;
+    -fx-font-weight: bold;
+    -fx-font-size: 22;
+    -fx-font-style: italic;
+}
+
+/*------------------------------------------*/
+
+.MainBackground {
+    -fx-background-color: #F1F3F6;
+}
+
+.MainTitle {
+    -fx-font-size: 50;
+    -fx-text-fill: #000000;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
     -fx-font-weight: bold;
 }
