@@ -38,6 +38,10 @@ public class UserBookController extends User implements Initializable {
     public ObservableList<UserBookInfo> bookList;
     public ChoiceBox num_row_shown;
     public Button go_to_dashboard_btn;
+    /**
+     * This is the same as the go_to_dashboard_btn
+     */
+    public Button back_to_dashboard_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

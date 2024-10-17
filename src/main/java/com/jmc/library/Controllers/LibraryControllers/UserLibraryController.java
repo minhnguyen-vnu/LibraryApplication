@@ -32,6 +32,7 @@ public class UserLibraryController extends LibraryController implements Initiali
     public TableColumn<BookInfo, Boolean> add_to_cart_tb_cl;
     public ChoiceBox num_row_shown;
     public Button go_to_dashboard_btn;
+    public Button back_to_dashboard_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
