@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,7 +20,7 @@
       </HBox>
       <AnchorPane prefHeight="600.0" prefWidth="1000.0" styleClass="BackGround">
          <children>
-            <VBox alignment="CENTER_LEFT" layoutX="156.0" layoutY="153.0" prefHeight="343.0" prefWidth="654.0" spacing="30.0" styleClass="DetailBook">
+            <VBox alignment="CENTER_LEFT" layoutX="191.0" layoutY="154.0" prefHeight="343.0" prefWidth="654.0" spacing="30.0" styleClass="DetailBook">
                <children>
                   <Label fx:id="publication_date_lbl" styleClass="InfoText" text="Ngày công chiếu: 28 tháng 3 năm 2002">
                      <VBox.margin>
@@ -53,8 +54,17 @@
                   </Label>
                </children>
             </VBox>
-            <Label layoutX="75.0" layoutY="82.0" styleClass="Tile" text="Book info :" />
-            <Button layoutX="696.0" layoutY="84.0" mnemonicParsing="false" styleClass="GetButton" text="Get book" />
+            <Label layoutX="110.0" layoutY="83.0" styleClass="Tile" text="Book info :" />
+            <Button fx:id="get_book_btn" layoutX="731.0" layoutY="85.0" mnemonicParsing="false" styleClass="GetButton" text="Get book" />
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" styleClass="BackButton">
+               <graphic>
+                  <ImageView fx:id="go_to_back_btn" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../IMAGES/GoBackIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
    </children>
