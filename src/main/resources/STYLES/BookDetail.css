@@ -3,6 +3,34 @@
     -fx-border-width: 10;
 }
 
+.DetailBook {
+    -fx-border-color: #6943CE;
+    -fx-border-width: 0 0 0 1;
+}
+
+.Tile {
+    -fx-border-color: #6943CE;
+    -fx-border-width: 0 0 3 0;
+    -fx-text-fill: #1256d3;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.GetButton {
+    -fx-background-color: #6943CE;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.GetButton:hover {
+    -fx-background-color: #7035d6;
+    -fx-text-fill: #b0ed99;
+}
+
 .BookName {
     -fx-font-size: 50;
     -fx-weight: bold;
