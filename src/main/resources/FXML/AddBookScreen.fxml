@@ -17,7 +17,7 @@
    <children>
       <AnchorPane prefHeight="730.0" prefWidth="471.0" styleClass="BarBackground" stylesheets="@../STYLES/ManageBookBar.css">
          <children>
-            <VBox layoutX="56.0" layoutY="96.0" prefWidth="300.0" stylesheets="@../STYLES/ManageBookBar.css">
+            <VBox layoutX="53.0" layoutY="81.0" prefHeight="540.0" prefWidth="280.0" stylesheets="@../STYLES/ManageBookBar.css">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="101.0" prefWidth="300.0">
                      <children>
@@ -97,9 +97,23 @@
                         </VBox>
                      </children>
                   </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="101.0" prefWidth="300.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="CALENDAR" size="20" styleClass="SearchIcon" />
+                        <VBox prefHeight="200.0">
+                           <children>
+                              <Label styleClass="SearchTitle" stylesheets="@../STYLES/ManageBookBar.css" text="Enter published date" />
+                              <TextField fx:id="enter_published_date_txt_fld" styleClass="SearchField" stylesheets="@../STYLES/ManageBookBar.css" />
+                           </children>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
-            <HBox layoutX="36.0" layoutY="630.0" spacing="20.0">
+            <HBox layoutX="36.0" layoutY="656.0" spacing="20.0">
                <children>
                   <Button fx:id="add_book_btn" mnemonicParsing="false" styleClass="ManageBarButton" text="Add" />
                   <Button fx:id="update_book_btn" mnemonicParsing="false" styleClass="ManageBarButton" text="Update" />
@@ -111,7 +125,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="730.0" prefWidth="926.0" styleClass="MainBackground" stylesheets="@../STYLES/ManageBookBar.css">
          <children>
-            <TableView fx:id="store_tb" layoutX="70.0" layoutY="147.0" prefHeight="550.0" prefWidth="774.0" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
+            <TableView fx:id="store_tb" layoutX="47.0" layoutY="147.0" prefHeight="550.0" prefWidth="774.0" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
                <columns>
                   <TableColumn fx:id="book_id_tb_cl" prefWidth="75.0" text="Book's ID" />
                   <TableColumn fx:id="book_name_tb_cl" prefWidth="75.0" text="Book's Name" />

@@ -27,6 +27,7 @@ public class AddBookController extends LibraryTable implements Initializable {
     public Button update_book_btn;
     public Button return_btn;
     public TextField enter_price_txt_fld;
+    public TextField enter_published_date_txt_fld;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
