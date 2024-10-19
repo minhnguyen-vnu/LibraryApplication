@@ -1,0 +1,23 @@
+.Border {
+    -fx-border-color: #41445B;
+    -fx-border-width: 10;
+}
+
+.BookName {
+    -fx-font-size: 50;
+    -fx-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.InfoText {
+    -fx-font-size: 20;
+    -fx-text-fill: #000000;
+}
+
+.BarGround {
+    -fx-background-color: #2F314B;
+}
+
+.BackGround {
+    -fx-background-color: #f0f0f0;
+}
