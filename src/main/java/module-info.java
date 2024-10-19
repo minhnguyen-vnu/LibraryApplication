@@ -5,6 +5,7 @@ module com.jmc.library {
     requires java.sql;
     requires mysql.connector.j;
     requires java.desktop;
+    requires google.api.services.books.v1.rev113;
 
     opens com.jmc.library to javafx.fxml;
     exports com.jmc.library.Controllers;
@@ -15,4 +16,5 @@ module com.jmc.library {
     exports com.jmc.library.Assets;
     exports com.jmc.library.Controllers.LibraryControllers;
     exports com.jmc.library.Controllers.Admin;
+    exports com.jmc.library.Account;
 }

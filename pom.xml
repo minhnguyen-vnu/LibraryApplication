@@ -40,6 +40,12 @@
             <version>4.2.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-books</artifactId>
+            <version>v1-rev113-1.25.0</version>
+        </dependency>
+
 
 
         <dependency>

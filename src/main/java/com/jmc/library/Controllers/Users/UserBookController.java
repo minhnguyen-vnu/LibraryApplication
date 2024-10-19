@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class UserBookController extends User implements Initializable {
+public class UserBookController implements Initializable {
     public Button go_to_setting_btn;
     public Label username_lbl;
     public TableView<UserBookInfo> store_tb;
@@ -38,9 +38,6 @@ public class UserBookController extends User implements Initializable {
     public ObservableList<UserBookInfo> bookList;
     public ChoiceBox num_row_shown;
     public Button go_to_dashboard_btn;
-    /**
-     * This is the same as the go_to_dashboard_btn
-     */
     public Button back_to_dashboard_btn;
 
     @Override

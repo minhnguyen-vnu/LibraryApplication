@@ -1,5 +1,7 @@
 package com.jmc.library.View;
 
+import com.jmc.library.Account.Admin;
+import com.jmc.library.Controllers.Admin.AdminView;
 import com.jmc.library.Controllers.Authentication;
 import com.jmc.library.Controllers.Users.UserView;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,12 +18,16 @@ public class ViewFactory {
     private HBox signUpView;
     private HBox userLibrary;
     private HBox userHiredBook;
+    private HBox adminLibrary;
+    private HBox adminSettings;
     private final StringProperty selectedAuthenticatonMode;
     private final StringProperty selectedUserMode;
+    private final StringProperty selectedAdminMode;
 
     public ViewFactory() {
         this.selectedAuthenticatonMode = new SimpleStringProperty("");
         this.selectedUserMode = new SimpleStringProperty("");
+        this.selectedAdminMode = new SimpleStringProperty("");
     }
 
     public StringProperty getSelectedAuthenticatonMode() {
@@ -31,6 +37,8 @@ public class ViewFactory {
     public StringProperty getSelectedUserMode() {
         return selectedUserMode;
     }
+
+    public StringProperty getSelectedAdminMode() { return selectedAdminMode; }
 
     public HBox getSignUpView() {
         if (signUpView == null) {
@@ -83,6 +91,29 @@ public class ViewFactory {
         return userHiredBook;
     }
 
+    public HBox getAdminLibrary() {
+        if (adminLibrary == null) {
+            try {
+                adminLibrary = new FXMLLoader(getClass().getResource("/FXML/AdminLibrary.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return adminLibrary;
+    }
+
+    public HBox getAdminSettings() {
+        if (adminSettings == null) {
+            try {
+                adminSettings = new FXMLLoader(getClass().getResource("/FXML/AddBookScreen.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return adminSettings;
+    }
+
+
     public void showUserWindow() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/UserView.fxml"));
         UserView user = new UserView();
@@ -91,17 +122,14 @@ public class ViewFactory {
     }
 
     public void showAdminWindow() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/AdminLibrary.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/AdminView.fxml"));
+        AdminView adminView = new AdminView();
+        fxmlLoader.setController(adminView);
         createStage(fxmlLoader);
     }
 
     public void showUserDashboard() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/UserDashboard.fxml"));
-        createStage(fxmlLoader);
-    }
-
-    public void showAdminLibrary() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/AdminLibrary.fxml"));
         createStage(fxmlLoader);
     }
 

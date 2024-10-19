@@ -38,6 +38,7 @@ public class UserLibraryController extends LibraryController implements Initiali
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setButtonListener();
         initialAction();
+        setTable();
         addBinding();
         onAction();
         showLibrary();

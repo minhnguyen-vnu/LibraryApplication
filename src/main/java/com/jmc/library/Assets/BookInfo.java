@@ -1,6 +1,7 @@
 package com.jmc.library.Assets;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class BookInfo {
     private int bookId;
@@ -71,4 +72,17 @@ public class BookInfo {
     public boolean isInCart() { return inCart; }
 
     public void setInCart(boolean inCart) { this.inCart = inCart; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookInfo bookInfo = (BookInfo) o;
+        return bookId == bookInfo.bookId && quantityInStock == bookInfo.quantityInStock && Double.compare(leastPrice, bookInfo.leastPrice) == 0 && Objects.equals(bookName, bookInfo.bookName) && Objects.equals(authorName, bookInfo.authorName) && Objects.equals(publishedDate, bookInfo.publishedDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookId, bookName, authorName, quantityInStock, leastPrice, publishedDate);
+    }
 }

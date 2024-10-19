@@ -1,4 +1,4 @@
-package com.jmc.library.Controllers.Users;
+package com.jmc.library.Account;
 
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.DBUtlis;
@@ -8,29 +8,11 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class User {
-    private String username;
-    private String token;
+public class User extends Account {
     private ObservableList<UserBookInfo> bookList;
 
     public User() {
         this.bookList = FXCollections.observableArrayList();
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public ObservableList<UserBookInfo> getBookList() {
@@ -64,5 +46,10 @@ public class User {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public boolean isAdmin() {
+        return false;
     }
 }

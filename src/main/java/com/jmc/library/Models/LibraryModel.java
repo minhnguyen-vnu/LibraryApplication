@@ -1,25 +1,19 @@
 package com.jmc.library.Models;
 
 import com.jmc.library.Controllers.LibraryControllers.UserLibraryController;
-import com.jmc.library.Controllers.Users.User;
+import com.jmc.library.Account.User;
 
 public class LibraryModel {
     private static LibraryModel model;
-    private final UserLibraryController userLibraryController;
     private final User user;
 
     private LibraryModel(){
-        this.userLibraryController = new UserLibraryController();
         this.user = new User();
     }
 
     public static synchronized LibraryModel getInstance(){
         if(model == null) model = new LibraryModel();
         return model;
-    }
-
-    public UserLibraryController getLibraryController(){
-        return userLibraryController;
     }
 
     public User getUser() {
