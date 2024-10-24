@@ -3,6 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,50 +15,90 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" styleClass="Border" stylesheets="@../STYLES/BookDetail.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserBookDetailController">
    <children>
-      <HBox alignment="CENTER" prefHeight="150.0" prefWidth="200.0" spacing="30.0" styleClass="BarGround">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" styleClass="BarGround">
          <children>
-            <TextFlow fx:id="book_name_txt_flw" prefWidth="700.0" styleClass="BookName" />
-            <ImageView fx:id="book_img" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+            <Label styleClass="BigWhiteTitle" text="Book Detail" />
          </children>
       </HBox>
       <AnchorPane prefHeight="600.0" prefWidth="1000.0" styleClass="BackGround">
          <children>
-            <VBox alignment="CENTER_LEFT" layoutX="191.0" layoutY="154.0" prefHeight="343.0" prefWidth="654.0" spacing="30.0" styleClass="DetailBook">
+            <HBox layoutX="30.0" layoutY="87.0" spacing="50.0">
                <children>
-                  <Label fx:id="publication_date_lbl" styleClass="InfoText" text="Ngày công chiếu: 28 tháng 3 năm 2002">
-                     <VBox.margin>
-                        <Insets left="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="award_lbl" styleClass="InfoText" text="Giải thưởng: bộ phim vàng">
-                     <VBox.margin>
-                        <Insets left="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="nomination_lbl" styleClass="InfoText" text="Đề cử: Bộ phim bạc, vàng, đá quý">
-                     <VBox.margin>
-                        <Insets left="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="character_lbl" styleClass="InfoText" text="Nhân vật: Nam chính, nam phụ, nữ chính, nữ phụ">
-                     <VBox.margin>
-                        <Insets left="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="genre_lbl" styleClass="InfoText" text="Thể loại: drama, ngôn tình, tâm lý tình cảm">
-                     <VBox.margin>
-                        <Insets left="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="original_language_lbl" styleClass="InfoText" text="Ngôn ngữ gốc: Việt">
-                     <VBox.margin>
-                        <Insets left="20.0" />
-                     </VBox.margin>
-                  </Label>
+                  <VBox spacing="20.0">
+                     <children>
+                        <ImageView fx:id="book_img" fitHeight="400.0" fitWidth="300.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../IMAGES/BookStoreIcon.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="get_book_btn" mnemonicParsing="false" styleClass="GetButton" text="Get book" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="20.0">
+                     <children>
+                        <TextFlow fx:id="book_name_txt_flw" prefHeight="60.0" prefWidth="550.0" styleClass="BookName" />
+                        <TabPane prefWidth="550.0" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab text="Book info">
+                                 <content>
+                                    <AnchorPane prefWidth="550.0">
+                                       <children>
+                                          <VBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="20.0" spacing="30.0" styleClass="DetailBook">
+                                             <children>
+                                                <Label fx:id="publication_date_lbl" styleClass="InfoText" text="Ngày công chiếu: 28 tháng 3 năm 2002">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label fx:id="author_lbl" styleClass="InfoText" text="Tác giả: bầu trời đầy sương">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label fx:id="publisher_lbl" styleClass="InfoText" text="Nhà xuất bản: Kim tiền">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label fx:id="isbn_lbl" styleClass="InfoText" text="ISBN: 150TAM">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label fx:id="original_language_lbl" styleClass="InfoText" text="Ngôn ngữ gốc: Việt">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                            <Tab text="Preview">
+                                 <content>
+                                    <AnchorPane>
+                                       <children>
+                                          <ScrollPane layoutX="25.0" layoutY="26.0" prefHeight="250.0" prefWidth="500.0">
+                                             <content>
+                                                <AnchorPane prefHeight="250.0" prefWidth="500.0">
+                                                   <children>
+                                                      <TextFlow fx:id="preview_txt_flow" layoutX="25.0" layoutY="25.0" prefHeight="200.0" prefWidth="450.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
-            <Label layoutX="110.0" layoutY="83.0" styleClass="Tile" text="Book info :" />
-            <Button fx:id="get_book_btn" layoutX="731.0" layoutY="85.0" mnemonicParsing="false" styleClass="GetButton" text="Get book" />
+            </HBox>
             <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" styleClass="BackButton">
                <graphic>
                   <ImageView fx:id="go_to_back_btn" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">

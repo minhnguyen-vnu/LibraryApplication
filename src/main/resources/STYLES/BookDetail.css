@@ -18,10 +18,18 @@
     -fx-font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
+.BigWhiteTitle {
+    -fx-font-size: 50;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
 .GetButton {
     -fx-background-color: #6943CE;
     -fx-text-fill: #ffffff;
     -fx-font-size: 20;
+    -fx-pref-width: 300;
     -fx-font-weight: bold;
     -fx-font-family: "Comic Sans MS", cursive, sans-serif;
 }
