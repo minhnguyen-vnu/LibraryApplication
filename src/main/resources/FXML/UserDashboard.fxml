@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserDashboardController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserDashboardController">
     <children>
         <VBox prefHeight="200.0" prefWidth="200.0">
             <children>
@@ -167,10 +167,10 @@
                             <children>
                                 <LineChart fx:id="over_view_line_chart" layoutY="50.0" prefHeight="230.0" prefWidth="480.0" styleClass="LineChart">
                                     <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
+                                        <CategoryAxis fx:id="month_over_view_ca" side="BOTTOM" />
                                     </xAxis>
                                     <yAxis>
-                                        <NumberAxis side="LEFT" />
+                                        <NumberAxis fx:id="book_borrowed_over_view_na" side="LEFT" />
                                     </yAxis>
                                 </LineChart>
                                 <Label layoutX="14.0" layoutY="14.0" styleClass="TitleText" text="Over view" />
@@ -180,10 +180,10 @@
                             <children>
                                 <BarChart fx:id="read_and_hired_bar_chart" layoutY="50.0" prefHeight="230.0" prefWidth="480.0" styleClass="BarChart">
                                     <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
+                                        <CategoryAxis fx:id="month_total_read_hired_ca" side="BOTTOM" />
                                     </xAxis>
                                     <yAxis>
-                                        <NumberAxis side="LEFT" />
+                                        <NumberAxis fx:id="read_hired_bar_chart_na" side="LEFT" />
                                     </yAxis>
                                 </BarChart>
                                 <Label layoutX="14.0" layoutY="14.0" styleClass="TitleText" text="Total book read &amp; hired" />

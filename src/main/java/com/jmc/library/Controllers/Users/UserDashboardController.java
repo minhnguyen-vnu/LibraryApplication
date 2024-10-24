@@ -1,12 +1,20 @@
 package com.jmc.library.Controllers.Users;
 
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
+import com.jmc.library.Assets.UserBookInfo;
+import com.jmc.library.Models.LibraryModel;
+import com.jmc.library.Models.Model;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
 /**
@@ -15,51 +23,118 @@ import javafx.scene.image.ImageView;
  * now every thing is not designed
  */
 
-public class UserDashboardController {
+public class UserDashboardController extends User implements Initializable {
 
     public Button go_to_library_btn;
     public Button go_to_store_btn;
     public Button go_to_setting_btn;
     public Button log_out_btn;
-    public Label username_lbl;
-    public ImageView account_avatar_img;
     public Button search_btn;
-    public TextField search_fld;
+
+    public Label username_lbl;
     public Label welcome_username_lbl;
-    /**
-     * hot_book_list: list view of hot books
-     * type: ListView
-     */
-    public ListView hot_book_list;
-    /**
-     * view_all_lbl: link to view all books in hot book list
-     * but when clicked, it will redirect to the store page
-     */
     public Label view_all_lbl;
-    /**
-     * total_read_book_lbl: label to show total read books
-     * just a number
-     */
     public Label total_read_book_lbl;
-    /**
-     * new_books_read_lbl: label to show new books read in the last 7 days
-     * just a number
-     */
     public Label new_books_read_lbl;
-    /**
-     * total_hired_book_lbl: label to show total hired books
-     * just a number
-     */
     public Label total_hired_book_lbl;
-    /**
-     * over_view_line_chart: line chart to show the overview of the user's reading and hiring activities
-     * type: LineChart
-     */
-    public LineChart over_view_line_chart;
-    /**
-     * read_and_hired_bar_chart: bar chart to show the user's reading and hiring activities
-     * show the total read books and total hired books per month
-     * type: BarChart
-     */
-    public BarChart read_and_hired_bar_chart;
+
+    public ImageView account_avatar_img;
+
+    public TextField search_fld;
+
+    public ListView<UserBookInfo> hot_book_list;
+
+    public LineChart<String, Number> over_view_line_chart;
+    public NumberAxis book_borrowed_over_view_na;
+    public CategoryAxis month_over_view_ca;
+
+    public BarChart<String, Number> read_and_hired_bar_chart;
+    public NumberAxis read_hired_bar_chart_na;
+    public CategoryAxis month_total_read_hired_ca;
+
+    public ObservableList<UserBookInfo> bookList;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        bookList = LibraryModel.getInstance().getUser().getBookList();
+
+        addBinding();
+        setButtonListener();
+        setAnotherListener();
+    }
+
+    private void setButtonListener() {
+        // cai button search nay hoi vo li sua lai sau.
+        search_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
+        });
+        go_to_library_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
+        });
+        go_to_store_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("Store");
+        });
+        go_to_setting_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("Setting");
+        });
+        log_out_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("Login");
+        });
+    }
+
+    private void setAnotherListener() {
+        // cai nay de tam thoi, sau nay se sua lai
+        view_all_lbl.setOnMouseClicked(mouseEvent -> {
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
+        });
+
+        welcome_username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
+        username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
+        account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png").toExternalForm()).getImage());
+
+        total_read_book_lbl.setText("400");
+        new_books_read_lbl.setText("300");
+        total_hired_book_lbl.setText(String.valueOf(bookList.size()));
+    }
+    private void addBinding() {
+        hot_book_list.setItems(bookList);
+        System.err.println("UserDashboardController.addBinding");
+        setOverViewLineChart();
+        setReadAndHiredBarChart();
+    }
+
+    private void setOverViewLineChart() {
+
+        over_view_line_chart.setTitle("Book Borrowed Overview");
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Book Borrowed");
+        //de tam thoi sau nay se sua lai
+        series.getData().add(new XYChart.Data<>("Jan", 100));
+        series.getData().add(new XYChart.Data<>("Feb", 200));
+        series.getData().add(new XYChart.Data<>("Mar", 300));
+        series.getData().add(new XYChart.Data<>("Apr", 400));
+
+        over_view_line_chart.getData().add(series);
+    }
+
+    private void setReadAndHiredBarChart() {
+        read_and_hired_bar_chart.setTitle("Read and Hired Overview");
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+        series1.setName("Read");
+        //de tam thoi sau nay se sua lai
+        series1.getData().add(new XYChart.Data<>("Jan", 100));
+        series1.getData().add(new XYChart.Data<>("Feb", 200));
+        series1.getData().add(new XYChart.Data<>("Mar", 300));
+        series1.getData().add(new XYChart.Data<>("Apr", 400));
+
+        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+        series2.setName("Hired");
+        //de tam thoi sau nay se sua lai
+        series2.getData().add(new XYChart.Data<>("Jan", 500));
+        series2.getData().add(new XYChart.Data<>("Feb", 600));
+        series2.getData().add(new XYChart.Data<>("Mar", 700));
+        series2.getData().add(new XYChart.Data<>("Apr", 800));
+
+        read_and_hired_bar_chart.getData().addAll(series1, series2);
+    }
 }

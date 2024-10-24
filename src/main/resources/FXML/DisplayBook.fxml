@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" styleClass="Border" stylesheets="@../STYLES/BookDetail.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserBookDetailController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" styleClass="Border" stylesheets="@../STYLES/BookDetail.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Books.BookDisplayController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" styleClass="BarGround">
          <children>
@@ -41,9 +42,9 @@
                           <tabs>
                             <Tab text="Book info">
                                  <content>
-                                    <AnchorPane prefWidth="550.0">
+                                    <AnchorPane prefHeight="337.0" prefWidth="550.0">
                                        <children>
-                                          <VBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="20.0" spacing="30.0" styleClass="DetailBook">
+                                          <VBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="20.0" prefHeight="317.0" prefWidth="368.0" spacing="30.0" styleClass="DetailBook">
                                              <children>
                                                 <Label fx:id="publication_date_lbl" styleClass="InfoText" text="Ngày công chiếu: 28 tháng 3 năm 2002">
                                                    <VBox.margin>
@@ -70,6 +71,11 @@
                                                       <Insets left="20.0" />
                                                    </VBox.margin>
                                                 </Label>
+                                                <Label fx:id="book_genres_lbl" styleClass="InfoText" text="Label">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Label>
                                              </children>
                                           </VBox>
                                        </children>
@@ -84,7 +90,7 @@
                                              <content>
                                                 <AnchorPane prefHeight="250.0" prefWidth="500.0">
                                                    <children>
-                                                      <TextFlow fx:id="preview_txt_flow" layoutX="25.0" layoutY="25.0" prefHeight="200.0" prefWidth="450.0" />
+                                                      <TextArea fx:id="preview_txt_flw" layoutX="38.0" layoutY="18.0" prefHeight="207.0" prefWidth="401.0" />
                                                    </children>
                                                 </AnchorPane>
                                              </content>
@@ -99,9 +105,9 @@
                   </VBox>
                </children>
             </HBox>
-            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" styleClass="BackButton">
+            <Button fx:id="go_to_back_btn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" styleClass="BackButton">
                <graphic>
-                  <ImageView fx:id="go_to_back_btn" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../IMAGES/GoBackIcon.png" />
                      </image>

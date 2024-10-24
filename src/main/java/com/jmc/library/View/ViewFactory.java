@@ -1,10 +1,14 @@
 package com.jmc.library.View;
 
+import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Controllers.Authentication;
+import com.jmc.library.Controllers.Books.BookDisplayController;
 import com.jmc.library.Controllers.Users.UserView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ParallelCamera;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -16,6 +20,7 @@ public class ViewFactory {
     private HBox signUpView;
     private HBox userLibrary;
     private HBox userHiredBook;
+    private HBox userDashboard;
     private final StringProperty selectedAuthenticatonMode;
     private final StringProperty selectedUserMode;
 
@@ -72,6 +77,9 @@ public class ViewFactory {
         return userLibrary;
     }
 
+    public HBox getUserStore() {
+        return getUserLibrary();
+    }
     public HBox getUserHiredBook() {
         if (userHiredBook == null) {
             try {
@@ -83,6 +91,16 @@ public class ViewFactory {
         return userHiredBook;
     }
 
+    public HBox getUserDashboard() {
+        if (userDashboard == null) {
+            try {
+                userDashboard = new FXMLLoader(getClass().getResource("/FXML/UserDashboard.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return userDashboard;
+    }
     public void showUserWindow() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/UserView.fxml"));
         UserView user = new UserView();
@@ -105,6 +123,10 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
+    public void showDisplayBook() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/DisplayBook.fxml"));
+        createStage(fxmlLoader);
+    }
     void createStage(FXMLLoader loader) {
         Scene scene = null;
         try {
@@ -112,6 +134,14 @@ public class ViewFactory {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Library Application");
+        stage.show();
+    }
+
+    void createStage(Parent loader) {
+        Scene scene = new Scene(loader);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Library Application");

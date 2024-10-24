@@ -53,7 +53,7 @@ public class LibraryController {
             while (resultSet.next()) {
                 BookInfo currentBook = new BookInfo(resultSet.getInt("bookId"), resultSet.getString("bookName"),
                         resultSet.getString("authorName"), resultSet.getInt("quantityInStock"), resultSet.getInt("leastPrice"),
-                        resultSet.getDate("publishDate").toLocalDate());
+                        resultSet.getDate("publishDate").toLocalDate(), resultSet.getString("ISBN"));
                 bookList.add(currentBook);
             }
         } catch (SQLException e){
