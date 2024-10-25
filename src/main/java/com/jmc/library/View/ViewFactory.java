@@ -1,6 +1,5 @@
 package com.jmc.library.View;
 
-import com.jmc.library.Account.Admin;
 import com.jmc.library.Controllers.Admin.AdminView;
 import com.jmc.library.Controllers.Authentication;
 import com.jmc.library.Controllers.Users.UserView;
@@ -105,7 +104,7 @@ public class ViewFactory {
     public HBox getAdminSettings() {
         if (adminSettings == null) {
             try {
-                adminSettings = new FXMLLoader(getClass().getResource("/FXML/AddBookScreen.fxml")).load();
+                adminSettings = new FXMLLoader(getClass().getResource("/FXML/ManageBookScreen.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }

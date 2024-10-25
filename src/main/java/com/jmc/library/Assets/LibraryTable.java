@@ -42,7 +42,7 @@ public class LibraryTable {
             ResultSet resultSet = DBUtlis.executeQuery("select * from bookStore");
             while (resultSet.next()) {
                 BookInfo currentBook = new BookInfo(resultSet.getInt("bookId"), resultSet.getString("bookName"),
-                        resultSet.getString("authorName"), resultSet.getInt("quantityInStock"), resultSet.getInt("leastPrice"),
+                        resultSet.getString("authorName"), resultSet.getInt("quantityInStock"), resultSet.getDouble("leastPrice"),
                         resultSet.getDate("publishDate").toLocalDate());
                 bookList.add(currentBook);
             }

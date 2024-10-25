@@ -7,17 +7,16 @@ import com.jmc.library.Models.AdminLibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class AddBookController extends LibraryTable implements Initializable {
+public class ManageBookController extends LibraryTable implements Initializable {
     public TextField enter_book_id_txt_fld;
     public TextField enter_book_name_txt_fld;
     public TextField enter_author_name_txt_fld;
@@ -28,6 +27,7 @@ public class AddBookController extends LibraryTable implements Initializable {
     public Button return_btn;
     public TextField enter_price_txt_fld;
     public TextField enter_published_date_txt_fld;
+    public Button clear_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,7 +47,7 @@ public class AddBookController extends LibraryTable implements Initializable {
         boolean ok = true;
         if (enter_book_id_txt_fld.getText().isEmpty() || enter_book_name_txt_fld.getText().isEmpty() ||
                 enter_author_name_txt_fld.getText().isEmpty() || enter_quantity_txt_fld.getText().isEmpty() ||
-                enter_price_txt_fld.getText().isEmpty()) ok = false;
+                enter_price_txt_fld.getText().isEmpty() || enter_published_date_txt_fld.getText().isEmpty()) ok = false;
         return ok;
     }
 
@@ -76,6 +76,7 @@ public class AddBookController extends LibraryTable implements Initializable {
         enter_author_name_txt_fld.clear();
         enter_quantity_txt_fld.clear();
         enter_price_txt_fld.clear();
+        enter_published_date_txt_fld.clear();
     }
 
     private void onAction() {
@@ -95,6 +96,7 @@ public class AddBookController extends LibraryTable implements Initializable {
                 enter_author_name_txt_fld.setText(authorName);
                 enter_quantity_txt_fld.setText(Integer.toString(quantityInStock));
                 enter_price_txt_fld.setText(Double.toString(leastPrice));
+                enter_published_date_txt_fld.setText(publishedDate.toString());
             }
         });
 
@@ -104,7 +106,7 @@ public class AddBookController extends LibraryTable implements Initializable {
             if (ok) {
                 BookInfo bookInfo = new BookInfo(Integer.parseInt(enter_book_id_txt_fld.getText()), enter_book_name_txt_fld.getText(),
                         enter_author_name_txt_fld.getText(), Integer.parseInt(enter_quantity_txt_fld.getText()),
-                        Double.parseDouble(enter_price_txt_fld.getText()), LocalDate.now());
+                        Double.parseDouble(enter_price_txt_fld.getText()), LocalDate.parse(enter_published_date_txt_fld.getText()));
                 DBUtlis.executeUpdate("insert into bookStore (bookId, bookName, publishDate, authorName, quantityInStock, leastPrice) \n" +
                         "values (?, ?, ?, ?, ?, ?);",   bookInfo.getBookId(), bookInfo.getBookName(),
                         bookInfo.getPublishedDate(), bookInfo.getAuthorName(), bookInfo.getQuantityInStock(),
@@ -120,14 +122,17 @@ public class AddBookController extends LibraryTable implements Initializable {
             if (!ok) {
                 BookInfo bookInfo = new BookInfo(Integer.parseInt(enter_book_id_txt_fld.getText()), enter_book_name_txt_fld.getText(),
                         enter_author_name_txt_fld.getText(), Integer.parseInt(enter_quantity_txt_fld.getText()),
-                        Double.parseDouble(enter_price_txt_fld.getText()), LocalDate.now());
+                        Double.parseDouble(enter_price_txt_fld.getText()), LocalDate.parse(enter_published_date_txt_fld.getText()));
                 DBUtlis.executeUpdate("delete from bookStore\n" +
-                        "where bookId = ? and bookName = ? and authorName = ? and quantityInStock = ? and leastPrice = ?;", bookInfo.getBookId(),
-                        bookInfo.getBookName(),
+                        "where bookId = ? and bookName = ? and authorName = ? and quantityInStock = ? and leastPrice = ? and publishDate = ?;",
+                        bookInfo.getBookId(), bookInfo.getBookName(),
                         bookInfo.getAuthorName(), bookInfo.getQuantityInStock(),
-                        bookInfo.getLeastPrice());
+                        bookInfo.getLeastPrice(), Date.valueOf(bookInfo.getPublishedDate()));
+                System.out.println(bookInfo.getLeastPrice());
                 bookList.remove(bookInfo);
             }
         });
+
+        clear_btn.setOnAction(actionEvent -> clear());
     }
 }
