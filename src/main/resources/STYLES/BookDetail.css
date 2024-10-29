@@ -62,10 +62,10 @@
 
 
 
-.BookName {
+.BookName .label {
     -fx-font-size: 50;
     -fx-weight: bold;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #000000;
 }
 
 .InfoText {
