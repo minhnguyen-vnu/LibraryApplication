@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" styleClass="Border" stylesheets="@../STYLES/BookDetail.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Books.BookDisplayController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" styleClass="Border" stylesheets="@../STYLES/BookDetail.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Books.BookDisplayController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" styleClass="BarGround">
          <children>
@@ -23,7 +23,7 @@
       </HBox>
       <AnchorPane prefHeight="600.0" prefWidth="1000.0" styleClass="BackGround">
          <children>
-            <HBox layoutX="30.0" layoutY="87.0" spacing="50.0">
+            <HBox layoutX="24.0" layoutY="80.0" spacing="50.0">
                <children>
                   <VBox spacing="20.0">
                      <children>
@@ -42,9 +42,9 @@
                           <tabs>
                             <Tab text="Book info">
                                  <content>
-                                    <AnchorPane prefHeight="337.0" prefWidth="550.0">
+                                    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="550.0">
                                        <children>
-                                          <VBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="20.0" prefHeight="317.0" prefWidth="368.0" spacing="30.0" styleClass="DetailBook">
+                                          <VBox alignment="CENTER_LEFT" layoutX="21.0" layoutY="10.0" prefHeight="317.0" prefWidth="368.0" spacing="30.0" styleClass="DetailBook">
                                              <children>
                                                 <Label fx:id="publication_date_lbl" styleClass="InfoText" text="Ngày công chiếu: 28 tháng 3 năm 2002">
                                                    <VBox.margin>
@@ -84,13 +84,13 @@
                               </Tab>
                             <Tab text="Preview">
                                  <content>
-                                    <AnchorPane>
+                                    <AnchorPane prefHeight="350.0" prefWidth="550.0" styleClass="Null">
                                        <children>
-                                          <ScrollPane layoutX="25.0" layoutY="26.0" prefHeight="250.0" prefWidth="500.0">
+                                          <ScrollPane layoutX="25.0" layoutY="26.0" prefHeight="300.0" prefWidth="505.0">
                                              <content>
-                                                <AnchorPane prefHeight="250.0" prefWidth="500.0">
+                                                <AnchorPane prefHeight="320.0" prefWidth="400.0">
                                                    <children>
-                                                      <TextArea fx:id="preview_txt_flw" layoutX="38.0" layoutY="18.0" prefHeight="207.0" prefWidth="401.0" />
+                                                      <TextArea fx:id="preview_txt_flw" layoutY="-5.0" prefWidth="480.0" styleClass="TextArea" text="Cuốn sách mô tả về hành trình vô địch của T1 tại chung kết thế giới năm 2025. Nhà vua đã trở lại và đại bại GenG khiến cho bao nhiêu người hâm mộ trở lại đỉnh xã hội. Tuy nhiên để có được thành công đó T1 đã phải trải qua những gì? Những khó khăn thử thách nào mà họ đã phải vượt qua? Tất cả được dựng lại một cách trân thực trong &quot;Hành trình Huyền Thoại&quot; của tác giả &quot;T1 Con&quot;" wrapText="true" />
                                                    </children>
                                                 </AnchorPane>
                                              </content>

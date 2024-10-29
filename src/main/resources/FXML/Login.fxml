@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/Login.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.LoginController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/Login.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.LoginController">
     <children>
         <AnchorPane prefHeight="750.0" prefWidth="650.0" styleClass="WelcomeBackGround">
             <children>
@@ -23,7 +23,7 @@
                         <Image url="@../IMAGES/LoginArt.png" />
                     </image>
                 </ImageView>
-                <TextFlow fx:id="welcome_text_txt_flw" layoutX="39.0" layoutY="248.0" prefHeight="124.0" prefWidth="326.0" styleClass="WelcomeText" />
+                <TextFlow fx:id="welcome_text_txt_flw" layoutX="39.0" layoutY="248.0" prefHeight="124.0" prefWidth="326.0" styleClass="WelcomeText" textAlignment="CENTER" />
             </children>
         </AnchorPane>
         <AnchorPane prefHeight="750.0" prefWidth="1100.0" styleClass="MainBackground">

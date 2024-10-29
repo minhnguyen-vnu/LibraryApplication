@@ -80,3 +80,75 @@
 .BackGround {
     -fx-background-color: #f0f0f0;
 }
+
+.tab-pane {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 0 0 15 15;
+    /*-fx-border-color: #6943CE;*/
+    /*-fx-border-width: 2;*/
+}
+
+/* Style for the Tab headers */
+.tab-pane .tab-header-area {
+    -fx-background-color: #6943CE;
+}
+
+.tab-pane .tab-header-area .tab {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #6943CE;
+    -fx-border-width: 0 0 2 0;
+    -fx-pref-width: 100;
+    -fx-pref-height: 30;
+}
+
+.tab-pane .tab-header-area .tab .tab-label {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    /*-fx-border-color: #6943CE;*/
+    -fx-text-fill: #1e1665;
+}
+
+.tab-pane .tab-header-area .tab:selected .tab-label {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    /*-fx-border-color: #6943CE;*/
+}
+
+.tab-pane .tab-header-area .tab:selected {
+    -fx-background-color: #6943CE;
+    -fx-text-fill: #ffffff;
+}
+
+/* Style for the Tab content */
+.tab-pane .tab-content-area {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 0 0 15 15;
+}
+
+
+.tab-header-background {
+    -fx-background-color: #361d81;
+    /*-fx-opacity: 0.5;*/
+    /*-fx-background-radius: 15 15 0 0;*/
+}
+
+.scroll-bar:horizontal {
+    -fx-pref-width: 0;
+    -fx-opacity: 0;
+}
+
+.scroll-bar:vertical {
+    -fx-opacity: 0;
+}
+
+.scroll-pane {
+    -fx-background-color: #ffffff;
+}
+.scroll-pane .viewport {
+    -fx-background-color: #ffffff;
+}
+.TextArea {
+    -fx-font-size: 20;
+    -fx-text-fill: #1e53ff;
+}
