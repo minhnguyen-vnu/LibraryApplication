@@ -15,7 +15,11 @@
 }
 
 .WelcomeText {
-    -fx-font-size: 30;
+
+}
+
+.WelcomeText .label {
+    -fx-font-size: 40;
     -fx-text-fill: #ffffff;
     -fx-font-family: "Comic Sans MS", cursive, sans-serif;
     -fx-font-style: italic;
