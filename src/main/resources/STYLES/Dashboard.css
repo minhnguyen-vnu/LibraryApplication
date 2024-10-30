@@ -31,12 +31,12 @@
 
 .SmallCountText{
     -fx-font-size: 13;
-    -fx-font-weight: 30;
+    -fx-font-weight: bold;
 }
 
 .CountNumber{
     -fx-font-size: 60;
-    -fx-font-weight: 30;
+    -fx-font-weight: bold;
 }
 
 .HotBookList{

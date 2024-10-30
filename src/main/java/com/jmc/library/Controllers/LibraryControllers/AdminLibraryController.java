@@ -19,7 +19,7 @@ public class AdminLibraryController extends LibraryController implements Initial
     public Button log_out_btn;
     public Button go_to_setting_btn;
     public Button manage_btn;
-    public Button go_to_library_btn;
+    public Button go_to_dashboard_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -37,8 +37,7 @@ public class AdminLibraryController extends LibraryController implements Initial
     }
 
     public void onAction() {
-        settings_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Managemental Book");
-        });
+        settings_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Managemental Book"));
+        go_to_dashboard_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Dashboard View"));
     }
 }

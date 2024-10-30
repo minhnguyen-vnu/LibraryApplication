@@ -70,6 +70,18 @@ public class ManageBookController extends LibraryTable implements Initializable 
         return ok;
     }
 
+    private boolean isExist() {
+        boolean ok = isFilled();
+
+        try {
+            int number = Integer.parseInt(enter_book_id_txt_fld.getText());
+        } catch (Exception e) {
+            ok = false;
+        }
+
+        return ok;
+    }
+
     private void clear() {
         enter_book_id_txt_fld.clear();
         enter_book_name_txt_fld.clear();
@@ -77,6 +89,14 @@ public class ManageBookController extends LibraryTable implements Initializable 
         enter_quantity_txt_fld.clear();
         enter_price_txt_fld.clear();
         enter_published_date_txt_fld.clear();
+    }
+
+    private void assign(BookInfo oldValue, BookInfo newValue) {
+        oldValue.setBookName(newValue.getBookName());
+        oldValue.setAuthorName(newValue.getAuthorName());
+        oldValue.setQuantityInStock(newValue.getQuantityInStock());
+        oldValue.setLeastPrice(newValue.getLeastPrice());
+        oldValue.setPublishedDate(newValue.getPublishedDate());
     }
 
     private void onAction() {
@@ -128,8 +148,31 @@ public class ManageBookController extends LibraryTable implements Initializable 
                         bookInfo.getBookId(), bookInfo.getBookName(),
                         bookInfo.getAuthorName(), bookInfo.getQuantityInStock(),
                         bookInfo.getLeastPrice(), Date.valueOf(bookInfo.getPublishedDate()));
-                System.out.println(bookInfo.getLeastPrice());
                 bookList.remove(bookInfo);
+            }
+        });
+
+        update_book_btn.setOnAction(actionEvent -> {
+            boolean ok = isFilled();
+
+            if (ok) {
+                BookInfo bookInfo = new BookInfo(Integer.parseInt(enter_book_id_txt_fld.getText()), enter_book_name_txt_fld.getText(),
+                        enter_author_name_txt_fld.getText(), Integer.parseInt(enter_quantity_txt_fld.getText()),
+                        Double.parseDouble(enter_price_txt_fld.getText()), LocalDate.parse(enter_published_date_txt_fld.getText()));
+                DBUtlis.executeUpdate("update bookStore\n" +
+                        "set bookName = ?, authorName = ?, quantityInStock = ?, leastPrice = ?, publishDate = ?\n" +
+                        "where bookId = ?; \n", bookInfo.getBookName(),
+                        bookInfo.getAuthorName(), bookInfo.getQuantityInStock(),
+                        bookInfo.getLeastPrice(), Date.valueOf(bookInfo.getPublishedDate()), bookInfo.getBookId());
+                for (int i = 0; i < bookList.size(); i++) {
+                    BookInfo temp = bookList.get(i);
+                    if (temp.getBookId() == bookInfo.getBookId()) {
+                        assign(temp, bookInfo);
+                        break;
+                    }
+                }
+                store_tb.refresh();
+                clear();
             }
         });
 

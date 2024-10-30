@@ -19,6 +19,7 @@ public class ViewFactory {
     private HBox userHiredBook;
     private HBox adminLibrary;
     private HBox adminSettings;
+    private HBox adminDashboard;
     private final StringProperty selectedAuthenticatonMode;
     private final StringProperty selectedUserMode;
     private final StringProperty selectedAdminMode;
@@ -110,6 +111,17 @@ public class ViewFactory {
             }
         }
         return adminSettings;
+    }
+
+    public HBox getAdminDashboard() {
+        if (adminDashboard == null) {
+            try {
+                adminDashboard = new FXMLLoader(getClass().getResource("/FXML/AdminDashboard.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return adminDashboard;
     }
 
 
