@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<HBox alignment="CENTER" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.CartEntityController">
+   <children>
+      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="700.0">
+         <children>
+            <ImageView fx:id="book_img" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@../IMAGES/logOUtIcon.png" />
+               </image>
+            </ImageView>
+            <VBox alignment="CENTER" prefHeight="100.0" prefWidth="178.0" spacing="5.0">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+               <children>
+                  <Label fx:id="book_name_lbl" text="Tên sách to đậm" />
+                  <Label fx:id="author_lbl" text="Tên tác giả bé mờ" />
+               </children>
+            </VBox>
+            <HBox alignment="CENTER" prefHeight="100.0" spacing="5.0">
+               <children>
+                  <Button fx:id="decrease_btn" mnemonicParsing="false" text="-" />
+                  <Label fx:id="quantity_lbl" text="0" />
+                  <Button fx:id="increase_btn" mnemonicParsing="false" text="+" />
+               </children>
+               <HBox.margin>
+                  <Insets left="70.0" />
+               </HBox.margin>
+            </HBox>
+            <Label fx:id="cost_lbl" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="260.0" text="10000$" />
+            <Button fx:id="erase_btn" mnemonicParsing="false" text="ers">
+               <HBox.margin>
+                  <Insets left="15.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</HBox>
