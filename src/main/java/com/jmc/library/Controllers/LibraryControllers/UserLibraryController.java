@@ -37,6 +37,8 @@ public class UserLibraryController extends LibraryController implements Initiali
     public ChoiceBox num_row_shown;
     public Button go_to_dashboard_btn;
     public Button go_to_store_btn;
+    public Button back_to_dashboard_btn;
+    public Button cart_btn;
 
 
     @Override

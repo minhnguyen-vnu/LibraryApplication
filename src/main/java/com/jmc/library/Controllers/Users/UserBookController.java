@@ -42,6 +42,7 @@ public class UserBookController extends User implements Initializable {
      * This is the same as the go_to_dashboard_btn
      */
     public Button back_to_dashboard_btn;
+    public Button cart_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
