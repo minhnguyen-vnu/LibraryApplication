@@ -34,6 +34,7 @@ public class LoginController implements Initializable {
     }
 
     void addListener() {
+        welcome_text_txt_flw.getChildren().add(new Label("Welcome to Library\nManagement System"));
         login_btn.setOnAction(event -> login());
         signup_lbl.setOnMouseClicked(mouseEvent -> onSignUp());
     }
