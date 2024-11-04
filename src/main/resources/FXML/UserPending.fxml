@@ -89,7 +89,7 @@
                                 </Button>
                             </children>
                         </VBox>
-                        <Button fx:id="log_out_btn" layoutY="585.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Log out">
+                        <Button fx:id="log_out_btn" layoutY="650.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Log out">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
