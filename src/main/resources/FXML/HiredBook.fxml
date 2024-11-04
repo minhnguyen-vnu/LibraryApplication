@@ -196,6 +196,8 @@
                         </Label>
                      </children>
                   </HBox>
+                  <AnchorPane fx:id="matte_screen" prefHeight="650.0" prefWidth="1080.0" styleClass="LowLightBackground" stylesheets="@../STYLES/BackGround.css" visible="false" />
+                  <AnchorPane fx:id="user_info_pane" layoutX="647.0" layoutY="2.0" styleClass="WhiteBackground" stylesheets="@../STYLES/BackGround.css" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                     </children>
                 </AnchorPane>
             </children>

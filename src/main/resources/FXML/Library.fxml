@@ -203,6 +203,8 @@
                                 </Label>
                             </children>
                         </HBox>
+                  <AnchorPane fx:id="matte_screen" prefHeight="200.0" prefWidth="200.0" styleClass="LowLightBackground" stylesheets="@../STYLES/BackGround.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <AnchorPane fx:id="user_info_pane" styleClass="WhiteBackground" stylesheets="@../STYLES/BackGround.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                     </children>
                 </AnchorPane>
             </children>

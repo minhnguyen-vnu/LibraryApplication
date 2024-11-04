@@ -10,10 +10,12 @@ import com.mysql.cj.xdevapi.CreateIndexParams;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -40,6 +42,8 @@ public class UserLibraryController extends LibraryController implements Initiali
     public Button back_to_dashboard_btn;
     public Button cart_btn;
     public Button pending_btn;
+    public AnchorPane matte_screen;
+    public AnchorPane user_info_pane;
 
 
     @Override
@@ -60,6 +64,28 @@ public class UserLibraryController extends LibraryController implements Initiali
         });
         go_to_store_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
+        });
+        account_avatar_img.setOnMouseClicked(mouseEvent -> {
+            if(user_info_pane.getChildren().isEmpty()) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/UserInfo.fxml"));
+                try {
+                    user_info_pane.getChildren().add(loader.load());
+                    matte_screen.setVisible(true);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                user_info_pane.getChildren().clear();
+                matte_screen.setVisible(false);
+            }
+        });
+        matte_screen.setOnMouseClicked(mouseEvent -> {
+            if(!user_info_pane.getChildren().isEmpty()) {
+                user_info_pane.getChildren().clear();
+                matte_screen.setVisible(false);
+            }
         });
     }
 
