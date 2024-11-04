@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserBookController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserPendingController">
     <children>
         <VBox prefHeight="200.0" prefWidth="200.0">
             <children>
@@ -69,15 +69,15 @@
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="pending_btn" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Pending list">
-                                    <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../IMAGES/BookListIcon.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
+                        <Button fx:id="pending_btn" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Pending list">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../IMAGES/BookListIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                                 <Button fx:id="go_to_setting_btn" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Setting">
                                     <graphic>
                                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -147,15 +147,14 @@
                         <TableView fx:id="store_tb" cacheShape="false" centerShape="false" layoutX="50.0" layoutY="70.0" prefHeight="550.0" prefWidth="960.0" scaleShape="false" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
                             <columns>
                                 <TableColumn fx:id="book_name_tb_cl" prefWidth="150.0" text="Book's name" />
-                        <TableColumn fx:id="author_tb_cl" prefWidth="150.0" text="Author's name" />
+                                <TableColumn fx:id="author_tb_cl" prefWidth="150.0" text="Author's name" />
                                 <TableColumn fx:id="book_id_tb_cl" prefWidth="120.0" text="Book's ID" />
                                 <TableColumn fx:id="picked_day_tb_cl" prefWidth="120.0" text="Picked Date" />
                                 <TableColumn fx:id="return_day_tb_cl" maxWidth="187.199951171875" minWidth="67.60003662109375" prefWidth="120.0" text="Return Date" />
-                                <TableColumn fx:id="total_cost_tb_cl" prefWidth="150.0" text="Cost" />
                             </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
                         </TableView>
                         <Button layoutX="811.0" layoutY="24.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="150.0" styleClass="MainButton" text="Check out" />
                         <Button layoutX="974.0" layoutY="24.0" minWidth="-Infinity" mnemonicParsing="false" prefWidth="35.0" styleClass="MainButton">
@@ -163,39 +162,39 @@
                                 <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="20" />
                             </graphic>
                         </Button>
-                  <HBox layoutX="42.0" layoutY="14.0">
-                     <children>
-                        <Button fx:id="go_to_dashboard_btn" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="IconButton">
-                           <graphic>
-                              <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../IMAGES/GoBackIcon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Label prefHeight="42.0" styleClass="Title" text="Hired book list">
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="409.0" layoutY="17.0" styleClass="ShowRow">
-                     <children>
-                        <Label text="Show ">
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </Label>
-                        <ChoiceBox fx:id="num_row_shown" />
-                        <Label text=" rows">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                  </HBox>
+                        <HBox layoutX="42.0" layoutY="14.0">
+                            <children>
+                                <Button fx:id="go_to_dashboard_btn" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="IconButton">
+                                    <graphic>
+                                        <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../IMAGES/GoBackIcon.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Label prefHeight="42.0" styleClass="Title" text="Pending book list">
+                                    <HBox.margin>
+                                        <Insets left="20.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="409.0" layoutY="17.0" styleClass="ShowRow">
+                            <children>
+                                <Label text="Show ">
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                                <ChoiceBox fx:id="num_row_shown" />
+                                <Label text=" rows">
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
                     </children>
                 </AnchorPane>
             </children>
