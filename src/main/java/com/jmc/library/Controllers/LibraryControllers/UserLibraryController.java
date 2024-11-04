@@ -39,6 +39,7 @@ public class UserLibraryController extends LibraryController implements Initiali
     public Button go_to_store_btn;
     public Button back_to_dashboard_btn;
     public Button cart_btn;
+    public Button pending_btn;
 
 
     @Override

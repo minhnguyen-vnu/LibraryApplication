@@ -43,6 +43,7 @@ public class UserBookController extends User implements Initializable {
      */
     public Button back_to_dashboard_btn;
     public Button cart_btn;
+    public Button pending_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
