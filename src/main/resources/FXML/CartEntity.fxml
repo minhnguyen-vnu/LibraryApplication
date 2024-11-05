@@ -3,11 +3,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
 
 <HBox alignment="CENTER" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.CartEntityController">
    <children>
@@ -32,9 +32,9 @@
             </VBox>
             <HBox alignment="CENTER" prefHeight="100.0" spacing="5.0">
                <children>
-                  <Button fx:id="decrease_btn" mnemonicParsing="false" text="-" />
-                  <Label fx:id="quantity_lbl" text="0" />
-                  <Button fx:id="increase_btn" mnemonicParsing="false" text="+" />
+                  <Button fx:id="decrease_btn" mnemonicParsing="false" prefWidth="40.0" text="-" />
+                  <TextField fx:id="num_day_borrow_txt_flw" minWidth="3.0" prefHeight="25.0" prefWidth="50.0" />
+                  <Button fx:id="increase_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="40.0" text="+" />
                </children>
                <HBox.margin>
                   <Insets left="70.0" />

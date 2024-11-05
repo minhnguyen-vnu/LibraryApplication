@@ -36,9 +36,12 @@ public class UserLibraryController extends LibraryController implements Initiali
     public ImageView account_avatar_img;
     public TableColumn<BookInfo, Boolean> add_to_cart_tb_cl;
     public TableColumn<BookInfo, String> book_name_tb_cl;
-    public ChoiceBox<Integer> num_row_shown;
+    public ChoiceBox num_row_shown;
     public Button go_to_dashboard_btn;
     public Button go_to_store_btn;
+    public Button back_to_dashboard_btn;
+    public Button cart_btn;
+    public Button pending_btn;
     public AnchorPane matte_screen;
     public AnchorPane user_info_pane;
 
@@ -46,7 +49,6 @@ public class UserLibraryController extends LibraryController implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setButtonListener();
-        setMaterialListener();
         initialAction();
         addBinding();
         onAction();
@@ -62,6 +64,28 @@ public class UserLibraryController extends LibraryController implements Initiali
         });
         go_to_store_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
+        });
+        account_avatar_img.setOnMouseClicked(mouseEvent -> {
+            if(user_info_pane.getChildren().isEmpty()) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/UserInfo.fxml"));
+                try {
+                    user_info_pane.getChildren().add(loader.load());
+                    matte_screen.setVisible(true);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                user_info_pane.getChildren().clear();
+                matte_screen.setVisible(false);
+            }
+        });
+        matte_screen.setOnMouseClicked(mouseEvent -> {
+            if(!user_info_pane.getChildren().isEmpty()) {
+                user_info_pane.getChildren().clear();
+                matte_screen.setVisible(false);
+            }
         });
         log_out_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().showAuthenticationWindow();

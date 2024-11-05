@@ -1,0 +1,103 @@
+* {
+    -fx-primary-color: #f0f0f0;
+    -fx-secondary-color: #8a64ec;
+    -fx-third-color: #baa4fd;
+    -fx-white-color: #ffffff;
+    -fx-dark-text-color: #000000;
+    -fx-light-text-color: #8d8c93;
+    -fx-light-blue-text-color: #64b3ec;
+    -fx-green-text-color: #76ea5c;
+}
+
+/* Style for the headers */
+
+.Header {
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-dark-text-color;
+    -fx-font-family: sans-serif;
+}
+
+.SubHeader {
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-dark-text-color;
+    -fx-font-family: sans-serif;
+}
+
+.LightText {
+    -fx-font-size: 12;
+    -fx-text-fill: -fx-light-text-color;
+    -fx-font-family: sans-serif;
+}
+
+.DarkText {
+    -fx-font-size: 12;
+    -fx-text-fill: -fx-dark-text-color;
+    -fx-font-family: sans-serif;
+}
+
+/* Style for the block */
+
+.GreyBlock {
+    -fx-background-color: -fx-primary-color;
+    -fx-background-radius: 15;
+}
+
+.PurpleBlock {
+    -fx-background-color: -fx-secondary-color;
+    -fx-background-radius: 15;
+}
+
+/* Style for the scroll pane */
+
+.scroll-pane .scroll-bar {
+    -fx-opacity: 0;
+}
+
+/* Style for the buttons */
+
+.CheckoutButton {
+    -fx-background-color: -fx-white-color;
+    /*-fx-text-fill: -fx-light-blue-text-color;*/
+    -fx-background-radius: 10;
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+}
+
+.CheckoutButton:hover {
+    -fx-background-color: -fx-white-color;
+    -fx-text-fill: -fx-light-blue-text-color;
+    -fx-background-radius: 10;
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+}
+
+.CheckoutButton .label {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-font-family: sans-serif;
+    -fx-text-fill: -fx-light-blue-text-color;
+}
+
+.CheckoutButton:hover .label {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-font-family: sans-serif;
+    -fx-text-fill: -fx-green-text-color;
+}
+
+.TextButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-light-text-color;
+    -fx-font-weight: bold;
+    -fx-font-size: 13;
+
+}
+
+.TextButton:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-dark-text-color;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+}

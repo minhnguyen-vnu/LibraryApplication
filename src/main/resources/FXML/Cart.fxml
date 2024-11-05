@@ -1,44 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserCartController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="GreyBlock" stylesheets="@../STYLES/Cart.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserCartController">
    <children>
       <AnchorPane prefHeight="80.0" prefWidth="1300.0">
          <children>
-            <Button fx:id="back_library_btn" layoutX="23.0" layoutY="27.0" mnemonicParsing="false" text="back" />
+            <Button fx:id="back_library_btn" layoutX="23.0" layoutY="27.0" mnemonicParsing="false" styleClass="TextButton" text="Back to library">
+               <graphic>
+                  <FontAwesomeIconView glyphName="ARROW_LEFT" />
+               </graphic></Button>
          </children>
       </AnchorPane>
       <HBox prefHeight="670.0" prefWidth="1300.0">
          <children>
             <VBox prefHeight="670.0" prefWidth="900.0">
                <children>
+                  <Separator prefHeight="6.0" prefWidth="200.0" />
                   <AnchorPane prefHeight="60.0" prefWidth="900.0">
                      <children>
                         <ChoiceBox fx:id="sort_choice_box" layoutX="697.0" layoutY="18.0" prefWidth="150.0" />
-                        <Label layoutX="33.0" layoutY="22.0" text="Borrowing cart " />
+                        <Label layoutX="33.0" layoutY="13.0" styleClass="Header" text="Borrowing cart " />
                      </children>
                   </AnchorPane>
                   <ScrollPane prefHeight="610.0" prefWidth="90.0">
                      <content>
-                        <VBox fx:id="list_book_vbox" alignment="TOP_CENTER" prefHeight="610.0" prefWidth="900.0" spacing="30.0" />
+                        <VBox fx:id="list_book_vbox" alignment="TOP_CENTER" prefHeight="610.0" prefWidth="900.0" spacing="30.0" styleClass="GreyBlock" />
                      </content>
                   </ScrollPane>
                </children>
             </VBox>
             <AnchorPane prefHeight="670.0" prefWidth="400.0">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="30.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="30.0" styleClass="PurpleBlock" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
                      <children>
-                        <Label text="Borrow Detail">
+                        <Label styleClass="SubHeader" text="Borrow Detail">
                            <VBox.margin>
                               <Insets left="15.0" top="10.0" />
                            </VBox.margin>
@@ -47,12 +52,12 @@
                            <children>
                               <HBox>
                                  <children>
-                                    <Label prefHeight="17.0" prefWidth="116.0" text="Sub total:">
+                                    <Label prefHeight="17.0" prefWidth="116.0" styleClass="DarkText" text="Sub total:">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Label fx:id="sub_total_lbl" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="229.0" text="1000$">
+                                    <Label fx:id="sub_total_lbl" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="229.0" styleClass="DarkText" text="1000$">
                                        <HBox.margin>
                                           <Insets right="10.0" />
                                        </HBox.margin>
@@ -61,12 +66,12 @@
                               </HBox>
                               <HBox>
                                  <children>
-                                    <Label prefHeight="17.0" prefWidth="116.0" text="Additional:">
+                                    <Label prefHeight="17.0" prefWidth="116.0" styleClass="DarkText" text="Additional:">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Label fx:id="additional_lbl" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="229.0" text="1000$">
+                                    <Label fx:id="additional_lbl" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="229.0" styleClass="DarkText" text="1000$">
                                        <HBox.margin>
                                           <Insets right="10.0" />
                                        </HBox.margin>
@@ -75,19 +80,19 @@
                               </HBox>
                               <HBox>
                                  <children>
-                                    <Label prefHeight="17.0" prefWidth="116.0" text="Total:">
+                                    <Label prefHeight="17.0" prefWidth="116.0" styleClass="DarkText" text="Total:">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Label fx:id="total_lbl" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="229.0" text="1000$">
+                                    <Label fx:id="total_lbl" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="229.0" styleClass="DarkText" text="1000$">
                                        <HBox.margin>
                                           <Insets right="10.0" />
                                        </HBox.margin>
                                     </Label>
                                  </children>
                               </HBox>
-                              <Button fx:id="check_out_btn" mnemonicParsing="false" text="check out &gt;">
+                              <Button fx:id="check_out_btn" mnemonicParsing="false" styleClass="CheckoutButton" text="check out">
                                  <graphic>
                                     <Label fx:id="show_total_lbl" text="1000$">
                                        <padding>
