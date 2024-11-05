@@ -2,7 +2,7 @@ package com.jmc.library.Controllers.Admin;
 
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.LibraryTable;
-import com.jmc.library.DBUtlis;
+import com.jmc.library.Database.DBUtlis;
 import com.jmc.library.Models.AdminLibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.fxml.Initializable;

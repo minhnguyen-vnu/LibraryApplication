@@ -1,7 +1,8 @@
 package com.jmc.library.Models;
 
 import com.jmc.library.Assets.BookInfo;
-import com.jmc.library.DBUtlis;
+import com.jmc.library.Database.DBQuery;
+import com.jmc.library.Database.DBUtlis;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,6 +15,7 @@ public class AdminLibraryModel {
     private int totalUsers;
     private int totalUser30PreviousDays;
     private int totalHiredBooks;
+    private boolean thread1, thread2, thread3;
 
     private AdminLibraryModel() {
         bookList = FXCollections.observableArrayList();
@@ -58,26 +60,100 @@ public class AdminLibraryModel {
     }
 
     private void dataFetching() {
-        try {
-            ResultSet resultSet = DBUtlis.executeQuery("select\n" +
-                    "    count(*) as cnt\n" +
-                    "from users\n" +
-                    "where isAdmin = 0;");
-            if (resultSet.next()) {
-                totalUsers = resultSet.getInt("cnt");
+        DBQuery totalUsersQuery = new DBQuery("select count(*) as cnt from users where isAdmin = 0;");
+        totalUsersQuery.setOnSucceeded(event -> {
+            ResultSet resultSet = totalUsersQuery.getValue();
+            try {
+                if (resultSet.next()) {
+                    totalUsers = resultSet.getInt("cnt");
+                    thread1 = true;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-            resultSet = DBUtlis.executeQuery("select count(*) as cnt from users\n" +
-                    "where registeredDate <= current_date - interval 30 day;");
-            if (resultSet.next()) {
-                totalUser30PreviousDays = resultSet.getInt("cnt");
+        });
+        totalUsersQuery.setOnFailed(event -> totalUsersQuery.getException().printStackTrace());
+
+        DBQuery totalUser30PreviousDaysQuery = new DBQuery("select count(*) as cnt from users where registeredDate <= current_date - interval 30 day;");
+        totalUser30PreviousDaysQuery.setOnSucceeded(event -> {
+            ResultSet resultSet = totalUser30PreviousDaysQuery.getValue();
+            try {
+                if (resultSet.next()) {
+                    totalUser30PreviousDays = resultSet.getInt("cnt");
+                    thread2 = true;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-            resultSet = DBUtlis.executeQuery("select count(*) as cnt from userRequest\n" +
-                    "where returnDate > current_date or returnDate is null;");
-            if (resultSet.next()) {
-                totalHiredBooks = resultSet.getInt("cnt");
+        });
+        totalUser30PreviousDaysQuery.setOnFailed(event -> totalUser30PreviousDaysQuery.getException().printStackTrace());
+
+        DBQuery totalHiredBooksQuery = new DBQuery("select count(*) as cnt from userRequest where returnDate > current_date or returnDate is null;");
+        totalHiredBooksQuery.setOnSucceeded(event -> {
+            ResultSet resultSet = totalHiredBooksQuery.getValue();
+            try {
+                if (resultSet.next()) {
+                    totalHiredBooks = resultSet.getInt("cnt");
+                    thread3 = true;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        });
+        totalHiredBooksQuery.setOnFailed(event -> totalHiredBooksQuery.getException().printStackTrace());
+
+        Thread totalUsersThread = new Thread(totalUsersQuery);
+        Thread totalUser30PreviousDaysThread = new Thread(totalUser30PreviousDaysQuery);
+        Thread totalHiredBooksThread = new Thread(totalHiredBooksQuery);
+
+        totalUsersThread.setDaemon(true);
+        totalUser30PreviousDaysThread.setDaemon(true);
+        totalHiredBooksThread.setDaemon(true);
+
+        totalUsersThread.start();
+        totalUser30PreviousDaysThread.start();
+        totalHiredBooksThread.start();
+    }
+
+    public boolean isThread2() {
+        return thread2;
+    }
+
+    public void setThread2(boolean thread2) {
+        this.thread2 = thread2;
+    }
+
+    public boolean isThread1() {
+        return thread1;
+    }
+
+    public void setThread1(boolean thread1) {
+        this.thread1 = thread1;
+    }
+
+    public boolean isThread3() {
+        return thread3;
+    }
+
+    public void setThread3(boolean thread3) {
+        this.thread3 = thread3;
     }
 }

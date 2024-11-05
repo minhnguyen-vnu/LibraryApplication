@@ -1,8 +1,10 @@
 package com.jmc.library.Controllers.Admin;
 
-import com.jmc.library.DBUtlis;
+import com.jmc.library.Database.DBQuery;
+import com.jmc.library.Database.DBUtlis;
 import com.jmc.library.Models.AdminLibraryModel;
 import com.jmc.library.Models.Model;
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -12,11 +14,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
+import java.util.*;
+import java.util.concurrent.CountDownLatch;
+
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+
 
 public class AdminDashboardController implements Initializable {
     public Button go_to_dashboard_btn;
@@ -38,11 +45,24 @@ public class AdminDashboardController implements Initializable {
     }
 
     private void show() {
-        total_customers_lbl.setText(String.valueOf(AdminLibraryModel.getInstance().getTotalUsers()));
-        diff_lbl.setText(String.valueOf(AdminLibraryModel.getInstance().getTotalUsers() - AdminLibraryModel.getInstance().getTotalUser30PreviousDays()));
-        total_hired_book_lbl.setText(String.valueOf(AdminLibraryModel.getInstance().getTotalHiredBooks()));
+        Thread UIThread = new Thread(() -> {
+            while (true) {
+                if (AdminLibraryModel.getInstance().isThread1() && AdminLibraryModel.getInstance().isThread2() && AdminLibraryModel.getInstance().isThread3()) {
+                    Platform.runLater(() -> {
+                        total_customers_lbl.setText(String.valueOf(AdminLibraryModel.getInstance().getTotalUsers()));
+                        diff_lbl.setText(String.valueOf(AdminLibraryModel.getInstance().getTotalUsers() - AdminLibraryModel.getInstance().getTotalUser30PreviousDays()));
+                        total_hired_book_lbl.setText(String.valueOf(AdminLibraryModel.getInstance().getTotalHiredBooks()));
+                    });
+                    break;
+                }
+            }
+        });
+        UIThread.setDaemon(true);
+        UIThread.start();
 
-        // Ensure the LineChart is not re-initialized
+
+        System.out.println(AdminLibraryModel.getInstance().getTotalUsers());
+
         customers_line_chart.getData().clear();
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -50,22 +70,43 @@ public class AdminDashboardController implements Initializable {
 
         LocalDate currentDate = LocalDate.now();
         int currentMonth = currentDate.getMonthValue();
-        boolean ok = false;
-        for (int i = 1; i <= currentMonth; i++) {
-            try {
-                ResultSet resultSet = DBUtlis.executeQuery("select count(*) as cnt from users where month(registeredDate) = ? and isAdmin = 0;", i);
-                if (resultSet.next()) {
-                    int num = resultSet.getInt("cnt");
-                    if (num > 0) ok = true;
-                    if (ok) {
-                        System.out.println(i + " " + num);
-                        series.getData().add(new XYChart.Data<>(String.valueOf(i), num));
+
+
+        Thread thread = new Thread(() -> {
+            for (int i = 1; i <= currentMonth; i++) {
+                int month = i;
+                DBQuery dbQuery = new DBQuery("select count(*) as cnt from users where month(registeredDate) = ? and isAdmin = 0;", i);
+                dbQuery.setOnSucceeded(event -> {
+                    ResultSet resultSet = dbQuery.getValue();
+                    try {
+                        if (resultSet.next()) {
+                            int num = resultSet.getInt("cnt");
+                            if (num > 0) {
+                                Platform.runLater(() -> {
+                                    series.getData().add(new XYChart.Data<>(String.valueOf(month), num));
+                                });
+                            }
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            resultSet.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                });
+                dbQuery.setOnFailed(event -> dbQuery.getException().printStackTrace());
+
+                dbQuery.run();
             }
-        }
+            Platform.runLater(() -> customers_line_chart.getData().add(series));
+        });
+        thread.setDaemon(true);
+        thread.start();
+
+
         customers_line_chart.getData().add(series);
     }
 
