@@ -38,7 +38,7 @@ public class LoginController implements Initializable {
 
     void addListener() {
         welcome_text_txt_flw.getChildren().add(new Label("Welcome to Library\nManagement System"));
-        login_btn.setOnAction(event -> login());
+        login_btn.setOnAction(event -> login()); /// bat dau quay o day
         signup_lbl.setOnMouseClicked(mouseEvent -> onSignUp());
     }
 
@@ -61,7 +61,7 @@ public class LoginController implements Initializable {
                     Platform.runLater(() -> stageTransforming(isAdmin));
                 } else {
                     Platform.runLater(() -> {
-                        error_lbl.setText("Login Failed");
+                        error_lbl.setText("Login Failed"); /// ket thuc quay o day, neu mat khau sai
                         error_lbl.setStyle("-fx-text-fill: red");
                     });
                 }
@@ -82,6 +82,8 @@ public class LoginController implements Initializable {
     }
 
     public void stageTransforming(boolean isAdmin) {
+
+        /// mat khau dung thi ket thuc o day
         Stage currentStage = (Stage) login_btn.getScene().getWindow();
         Model.getInstance().getViewFactory().closeStage(currentStage);
         if (isAdmin) {
