@@ -56,6 +56,8 @@ public class LoginController implements Initializable {
     }
 
     public void login() {
+        loading_img.setVisible(true);
+        rotateTransition.play();
         DBQuery dbQuery = new DBQuery("select * from users where username = ? and password = ?", acc_address_fld.getText(), password_fld.getText());
         dbQuery.setOnSucceeded(event -> {
             ResultSet resultSet = dbQuery.getValue();
@@ -75,6 +77,8 @@ public class LoginController implements Initializable {
                 } else {
                     Platform.runLater(() -> {
                         error_lbl.setText("Login Failed"); /// ket thuc quay o day, neu mat khau sai
+                        loading_img.setVisible(false);
+                        rotateTransition.stop();
                         error_lbl.setStyle("-fx-text-fill: red");
                     });
                 }
@@ -97,6 +101,8 @@ public class LoginController implements Initializable {
     public void stageTransforming(boolean isAdmin) {
 
         /// mat khau dung thi ket thuc o day
+        loading_img.setVisible(false);
+        rotateTransition.stop();
         Stage currentStage = (Stage) login_btn.getScene().getWindow();
         Model.getInstance().getViewFactory().closeStage(currentStage);
         if (isAdmin) {
