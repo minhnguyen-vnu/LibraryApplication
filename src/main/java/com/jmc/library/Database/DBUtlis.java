@@ -1,4 +1,4 @@
-package com.jmc.library;
+package com.jmc.library.Database;
 
 import java.sql.*;
 

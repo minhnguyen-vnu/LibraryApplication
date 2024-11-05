@@ -1,6 +1,7 @@
 package com.jmc.library.Assets;
 
-import com.jmc.library.DBUtlis;
+import com.jmc.library.Database.DBQuery;
+import com.jmc.library.Database.DBUtlis;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -38,16 +39,26 @@ public class LibraryTable {
     protected void showLibrary() {
         bookList.clear();
         store_tb.setItems(bookList);
-        try {
-            ResultSet resultSet = DBUtlis.executeQuery("select * from bookStore");
-            while (resultSet.next()) {
-                BookInfo currentBook = new BookInfo(resultSet.getInt("bookId"), resultSet.getString("bookName"),
-                        resultSet.getString("authorName"), resultSet.getInt("quantityInStock"), resultSet.getDouble("leastPrice"),
-                        resultSet.getDate("publishDate").toLocalDate());
-                bookList.add(currentBook);
+        DBQuery dbQuery = new DBQuery("select * from bookStore");
+        dbQuery.setOnSucceeded(event -> {
+            ResultSet resultSet = dbQuery.getValue();
+            try {
+                while (resultSet.next()) {
+                    BookInfo currentBook = new BookInfo(resultSet.getInt("bookId"), resultSet.getString("bookName"),
+                            resultSet.getString("authorName"), resultSet.getInt("quantityInStock"), resultSet.getDouble("leastPrice"),
+                            resultSet.getDate("publishDate").toLocalDate());
+                    bookList.add(currentBook);
+                }
+                resultSet.close();
+            } catch (SQLException e){
+                throw new RuntimeException(e);
             }
-        } catch (SQLException e){
-            throw new RuntimeException(e);
-        }
+        });
+        dbQuery.setOnFailed(event -> {
+            System.out.println("Failed");
+        });
+        Thread thread = new Thread(dbQuery);
+        thread.setDaemon(true);
+        thread.start();
     }
 }

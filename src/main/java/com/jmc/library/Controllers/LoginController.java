@@ -1,8 +1,11 @@
 package com.jmc.library.Controllers;
 
-import com.jmc.library.DBUtlis;
+import com.jmc.library.Database.DBQuery;
+import com.jmc.library.Database.DBUpdate;
+import com.jmc.library.Database.DBUtlis;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
+import javafx.application.Platform;
 import javafx.animation.RotateTransition;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -40,7 +43,7 @@ public class LoginController implements Initializable {
 
     void addListener() {
         welcome_text_txt_flw.getChildren().add(new Label("Welcome to Library\nManagement System"));
-        login_btn.setOnAction(event -> login());
+        login_btn.setOnAction(event -> login()); /// bat dau quay o day
         signup_lbl.setOnMouseClicked(mouseEvent -> onSignUp());
     }
 
@@ -53,39 +56,51 @@ public class LoginController implements Initializable {
     }
 
     public void login() {
-        loading_img.setVisible(true);
-        rotateTransition.play();
+        DBQuery dbQuery = new DBQuery("select * from users where username = ? and password = ?", acc_address_fld.getText(), password_fld.getText());
+        dbQuery.setOnSucceeded(event -> {
+            ResultSet resultSet = dbQuery.getValue();
+            try {
+                if (resultSet.next()) {
+                    boolean isAdmin = resultSet.getBoolean("isAdmin");
+                    if (!isAdmin) {
+                        Platform.runLater(() -> {
+                            error_lbl.setText("Login Successfully");
+                            error_lbl.setStyle("-fx-text-fill: green");
+                            error_lbl.setAlignment(Pos.CENTER_LEFT);
+                            LibraryModel.getInstance().setUser(acc_address_fld.getText(), password_fld.getText());
+                            LibraryModel.getInstance().getUser().loadBookList();
+                        });
+                    }
+                    Platform.runLater(() -> stageTransforming(isAdmin));
+                } else {
+                    Platform.runLater(() -> {
+                        error_lbl.setText("Login Failed"); /// ket thuc quay o day, neu mat khau sai
+                        error_lbl.setStyle("-fx-text-fill: red");
+                    });
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                DBUtlis.closeResources(null, resultSet, null);
+            }
+        });
 
-//        ResultSet resultSet = null;
-//        try {
-//            resultSet = DBUtlis.executeQuery("select * from users where username = ? and password = ?", acc_address_fld.getText(), password_fld.getText());
-//            if (resultSet.next()) {
-//                boolean isAdmin = resultSet.getBoolean("isAdmin");
-//                if (!isAdmin) {
-//                    error_lbl.setText("Login Successfully");
-//                    error_lbl.setStyle("-fx-text-fill: green");
-//                    error_lbl.setAlignment(Pos.CENTER_LEFT);
-//                    LibraryModel.getInstance().setUser(acc_address_fld.getText(), password_fld.getText());
-//                    LibraryModel.getInstance().getUser().loadBookList();
-//                }
-//                stageTransforming(isAdmin);
-//            } else {
-//                error_lbl.setText("Login Failed");
-//                error_lbl.setStyle("-fx-text-fill: red");
-//            }
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//            DBUtlis.closeResources(null, resultSet, null);
-//        }
+        dbQuery.setOnFailed(event -> {
+            System.out.println("Failed");
+        });
+
+        Thread thread = new Thread(dbQuery);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     public void stageTransforming(boolean isAdmin) {
+
+        /// mat khau dung thi ket thuc o day
         Stage currentStage = (Stage) login_btn.getScene().getWindow();
         Model.getInstance().getViewFactory().closeStage(currentStage);
         if (isAdmin) {
             Model.getInstance().getViewFactory().showAdminWindow();
-            System.out.println(1);
             Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View");
         }
         else {
