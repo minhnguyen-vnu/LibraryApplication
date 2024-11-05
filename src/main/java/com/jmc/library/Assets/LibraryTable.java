@@ -2,15 +2,22 @@ package com.jmc.library.Assets;
 
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Database.DBUtlis;
+import javafx.animation.RotateTransition;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 
+import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import  javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
 
 public class LibraryTable {
     public TableColumn<BookInfo, Integer> book_id_tb_cl;
@@ -21,7 +28,32 @@ public class LibraryTable {
     public TableColumn<BookInfo, LocalDate> published_date_tb_cl;
     public TableView<BookInfo> store_tb;
     public ObservableList<BookInfo> bookList;
+    public ImageView loading_img;
+    public RotateTransition rotateTransition;
 
+    protected void addLoading() {
+
+        rotateTransition = new RotateTransition();
+        rotateTransition.setNode(loading_img);
+        rotateTransition.setByAngle(360);
+        rotateTransition.setCycleCount(RotateTransition.INDEFINITE);
+        rotateTransition.setAutoReverse(false);
+        rotateTransition.play();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
+        try {
+            loading_img = loader.load();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        rotateTransition = new RotateTransition();
+        rotateTransition.setNode(loading_img);
+        rotateTransition.setByAngle(360);
+        rotateTransition.setCycleCount(RotateTransition.INDEFINITE);
+        rotateTransition.setAutoReverse(false);
+        rotateTransition.play();
+        store_tb.setPlaceholder(loading_img);
+
+    }
     protected void setTable() {
         bookList = FXCollections.observableArrayList();
         store_tb.setItems(bookList);

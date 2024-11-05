@@ -1,0 +1,10 @@
+.BigWhiteFont {
+    -fx-font-size: 40;
+    -fx-text-fill: white;
+}
+
+.BigBlackFont {
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-font-size: 40;
+    -fx-text-fill: black;
+}

@@ -23,6 +23,7 @@ public class AdminLibraryController extends LibraryController implements Initial
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addLoading();
         initialAction();
         setTable();
         addBinding();
