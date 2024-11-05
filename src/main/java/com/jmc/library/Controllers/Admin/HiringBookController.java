@@ -14,4 +14,5 @@ public class HiringBookController {
     public TableColumn customer_cl;
     public TableColumn due_date_cl;
     public TableColumn status_cl;
+    public Button return_btn;
 }
