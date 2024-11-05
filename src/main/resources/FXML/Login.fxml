@@ -56,7 +56,7 @@
                         </HBox>
                     </children>
                 </Pane>
-                <Button fx:id="login_btn" layoutX="261.0" layoutY="409.0" mnemonicParsing="false" styleClass="LoginButton" text="Log In" />
+                <Button fx:id="login_btn" layoutX="261.0" layoutY="409.0" mnemonicParsing="false" styleClass="LoginButton" text="Login" />
                 <Label fx:id="error_lbl" layoutX="261.0" layoutY="506.0" styleClass="error_lbl" />
                 <Label fx:id="signup_lbl" layoutX="499.0" layoutY="557.0" styleClass="link_lbl" text="Sign up now" />
                 <Text layoutX="349.0" layoutY="572.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have the account?">
@@ -64,6 +64,15 @@
                         <Font size="13.0" />
                     </font>
                 </Text>
+            <Pane layoutX="528.0" layoutY="416.0">
+               <children>
+                  <ImageView fx:id="loading_img" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../IMAGES/loadingImage.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
             </children></AnchorPane>
     </children>
 </HBox>
