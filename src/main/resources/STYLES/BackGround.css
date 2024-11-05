@@ -1,0 +1,9 @@
+.WhiteBackground {
+    -fx-background-color: white;
+    -fx-background-radius: 15 0 0 15;
+}
+
+.LowLightBackground {
+    -fx-background-color: #616161;
+    -fx-opacity: 0.3;
+}
