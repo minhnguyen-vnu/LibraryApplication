@@ -1,5 +1,6 @@
 package com.jmc.library.Assets;
 
+import com.jmc.library.Controllers.Assets.LoadingController;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Database.DBUtlis;
 import javafx.animation.RotateTransition;
@@ -29,30 +30,17 @@ public class LibraryTable {
     public TableView<BookInfo> store_tb;
     public ObservableList<BookInfo> bookList;
     public ImageView loading_img;
-    public RotateTransition rotateTransition;
 
     protected void addLoading() {
 
-        rotateTransition = new RotateTransition();
-        rotateTransition.setNode(loading_img);
-        rotateTransition.setByAngle(360);
-        rotateTransition.setCycleCount(RotateTransition.INDEFINITE);
-        rotateTransition.setAutoReverse(false);
-        rotateTransition.play();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
         try {
             loading_img = loader.load();
+            store_tb.setPlaceholder(loading_img);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        rotateTransition = new RotateTransition();
-        rotateTransition.setNode(loading_img);
-        rotateTransition.setByAngle(360);
-        rotateTransition.setCycleCount(RotateTransition.INDEFINITE);
-        rotateTransition.setAutoReverse(false);
-        rotateTransition.play();
-        store_tb.setPlaceholder(loading_img);
-
     }
     protected void setTable() {
         bookList = FXCollections.observableArrayList();
