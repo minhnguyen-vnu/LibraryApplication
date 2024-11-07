@@ -69,13 +69,14 @@
       </AnchorPane>
       <AnchorPane prefHeight="755.0" prefWidth="900.0" styleClass="MainBackground" stylesheets="@../STYLES/ManageBookBar.css">
          <children>
-            <TableView layoutX="25.0" layoutY="186.0" prefHeight="525.0" prefWidth="850.0" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
+            <TableView layoutX="25.0" layoutY="186.0" prefHeight="525.0" prefWidth="840.0" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
                <columns>
                   <TableColumn fx:id="issue_id_cl" prefWidth="75.0" text="Issue id" />
                   <TableColumn fx:id="book_name_cl" prefWidth="75.0" text="Book name" />
                   <TableColumn fx:id="customer_cl" prefWidth="75.0" text="Customer" />
                   <TableColumn fx:id="borrow_date_cl" prefWidth="75.0" text="Borrow date" />
                   <TableColumn fx:id="due_date_cl" prefWidth="75.0" text=" Due Date" />
+                  <TableColumn fx:id="cost_cl" prefWidth="75.0" text="cost" />
                   <TableColumn fx:id="status_cl" prefWidth="75.0" text="Status" />
                </columns>
                <columnResizePolicy>
