@@ -145,8 +145,9 @@
                 </AnchorPane>
                 <AnchorPane prefHeight="650.0" prefWidth="180.0" styleClass="MainBackground">
                     <children>
-                        <TableView fx:id="store_tb" layoutX="50.0" layoutY="70.0" prefHeight="550.0" prefWidth="960.0" styleClass="TableListView">
+                        <TableView fx:id="store_tb" layoutX="50.0" layoutY="70.0" prefHeight="550.0" prefWidth="995.0" styleClass="TableListView">
                         <columns>
+                        <TableColumn fx:id="book_cover_tb_cl" prefWidth="75.0" text="Cover" />
                            <TableColumn fx:id="book_id_tb_cl" prefWidth="71.0" text="Book's ID" />
                            <TableColumn fx:id="book_name_tb_cl" prefWidth="131.0" text="Book's name" />
                            <TableColumn fx:id="author_tb_cl" prefWidth="102.0" text="Author " />

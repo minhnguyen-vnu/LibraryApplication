@@ -44,6 +44,7 @@ public class UserLibraryController extends LibraryController implements Initiali
     public Button pending_btn;
     public AnchorPane matte_screen;
     public AnchorPane user_info_pane;
+    public TableColumn<BookInfo, ImageView> book_cover_tb_cl;
 
 
     @Override
@@ -152,6 +153,19 @@ public class UserLibraryController extends LibraryController implements Initiali
                         Model.getInstance().getViewFactory().showDisplayBook();
                         System.out.println("Book name: " + book.getBookName());
                     });
+                }
+            }
+        });
+
+        book_cover_tb_cl.setCellFactory(param -> new TableCell<BookInfo, ImageView>() {
+            @Override
+            protected void updateItem(ImageView item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    BookInfo book = getTableView().getItems().get(getIndex());
+//                    setGraphic(book.getBookCover());
                 }
             }
         });
