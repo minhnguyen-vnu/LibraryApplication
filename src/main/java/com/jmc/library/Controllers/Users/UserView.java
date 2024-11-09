@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 
 public class UserView implements Initializable {
     public BorderPane user_parent;
-//    ObservableList<BookInfo>
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -20,6 +19,13 @@ public class UserView implements Initializable {
                         case "User Library" -> user_parent.setCenter(Model.getInstance().getViewFactory().getUserHiredBook());
                         case "User Dashboard" -> user_parent.setCenter(Model.getInstance().getViewFactory().getUserDashboard());
                         case "User Store" -> user_parent.setCenter(Model.getInstance().getViewFactory().getUserStore());
+                        case "User Cart" -> user_parent.setCenter(Model.getInstance().getViewFactory().getUserCart());
+                        case "User Pending" -> user_parent.setCenter(Model.getInstance().getViewFactory().getUserPending());
+                        case "Book Detail" -> {
+                            System.out.println(2);
+                            user_parent.setCenter(Model.getInstance().getViewFactory().getBookDetail());
+                            System.out.println(2);
+                        }
                         default -> user_parent.setCenter(Model.getInstance().getViewFactory().getUserLibrary());
                     }
                 } else {

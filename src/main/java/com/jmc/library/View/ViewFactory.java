@@ -7,6 +7,7 @@ import com.jmc.library.Controllers.Users.UserView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,8 +22,13 @@ public class ViewFactory {
     private HBox userLibrary;
     private HBox userHiredBook;
     private HBox userDashboard;
+    private Node userCart;
+    private Node userPending;
+    private Node bookDetail;
     private final StringProperty selectedAuthenticatonMode;
     private final StringProperty selectedUserMode;
+
+    private BookDisplayController bookDisplayController;
 
     public ViewFactory() {
         this.selectedAuthenticatonMode = new SimpleStringProperty("");
@@ -101,6 +107,51 @@ public class ViewFactory {
         }
         return userDashboard;
     }
+
+    public Node getUserCart() {
+        if (userCart == null) {
+            try {
+                userCart = new FXMLLoader(getClass().getResource("/FXML/Cart.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return userCart;
+    }
+
+    public Node getBookDetail() {
+        if (bookDetail == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/DisplayBook.fxml"));
+                bookDetail = loader.load();
+                bookDisplayController = loader.getController();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return bookDetail;
+    }
+
+    public void setBookDisplayController(BookDisplayController bookDisplayController) {
+        this.bookDisplayController = bookDisplayController;
+    }
+
+    public BookDisplayController getBookDisplayController() {
+        return bookDisplayController;
+    }
+
+    public Node getUserPending() {
+        if (userPending == null) {
+            try {
+                userPending = new FXMLLoader(getClass().getResource("/FXML/UserPending.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return userPending;
+    }
+
     public void showUserWindow() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/UserView.fxml"));
         UserView user = new UserView();

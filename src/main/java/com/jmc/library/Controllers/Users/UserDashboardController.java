@@ -56,7 +56,7 @@ public class UserDashboardController extends User implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        bookList = LibraryModel.getInstance().getUser().getBookList();
+        bookList = LibraryModel.getInstance().getUser().getBookHiredList();
 
         addBinding();
         setButtonListener();
@@ -96,6 +96,7 @@ public class UserDashboardController extends User implements Initializable {
         new_books_read_lbl.setText("300");
         total_hired_book_lbl.setText(String.valueOf(bookList.size()));
     }
+
     private void addBinding() {
         hot_book_list.setItems(bookList);
         System.err.println("UserDashboardController.addBinding");

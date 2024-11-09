@@ -1,5 +1,8 @@
 package com.jmc.library.Assets;
 
+import com.jmc.library.DBUtlis;
+
+import java.sql.ResultSet;
 import java.time.LocalDate;
 
 public class UserBookInfo {
@@ -8,14 +11,51 @@ public class UserBookInfo {
     private int bookId;
     private LocalDate returnDate, pickedDate;
     private double totalCost;
+    private String status;
 
-    public UserBookInfo(String bookName, String authorName, int bookId, LocalDate pickedDate, LocalDate returnDate, double totalCost) {
+    private double singleCost;
+    private String ISBN;
+
+    public UserBookInfo() {
+
+    }
+    public UserBookInfo(String bookName, String authorName,
+                        int bookId, LocalDate pickedDate,
+                        LocalDate returnDate, double totalCost,
+                        String status) {
         this.bookName = bookName;
         this.authorName = authorName;
         this.bookId = bookId;
-        this.returnDate = pickedDate;
-        this.pickedDate = returnDate;
+        this.pickedDate = pickedDate;
+        this.returnDate = returnDate;
         this.totalCost = totalCost;
+        this.status = status;
+
+        try {
+            ResultSet rs = DBUtlis.executeQuery("SELECT ISBN,leastPrice FROM bookStore WHERE bookId = " + bookId);
+            if (rs.next()) {
+                this.ISBN = rs.getString("ISBN");
+                this.singleCost = rs.getDouble("leastPrice");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public double getSingleCost() {
+        return singleCost;
+    }
+
+    public void setSingleCost(double singleCost) {
+        this.singleCost = singleCost;
     }
 
     public String getBookName() {
@@ -66,6 +106,14 @@ public class UserBookInfo {
         this.totalCost = totalCost;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "UserBookInfo{" +
@@ -75,6 +123,7 @@ public class UserBookInfo {
                 ", returnDate=" + returnDate +
                 ", pickedDate=" + pickedDate +
                 ", totalCost=" + totalCost +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

@@ -45,20 +45,22 @@ public class BookDisplayController extends UserLibraryController implements Init
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        displayBook = BookModel.getInstance().getBookInfo();
+        setDisplayBook(BookModel.getInstance().getBookInfo());
         if (displayBook == null) {
             System.out.println("No book selected.");
             return;
         }
+        System.out.println("Book selected: " + displayBook.getBookName());
         setButtonListener();
+    }
+
+    public void setDisplayBook(BookInfo displayBook) {
+        this.displayBook = displayBook;
         setMaterialListener();
     }
 
     private void setButtonListener() {
         go_to_back_btn.setOnAction(actionEvent -> {
-            Stage currentStage = (Stage) get_book_btn.getScene().getWindow();
-            Model.getInstance().getViewFactory().closeStage(currentStage);
-            Model.getInstance().getViewFactory().showUserWindow();
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
         });
         get_book_btn.setOnAction(actionEvent -> {
@@ -88,7 +90,7 @@ public class BookDisplayController extends UserLibraryController implements Init
             JSONObject volumeInfo = items.getJSONObject(totalItems).getJSONObject("volumeInfo");
 
             JSONArray authorsArray = volumeInfo.has("authors") ? volumeInfo.getJSONArray("authors") : null;
-            book_name_txt_flw.getChildren().add(new Label(displayBook.getBookName()));
+            book_name_txt_flw.getChildren().setAll(new Label(displayBook.getBookName()));
             String authors = (authorsArray != null) ? Arrays.toString(authorsArray.toList().toArray()) : "N/A";
             author_lbl.setText("Author(s): " + authors.replace("[", "").replace("]", ""));
             String publisher = volumeInfo.has("publisher") ? volumeInfo.getString("publisher") : "N/A";
@@ -110,8 +112,12 @@ public class BookDisplayController extends UserLibraryController implements Init
             preview_txt_flw.setWrapText(true);
             preview_txt_flw.setText(description);
             String thumbnail = volumeInfo.has("imageLinks") ? volumeInfo.getJSONObject("imageLinks").getString("thumbnail") : null;
+
             if (thumbnail != null) {
                 book_img.setImage(new javafx.scene.image.Image(thumbnail));
+            }
+            else {
+                book_img.setImage(new javafx.scene.image.Image("https://via.placeholder.com/150"));
             }
         }
     }

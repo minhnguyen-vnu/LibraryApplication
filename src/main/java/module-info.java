@@ -22,4 +22,5 @@ module com.jmc.library {
     exports com.jmc.library.Controllers.Admin;
     exports com.jmc.library.Controllers.GoogleBookAPI;
     exports com.jmc.library.Controllers.Books;
+    exports com.jmc.library.Controllers.Interface;
 }
