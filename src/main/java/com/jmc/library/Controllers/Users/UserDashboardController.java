@@ -1,6 +1,8 @@
 package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.UserBookInfo;
+import com.jmc.library.Controllers.Interface.DashboardUpdateListener;
+import com.jmc.library.Controllers.Interface.InterfaceManager;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.ObservableList;
@@ -24,7 +26,7 @@ import java.util.ResourceBundle;
  * now every thing is not designed
  */
 
-public class UserDashboardController extends User implements Initializable {
+public class UserDashboardController extends User implements Initializable, DashboardUpdateListener {
 
     public Button go_to_library_btn;
     public Button go_to_store_btn;
@@ -57,11 +59,20 @@ public class UserDashboardController extends User implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        bookList = LibraryModel.getInstance().getUser().getBookHiredList();
-
+        InterfaceManager.getInstance().setDashboardUpdateListener(this);
         addBinding();
         setButtonListener();
         setAnotherListener();
+    }
+
+    @Override
+    public void onTotalReadBookUpdate(int totalReadBook) {
+        total_read_book_lbl.setText(String.valueOf(totalReadBook));
+    }
+
+    @Override
+    public void onNewBooksReadUpdate(int newBooksRead) {
+        new_books_read_lbl.setText(String.valueOf(newBooksRead));
     }
 
     // thieu pending/cart/ + bo search + bo setting
@@ -98,21 +109,14 @@ public class UserDashboardController extends User implements Initializable {
         welcome_username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
         username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
         account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png").toExternalForm()).getImage());
-
-        int count = 0;
+        /*
         total_read_book_lbl.setText(String.valueOf
                 (LibraryModel.getInstance().getUser().
                         getBookHiredList().size()));
 
-        for (UserBookInfo book : LibraryModel.getInstance().getUser().getBookHiredList()) {
-            if ((int) (java.time.temporal.ChronoUnit.DAYS.between(
-                    book.getPickedDate(),
-                    book.getReturnDate()) + 1) <= 10) {
-                count++;
-            }
-        }
-        new_books_read_lbl.setText(String.valueOf(count));
+        
         total_hired_book_lbl.setText(String.valueOf(bookList.size()));
+        */
     }
 
     private void addBinding() {

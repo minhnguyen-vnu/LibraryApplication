@@ -5,6 +5,8 @@ public class InterfaceManager {
 
     private CartUpdateListener cartUpdateListener;
 
+    private DashboardUpdateListener dashboardUpdateListener;
+
     private InterfaceManager() {
         cartUpdateListener = null;
     }
@@ -20,5 +22,13 @@ public class InterfaceManager {
 
     public CartUpdateListener getCartUpdateListener() {
         return this.cartUpdateListener;
+    }
+
+    public void setDashboardUpdateListener(DashboardUpdateListener listener) {
+        this.dashboardUpdateListener = listener;
+    }
+
+    public DashboardUpdateListener getDashboardUpdateListener() {
+        return this.dashboardUpdateListener;
     }
 }
