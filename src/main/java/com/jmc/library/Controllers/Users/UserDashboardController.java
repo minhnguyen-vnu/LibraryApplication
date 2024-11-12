@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -63,37 +64,54 @@ public class UserDashboardController extends User implements Initializable {
         setAnotherListener();
     }
 
+    // thieu pending/cart/ + bo search + bo setting
     private void setButtonListener() {
-        // cai button search nay hoi vo li sua lai sau.
         search_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
         });
+
         go_to_library_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
         });
+
         go_to_store_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("Store");
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
         });
+
         go_to_setting_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("Setting");
         });
+
         log_out_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("Login");
+            Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(currentStage);
+            Model.getInstance().getViewFactory().showAuthenticationWindow();
         });
     }
 
     private void setAnotherListener() {
-        // cai nay de tam thoi, sau nay se sua lai
+        //lam sau
         view_all_lbl.setOnMouseClicked(mouseEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
         });
 
         welcome_username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
         username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
         account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png").toExternalForm()).getImage());
 
-        total_read_book_lbl.setText("400");
-        new_books_read_lbl.setText("300");
+        int count = 0;
+        total_read_book_lbl.setText(String.valueOf
+                (LibraryModel.getInstance().getUser().
+                        getBookHiredList().size()));
+
+        for (UserBookInfo book : LibraryModel.getInstance().getUser().getBookHiredList()) {
+            if ((int) (java.time.temporal.ChronoUnit.DAYS.between(
+                    book.getPickedDate(),
+                    book.getReturnDate()) + 1) <= 10) {
+                count++;
+            }
+        }
+        new_books_read_lbl.setText(String.valueOf(count));
         total_hired_book_lbl.setText(String.valueOf(bookList.size()));
     }
 

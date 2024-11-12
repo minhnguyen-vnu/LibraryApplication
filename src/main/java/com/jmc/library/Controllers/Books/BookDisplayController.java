@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -26,6 +27,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class BookDisplayController extends UserLibraryController implements Initializable {
@@ -113,12 +115,7 @@ public class BookDisplayController extends UserLibraryController implements Init
             preview_txt_flw.setText(description);
             String thumbnail = volumeInfo.has("imageLinks") ? volumeInfo.getJSONObject("imageLinks").getString("thumbnail") : null;
 
-            if (thumbnail != null) {
-                book_img.setImage(new javafx.scene.image.Image(thumbnail));
-            }
-            else {
-                book_img.setImage(new javafx.scene.image.Image("https://via.placeholder.com/150"));
-            }
+            book_img.setImage(new Image(Objects.requireNonNullElse(thumbnail, "https://via.placeholder.com/150")));
         }
     }
 }

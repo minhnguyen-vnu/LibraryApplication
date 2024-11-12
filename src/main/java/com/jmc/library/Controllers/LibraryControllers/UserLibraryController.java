@@ -28,20 +28,19 @@ import java.util.stream.Collectors;
 
 public class UserLibraryController extends LibraryController implements Initializable {
     public Button go_to_setting_btn;
-    public TableColumn<BookInfo, Button> hire_tb_cl;
-
     public Button go_to_user_library_btn;
+    public Button go_to_dashboard_btn;
+    public Button go_to_store_btn;
+    public Button cart_btn;
+    public Button pending_btn;
     public Button log_out_btn;
+    
     public Label username_lbl;
     public ImageView account_avatar_img;
     public TableColumn<BookInfo, Boolean> add_to_cart_tb_cl;
     public TableColumn<BookInfo, String> book_name_tb_cl;
     public ChoiceBox<Integer> num_row_shown;
-    public Button go_to_dashboard_btn;
-    public Button go_to_store_btn;
-    public Button back_to_dashboard_btn;
-    public Button cart_btn;
-    public Button pending_btn;
+
     public AnchorPane matte_screen;
     public AnchorPane user_info_pane;
     public TableColumn<BookInfo, ImageView> book_cover_tb_cl;
@@ -53,6 +52,7 @@ public class UserLibraryController extends LibraryController implements Initiali
         initialAction();
         setButtonListener();
         setMaterialListener();
+        setTable();
         showLibrary();
     }
 
@@ -71,9 +71,6 @@ public class UserLibraryController extends LibraryController implements Initiali
             Model.getInstance().getViewFactory().closeStage(currentStage);
             Model.getInstance().getViewFactory().showAuthenticationWindow();
         });
-        back_to_dashboard_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Dashboard");
-        });
         cart_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Cart");
         });
@@ -82,37 +79,28 @@ public class UserLibraryController extends LibraryController implements Initiali
         });
     }
 
-    private void setMaterialListener(){
-        try {
-            ResultSet resultSet = DBUtlis.executeQuery("SELECT * \n" +
-                    "FROM bookStore b\n" +
-                    "WHERE b.bookId NOT IN (\n" +
-                    "    SELECT r.bookId\n" +
-                    "    FROM userRequest r\n" +
-                    "    WHERE r.status = 'accepted'\n" +
-                    ");");
+    private void setMaterialListener() {
+        setUsername_lbl();
+        setNum_row_shown();
+        setAccount_avatar_img();
+    }
 
-            if (resultSet.next()) {
-                while (resultSet.next()) {
-                    BookInfo book = new BookInfo(resultSet.getInt("bookId"), resultSet.getString("bookName"),
-                            resultSet.getDate("publishDate").toLocalDate(), resultSet.getString("authorName"),
-                            resultSet.getInt("quantityInStock"), resultSet.getDouble("leastPrice"),
-                            resultSet.getString("ISBN"));
-                    bookList.add(book);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
+    private void setUsername_lbl() {
         username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
+    }
 
+    private void setNum_row_shown() {
         num_row_shown.getItems().addAll(5, 10, 15, 20);
         num_row_shown.setValue(5);
         num_row_shown.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             store_tb.refresh();
             store_tb.setItems(FXCollections.observableArrayList(bookList.stream().limit(newVal).collect(Collectors.toList())));
         });
+    }
+
+    private void setAccount_avatar_img() {
+        account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png")
+                .toExternalForm()).getImage());
 
         account_avatar_img.setOnMouseClicked(mouseEvent -> {
             if(user_info_pane.getChildren().isEmpty()) {
@@ -139,6 +127,12 @@ public class UserLibraryController extends LibraryController implements Initiali
     }
 
     private void onAction() {
+        setAdd_to_cart_tb_cl();
+        setBook_name_tb_cl();
+        setBook_cover_tb_cl();
+    }
+
+    private void setAdd_to_cart_tb_cl() {
         add_to_cart_tb_cl.setCellFactory(param -> new TableCell<BookInfo, Boolean>() {
             private final CheckBox checkBox = new CheckBox("Cart");
 
@@ -172,7 +166,9 @@ public class UserLibraryController extends LibraryController implements Initiali
                 }
             }
         });
+    }
 
+    private void setBook_name_tb_cl() {
         book_name_tb_cl.setCellFactory(param -> new TableCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -191,7 +187,9 @@ public class UserLibraryController extends LibraryController implements Initiali
                 }
             }
         });
+    }
 
+    private void setBook_cover_tb_cl() {
         book_cover_tb_cl.setCellFactory(param -> new TableCell<BookInfo, ImageView>() {
             @Override
             protected void updateItem(ImageView item, boolean empty) {
@@ -207,8 +205,6 @@ public class UserLibraryController extends LibraryController implements Initiali
     }
 
     private void addBookForUser(UserBookInfo addedBook){
-        LibraryModel.getInstance().getUser()
-                .getBookWaitingPaymentList().add(addedBook);
         LibraryModel.getInstance().getUser()
                 .getCartEntityControllers().add(new CartEntityController(addedBook));
         InterfaceManager.getInstance()

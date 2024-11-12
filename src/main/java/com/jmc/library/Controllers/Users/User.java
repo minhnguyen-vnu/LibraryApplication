@@ -11,15 +11,14 @@ import java.sql.SQLException;
 public class User {
     private String username;
     private String token;
+
     private ObservableList<UserBookInfo> bookPendingList;
     private ObservableList<UserBookInfo> bookHiredList;
-    private ObservableList<UserBookInfo> bookWaitingPaymentList;
     private ObservableList<CartEntityController> cartEntityControllers;
 
     public User() {
         this.bookPendingList = FXCollections.observableArrayList();
         this.bookHiredList = FXCollections.observableArrayList();
-        this.bookWaitingPaymentList = FXCollections.observableArrayList();
         this.cartEntityControllers = FXCollections.observableArrayList();
     }
 
@@ -55,14 +54,6 @@ public class User {
         this.bookHiredList = bookHiredList;
     }
 
-    public ObservableList<UserBookInfo> getBookWaitingPaymentList() {
-        return bookWaitingPaymentList;
-    }
-
-    public void setBookWaitingPaymentList(ObservableList<UserBookInfo> bookWaitingPaymentList) {
-        this.bookWaitingPaymentList = bookWaitingPaymentList;
-    }
-
     public ObservableList<CartEntityController> getCartEntityControllers() {
         return cartEntityControllers;
     }
@@ -92,6 +83,7 @@ public class User {
                         resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("status"));
                 this.bookPendingList.add(userBookInfo);
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -109,7 +101,7 @@ public class User {
                     "    r.returnDate,\n" +
                     "    r.cost,\n" +
                     "    r.status\n"+
-                    "from userHired r\n" +
+                    "from  userRequest r\n" +
                     "join bookStore b using(bookId)\n" +
                     "where r.username = ? " +
                     "and r.status = 'accepted';", this.username);
@@ -120,33 +112,7 @@ public class User {
                         resultSet.getString("status"));
                 this.bookHiredList.add(userBookInfo);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void loadBookWaitingPaymentList() {
-        bookWaitingPaymentList.clear();
-        try {
-            ResultSet resultSet = DBUtlis.executeQuery("select\n" +
-                    "    r.username,\n" +
-                    "    r.bookName,\n" +
-                    "    b.authorName,\n" +
-                    "    r.bookId,\n" +
-                    "    r.pickedDate,\n" +
-                    "    r.returnDate,\n" +
-                    "    r.cost,\n" +
-                    "from userHired r\n" +
-                    "join bookStore b using(bookId)\n" +
-                    "where r.username = ? " +
-                    "and r.status = 'waiting_payment';", this.username);
-            while (resultSet.next()) {
-                UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
-                        resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
-                        resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"),
-                        resultSet.getString("status"));
-                this.bookWaitingPaymentList.add(userBookInfo);
-            }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -177,6 +143,7 @@ public class User {
                 CartEntityController cartEntityController = new CartEntityController(userBookInfo);
                 this.cartEntityControllers.add(cartEntityController);
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -199,5 +166,34 @@ public class User {
 
     public String getTotal() {
         return String.format("%.2f",Double.parseDouble(getSubTotal()) + Double.parseDouble(getAdditional()));
+    }
+
+    public boolean userPayment() {
+        try {
+            ResultSet resultSet = DBUtlis.executeQuery("select money from user where username = ?;", this.username);
+            if (resultSet.next()) {
+                double money = resultSet.getDouble("money");
+                if (money >= Double.parseDouble(getTotal())) {
+                    DBUtlis.executeUpdate("update user set money = ? where username = ?;", money - Double.parseDouble(getTotal()), this.username);
+                    for (CartEntityController cartEntityController : this.cartEntityControllers) {
+                        DBUtlis.executeUpdate("update userRequest set status = 'pending' where username = ? and bookId = ?;",
+                                this.username,
+                                cartEntityController.getUserBookInfo().getBookId());
+                        cartEntityController.getUserBookInfo().setStatus("pending");
+                        this.bookPendingList.add(cartEntityController.getUserBookInfo());
+                    }
+                    resultSet.close();
+                    return true;
+                }
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+    public void clearCart() {
+        DBUtlis.executeUpdate("delete from userRequest where username = ? and status = 'Need_to_payment';", this.username);
+        this.cartEntityControllers.clear();
     }
 }

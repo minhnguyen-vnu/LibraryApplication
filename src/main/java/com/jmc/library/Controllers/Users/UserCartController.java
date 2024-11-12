@@ -27,7 +27,6 @@ public class UserCartController extends User implements Initializable, CartUpdat
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        LibraryModel.getInstance().getUser().loadCartEntityControllers();
         InterfaceManager.getInstance().setCartUpdateListener(this);
         setButtonListener();
         setMaterialListener();
@@ -58,7 +57,12 @@ public class UserCartController extends User implements Initializable, CartUpdat
         });
 
         check_out_btn.setOnAction(actionEvent -> {
-            // Xử lý thanh toán
+            if (LibraryModel.getInstance().getUser().userPayment()) {
+                LibraryModel.getInstance().getUser().clearCart();
+                setListBookVBox();
+                updateCartSummary();
+                Model.getInstance().getViewFactory().getSelectedUserMode().set("User Pending");
+            }
         });
     }
 
@@ -66,7 +70,6 @@ public class UserCartController extends User implements Initializable, CartUpdat
         list_book_vbox.getChildren().clear();
 
         for (CartEntityController cartEntityController : LibraryModel.getInstance().getUser().getCartEntityControllers()) {
-            //cartEntityController.setCartUpdateListener(this);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/CartEntity.fxml"));
             loader.setController(cartEntityController);
             try {

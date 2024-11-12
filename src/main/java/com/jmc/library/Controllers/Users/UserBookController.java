@@ -32,10 +32,11 @@ public class UserBookController extends User implements Initializable {
     public TableColumn<UserBookInfo, Integer> book_id_tb_cl;
     public TableColumn<UserBookInfo, LocalDate> return_day_tb_cl;
     public TableColumn<UserBookInfo, LocalDate> picked_day_tb_cl;
+    public TableColumn<UserBookInfo, Double> total_cost_tb_cl;
+
     public TextField search_fld;
     public Button search_btn;
 
-    public TableColumn<UserBookInfo, Double> total_cost_tb_cl;
     public Button go_to_store_btn;
     public Button go_to_library_btn;
     public ImageView account_avatar_img;
