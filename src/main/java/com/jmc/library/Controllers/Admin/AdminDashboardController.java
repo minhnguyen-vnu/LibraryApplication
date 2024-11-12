@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AdminDashboardController implements Initializable {
     public Button go_to_dashboard_btn;
     public Button manage_btn;
-    public Button go_to_setting_btn;
+    public Button go_to_request_btn;
     public Button log_out_btn;
     public ListView trending;
     public Label view_all_lbl;
@@ -114,5 +114,6 @@ public class AdminDashboardController implements Initializable {
         manage_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View");
         });
+        go_to_request_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Request Management"));
     }
 }

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="BorderContainer" stylesheets="@../STYLES/ManageBookBar.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Admin.HiringBookController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="BorderContainer" stylesheets="@../STYLES/ManageBookBar.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Admin.RequestManagement">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="750.0" prefWidth="400.0" styleClass="BarBackground" stylesheets="@../STYLES/ManageBookBar.css">
          <children>
@@ -31,8 +31,8 @@
                      <children>
                         <VBox alignment="CENTER_LEFT">
                            <children>
-                              <Label styleClass="SearchTitle" text="Borrow date" />
-                              <DatePicker fx:id="get_borrow_date" styleClass="SearchField" stylesheets="@../STYLES/ManageBookBar.css" />
+                              <Label styleClass="SearchTitle" text="Borrowed date" />
+                              <DatePicker fx:id="get_borrowed_date" styleClass="SearchField" stylesheets="@../STYLES/ManageBookBar.css" />
                            </children>
                         </VBox>
                      </children>
@@ -69,14 +69,14 @@
       </AnchorPane>
       <AnchorPane prefHeight="755.0" prefWidth="900.0" styleClass="MainBackground" stylesheets="@../STYLES/ManageBookBar.css">
          <children>
-            <TableView layoutX="25.0" layoutY="186.0" prefHeight="525.0" prefWidth="840.0" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
+            <TableView fx:id="store_tb" layoutX="25.0" layoutY="186.0" prefHeight="525.0" prefWidth="840.0" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
                <columns>
-                  <TableColumn fx:id="issue_id_cl" prefWidth="75.0" text="Issue id" />
-                  <TableColumn fx:id="book_name_cl" prefWidth="75.0" text="Book name" />
+                  <TableColumn fx:id="issue_id_cl" prefWidth="75.0" text="Issue's ID" />
+                  <TableColumn fx:id="book_id_cl" prefWidth="75.0" text="Book's ID" />
                   <TableColumn fx:id="customer_cl" prefWidth="75.0" text="Customer" />
-                  <TableColumn fx:id="borrow_date_cl" prefWidth="75.0" text="Borrow date" />
+                  <TableColumn fx:id="borrowed_date_cl" prefWidth="75.0" text="Borrowed date" />
                   <TableColumn fx:id="due_date_cl" prefWidth="75.0" text=" Due Date" />
-                  <TableColumn fx:id="cost_cl" prefWidth="75.0" text="cost" />
+                  <TableColumn fx:id="cost_cl" prefWidth="75.0" text="Cost" />
                   <TableColumn fx:id="status_cl" prefWidth="75.0" text="Status" />
                </columns>
                <columnResizePolicy>

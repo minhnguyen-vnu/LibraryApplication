@@ -13,8 +13,8 @@ public class UserBookInfo {
         this.bookName = bookName;
         this.authorName = authorName;
         this.bookId = bookId;
-        this.returnDate = pickedDate;
-        this.pickedDate = returnDate;
+        this.returnDate = returnDate;
+        this.pickedDate = pickedDate;
         this.totalCost = totalCost;
     }
 

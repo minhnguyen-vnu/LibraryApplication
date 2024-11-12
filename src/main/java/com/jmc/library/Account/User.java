@@ -41,6 +41,7 @@ public class User extends Account {
                 UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
                         resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
                         resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"));
+                System.out.println(userBookInfo);
                 this.bookList.add(userBookInfo);
             }
         } catch (SQLException e) {

@@ -82,9 +82,9 @@ public class UserLibraryController extends LibraryController implements Initiali
                         book.setQuantityInStock(book.getQuantityInStock() - 1);
                         LocalDate expiryDate = LocalDate.of(2024, 12, 19);
                         long daysBetween = ChronoUnit.DAYS.between(LocalDate.now(), expiryDate);
-                        DBUtlis.executeUpdate("insert into userRequest\n" +
-                                "values(?, ?, ?, ?, ?, ?); ", book.getBookId(), book.getBookName(), LibraryModel.getInstance().getUser().getUsername(),
-                                LocalDate.now(), expiryDate, book.getLeastPrice() * daysBetween);
+                        DBUtlis.executeUpdate("insert into userRequest(bookId, bookName, username, pickedDate, returnDate, cost, requestStatus)\n" +
+                                "values(?, ?, ?, ?, ?, ?, ?); ", book.getBookId(), book.getBookName(), LibraryModel.getInstance().getUser().getUsername(),
+                                LocalDate.now(), expiryDate, book.getLeastPrice() * daysBetween, "pending");
                         getTableView().refresh();
                         UserBookInfo userBookInfo = new UserBookInfo(book.getBookName(), book.getAuthorName(),  book.getBookId(), LocalDate.now(), expiryDate, book.getLeastPrice() * daysBetween);
                         addBookforUser(userBookInfo);

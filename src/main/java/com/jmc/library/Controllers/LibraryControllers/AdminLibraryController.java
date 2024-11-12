@@ -17,7 +17,7 @@ public class AdminLibraryController extends LibraryController implements Initial
     public ImageView account_avatar_img;
     public Label account_name_lbl;
     public Button log_out_btn;
-    public Button go_to_setting_btn;
+    public Button go_to_request_btn;
     public Button manage_btn;
     public Button go_to_dashboard_btn;
 
@@ -40,5 +40,6 @@ public class AdminLibraryController extends LibraryController implements Initial
     public void onAction() {
         settings_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Managemental Book"));
         go_to_dashboard_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Dashboard View"));
+        go_to_request_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Request Management"));
     }
 }
