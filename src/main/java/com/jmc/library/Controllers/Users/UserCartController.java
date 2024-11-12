@@ -30,7 +30,7 @@ public class UserCartController extends User implements Initializable, CartUpdat
         InterfaceManager.getInstance().setCartUpdateListener(this);
         setButtonListener();
         setMaterialListener();
-        setListBookVBox();
+//        setListBookVBox();
     }
 
     @Override

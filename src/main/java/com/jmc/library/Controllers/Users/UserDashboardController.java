@@ -56,6 +56,18 @@ public class UserDashboardController extends User implements Initializable, Dash
     public CategoryAxis month_total_read_hired_ca;
 
     public ObservableList<UserBookInfo> bookList;
+    public Button back_to_dashboard_btn;
+    public Button cart_btn;
+    public Button pending_btn;
+    public Label welcome_admin_lbl;
+    public ListView trending;
+    public Label total_customers_lbl;
+    /**
+     * this is the different between the last month and this month customers
+     */
+    public Label diff_lbl;
+    public LineChart customers_line_chart;
+    public BarChart hired_books_chart;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
