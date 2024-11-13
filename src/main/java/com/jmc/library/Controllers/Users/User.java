@@ -63,6 +63,22 @@ public class User {
     }
 
     public void loadBookPendingList() {
+        try {
+            ResultSet resultSet = DBUtlis.executeQuery("select\n" +
+                    "    r.username,\n" +
+                    "    r.bookName,\n" +
+                    "    b.authorName,\n" +
+                    "    r.bookId,\n" +
+                    "    r.pickedDate,\n" +
+                    "    r.returnDate,\n" +
+                    "    r.cost,\n" +
+                    "    r.requestStatus\n"+
+                    "from userRequest r\n" +
+                    "join bookStore b using(bookId)\n" +
+                    "where r.username = ? order by r.requestStatus;", this.username);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         bookPendingList.clear();
         try {
             ResultSet resultSet = DBUtlis.executeQuery("select\n" +
@@ -73,14 +89,14 @@ public class User {
                     "    r.pickedDate,\n" +
                     "    r.returnDate,\n" +
                     "    r.cost,\n" +
-                    "    r.status\n"+
+                    "    r.requestStatus\n"+
                     "from userRequest r\n" +
                     "join bookStore b using(bookId)\n" +
-                    "where r.username = ? order by r.status;", this.username);
+                    "where r.username = ? order by r.requestStatus;", this.username);
             while (resultSet.next()) {
                 UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
                         resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
-                        resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("status"));
+                        resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"));
                 this.bookPendingList.add(userBookInfo);
             }
             resultSet.close();
@@ -100,11 +116,11 @@ public class User {
                     "    r.pickedDate,\n" +
                     "    r.returnDate,\n" +
                     "    r.cost,\n" +
-                    "    r.status\n"+
+                    "    r.requestStatus\n"+
                     "from  userRequest r\n" +
                     "join bookStore b using(bookId)\n" +
                     "where r.username = ? " +
-                    "and r.status = 'accepted';", this.username);
+                    "and r.requestStatus = 'accepted';", this.username);
             while (resultSet.next()) {
                 UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
                         resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
@@ -129,17 +145,17 @@ public class User {
                     "    r.pickedDate,\n" +
                     "    r.returnDate,\n" +
                     "    r.cost,\n" +
-                    "    r.status\n"+
+                    "    r.requestStatus\n"+
                     "from userRequest r\n" +
                     "join bookStore b using(bookId)\n" +
                     "where r.username = ? " +
-                    "and r.status = 'Need_to_payment';", this.username);
+                    "and r.requestStatus = 'Need_to_payment';", this.username);
             while (resultSet.next()) {
                 System.out.println(1);
                 UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
                         resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
                         resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"),
-                        resultSet.getString("status"));
+                        resultSet.getString("requestStatus"));
                 CartEntityController cartEntityController = new CartEntityController(userBookInfo);
                 this.cartEntityControllers.add(cartEntityController);
             }
@@ -176,7 +192,7 @@ public class User {
                 if (money >= Double.parseDouble(getTotal())) {
                     DBUtlis.executeUpdate("update user set money = ? where username = ?;", money - Double.parseDouble(getTotal()), this.username);
                     for (CartEntityController cartEntityController : this.cartEntityControllers) {
-                        DBUtlis.executeUpdate("update userRequest set status = 'pending' where username = ? and bookId = ?;",
+                        DBUtlis.executeUpdate("update userRequest set requestStatus = 'pending' where username = ? and bookId = ?;",
                                 this.username,
                                 cartEntityController.getUserBookInfo().getBookId());
                         cartEntityController.getUserBookInfo().setStatus("pending");
@@ -193,7 +209,16 @@ public class User {
         return false;
     }
     public void clearCart() {
-        DBUtlis.executeUpdate("delete from userRequest where username = ? and status = 'Need_to_payment';", this.username);
+        DBUtlis.executeUpdate("delete from userRequest where username = ? and requestStatus = 'Need_to_payment';", this.username);
         this.cartEntityControllers.clear();
+    }
+
+    public void resetAll() {
+        this.bookPendingList.clear();
+        this.bookHiredList.clear();
+        this.cartEntityControllers.clear();
+
+        this.username = null;
+        this.token = null;
     }
 }

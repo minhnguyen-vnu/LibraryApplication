@@ -11,7 +11,7 @@ public class UserBookInfo {
     private int bookId;
     private LocalDate returnDate, pickedDate;
     private double totalCost;
-    private String status;
+    private String requestStatus;
 
     private double singleCost;
     private String ISBN;
@@ -29,7 +29,7 @@ public class UserBookInfo {
         this.pickedDate = pickedDate;
         this.returnDate = returnDate;
         this.totalCost = totalCost;
-        this.status = status;
+        this.requestStatus = status;
 
         try {
             ResultSet rs = DBUtlis.executeQuery("SELECT ISBN,leastPrice FROM bookStore WHERE bookId = " + bookId);
@@ -107,11 +107,11 @@ public class UserBookInfo {
     }
 
     public String getStatus() {
-        return status;
+        return requestStatus;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.requestStatus = status;
     }
 
     @Override
@@ -123,7 +123,7 @@ public class UserBookInfo {
                 ", returnDate=" + returnDate +
                 ", pickedDate=" + pickedDate +
                 ", totalCost=" + totalCost +
-                ", status='" + status + '\'' +
+                ", requestStatus='" + requestStatus + '\'' +
                 '}';
     }
 }

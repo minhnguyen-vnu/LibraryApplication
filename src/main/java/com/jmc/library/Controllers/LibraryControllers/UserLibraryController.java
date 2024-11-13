@@ -4,13 +4,11 @@ import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.Interface.InterfaceManager;
 import com.jmc.library.Controllers.Users.CartEntityController;
-import com.jmc.library.Controllers.Interface.CartUpdateListener;
 import com.jmc.library.DBUtlis;
 import com.jmc.library.Models.BookModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -67,6 +65,8 @@ public class UserLibraryController extends LibraryController implements Initiali
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
         });
         log_out_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().resetAll();
+            LibraryModel.getInstance().getUser().resetAll();
             Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(currentStage);
             Model.getInstance().getViewFactory().showAuthenticationWindow();
@@ -207,6 +207,8 @@ public class UserLibraryController extends LibraryController implements Initiali
     private void addBookForUser(UserBookInfo addedBook){
         LibraryModel.getInstance().getUser()
                 .getCartEntityControllers().add(new CartEntityController(addedBook));
+        LibraryModel.getInstance().getUser()
+                        .getBookPendingList().add(addedBook);
         InterfaceManager.getInstance()
                 .getCartUpdateListener()
                 .onAddCartEntity(new CartEntityController(addedBook));
@@ -217,15 +219,25 @@ public class UserLibraryController extends LibraryController implements Initiali
                 "set quantityInStock = quantityInStock - 1\n" +
                 "where bookId = ?;", book.getBookId());
         book.setQuantityInStock(book.getQuantityInStock() - 1);
-        DBUtlis.executeUpdate("insert into userRequest\n" +
-                        "values(?, ?, ?, ?, ?, ?, ?); ", book.getBookId(), book.getBookName(),
-                LibraryModel.getInstance().getUser().getUsername(),
-                LocalDate.now(), LocalDate.now(), book.getLeastPrice(),
-                "Need_to_payment");
         UserBookInfo userBookInfo = new UserBookInfo(book.getBookName(), book.getAuthorName(),
                 book.getBookId(), LocalDate.now(),
                 LocalDate.now(), book.getLeastPrice(),
                 "Need_to_payment");
+        try {
+            ResultSet resultSet = DBUtlis.executeQuery("select max(issueId) from userRequest;");
+            if (resultSet.next()) {
+                DBUtlis.executeUpdate("insert into userRequest\n" +
+                                "values(?, ?, ?, ?, ?, ?, ?, ?); ",
+                        resultSet.getInt(1) + 1,
+                        book.getBookId(), book.getBookName(),
+                        LibraryModel.getInstance().getUser().getUsername(),
+                        LocalDate.now(), LocalDate.now(),
+                        book.getLeastPrice(),
+                        "Need_to_payment");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         addBookForUser(userBookInfo);
     }
 

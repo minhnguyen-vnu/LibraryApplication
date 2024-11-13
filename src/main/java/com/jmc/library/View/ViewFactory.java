@@ -202,4 +202,15 @@ public class ViewFactory {
     public void closeStage(Stage stage) {
         stage.close();
     }
+
+    public void resetAll() {
+        logInView = null;
+        signUpView = null;
+        userLibrary = null;
+        userHiredBook = null;
+        userDashboard = null;
+        userCart = null;
+        userPending = null;
+        bookDetail = null;
+    }
 }

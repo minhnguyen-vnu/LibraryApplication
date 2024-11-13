@@ -1,7 +1,9 @@
 package com.jmc.library.Controllers.Interface;
 
 public interface DashboardUpdateListener {
-    void onTotalReadBookUpdate(int totalReadBook);
+    void onTotalReadBookUpdate();
 
-    void onNewBooksReadUpdate(int newBooksRead);
+    void onNewBooksReadUpdate();
+
+    void onHireBooksUpdate();
 }

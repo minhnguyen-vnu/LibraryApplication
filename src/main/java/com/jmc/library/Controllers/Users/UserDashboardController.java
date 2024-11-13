@@ -3,6 +3,7 @@ package com.jmc.library.Controllers.Users;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.Interface.DashboardUpdateListener;
 import com.jmc.library.Controllers.Interface.InterfaceManager;
+import com.jmc.library.DBUtlis;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.ObservableList;
@@ -15,8 +16,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 
@@ -31,21 +35,20 @@ public class UserDashboardController extends User implements Initializable, Dash
     public Button go_to_library_btn;
     public Button go_to_store_btn;
     public Button go_to_setting_btn;
+    public Button go_to_dashboard_btn;
+    public Button go_to_cart_btn;
+    public Button go_to_pending_btn;
     public Button log_out_btn;
-    public Button search_btn;
 
-    public Label username_lbl;
     public Label welcome_username_lbl;
+
     public Label view_all_lbl;
+
     public Label total_read_book_lbl;
     public Label new_books_read_lbl;
     public Label total_hired_book_lbl;
 
-    public ImageView account_avatar_img;
-
-    public TextField search_fld;
-
-    public ListView<UserBookInfo> hot_book_list;
+    public ListView<Pair<String, String>> hot_book_list;
 
     public LineChart<String, Number> over_view_line_chart;
     public NumberAxis book_borrowed_over_view_na;
@@ -54,8 +57,6 @@ public class UserDashboardController extends User implements Initializable, Dash
     public BarChart<String, Number> read_and_hired_bar_chart;
     public NumberAxis read_hired_bar_chart_na;
     public CategoryAxis month_total_read_hired_ca;
-
-    public ObservableList<UserBookInfo> bookList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -66,21 +67,33 @@ public class UserDashboardController extends User implements Initializable, Dash
     }
 
     @Override
-    public void onTotalReadBookUpdate(int totalReadBook) {
-        total_read_book_lbl.setText(String.valueOf(totalReadBook));
+    public void onTotalReadBookUpdate(){}
+    //@Override
+    public void onDashBoardUpdate() {
+        ObservableList<UserBookInfo> bookList = LibraryModel
+                .getInstance().getUser().getBookHiredList();
+        int countReadBook = 0;
+        int countHiredBook = 0;
+        int countNewReadBook = 0;
+        for (UserBookInfo book : bookList) {
+            if (book.getReturnDate().isBefore(LocalDate.now())) {
+                total_read_book_lbl.setText(String.valueOf(
+                        Integer.parseInt(total_read_book_lbl.getText()) + 1));
+            }
+        }
     }
 
     @Override
-    public void onNewBooksReadUpdate(int newBooksRead) {
-        new_books_read_lbl.setText(String.valueOf(newBooksRead));
+    public void onNewBooksReadUpdate() {
+        //new_books_read_lbl.setText(String.valueOf(newBooksRead));
     }
 
-    // thieu pending/cart/ + bo search + bo setting
-    private void setButtonListener() {
-        search_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
-        });
+    @Override
+    public void onHireBooksUpdate() {
 
+    }
+
+    private void setButtonListener() {
         go_to_library_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
         });
@@ -89,11 +102,21 @@ public class UserDashboardController extends User implements Initializable, Dash
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
         });
 
+        go_to_cart_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Cart");
+        });
+
+        go_to_pending_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Pending");
+        });
+
         go_to_setting_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("Setting");
         });
 
         log_out_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().resetAll();
+            LibraryModel.getInstance().getUser().resetAll();
             Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(currentStage);
             Model.getInstance().getViewFactory().showAuthenticationWindow();
@@ -107,20 +130,22 @@ public class UserDashboardController extends User implements Initializable, Dash
         });
 
         welcome_username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
-        username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
-        account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png").toExternalForm()).getImage());
-        /*
-        total_read_book_lbl.setText(String.valueOf
-                (LibraryModel.getInstance().getUser().
-                        getBookHiredList().size()));
-
-        
-        total_hired_book_lbl.setText(String.valueOf(bookList.size()));
-        */
     }
 
+    private void setHotBookList() {
+        try {
+            ResultSet resultSet = DBUtlis.executeQuery("select bookName, " +
+                    "authorName from bookStore order by quantityInStock DESC limit 3;");
+            while (resultSet.next()) {
+                hot_book_list.getItems().add(new Pair<>(resultSet.getString("bookName"),
+                        resultSet.getString("authorName")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void addBinding() {
-        hot_book_list.setItems(bookList);
+        setHotBookList();
         System.err.println("UserDashboardController.addBinding");
         setOverViewLineChart();
         setReadAndHiredBarChart();
