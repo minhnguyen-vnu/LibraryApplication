@@ -173,7 +173,12 @@ public class User {
     }
 
     public String getSubTotal() {
-        return String.format("%.2f",this.cartEntityControllers.stream().mapToDouble(cartEntityController -> cartEntityController.getUserBookInfo().getTotalCost()).sum());
+        double total = this.cartEntityControllers.stream().mapToDouble(cartEntityController -> cartEntityController.getUserBookInfo().getTotalCost()).sum();
+        System.out.println(total);
+        String result = Double.toString(total);
+        System.out.println(result);
+        return result;
+
     }
 
     public String getAdditional() {
