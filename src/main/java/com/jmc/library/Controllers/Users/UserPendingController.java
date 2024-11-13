@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -64,28 +65,28 @@ public class UserPendingController extends User implements Initializable {
             store_tb.setItems(FXCollections.observableArrayList(bookList.stream().limit(newVal).collect(Collectors.toList())));
         });
 
-//        account_avatar_img.setOnMouseClicked(mouseEvent -> {
-//            if(user_info_pane.getChildren().isEmpty()) {
-//                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/UserInfo.fxml"));
-//                try {
-//                    user_info_pane.getChildren().add(loader.load());
-//                    matte_screen.setVisible(true);
-//                }
-//                catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            else {
-//                user_info_pane.getChildren().clear();
-//                matte_screen.setVisible(false);
-//            }
-//        });
-//        matte_screen.setOnMouseClicked(mouseEvent -> {
-//            if(!user_info_pane.getChildren().isEmpty()) {
-//                user_info_pane.getChildren().clear();
-//                matte_screen.setVisible(false);
-//            }
-//        });
+        account_avatar_img.setOnMouseClicked(mouseEvent -> {
+            if(user_info_pane.getChildren().isEmpty()) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/UserInfo.fxml"));
+                try {
+                    user_info_pane.getChildren().add(loader.load());
+                    matte_screen.setVisible(true);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                user_info_pane.getChildren().clear();
+                matte_screen.setVisible(false);
+            }
+        });
+        matte_screen.setOnMouseClicked(mouseEvent -> {
+            if(!user_info_pane.getChildren().isEmpty()) {
+                user_info_pane.getChildren().clear();
+                matte_screen.setVisible(false);
+            }
+        });
     }
 
     private void setButtonListener() {
@@ -119,7 +120,13 @@ public class UserPendingController extends User implements Initializable {
     }
 
     private void addBinding() {
+        book_name_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookName"));
+        author_tb_cl.setCellValueFactory(new PropertyValueFactory<>("authorName"));
+        book_id_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookId"));
+        picked_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("pickedDate"));
+        return_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
 
+        store_tb.setItems(bookList);
     }
 
     private void searchBookByAuthor(String authorName) {

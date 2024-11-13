@@ -19,6 +19,7 @@ public class UserBookInfo {
     public UserBookInfo() {
 
     }
+
     public UserBookInfo(String bookName, String authorName,
                         int bookId, LocalDate pickedDate,
                         LocalDate returnDate, double totalCost,

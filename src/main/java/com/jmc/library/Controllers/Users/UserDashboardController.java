@@ -21,7 +21,9 @@ import javafx.util.Pair;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ResourceBundle;
+import java.util.Vector;
 
 
 /**
@@ -63,12 +65,10 @@ public class UserDashboardController extends User implements Initializable, Dash
         InterfaceManager.getInstance().setDashboardUpdateListener(this);
         addBinding();
         setButtonListener();
-        setAnotherListener();
+        setMaterialListener();
     }
 
     @Override
-    public void onTotalReadBookUpdate(){}
-    //@Override
     public void onDashBoardUpdate() {
         ObservableList<UserBookInfo> bookList = LibraryModel
                 .getInstance().getUser().getBookHiredList();
@@ -77,20 +77,16 @@ public class UserDashboardController extends User implements Initializable, Dash
         int countNewReadBook = 0;
         for (UserBookInfo book : bookList) {
             if (book.getReturnDate().isBefore(LocalDate.now())) {
-                total_read_book_lbl.setText(String.valueOf(
-                        Integer.parseInt(total_read_book_lbl.getText()) + 1));
+                countReadBook ++;
+                if(book.getReturnDate().isBefore(LocalDate.now().minusDays(7))) {
+                    countNewReadBook ++;
+                }
             }
+            countHiredBook ++;
         }
-    }
-
-    @Override
-    public void onNewBooksReadUpdate() {
-        //new_books_read_lbl.setText(String.valueOf(newBooksRead));
-    }
-
-    @Override
-    public void onHireBooksUpdate() {
-
+        total_read_book_lbl.setText(String.valueOf(countReadBook));
+        new_books_read_lbl.setText(String.valueOf(countNewReadBook));
+        total_hired_book_lbl.setText(String.valueOf(countHiredBook));
     }
 
     private void setButtonListener() {
@@ -123,7 +119,7 @@ public class UserDashboardController extends User implements Initializable, Dash
         });
     }
 
-    private void setAnotherListener() {
+    private void setMaterialListener() {
         //lam sau
         view_all_lbl.setOnMouseClicked(mouseEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
@@ -147,21 +143,27 @@ public class UserDashboardController extends User implements Initializable, Dash
     private void addBinding() {
         setHotBookList();
         System.err.println("UserDashboardController.addBinding");
+        onDashBoardUpdate();
         setOverViewLineChart();
         setReadAndHiredBarChart();
     }
 
     private void setOverViewLineChart() {
-
         over_view_line_chart.setTitle("Book Borrowed Overview");
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Book Borrowed");
-        //de tam thoi sau nay se sua lai
-        series.getData().add(new XYChart.Data<>("Jan", 100));
-        series.getData().add(new XYChart.Data<>("Feb", 200));
-        series.getData().add(new XYChart.Data<>("Mar", 300));
-        series.getData().add(new XYChart.Data<>("Apr", 400));
-
+        int[] borrowedBook = new int[12];
+        for (UserBookInfo book : LibraryModel.getInstance().getUser().getBookHiredList()) {
+            if (book.getPickedDate().getYear() == LocalDate.now().getYear()
+                    || (book.getPickedDate().getYear() == LocalDate.now().getYear()
+                    && book.getPickedDate().getMonthValue() >= LocalDate.now().getMonthValue())) {
+                borrowedBook[book.getPickedDate().getMonthValue() - 1] ++;
+            }
+        }
+        int startMonth = LocalDate.now().getMonthValue() + 1;
+        for(int i = startMonth; i < startMonth + 12; i ++) {
+            series.getData().add(new XYChart.Data<>(Month.of((i - 1) % 12 + 1).toString(), borrowedBook[(i - 1) % 12]));
+        }
         over_view_line_chart.getData().add(series);
     }
 
@@ -169,19 +171,35 @@ public class UserDashboardController extends User implements Initializable, Dash
         read_and_hired_bar_chart.setTitle("Read and Hired Overview");
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         series1.setName("Read");
-        //de tam thoi sau nay se sua lai
-        series1.getData().add(new XYChart.Data<>("Jan", 100));
-        series1.getData().add(new XYChart.Data<>("Feb", 200));
-        series1.getData().add(new XYChart.Data<>("Mar", 300));
-        series1.getData().add(new XYChart.Data<>("Apr", 400));
+
+        int[] readBook = new int[12];
+        for (UserBookInfo book : LibraryModel.getInstance().getUser().getBookHiredList()) {
+            if (book.getReturnDate().getYear() == LocalDate.now().getYear()
+                    || (book.getReturnDate().getYear() == LocalDate.now().getYear()
+                    && book.getReturnDate().getMonthValue() >= LocalDate.now().getMonthValue())) {
+                if (book.getReturnDate().isBefore(LocalDate.now())) {
+                    readBook[book.getReturnDate().getMonthValue() - 1] ++;
+                }
+            }
+        }
+        int startMonth = LocalDate.now().getMonthValue() + 1;
+        for(int i = startMonth; i < startMonth + 12; i ++) {
+            series1.getData().add(new XYChart.Data<>(Month.of((i - 1) % 12 + 1).toString(), readBook[(i - 1) % 12]));
+        }
 
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         series2.setName("Hired");
-        //de tam thoi sau nay se sua lai
-        series2.getData().add(new XYChart.Data<>("Jan", 500));
-        series2.getData().add(new XYChart.Data<>("Feb", 600));
-        series2.getData().add(new XYChart.Data<>("Mar", 700));
-        series2.getData().add(new XYChart.Data<>("Apr", 800));
+        int[] hiredBook = new int[12];
+        for (UserBookInfo book : LibraryModel.getInstance().getUser().getBookHiredList()) {
+            if (book.getPickedDate().getYear() == LocalDate.now().getYear()
+                    || (book.getPickedDate().getYear() == LocalDate.now().getYear()
+                    && book.getPickedDate().getMonthValue() >= LocalDate.now().getMonthValue())) {
+                hiredBook[book.getPickedDate().getMonthValue() - 1] ++;
+            }
+        }
+        for(int i = startMonth; i < startMonth + 12; i ++) {
+            series2.getData().add(new XYChart.Data<>(Month.of((i - 1) % 12 + 1).toString(), hiredBook[(i - 1) % 12]));
+        }
 
         read_and_hired_bar_chart.getData().addAll(series1, series2);
     }

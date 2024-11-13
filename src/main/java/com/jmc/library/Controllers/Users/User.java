@@ -191,11 +191,11 @@ public class User {
 
     public boolean userPayment() {
         try {
-            ResultSet resultSet = DBUtlis.executeQuery("select money from user where username = ?;", this.username);
+            ResultSet resultSet = DBUtlis.executeQuery("select money from users where username = ?;", this.username);
             if (resultSet.next()) {
                 double money = resultSet.getDouble("money");
                 if (money >= Double.parseDouble(getTotal())) {
-                    DBUtlis.executeUpdate("update user set money = ? where username = ?;", money - Double.parseDouble(getTotal()), this.username);
+                    DBUtlis.executeUpdate("update users set money = ? where username = ?;", money - Double.parseDouble(getTotal()), this.username);
                     for (CartEntityController cartEntityController : this.cartEntityControllers) {
                         DBUtlis.executeUpdate("update userRequest set requestStatus = 'pending' where username = ? and bookId = ?;",
                                 this.username,

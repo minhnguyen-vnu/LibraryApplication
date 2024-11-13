@@ -30,7 +30,7 @@ public class UserCartController extends User implements Initializable, CartUpdat
         InterfaceManager.getInstance().setCartUpdateListener(this);
         setButtonListener();
         setMaterialListener();
-//        setListBookVBox();
+        setListBookVBox();
     }
 
     @Override
@@ -99,7 +99,7 @@ public class UserCartController extends User implements Initializable, CartUpdat
                             LibraryModel.getInstance().getUser().getCartEntityControllers().sort((o1, o2) -> Double.compare(o1.getUserBookInfo().getTotalCost(), o2.getUserBookInfo().getTotalCost()));
                             break;
                     }
-                    setListBookVBox(); // Cập nhật lại VBox sau khi sắp xếp
+                    setListBookVBox();
                 });
         updateCartSummary();
     }
