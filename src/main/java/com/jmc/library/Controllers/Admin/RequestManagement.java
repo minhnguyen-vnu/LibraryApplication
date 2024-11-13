@@ -15,12 +15,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class RequestManagement implements Initializable {
     public TextField get_customer_name_txt_fld;
     public DatePicker get_borrowed_date;
     public DatePicker get_due_date;
-    public ChoiceBox status_choice_box;
+    public ChoiceBox<String> status_choice_box;
     public Button search_btn;
     public TableColumn<RequestInfo, Integer> issue_id_cl;
     public TableColumn<RequestInfo, Integer> book_id_cl;
@@ -35,10 +36,15 @@ public class RequestManagement implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ChoiceBoxInitialization();
         setTable();
         onAction();
         addBinding();
         showLibrary();
+    }
+
+    private void ChoiceBoxInitialization() {
+        status_choice_box.setItems(FXCollections.observableArrayList("pending", "Need_to_payment", ""));
     }
 
     private void setTable() {
@@ -47,11 +53,19 @@ public class RequestManagement implements Initializable {
     }
 
     private void onAction() {
-        return_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View"));
+        return_btn.setOnAction(actionEvent -> {
+            get_customer_name_txt_fld.clear();
+            get_borrowed_date.setValue(null);
+            get_due_date.setValue(null);
+            status_choice_box.setValue(null);
+            store_tb.setItems(bookList);
+            Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View");
+        });
+        search_btn.setOnAction(actionEvent -> search());
     }
 
     private void addBinding() {
-        issue_id_cl.setCellValueFactory(new PropertyValueFactory<>("issueID"));
+        issue_id_cl.setCellValueFactory(new PropertyValueFactory<>("issueId"));
         book_id_cl.setCellValueFactory(new PropertyValueFactory<>("bookId"));
         customer_cl.setCellValueFactory(new PropertyValueFactory<>("username"));
         borrowed_date_cl.setCellValueFactory(new PropertyValueFactory<>("pickedDate"));
@@ -73,6 +87,7 @@ public class RequestManagement implements Initializable {
                             resultSet.getDate("pickedDate").toLocalDate(), resultSet.getDate("returnDate").toLocalDate(),
                             resultSet.getDouble("cost"), resultSet.getString("requestStatus"));
                     bookList.add(currentBook);
+                    System.out.println(currentBook);
                 }
                 resultSet.close();
             } catch (SQLException e){
@@ -85,6 +100,21 @@ public class RequestManagement implements Initializable {
         Thread thread = new Thread(dbQuery);
         thread.setDaemon(true);
         thread.start();
+    }
+
+    private void search() {
+        String customerName = get_customer_name_txt_fld.getText();
+        LocalDate borrowedDate = get_borrowed_date.getValue();
+        LocalDate dueDate = get_due_date.getValue();
+        String status = status_choice_box.getValue();
+
+        ObservableList<RequestInfo> filteredList = bookList.stream()
+                .filter(request -> (customerName.isEmpty() || request.getUsername().equals(customerName)) &&
+                        (borrowedDate == null || request.getPickedDate().equals(borrowedDate)) &&
+                        (dueDate == null || request.getReturnDate().equals(dueDate)) &&
+                        (status == null || status.isEmpty() || request.getRequestStatus().equals(status)))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        store_tb.setItems(filteredList);
     }
 
 }

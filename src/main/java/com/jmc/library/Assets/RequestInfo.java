@@ -14,8 +14,8 @@ public class RequestInfo {
         this.issueId = issueID;
         this.bookId = bookId;
         this.username = username;
-        this.returnDate = pickedDate;
-        this.pickedDate = returnDate;
+        this.returnDate = returnDate;
+        this.pickedDate = pickedDate;
         this.totalCost = totalCost;
         this.requestStatus = requestStatus;
     }
@@ -62,5 +62,18 @@ public class RequestInfo {
 
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestInfo{" +
+                "issueId=" + issueId +
+                ", bookId=" + bookId +
+                ", username='" + username + '\'' +
+                ", returnDate=" + returnDate +
+                ", pickedDate=" + pickedDate +
+                ", totalCost=" + totalCost +
+                ", requestStatus='" + requestStatus + '\'' +
+                '}';
     }
 }

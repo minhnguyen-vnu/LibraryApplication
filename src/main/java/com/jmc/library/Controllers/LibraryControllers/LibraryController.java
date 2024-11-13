@@ -28,7 +28,6 @@ public class LibraryController extends LibraryTable {
 
     private void searchBook(String text) {
         if (text.isEmpty()) {
-            System.out.println(1);
             showLibrary();
         } else {
             if (text.charAt(0) != '#') searchBookByName(text);

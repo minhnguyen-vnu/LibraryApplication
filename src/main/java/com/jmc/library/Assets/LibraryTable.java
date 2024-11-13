@@ -32,7 +32,6 @@ public class LibraryTable {
     public ImageView loading_img;
 
     protected void addLoading() {
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
         try {
             loading_img = loader.load();
@@ -42,6 +41,7 @@ public class LibraryTable {
             throw new RuntimeException(e);
         }
     }
+
     protected void setTable() {
         bookList = FXCollections.observableArrayList();
         store_tb.setItems(bookList);
