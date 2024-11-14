@@ -107,11 +107,11 @@ public class UserBookInfo {
         this.totalCost = totalCost;
     }
 
-    public String getStatus() {
+    public String getRequestStatus() {
         return requestStatus;
     }
 
-    public void setStatus(String status) {
+    public void setRequestStatus(String status) {
         this.requestStatus = status;
     }
 

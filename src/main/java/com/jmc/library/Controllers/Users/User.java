@@ -2,6 +2,7 @@ package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.DBUtlis;
+import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -190,29 +191,25 @@ public class User {
         return String.format("%.2f",Double.parseDouble(getSubTotal()) + Double.parseDouble(getAdditional()));
     }
 
-    public boolean userPayment() {
-        try {
-            ResultSet resultSet = DBUtlis.executeQuery("select money from users where username = ?;", this.username);
-            if (resultSet.next()) {
-                double money = resultSet.getDouble("money");
-                if (money >= Double.parseDouble(getTotal())) {
-                    DBUtlis.executeUpdate("update users set money = ? where username = ?;", money - Double.parseDouble(getTotal()), this.username);
-                    for (CartEntityController cartEntityController : this.cartEntityControllers) {
-                        DBUtlis.executeUpdate("update userRequest set requestStatus = 'pending' where username = ? and bookId = ?;",
-                                this.username,
-                                cartEntityController.getUserBookInfo().getBookId());
-                        cartEntityController.getUserBookInfo().setStatus("pending");
-                        this.bookPendingList.add(cartEntityController.getUserBookInfo());
-                    }
-                    resultSet.close();
-                    return true;
-                }
-                return false;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    public void userPayment() {
+        DBUtlis.executeUpdate("update userRequest set requestStatus = 'pending' where username = ? and requestStatus = 'Need_to_payment';", this.username);
+        for(CartEntityController cartEntityController : this.cartEntityControllers) {
+            cartEntityController.getUserBookInfo().setRequestStatus("pending");
+            LibraryModel.getInstance().getUser().getBookPendingList()
+                    .add(cartEntityController.getUserBookInfo());
         }
-        return false;
+    }
+
+    public void rebuiltCart() {
+        for(CartEntityController cartEntityController : this.cartEntityControllers) {
+            try {
+                cartEntityController.updReturnDateDB(cartEntityController.getUserBookInfo().getReturnDate());
+                cartEntityController.updCostDB();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
     public void clearCart() {
         DBUtlis.executeUpdate("delete from userRequest where username = ? and requestStatus = 'Need_to_payment';", this.username);

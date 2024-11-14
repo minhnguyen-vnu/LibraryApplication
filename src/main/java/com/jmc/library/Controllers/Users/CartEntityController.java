@@ -70,12 +70,12 @@ public class CartEntityController extends User implements Initializable {
         setMaterialListener();
     }
 
-    private void updReturnDateDB(LocalDate date) throws SQLException {
+    public void updReturnDateDB(LocalDate date) throws SQLException {
         DBUtlis.executeUpdate("UPDATE userRequest SET returnDate = '" + date +
                 "' WHERE bookId = " + userBookInfo.getBookId());
     }
 
-    private void updCostDB() throws SQLException {
+    public void updCostDB() throws SQLException {
         DBUtlis.executeUpdate("UPDATE userRequest SET cost = " + userBookInfo.getSingleCost() * day_borrow +
                 " WHERE bookId = " + userBookInfo.getBookId());
     }
@@ -84,8 +84,8 @@ public class CartEntityController extends User implements Initializable {
         cost_lbl.setText(String.valueOf(userBookInfo.getSingleCost()* day_borrow));
         userBookInfo.setReturnDate(userBookInfo.getPickedDate().plusDays(day_borrow - 1));
         userBookInfo.setTotalCost(userBookInfo.getSingleCost() * day_borrow);
-        updReturnDateDB(userBookInfo.getReturnDate());
-        updCostDB();
+        //updReturnDateDB(userBookInfo.getReturnDate());
+        //updCostDB();
         InterfaceManager.getInstance().getCartUpdateListener().onCartUpdated();
     }
 

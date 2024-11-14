@@ -1,6 +1,9 @@
 package com.jmc.library.Assets;
 
 import com.jmc.library.DBUtlis;
+import com.jmc.library.Models.BookModel;
+import com.jmc.library.Models.LibraryModel;
+import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -33,6 +36,14 @@ public class BookInfoTable {
         quantity_tb_cl.setCellValueFactory(new PropertyValueFactory<>("quantityInStock"));
         least_price_tb_cl.setCellValueFactory(new PropertyValueFactory<>("leastPrice"));
         published_date_tb_cl.setCellValueFactory(new PropertyValueFactory<>("publishedDate"));
+        store_tb.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getClickCount() == 2) {
+                BookInfo book = store_tb.getSelectionModel().getSelectedItem();
+                BookModel.getInstance().setBookInfo(book);
+                Model.getInstance().getViewFactory().getSelectedUserMode().set("Book Detail");
+                Model.getInstance().getViewFactory().getBookDisplayController().setDisplayBook(book);
+            }
+        });
     }
 
     protected void showLibrary() {

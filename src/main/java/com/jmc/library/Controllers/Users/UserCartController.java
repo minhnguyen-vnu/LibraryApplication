@@ -57,12 +57,12 @@ public class UserCartController extends User implements Initializable, CartUpdat
         });
 
         check_out_btn.setOnAction(actionEvent -> {
-            if (LibraryModel.getInstance().getUser().userPayment()) {
-                LibraryModel.getInstance().getUser().clearCart();
-                setListBookVBox();
-                updateCartSummary();
-                Model.getInstance().getViewFactory().getSelectedUserMode().set("User Pending");
-            }
+            LibraryModel.getInstance().getUser().userPayment();
+            LibraryModel.getInstance().getUser().rebuiltCart();
+            LibraryModel.getInstance().getUser().clearCart();
+            setListBookVBox();
+            updateCartSummary();
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Pending");
         });
     }
 
