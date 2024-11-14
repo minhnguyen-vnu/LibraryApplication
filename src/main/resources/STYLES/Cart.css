@@ -6,7 +6,9 @@
     -fx-dark-text-color: #000000;
     -fx-light-text-color: #8d8c93;
     -fx-light-blue-text-color: #64b3ec;
+    -fx-dark-blue-text-color: #0b50f3;
     -fx-green-text-color: #76ea5c;
+    -fx-sub-background-color: #190845;
 }
 
 /* Style for the headers */
@@ -100,4 +102,90 @@
     -fx-text-fill: -fx-dark-text-color;
     -fx-font-weight: bold;
     -fx-font-size: 15;
+}
+
+/* style for cart entity */
+
+/* This is the design for the container, it round by radius 15, it very light gray blue */
+
+.CartContainer {
+    -fx-background-color: #25dab9;
+    -fx-background-radius: 15;
+}
+
+/* This is label design, it black, bold, size is 18 */
+.BookName {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-dark-text-color;
+    -fx-font-family: sans-serif;
+}
+
+/* This is label design, it gray, size is 15 */
+.AuthorName {
+    -fx-font-size: 15;
+    -fx-text-fill: -fx-light-text-color;
+    -fx-font-family: sans-serif;
+}
+
+/* This is button design, it transparent, the button content become res */
+.RemoveButton {
+    -fx-background-color: transparent;
+}
+
+.RemoveButton .glyph-icon {
+    -glyph-size: 15;
+}
+
+.RemoveButton:hover {
+    -fx-background-color: -fx-sub-background-color;
+}
+
+.RemoveButton:hover .glyph-icon {
+    -fx-fill: red;
+    -glyph-size: 20;
+}
+
+/* This is label design, it for price text, it blue, bold, size is 15 */
+.Price {
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-dark-blue-text-color;
+    -fx-font-family: sans-serif;
+}
+
+/* This is label design, it for quantity text, it blue, bold, size is 15 */
+.Quantity {
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-light-blue-text-color;
+    -fx-font-family: sans-serif;
+}
+
+/* This is button design, it for increase quantity, it transparent */
+.IncreaseButton {
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+}
+
+.IncreaseButton:hover {
+    -fx-background-color: -fx-sub-background-color;
+}
+
+.IncreaseButton:hover .glyph-icon {
+    -fx-fill: green;
+}
+
+/* This is button design, it for decrease quantity, it transparent */
+.DecreaseButton {
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+}
+
+.DecreaseButton:hover {
+    -fx-background-color: -fx-sub-background-color;
+}
+
+.DecreaseButton:hover .glyph-icon {
+    -fx-fill: red;
 }
