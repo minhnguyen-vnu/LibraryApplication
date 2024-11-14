@@ -65,7 +65,7 @@ public class UserPendingController extends User implements Initializable {
             store_tb.setItems(FXCollections.observableArrayList(bookList.stream().limit(newVal).collect(Collectors.toList())));
         });
 
-        account_avatar_img.setOnMouseClicked(mouseEvent -> {
+       /* account_avatar_img.setOnMouseClicked(mouseEvent -> {
             if(user_info_pane.getChildren().isEmpty()) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/UserInfo.fxml"));
                 try {
@@ -86,7 +86,7 @@ public class UserPendingController extends User implements Initializable {
                 user_info_pane.getChildren().clear();
                 matte_screen.setVisible(false);
             }
-        });
+        });*/
     }
 
     private void setButtonListener() {
@@ -99,8 +99,8 @@ public class UserPendingController extends User implements Initializable {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
         });
         log_out_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().resetAll();
             LibraryModel.getInstance().getUser().resetAll();
+            Model.getInstance().getViewFactory().resetAll();
             Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(currentStage);
             Model.getInstance().getViewFactory().showAuthenticationWindow();

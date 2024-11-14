@@ -107,8 +107,8 @@ public class UserBookController extends User implements Initializable {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
         });
         log_out_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().resetAll();
             LibraryModel.getInstance().getUser().resetAll();
+            Model.getInstance().getViewFactory().resetAll();
             Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(currentStage);
             Model.getInstance().getViewFactory().showAuthenticationWindow();

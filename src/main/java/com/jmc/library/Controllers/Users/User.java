@@ -2,6 +2,7 @@ package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.DBUtlis;
+import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -219,6 +220,7 @@ public class User {
     }
 
     public void resetAll() {
+        System.out.println("User.resetAll");
         this.bookPendingList.clear();
         this.bookHiredList.clear();
         this.cartEntityControllers.clear();

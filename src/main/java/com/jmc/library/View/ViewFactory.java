@@ -100,6 +100,7 @@ public class ViewFactory {
     public HBox getUserDashboard() {
         if (userDashboard == null) {
             try {
+                System.out.println("ViewFactory.getUserDashboard");
                 userDashboard = new FXMLLoader(getClass().getResource("/FXML/UserDashboard.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -181,6 +182,7 @@ public class ViewFactory {
     void createStage(FXMLLoader loader) {
         Scene scene = null;
         try {
+            System.out.println("ViewFactory.createStage");
             scene = new Scene(loader.load());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -204,6 +206,7 @@ public class ViewFactory {
     }
 
     public void resetAll() {
+        System.out.println("ViewFactory.resetAll");
         logInView = null;
         signUpView = null;
         userLibrary = null;

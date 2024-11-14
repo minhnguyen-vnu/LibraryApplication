@@ -1,5 +1,6 @@
 package com.jmc.library.Controllers.Users;
 
+import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
@@ -26,7 +27,7 @@ public class UserView implements Initializable {
                             user_parent.setCenter(Model.getInstance().getViewFactory().getBookDetail());
                             System.out.println(2);
                         }
-                        default -> user_parent.setCenter(Model.getInstance().getViewFactory().getUserLibrary());
+                        case "User Restart"-> user_parent.setCenter(null);
                     }
                 } else {
                     System.err.println("Parent BorderPane is not initialized.");
