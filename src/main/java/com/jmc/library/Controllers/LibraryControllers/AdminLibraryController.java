@@ -20,6 +20,8 @@ public class AdminLibraryController extends LibraryController implements Initial
     public Button go_to_request_btn;
     public Button manage_btn;
     public Button go_to_dashboard_btn;
+    /** Them cai nay vao TT */
+    public Button go_to_pending_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

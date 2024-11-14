@@ -31,33 +31,46 @@
                                 <Label layoutX="60.0" layoutY="12.0" prefHeight="23.0" prefWidth="110.0" styleClass="LibraryName" text="Anchor" />
                             </children>
                         </Pane>
-                        <Button fx:id="go_to_dashboard_btn" layoutY="207.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Dashboard" AnchorPane.bottomAnchor="492.0" AnchorPane.topAnchor="199.0">
-                            <graphic>
-                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../IMAGES/LibraryStoreIcon.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
+                  <VBox layoutY="199.1999969482422" spacing="20.0">
+                     <children>
+                              <Button fx:id="go_to_dashboard_btn" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Dashboard">
+                                  <graphic>
+                                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                          <image>
+                                              <Image url="@../IMAGES/LibraryStoreIcon.png" />
+                                          </image>
+                                      </ImageView>
+                                  </graphic>
+                              </Button>
+                              <Button fx:id="manage_btn" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Manage">
+                                  <graphic>
+                                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                          <image>
+                                              <Image url="@../IMAGES/BookStoreIcon.png" />
+                                          </image>
+                                      </ImageView>
+                                  </graphic>
+                              </Button>
+                              <Button fx:id="go_to_request_btn" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Request">
+                                  <graphic>
+                                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                          <image>
+                                              <Image url="@../IMAGES/settingIcon.png" />
+                                          </image>
+                                      </ImageView>
+                                  </graphic>
+                              </Button>
+                        <Button fx:id="go_to_pending_btn" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Pending">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../IMAGES/settingIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
-                        <Button fx:id="manage_btn" layoutY="262.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Manage" AnchorPane.bottomAnchor="429.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="264.0">
-                            <graphic>
-                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../IMAGES/BookStoreIcon.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                        <Button fx:id="go_to_request_btn" layoutY="290.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Request" AnchorPane.bottomAnchor="354.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="337.0">
-                            <graphic>
-                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../IMAGES/settingIcon.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
+                     </children>
+                  </VBox>
                         <Button fx:id="log_out_btn" layoutY="500.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Log out">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
