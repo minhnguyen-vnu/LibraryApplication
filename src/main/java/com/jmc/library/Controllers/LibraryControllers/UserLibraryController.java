@@ -8,10 +8,13 @@ import com.jmc.library.DBUtlis;
 import com.jmc.library.Models.BookModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -127,80 +130,48 @@ public class UserLibraryController extends LibraryController implements Initiali
     }
 
     private void onAction() {
-        setAdd_to_cart_tb_cl();
-        setBook_name_tb_cl();
         setBook_cover_tb_cl();
     }
 
-    private void setAdd_to_cart_tb_cl() {
-        add_to_cart_tb_cl.setCellFactory(param -> new TableCell<BookInfo, Boolean>() {
-            private final CheckBox checkBox = new CheckBox("Cart");
-
-            @Override
-            protected void updateItem(Boolean item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    BookInfo book = getTableView().getItems().get(getIndex());
-                    checkBox.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-                        if (!wasSelected && isNowSelected) {
-                            try {
-                                ResultSet resultSet = getResultSetCaseSelectBook(book);
-                                if (resultSet.next()) {
-                                    System.out.println("You already have this book");
-                                    return;
-                                }
-                            } catch (SQLException e) {
-                                throw new RuntimeException(e);
-                            }
-                            updDatabaseCaseInsertBook(book);
-
-                            getTableView().refresh();
-                            checkBox.setSelected(true);
-                        } else if(wasSelected && !isNowSelected) {
-                            checkBox.setSelected(true);
-                        }
-                    });
-                    setGraphic(checkBox);
-                }
-            }
-        });
-    }
-
-    private void setBook_name_tb_cl() {
-        book_name_tb_cl.setCellFactory(param -> new TableCell<>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setGraphic(null);
-                } else {
-                    BookInfo book = getTableView().getItems().get(getIndex());
-                    setText(book.getBookName());
-                    setOnMouseClicked(event -> {
-                        BookModel.getInstance().setBookInfo(book);
-                        System.out.println("You clicked on " + BookModel.getInstance().getBookInfo().getBookName());
-                        Model.getInstance().getViewFactory().getSelectedUserMode().set("Book Detail");
-                        Model.getInstance().getViewFactory().getBookDisplayController().setDisplayBook(book);
-                    });
-                }
-            }
-        });
-    }
-
     private void setBook_cover_tb_cl() {
-        book_cover_tb_cl.setCellFactory(param -> new TableCell<BookInfo, ImageView>() {
+        book_cover_tb_cl.setCellFactory(col -> new TableCell<BookInfo, ImageView>() {
             @Override
-            protected void updateItem(ImageView item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
+            protected void updateItem(ImageView imageView, boolean empty) {
+                super.updateItem(imageView, empty);
+                if (empty || imageView == null) {
                     setGraphic(null);
                 } else {
-                    BookInfo book = getTableView().getItems().get(getIndex());
-//                    setGraphic(book.getBookCover());
+                    setGraphic(imageView);
                 }
             }
+        });
+
+        book_cover_tb_cl.setCellValueFactory(param -> {
+            BookInfo bookInfo = param.getValue();
+
+            // Ảnh mặc định chỉ cần load một lần
+            Image defaultCover = new Image(getClass().getResource("/IMAGES/BookListIcon.png").toExternalForm());
+
+            // Sử dụng Task để tải ảnh nền
+            Task<Image> loadImageTask = new Task<>() {
+                @Override
+                protected Image call() {
+                    if (bookInfo.getThumbnail() == null) {
+                        return defaultCover;
+                    } else {
+                        return new Image(bookInfo.getThumbnail(), 50, 75, true, true);  // Tải với kích thước tối ưu
+                    }
+                }
+            };
+
+            // Tạo ImageView và cập nhật sau khi ảnh được tải xong
+            ImageView bookCoverImage = new ImageView();
+            loadImageTask.setOnSucceeded(e -> bookCoverImage.setImage(loadImageTask.getValue()));
+            new Thread(loadImageTask).start();  // Chạy Task trong luồng nền
+
+            bookCoverImage.setFitWidth(50);
+            bookCoverImage.setFitHeight(75);
+            return new SimpleObjectProperty<>(bookCoverImage);
         });
     }
 

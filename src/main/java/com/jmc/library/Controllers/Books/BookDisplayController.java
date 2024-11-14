@@ -85,37 +85,19 @@ public class BookDisplayController extends UserLibraryController implements Init
 
     private void setMaterialListener() {
         System.out.println(displayBook.getISBN());
-        JSONObject bookInfo = new GoogleBookAPIMethod().searchBook(displayBook.getISBN());
-        JSONArray items = bookInfo.getJSONArray("items");
-        int totalItems = new GoogleBookAPIMethod().getTotalItems(bookInfo) - 1;
-        if (items != null) {
-            JSONObject volumeInfo = items.getJSONObject(totalItems).getJSONObject("volumeInfo");
-
-            JSONArray authorsArray = volumeInfo.has("authors") ? volumeInfo.getJSONArray("authors") : null;
+        if (displayBook.getItems() != null) {
             book_name_txt_flw.getChildren().setAll(new Label(displayBook.getBookName()));
-            String authors = (authorsArray != null) ? Arrays.toString(authorsArray.toList().toArray()) : "N/A";
-            author_lbl.setText("Author(s): " + authors.replace("[", "").replace("]", ""));
-            String publisher = volumeInfo.has("publisher") ? volumeInfo.getString("publisher") : "N/A";
-            publisher_lbl.setText("Publisher: " + publisher);
+            author_lbl.setText("Author: " + displayBook.getAuthorName());
+            publisher_lbl.setText("Publisher: " + displayBook.getPublisher());
             isbn_lbl.setText("ISBN(13): " + displayBook.getISBN());
-            String publicationDate = volumeInfo.has("publishedDate") ? volumeInfo.getString("publishedDate") : "N/A";
-            publication_date_lbl.setText("Publication Date: " + publicationDate);
-            if (volumeInfo.has("categories")) {
-                JSONArray categoriesArray = volumeInfo.getJSONArray("categories");
-                String categories = categoriesArray.join(", ").replace("\"", "");
-                book_genres_lbl.setText("Categories: " + categories);
-            } else {
-                book_genres_lbl.setText("N/A");
-            }
-            String originalLanguage = volumeInfo.has("language") ? volumeInfo.getString("language") : "N/A";
-            original_language_lbl.setText("Original Language: " + originalLanguage.toUpperCase());
-            String description = volumeInfo.has("description") ? volumeInfo.getString("description") : "No description available";
+            publication_date_lbl.setText("Publication Date: " + displayBook.getPublishedDate().toString());
+            book_genres_lbl.setText("Genres: " + displayBook.getGenre());
+            original_language_lbl.setText("Original Language: " + displayBook.getOriginalLanguage().toUpperCase());
             preview_txt_flw.setEditable(false);
             preview_txt_flw.setWrapText(true);
-            preview_txt_flw.setText(description);
-            String thumbnail = volumeInfo.has("imageLinks") ? volumeInfo.getJSONObject("imageLinks").getString("thumbnail") : null;
+            preview_txt_flw.setText(displayBook.getDescription());
 
-            book_img.setImage(new Image(Objects.requireNonNullElse(thumbnail, "https://via.placeholder.com/150")));
+            book_img.setImage(new Image(Objects.requireNonNullElse(displayBook.getThumbnail(), "https://via.placeholder.com/150")));
         }
     }
 }

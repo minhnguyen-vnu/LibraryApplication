@@ -40,9 +40,6 @@ public class UserPendingController extends User implements Initializable {
     public ChoiceBox<Integer> num_row_shown;
     public TableView<UserBookInfo> store_tb;
 
-    public AnchorPane user_info_pane;
-    public AnchorPane matte_screen;
-
     private ObservableList<UserBookInfo> bookList;
 
     @Override
@@ -55,7 +52,7 @@ public class UserPendingController extends User implements Initializable {
     private void setMaterialListener() {
         account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png")
                 .toExternalForm()).getImage());
-        bookList = LibraryModel.getInstance().getUser().getBookHiredList();
+        bookList = LibraryModel.getInstance().getUser().getBookPendingList();
         username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
 
         num_row_shown.getItems().addAll(5, 10, 15, 20);
@@ -64,29 +61,6 @@ public class UserPendingController extends User implements Initializable {
             store_tb.refresh();
             store_tb.setItems(FXCollections.observableArrayList(bookList.stream().limit(newVal).collect(Collectors.toList())));
         });
-
-       /* account_avatar_img.setOnMouseClicked(mouseEvent -> {
-            if(user_info_pane.getChildren().isEmpty()) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/UserInfo.fxml"));
-                try {
-                    user_info_pane.getChildren().add(loader.load());
-                    matte_screen.setVisible(true);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                user_info_pane.getChildren().clear();
-                matte_screen.setVisible(false);
-            }
-        });
-        matte_screen.setOnMouseClicked(mouseEvent -> {
-            if(!user_info_pane.getChildren().isEmpty()) {
-                user_info_pane.getChildren().clear();
-                matte_screen.setVisible(false);
-            }
-        });*/
     }
 
     private void setButtonListener() {
