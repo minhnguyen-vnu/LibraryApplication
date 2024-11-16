@@ -3,10 +3,6 @@
     -fx-border-width: 10;
 }
 
-.BookImageBorder {
-    -fx-border-color: #6943CE;
-    -fx-border-width: 5;
-}
 
 .DetailBook {
     -fx-border-color: #6943CE;
@@ -156,4 +152,9 @@
 .TextArea {
     -fx-font-size: 20;
     -fx-text-fill: #1e53ff;
+}
+
+.TextArea .content {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
 }

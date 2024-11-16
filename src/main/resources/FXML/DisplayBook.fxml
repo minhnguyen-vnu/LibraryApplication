@@ -23,32 +23,28 @@
       </HBox>
       <AnchorPane prefHeight="600.0" prefWidth="1000.0" styleClass="BackGround">
          <children>
-            <HBox layoutX="160.0" layoutY="94.0" spacing="150.0">
+            <HBox layoutX="121.0" layoutY="104.0" spacing="80.0">
                <children>
                   <VBox spacing="20.0">
                      <children>
-                        <AnchorPane styleClass="BookImageBorder">
-                           <children>
-                              <ImageView fx:id="book_img" fitHeight="400.0" fitWidth="300.0" pickOnBounds="true">
-                                 <image>
-                                    <Image url="@../IMAGES/BookStoreIcon.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </AnchorPane>
+                        <ImageView fx:id="book_img" fitHeight="400.0" fitWidth="300.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../IMAGES/BookStoreIcon.png" />
+                           </image>
+                        </ImageView>
                         <Button fx:id="get_book_btn" mnemonicParsing="false" styleClass="GetButton" text="Get book" />
                      </children>
                   </VBox>
                   <VBox spacing="20.0">
                      <children>
                         <TextFlow fx:id="book_name_txt_flw" prefHeight="60.0" prefWidth="550.0" styleClass="BookName" />
-                        <TabPane prefWidth="550.0" tabClosingPolicy="UNAVAILABLE">
+                        <TabPane prefHeight="385.0" prefWidth="680.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
                             <Tab text="Book info">
                                  <content>
-                                    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="550.0">
+                                    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="680.0">
                                        <children>
-                                          <VBox alignment="CENTER_LEFT" layoutX="21.0" layoutY="10.0" prefHeight="317.0" prefWidth="368.0" spacing="30.0" styleClass="DetailBook">
+                                          <VBox alignment="CENTER_LEFT" layoutX="21.0" layoutY="10.0" prefHeight="317.0" prefWidth="650.0" spacing="30.0" styleClass="DetailBook">
                                              <children>
                                                 <Label fx:id="publication_date_lbl" styleClass="InfoText" text="Ngày công chiếu: 28 tháng 3 năm 2002">
                                                    <VBox.margin>
@@ -88,13 +84,13 @@
                               </Tab>
                             <Tab text="Preview">
                                  <content>
-                                    <AnchorPane prefHeight="350.0" prefWidth="550.0" styleClass="Null">
+                                    <AnchorPane prefHeight="350.0" prefWidth="650.0" styleClass="Null">
                                        <children>
-                                          <ScrollPane layoutX="25.0" layoutY="26.0" prefHeight="300.0" prefWidth="505.0">
+                                          <ScrollPane layoutX="25.0" layoutY="26.0" prefHeight="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
                                              <content>
-                                                <AnchorPane prefHeight="320.0" prefWidth="400.0">
+                                                <AnchorPane prefHeight="320.0" prefWidth="650.0">
                                                    <children>
-                                                      <TextArea fx:id="preview_txt_flw" layoutY="-5.0" prefWidth="480.0" styleClass="TextArea" text="Cuốn sách mô tả về hành trình vô địch của T1 tại chung kết thế giới năm 2025. Nhà vua đã trở lại và đại bại GenG khiến cho bao nhiêu người hâm mộ trở lại đỉnh xã hội. Tuy nhiên để có được thành công đó T1 đã phải trải qua những gì? Những khó khăn thử thách nào mà họ đã phải vượt qua? Tất cả được dựng lại một cách trân thực trong &quot;Hành trình Huyền Thoại&quot; của tác giả &quot;T1 Con&quot;" wrapText="true" />
+                                                      <TextArea fx:id="preview_txt_flw" editable="false" layoutY="-5.0" prefWidth="480.0" styleClass="TextArea" text="Tạm gác hết những âu lo lại :v cùng mình giải bài toán này nhé. Mình cho các bạn một xâu kí tự &#10; gồm &#10; chữ cái in thường và một số nguyên &#10;. Bạn hãy giúp mình đếm số xâu kí tự &#10; độ dài &#10; cũng chỉ gồm các chữ cái in thường thỏa mãn điều kiện sau đây: Có chính xác &#10; cặp số nguyên &#10; với &#10; và xâu con liên tiếp của &#10; từ vị trí &#10; đến vị trí &#10; có thứ tự từ điển lớn hơn xâu con liên tiếp của &#10; từ vị trí &#10; đến vị trí &#10;.&#10;&#10;Nhắc lại, xâu &#10; được gọi là có thứ tự từ điển lớn hơn xâu &#10; khi và chỉ khi tồn tại chỉ số &#10; sao cho:&#10;&#10;Với mọi chỉ số &#10; sao cho &#10;, ta luôn có &#10;.&#10;Ví dụ, &quot;tranchau&quot; có thứ tự từ điển lớn hơn &quot;tocotoco&quot;, &quot;anhhanh&quot; có thứ tự từ điển lớn hơn &quot;anhanhh&quot;, &quot;nguvanloi&quot; có thứ tự từ điển lớn hơn &quot;bichphuong&quot;, &quot;thilin&quot; có thứ tự từ điển lớn hơn &quot;thaozi&quot;, &quot;ntha&quot; có thứ tự từ điển lớn hơn &quot;dxmh&quot;.&#10;&#10;Input&#10;Dòng đầu tiên chứa hai số nguyên &#10; và &#10; &#10;. Dòng thứ hai chứa xâu kí tự &#10; gồm &#10; chữ cái in thường.&#10;&#10;Output&#10;In ra một số nguyên duy nhất là số xâu kí tự &#10; thỏa mãn điều kiện trên. Do kết quả có thể rất lớn, bạn chỉ cần in ra đáp số theo modulo &#10;.&#10;&#10;Subtasks&#10;Bộ test của bài được chia làm các subtask như sau:&#10;&#10;Subtask &#10; (&#10; test): &#10;Subtask &#10; (&#10; test): &#10;Subtask &#10; (&#10; test): &#10; và &#10;Subtask &#10; (&#10; test): &#10;Subtask &#10; (&#10; điểm): Xâu &#10; chỉ gồm kí tự &#10;.&#10;Subtask &#10; (&#10; điểm): Không có ràng buộc gì thêm.&#10;Điểm tối đa của bài là &#10; điểm.    " wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                    </children>
                                                 </AnchorPane>
                                              </content>
