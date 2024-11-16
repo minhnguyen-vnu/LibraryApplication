@@ -150,7 +150,7 @@ public class UserLibraryController extends LibraryController implements Initiali
             BookInfo bookInfo = param.getValue();
 
             // Ảnh mặc định chỉ cần load một lần
-            Image defaultCover = new Image(getClass().getResource("/IMAGES/BookListIcon.png").toExternalForm());
+            Image defaultCover = new Image(getClass().getResource("/IMAGES/UnknownBookCover.png").toExternalForm());
 
             // Sử dụng Task để tải ảnh nền
             Task<Image> loadImageTask = new Task<>() {

@@ -29,7 +29,7 @@
                      <children>
                         <ImageView fx:id="book_img" fitHeight="400.0" fitWidth="300.0" pickOnBounds="true">
                            <image>
-                              <Image url="@../IMAGES/BookStoreIcon.png" />
+                              <Image url="@../IMAGES/UnknownBookCover.png" />
                            </image>
                         </ImageView>
                         <Button fx:id="get_book_btn" mnemonicParsing="false" styleClass="GetButton" text="Get book" />

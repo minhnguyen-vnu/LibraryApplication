@@ -97,7 +97,7 @@ public class BookDisplayController extends UserLibraryController implements Init
             preview_txt_flw.setWrapText(true);
             preview_txt_flw.setText(displayBook.getDescription());
 
-            book_img.setImage(new Image(Objects.requireNonNullElse(displayBook.getThumbnail(), "https://via.placeholder.com/150")));
+            book_img.setImage(new Image(Objects.requireNonNullElse(displayBook.getThumbnail(), getClass().getResource("/IMAGES/UnknownBookCover.png").toExternalForm())));
         }
     }
 }
