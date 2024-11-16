@@ -5,7 +5,11 @@ module com.jmc.library {
     requires java.sql;
     requires mysql.connector.j;
     requires java.desktop;
-    requires google.api.services.books.v1.rev113;
+    requires google.api.services.books.v1.rev114;
+    requires org.json;
+    requires com.google.api.client;
+    requires com.google.api.client.json.gson;
+    requires commons.logging;
 
     opens com.jmc.library to javafx.fxml;
     exports com.jmc.library.Controllers;
