@@ -3,6 +3,11 @@
     -fx-border-width: 10;
 }
 
+.BookImageBorder {
+    -fx-border-color: #6943CE;
+    -fx-border-width: 5;
+}
+
 .DetailBook {
     -fx-border-color: #6943CE;
     -fx-border-width: 0 0 0 1;
