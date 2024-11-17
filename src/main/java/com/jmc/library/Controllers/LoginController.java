@@ -45,6 +45,16 @@ public class LoginController implements Initializable {
         welcome_text_txt_flw.getChildren().add(new Label("Welcome to Library\nManagement System"));
         login_btn.setOnAction(event -> login()); /// bat dau quay o day
         signup_lbl.setOnMouseClicked(mouseEvent -> onSignUp());
+        acc_address_fld.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                password_fld.requestFocus();
+            }
+        });
+        password_fld.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                login();
+            }
+        });
     }
 
     private void setRotateTransition() {

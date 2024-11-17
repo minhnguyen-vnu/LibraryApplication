@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,6 +25,11 @@ public class LibraryController extends LibraryTable {
 
     protected void initialAction(){
         search_btn.setOnAction(actionEvent -> searchBook(search_fld.getText()));
+        search_fld.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                searchBook(search_fld.getText());
+            }
+        });
     }
 
     private void searchBook(String text) {
