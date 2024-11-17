@@ -10,7 +10,7 @@ public class BookInfo {
     private int quantityInStock;
     private double leastPrice;
     private LocalDate publishedDate;
-    private boolean inCart;
+    private String ISBN;
 
     public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate) {
         this.bookId = bookId;
@@ -19,6 +19,16 @@ public class BookInfo {
         this.quantityInStock = quantityInStock;
         this.leastPrice = leastPrice;
         this.publishedDate = publishedDate;
+    }
+
+    public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate, String ISBN) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.quantityInStock = quantityInStock;
+        this.leastPrice = leastPrice;
+        this.publishedDate = publishedDate;
+        this.ISBN = ISBN;
     }
 
     public int getBookId() {
@@ -69,21 +79,21 @@ public class BookInfo {
         this.publishedDate = publishedDate;
     }
 
-    public boolean isInCart() { return inCart; }
+    public String getISBN() { return ISBN; }
 
-    public void setInCart(boolean inCart) { this.inCart = inCart; }
+    public void setISBN(String ISBN) { this.ISBN = ISBN; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BookInfo bookInfo = (BookInfo) o;
-        return bookId == bookInfo.bookId && quantityInStock == bookInfo.quantityInStock && Double.compare(leastPrice, bookInfo.leastPrice) == 0 && Objects.equals(bookName, bookInfo.bookName) && Objects.equals(authorName, bookInfo.authorName) && Objects.equals(publishedDate, bookInfo.publishedDate);
+        return bookId == bookInfo.bookId && quantityInStock == bookInfo.quantityInStock && Double.compare(leastPrice, bookInfo.leastPrice) == 0 && Objects.equals(bookName, bookInfo.bookName) && Objects.equals(authorName, bookInfo.authorName) && Objects.equals(publishedDate, bookInfo.publishedDate) && Objects.equals(ISBN, bookInfo.ISBN);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bookId, bookName, authorName, quantityInStock, leastPrice, publishedDate);
+        return Objects.hash(bookId, bookName, authorName, quantityInStock, leastPrice, publishedDate, ISBN);
     }
 
     @Override
@@ -95,6 +105,7 @@ public class BookInfo {
                 ", quantityInStock=" + quantityInStock +
                 ", leastPrice=" + leastPrice +
                 ", publishedDate=" + publishedDate +
+                ", ISBN='" + ISBN + '\'' +
                 '}';
     }
 }

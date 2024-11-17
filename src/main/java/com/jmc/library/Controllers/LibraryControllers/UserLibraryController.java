@@ -92,23 +92,23 @@ public class UserLibraryController extends LibraryController implements Initiali
                 }
             }
         });
-        add_to_cart_tb_cl.setCellFactory(param -> new TableCell<BookInfo, Boolean>() {
-            private final CheckBox checkBox = new CheckBox("Cart");
-
-            @Override
-            protected void updateItem(Boolean item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    BookInfo book = getTableView().getItems().get(getIndex());
-                    checkBox.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-                        book.setInCart(isNowSelected);
-                    });
-                    setGraphic(checkBox);
-                }
-            }
-        });
+//        add_to_cart_tb_cl.setCellFactory(param -> new TableCell<BookInfo, Boolean>() {
+//            private final CheckBox checkBox = new CheckBox("Cart");
+//
+//            @Override
+//            protected void updateItem(Boolean item, boolean empty) {
+//                super.updateItem(item, empty);
+//                if (empty) {
+//                    setGraphic(null);
+//                } else {
+//                    BookInfo book = getTableView().getItems().get(getIndex());
+//                    checkBox.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+//                        book.setInCart(isNowSelected);
+//                    });
+//                    setGraphic(checkBox);
+//                }
+//            }
+//        });
     }
 
     private void addBookforUser(UserBookInfo addedBook){

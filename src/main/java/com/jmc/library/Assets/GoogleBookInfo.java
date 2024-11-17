@@ -14,6 +14,8 @@ public class GoogleBookInfo {
     private double leastPrice;
     private LocalDate publishedDate;
     private String ISBN;
+    private boolean exist;
+    private boolean loaded;
 
     private JSONObject bookInfo;
     private JSONArray items;
@@ -52,11 +54,20 @@ public class GoogleBookInfo {
 
     public void setISBN(String ISBN) { this.ISBN = ISBN; }
 
+    public boolean isExist() { return exist; }
+
+    public void setExist(boolean exist) { this.exist = exist; }
+
+    public boolean isLoaded() { return loaded; }
+
+    public void setLoaded(boolean loaded) { this.loaded = loaded; }
+
     private void getInfo() {
         this.bookInfo = new GoogleBookAPIMethod().searchBook(this.ISBN);
         int indexes = new GoogleBookAPIMethod().getTotalItems(bookInfo) - 1;
         this.items = bookInfo.getJSONArray("items");
         if (items != null) {
+            this.exist = true;
             this.volumeInfo = items.getJSONObject(indexes).getJSONObject("volumeInfo");
             this.bookName = volumeInfo.optString("title");
             this.publishedDate = LocalDate.parse(volumeInfo.optString("publishedDate"));
@@ -65,5 +76,9 @@ public class GoogleBookInfo {
                 this.authorName = authors.getString(0);
             }
         }
+        else {
+            this.exist = false;
+        }
+        this.loaded = true;
     }
 }
