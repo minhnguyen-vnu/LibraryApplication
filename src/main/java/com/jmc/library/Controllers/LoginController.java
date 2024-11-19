@@ -1,6 +1,6 @@
 package com.jmc.library.Controllers;
 
-import com.jmc.library.DBUtlis;
+import com.jmc.library.DataBase.*;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.fxml.Initializable;
@@ -48,9 +48,7 @@ public class LoginController implements Initializable {
                 error_lbl.setStyle("-fx-text-fill: green");
                 error_lbl.setAlignment(Pos.CENTER_LEFT);
                 LibraryModel.getInstance().setUser(acc_address_fld.getText(), password_fld.getText());
-                LibraryModel.getInstance().getUser().loadBookPendingList();
-                LibraryModel.getInstance().getUser().loadCartEntityControllers();
-                LibraryModel.getInstance().getUser().loadBookHiredList();
+                LibraryModel.getInstance().getUser().loadAllList();
                 stageTransforming();
             }
             else{

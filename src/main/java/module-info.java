@@ -12,15 +12,17 @@ module com.jmc.library {
     requires commons.logging;
 
     opens com.jmc.library to javafx.fxml;
-    exports com.jmc.library.Controllers;
     exports com.jmc.library;
     exports com.jmc.library.Models;
     exports com.jmc.library.View;
-    exports com.jmc.library.Controllers.Users;
     exports com.jmc.library.Assets;
+    exports com.jmc.library.DataBase;
+    exports com.jmc.library.Controllers;
+    exports com.jmc.library.Controllers.Users;
     exports com.jmc.library.Controllers.LibraryControllers;
     exports com.jmc.library.Controllers.Admin;
     exports com.jmc.library.Controllers.GoogleBookAPI;
     exports com.jmc.library.Controllers.Books;
     exports com.jmc.library.Controllers.Interface;
+    exports com.jmc.library.Controllers.Loading;
 }

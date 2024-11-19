@@ -1,7 +1,7 @@
 package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.UserBookInfo;
-import com.jmc.library.DBUtlis;
+import com.jmc.library.DataBase.*;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
@@ -64,23 +64,13 @@ public class User {
         this.cartEntityControllers = cartEntityControllers;
     }
 
+    public void loadAllList() {
+        loadBookHiredList();
+        loadBookPendingList();
+        loadCartEntityControllers();
+    }
+
     public void loadBookPendingList() {
-        try {
-            ResultSet resultSet = DBUtlis.executeQuery("select\n" +
-                    "    r.username,\n" +
-                    "    r.bookName,\n" +
-                    "    b.authorName,\n" +
-                    "    r.bookId,\n" +
-                    "    r.pickedDate,\n" +
-                    "    r.returnDate,\n" +
-                    "    r.cost,\n" +
-                    "    r.requestStatus\n"+
-                    "from userRequest r\n" +
-                    "join bookStore b using(bookId)\n" +
-                    "where r.username = ? order by r.requestStatus;", this.username);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         bookPendingList.clear();
         try {
             ResultSet resultSet = DBUtlis.executeQuery("select\n" +
@@ -153,7 +143,6 @@ public class User {
                     "where r.username = ? " +
                     "and r.requestStatus = 'Need_to_payment';", this.username);
             while (resultSet.next()) {
-                System.out.println(1);
                 UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
                         resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
                         resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"),

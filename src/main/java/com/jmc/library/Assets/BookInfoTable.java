@@ -1,6 +1,7 @@
 package com.jmc.library.Assets;
 
-import com.jmc.library.DBUtlis;
+import com.jmc.library.DataBase.DBQuery;
+import com.jmc.library.DataBase.DBUtlis;
 import com.jmc.library.Models.BookModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;

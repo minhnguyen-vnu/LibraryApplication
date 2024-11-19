@@ -5,21 +5,15 @@ import com.jmc.library.Controllers.Users.User;
 
 public class LibraryModel {
     private static LibraryModel model;
-    private final UserLibraryController userLibraryController;
     private final User user;
 
-    private LibraryModel(){
-        this.userLibraryController = new UserLibraryController();
+    private LibraryModel() {
         this.user = new User();
     }
 
-    public static synchronized LibraryModel getInstance(){
+    public static synchronized LibraryModel getInstance() {
         if(model == null) model = new LibraryModel();
         return model;
-    }
-
-    public UserLibraryController getLibraryController(){
-        return userLibraryController;
     }
 
     public User getUser() {
