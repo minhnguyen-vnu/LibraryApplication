@@ -5,6 +5,7 @@ import com.jmc.library.Assets.GoogleBookInfo;
 import com.jmc.library.Assets.LibraryTable;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Database.DBUpdate;
+import com.jmc.library.Database.DBUtlis;
 import com.jmc.library.Models.AdminLibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.application.Platform;
@@ -12,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+import java.awt.print.Book;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -45,35 +47,24 @@ public class ManageBookController extends LibraryTable implements Initializable 
     }
 
     private boolean isFilled() {
-        boolean ok = true;
-        if (enter_book_id_txt_fld.getText().isEmpty() || enter_quantity_txt_fld.getText().isEmpty() ||
-                enter_price_txt_fld.getText().isEmpty() || enter_ISBN_txt_fld.getText().isEmpty()) ok = false;
-        return ok;
+        return !enter_book_id_txt_fld.getText().isEmpty() && !enter_quantity_txt_fld.getText().isEmpty() &&
+                !enter_price_txt_fld.getText().isEmpty() && !enter_ISBN_txt_fld.getText().isEmpty();
     }
 
     private boolean isNotExisting() {
-        AtomicBoolean ok = new AtomicBoolean(isFilled());
-        try {
-            int number = Integer.parseInt(enter_book_id_txt_fld.getText());
-        } catch (Exception e) {
-            ok.set(false);
+        boolean ok = true;
+
+        String bookId = enter_book_id_txt_fld.getText();
+        String bookName = enter_ISBN_txt_fld.getText();
+
+        for (BookInfo book : bookList) {
+                        if (book.getBookId() == Integer.parseInt(bookId) || book.getBookName().equals(bookName)) {
+                ok = false;
+                break;
+            }
         }
 
-        DBQuery dbQuery = new DBQuery("select * from bookStore\n" +
-                "where bookId = ? or bookName = ?; ", enter_book_id_txt_fld.getText(), enter_ISBN_txt_fld.getText());
-        dbQuery.setOnSucceeded(event -> {
-            ResultSet resultSet = dbQuery.getValue();
-            try {
-                if (resultSet.next()) ok.set(false);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        Thread thread = new Thread(dbQuery);
-        thread.setDaemon(true);
-        thread.start();
-
-        return ok.get();
+        return ok;
     }
 
     private boolean isExist() {
@@ -93,14 +84,6 @@ public class ManageBookController extends LibraryTable implements Initializable 
         enter_book_id_txt_fld.clear();
         enter_quantity_txt_fld.clear();
         enter_price_txt_fld.clear();
-    }
-
-    private void assign(BookInfo oldValue, BookInfo newValue) {
-        oldValue.setBookName(newValue.getBookName());
-        oldValue.setAuthorName(newValue.getAuthorName());
-        oldValue.setQuantityInStock(newValue.getQuantityInStock());
-        oldValue.setLeastPrice(newValue.getLeastPrice());
-        oldValue.setPublishedDate(newValue.getPublishedDate());
     }
 
     private void onAction() {
@@ -157,32 +140,35 @@ public class ManageBookController extends LibraryTable implements Initializable 
                 thread.setDaemon(true);
                 thread.start();
                 bookList.remove(bookInfo);
+                clear();
             }
         });
 
-//        update_book_btn.setOnAction(actionEvent -> {
-//            boolean ok = isFilled();
-//
-//            if (ok) {
-//                BookInfo bookInfo = new BookInfo(Integer.parseInt(enter_book_id_txt_fld.getText()), enter_book_name_txt_fld.getText(),
-//                        enter_author_name_txt_fld.getText(), Integer.parseInt(enter_quantity_txt_fld.getText()),
-//                        Double.parseDouble(enter_price_txt_fld.getText()), LocalDate.parse(enter_published_date_txt_fld.getText()));
-//                DBUtlis.executeUpdate("update bookStore\n" +
-//                        "set bookName = ?, authorName = ?, quantityInStock = ?, leastPrice = ?, publishDate = ?\n" +
-//                        "where bookId = ?; \n", bookInfo.getBookName(),
-//                        bookInfo.getAuthorName(), bookInfo.getQuantityInStock(),
-//                        bookInfo.getLeastPrice(), Date.valueOf(bookInfo.getPublishedDate()), bookInfo.getBookId());
-//                for (int i = 0; i < bookList.size(); i++) {
-//                    BookInfo temp = bookList.get(i);
-//                    if (temp.getBookId() == bookInfo.getBookId()) {
-//                        assign(temp, bookInfo);
-//                        break;
-//                    }
-//                }
-//                store_tb.refresh();
-//                clear();
-//            }
-//        });
+        update_book_btn.setOnAction(actionEvent -> {
+            boolean ok = isFilled();
+
+            if (ok) {
+                int BookId = Integer.parseInt(enter_book_id_txt_fld.getText());
+                int Quantity = Integer.parseInt(enter_quantity_txt_fld.getText());
+                double Price = Double.parseDouble(enter_price_txt_fld.getText());
+                String ISBN = enter_ISBN_txt_fld.getText();
+                DBUpdate dbUpdate = new DBUpdate("update bookStore\n" +
+                        "set quantityInStock = ?, leastPrice = ?\n" +
+                        "where bookId = ?; \n", Quantity, Price, BookId);
+                Thread thread = new Thread(dbUpdate);
+                thread.setDaemon(true);
+                thread.start();
+                for (BookInfo temp : bookList) {
+                    if (temp.getBookId() == BookId && temp.getISBN().equals(ISBN)) {
+                        temp.setQuantityInStock(Quantity);
+                        temp.setLeastPrice(Price);
+                        break;
+                    }
+                }
+                store_tb.refresh();
+                clear();
+            }
+        });
 
         clear_btn.setOnAction(actionEvent -> clear());
     }
