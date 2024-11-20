@@ -58,7 +58,7 @@ public class ManageBookController extends LibraryTable implements Initializable 
         String bookName = enter_ISBN_txt_fld.getText();
 
         for (BookInfo book : bookList) {
-                        if (book.getBookId() == Integer.parseInt(bookId) || book.getBookName().equals(bookName)) {
+            if (book.getBookId() == Integer.parseInt(bookId) || book.getBookName().equals(bookName)) {
                 ok = false;
                 break;
             }
@@ -91,8 +91,7 @@ public class ManageBookController extends LibraryTable implements Initializable 
 
         store_tb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                int bookId = newValue.getBookId();
-                int quantityInStock = newValue.getQuantityInStock();
+                int bookId = newValue.getBookId();int quantityInStock = newValue.getQuantityInStock();
                 double leastPrice = newValue.getLeastPrice();
                 String isbn = newValue.getISBN();
 
@@ -147,8 +146,7 @@ public class ManageBookController extends LibraryTable implements Initializable 
         update_book_btn.setOnAction(actionEvent -> {
             boolean ok = isFilled();
 
-            if (ok) {
-                int BookId = Integer.parseInt(enter_book_id_txt_fld.getText());
+            if (ok) {int BookId = Integer.parseInt(enter_book_id_txt_fld.getText());
                 int Quantity = Integer.parseInt(enter_quantity_txt_fld.getText());
                 double Price = Double.parseDouble(enter_price_txt_fld.getText());
                 String ISBN = enter_ISBN_txt_fld.getText();
