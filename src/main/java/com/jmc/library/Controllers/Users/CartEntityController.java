@@ -71,13 +71,18 @@ public class CartEntityController extends User implements Initializable {
     }
 
     public void updReturnDateDB(LocalDate date) throws SQLException {
-        DBUtlis.executeUpdate("UPDATE userRequest SET returnDate = '" + date +
-                "' WHERE bookId = " + userBookInfo.getBookId());
+        DBUpdate dbUpdate = new DBUpdate("UPDATE userRequest SET returnDate = ? WHERE bookId = ?",
+                date, userBookInfo.getBookId());
+        Thread thread = new Thread(dbUpdate);
+        thread.start();
     }
 
     public void updCostDB() throws SQLException {
-        DBUtlis.executeUpdate("UPDATE userRequest SET cost = " + userBookInfo.getSingleCost() * day_borrow +
-                " WHERE bookId = " + userBookInfo.getBookId());
+        DBUpdate dbUpdate = new DBUpdate("UPDATE userRequest SET cost = ? WHERE bookId = ?",
+                userBookInfo.getSingleCost() * day_borrow, userBookInfo.getBookId());
+        Thread thread = new Thread(dbUpdate);
+        thread.start();
+
     }
 
     private void updCost() throws SQLException {

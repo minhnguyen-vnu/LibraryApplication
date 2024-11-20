@@ -186,37 +186,46 @@ public class UserLibraryController extends LibraryController implements Initiali
     }
 
     public void updDatabaseCaseInsertBook (BookInfo book) {
-        DBUtlis.executeUpdate("update bookStore\n" +
+        DBUpdate dbUpdate = new DBUpdate("update bookStore\n" +
                 "set quantityInStock = quantityInStock - 1\n" +
                 "where bookId = ?;", book.getBookId());
+        Thread thread = new Thread(dbUpdate);
+        thread.start();
         book.setQuantityInStock(book.getQuantityInStock() - 1);
         UserBookInfo userBookInfo = new UserBookInfo(book.getBookName(), book.getAuthorName(),
                 book.getBookId(), LocalDate.now(),
                 LocalDate.now(), book.getLeastPrice(),
                 "Need_to_payment");
-        try {
-            ResultSet resultSet = DBUtlis.executeQuery("select max(issueId) from userRequest;");
-            if (resultSet.next()) {
-                DBUtlis.executeUpdate("insert into userRequest\n" +
-                                "values(?, ?, ?, ?, ?, ?, ?, ?); ",
-                        resultSet.getInt(1) + 1,
-                        book.getBookId(), book.getBookName(),
-                        LibraryModel.getInstance().getUser().getUsername(),
-                        LocalDate.now(), LocalDate.now(),
-                        book.getLeastPrice(),
-                        "Need_to_payment");
+        DBQuery dbQuery = new DBQuery("select max(issueId) from userRequest;");
+        dbQuery.setOnSucceeded(event -> {
+            ResultSet resultSet = dbQuery.getValue();
+            try {
+                if (resultSet.next()) {
+                    DBUtlis.executeUpdate("insert into userRequest\n" +
+                                    "values(?, ?, ?, ?, ?, ?, ?, ?); ",
+                            resultSet.getInt(1) + 1,
+                            book.getBookId(), book.getBookName(),
+                            LibraryModel.getInstance().getUser().getUsername(),
+                            LocalDate.now(), LocalDate.now(),
+                            book.getLeastPrice(),
+                            "Need_to_payment");
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        addBookForUser(userBookInfo);
+            addBookForUser(userBookInfo);
+        });
+        Thread thread1 = new Thread(dbQuery);
+        thread1.start();
+
     }
 
-    public ResultSet getResultSetCaseSelectBook(BookInfo book) throws SQLException {
-        return DBUtlis.executeQuery("select\n" +
+    public DBQuery getResultSetCaseSelectBook(BookInfo book)  {
+        DBQuery dbQuery = new DBQuery("select\n" +
                 "    username,\n" +
                 "    bookId\n" +
                 "from userRequest\n" +
                 "where username = ? and bookId = ?;", LibraryModel.getInstance().getUser().getUsername(), book.getBookId());
+        return dbQuery;
     }
 }

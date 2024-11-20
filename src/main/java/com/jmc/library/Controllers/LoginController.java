@@ -40,26 +40,30 @@ public class LoginController implements Initializable {
     }
 
     public void login(){
-        ResultSet resultSet = null;
-        try {
-            resultSet = DBUtlis.executeQuery("select * from users where username = ? and password = ?", acc_address_fld.getText(), password_fld.getText());
-            if(resultSet.next()){
-                error_lbl.setText("Login Successfully");
-                error_lbl.setStyle("-fx-text-fill: green");
-                error_lbl.setAlignment(Pos.CENTER_LEFT);
-                LibraryModel.getInstance().setUser(acc_address_fld.getText(), password_fld.getText());
-                LibraryModel.getInstance().getUser().loadAllList();
-                stageTransforming();
+        DBQuery dbQuery = new DBQuery("select * from users where username = ? and password = ?", acc_address_fld.getText(), password_fld.getText());
+        dbQuery.setOnSucceeded(event -> {
+            ResultSet resultSet = dbQuery.getValue();
+            try {
+                if(resultSet.next()){
+                    error_lbl.setText("Login Successfully");
+                    error_lbl.setStyle("-fx-text-fill: green");
+                    error_lbl.setAlignment(Pos.CENTER_LEFT);
+                    LibraryModel.getInstance().setUser(acc_address_fld.getText(), password_fld.getText());
+                    LibraryModel.getInstance().getUser().loadAllList();
+                    stageTransforming();
+                }
+                else{
+                    error_lbl.setText("Login Failed");
+                    error_lbl.setStyle("-fx-text-fill: red");
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                DBUtlis.closeResources(null, resultSet, null);
             }
-            else{
-                error_lbl.setText("Login Failed");
-                error_lbl.setStyle("-fx-text-fill: red");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            DBUtlis.closeResources(null, resultSet, null);
-        }
+        });
+        Thread thread = new Thread(dbQuery);
+        thread.start();
     }
 
     public void stageTransforming(){

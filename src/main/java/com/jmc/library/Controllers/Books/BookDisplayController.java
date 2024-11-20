@@ -66,19 +66,22 @@ public class BookDisplayController extends UserLibraryController implements Init
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
         });
         get_book_btn.setOnAction(actionEvent -> {
-            try {
-                ResultSet resultSet = getResultSetCaseSelectBook(displayBook);
-                if (resultSet.next()) {
-                    // need to change into label notification.
-                    System.out.println("Book already exists in the library");
-                    return;
+            DBQuery dbQuery = getResultSetCaseSelectBook(displayBook);
+            dbQuery.setOnSucceeded(event -> {
+                ResultSet resultSet = dbQuery.getValue();
+                try {
+                    if (resultSet.next()) {
+                        System.out.println("Book already exists in the library");
+                        return;
+                    }
+                    updDatabaseCaseInsertBook(displayBook);
+                    System.out.println("Book added to the library");
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-                updDatabaseCaseInsertBook(displayBook);
-                // need to change into label notification.
-                System.out.println("Book added to the library");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            });
+            Thread thread = new Thread(dbQuery);
+            thread.start();
         });
     }
 
