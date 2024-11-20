@@ -91,7 +91,8 @@ public class ManageBookController extends LibraryTable implements Initializable 
 
         store_tb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                int bookId = newValue.getBookId();int quantityInStock = newValue.getQuantityInStock();
+                int bookId = newValue.getBookId();
+                int quantityInStock = newValue.getQuantityInStock();
                 double leastPrice = newValue.getLeastPrice();
                 String isbn = newValue.getISBN();
 

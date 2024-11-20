@@ -76,18 +76,11 @@ public class UserLibraryController extends LibraryController implements Initiali
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
-                        DBUtlis.executeUpdate("update bookStore\n" +
-                                "set quantityInStock = quantityInStock - 1\n" +
-                                "where bookId = ?;", book.getBookId());
-                        book.setQuantityInStock(book.getQuantityInStock() - 1);
                         LocalDate expiryDate = LocalDate.of(2024, 12, 19);
                         long daysBetween = ChronoUnit.DAYS.between(LocalDate.now(), expiryDate);
-                        DBUtlis.executeUpdate("insert into userRequest(bookId, bookName, username, pickedDate, returnDate, cost, requestStatus)\n" +
+                        DBUtlis.executeUpdate("insert into PendingRequest(bookId, bookName, username, requestDate, returnDate, cost, requestStatus)\n" +
                                 "values(?, ?, ?, ?, ?, ?, ?); ", book.getBookId(), book.getBookName(), LibraryModel.getInstance().getUser().getUsername(),
-                                LocalDate.now(), expiryDate, book.getLeastPrice() * daysBetween, "pending");
-                        getTableView().refresh();
-                        UserBookInfo userBookInfo = new UserBookInfo(book.getBookName(), book.getAuthorName(),  book.getBookId(), LocalDate.now(), expiryDate, book.getLeastPrice() * daysBetween);
-                        addBookforUser(userBookInfo);
+                                LocalDate.now(), expiryDate, book.getLeastPrice() * daysBetween, "Pending");
                     });
                 }
             }

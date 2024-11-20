@@ -5,14 +5,16 @@ import java.time.LocalDate;
 public class RequestInfo {
     private int issueId;
     private int bookId;
+    private String bookName;
     private String username;
     private LocalDate returnDate, pickedDate;
     private double totalCost;
     private String requestStatus;
 
-    public RequestInfo(int issueID, int bookId, String username, LocalDate pickedDate, LocalDate returnDate, double totalCost, String requestStatus) {
+    public RequestInfo(int issueID, int bookId, String bookName, String username, LocalDate pickedDate, LocalDate returnDate, double totalCost, String requestStatus) {
         this.issueId = issueID;
         this.bookId = bookId;
+        this.bookName = bookName;
         this.username = username;
         this.returnDate = returnDate;
         this.pickedDate = pickedDate;
@@ -23,6 +25,10 @@ public class RequestInfo {
     public int getIssueId() { return issueId; }
 
     public void setIssueId(int issueId) { this.issueId = issueId; }
+
+    public String getBookName() { return bookName; }
+
+    public void setBookName(String bookName) { this.bookName = bookName; }
 
     public String getUsername() { return username; }
 

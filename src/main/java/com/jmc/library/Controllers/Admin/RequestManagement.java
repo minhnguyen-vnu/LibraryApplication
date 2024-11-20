@@ -58,7 +58,7 @@ public abstract class RequestManagement {
             try {
                 while (resultSet.next()) {
                     RequestInfo currentBook = new RequestInfo(resultSet.getInt("issueId"), resultSet.getInt("bookId"),
-                            resultSet.getString("username"),
+                            resultSet.getString("bookName"), resultSet.getString("username"),
                             resultSet.getDate("pickedDate").toLocalDate(), resultSet.getDate("returnDate").toLocalDate(),
                             resultSet.getDouble("cost"), resultSet.getString("requestStatus"));
                     bookList.add(currentBook);
