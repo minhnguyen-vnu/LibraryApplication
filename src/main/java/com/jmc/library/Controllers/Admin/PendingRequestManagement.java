@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class PendingRequestManagement extends RequestManagement implements Initializable {
     public Button update_btn;
-    public TextField get_request_id_txt_fld;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -79,20 +79,6 @@ public class PendingRequestManagement extends RequestManagement implements Initi
     }
 
     private void addedAction() {
-        store_tb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                int requestID = newValue.getIssueId();
-                String customer = newValue.getUsername();
-                LocalDate requestedDate = newValue.getPickedDate();
-                LocalDate dueDate = newValue.getReturnDate();
-
-                get_request_id_txt_fld.setText(String.valueOf(requestID));
-                get_customer_name_txt_fld.setText(customer);
-                get_borrowed_date.setValue(requestedDate);
-                get_due_date.setValue(dueDate);
-            }
-        });
-
         update_btn.setOnAction(actionEvent -> {
             RequestInfo foundElement = getElement();
             if (foundElement != null && status_choice_box.getValue() != null) {

@@ -8,11 +8,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminLibraryController extends LibraryController implements Initializable {
+    private static final Log log = LogFactory.getLog(AdminLibraryController.class);
     public Button settings_btn;
     public ImageView account_avatar_img;
     public Label account_name_lbl;
@@ -42,5 +46,14 @@ public class AdminLibraryController extends LibraryController implements Initial
         go_to_dashboard_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Dashboard View"));
         go_to_request_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Request Management"));
         go_to_pending_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Pending Request Management"));
+        log_out_btn.setOnAction(actionEvent -> stageTransforming());
+    }
+
+    private void stageTransforming() {
+        Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
+        Model.getInstance().getViewFactory().closeStage(currentStage);
+        Model.getInstance().getViewFactory().showAuthenticationWindow();
+        Model.getInstance().getViewFactory().getSelectedAuthenticatonMode().set("Login");
+        Model.getInstance().getViewFactory().getSelectedAdminMode().set("");
     }
 }

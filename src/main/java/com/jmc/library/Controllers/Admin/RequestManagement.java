@@ -18,6 +18,7 @@ public abstract class RequestManagement {
     public DatePicker get_borrowed_date;
     public DatePicker get_due_date;
     public ChoiceBox<String> status_choice_box;
+    public TextField get_request_id_txt_fld;
     public Button search_btn;
     public Button return_btn;
 
@@ -31,6 +32,7 @@ public abstract class RequestManagement {
     public TableColumn<RequestInfo, LocalDate> due_date_cl;
     public TableColumn<RequestInfo, Double> cost_cl;
     public TableColumn<RequestInfo, String> status_cl;
+
 
     protected abstract void ChoiceBoxInitialization();
 
@@ -77,13 +79,15 @@ public abstract class RequestManagement {
     }
 
     protected void search() {
+        String issueID = get_request_id_txt_fld.getText();
         String customerName = get_customer_name_txt_fld.getText();
         LocalDate borrowedDate = get_borrowed_date.getValue();
         LocalDate dueDate = get_due_date.getValue();
         String status = status_choice_box.getValue();
 
         ObservableList<RequestInfo> filteredList = bookList.stream()
-                .filter(request -> (customerName.isEmpty() || request.getUsername().equals(customerName)) &&
+                .filter(request -> (issueID.isEmpty() || request.getIssueId() == Integer.parseInt(issueID)) &&
+                        (customerName.isEmpty() || request.getUsername().equals(customerName)) &&
                         (borrowedDate == null || request.getPickedDate().equals(borrowedDate)) &&
                         (dueDate == null || request.getReturnDate().equals(dueDate)) &&
                         (status == null || status.isEmpty() || request.getRequestStatus().equals(status)))
@@ -96,10 +100,25 @@ public abstract class RequestManagement {
             get_customer_name_txt_fld.clear();
             get_borrowed_date.setValue(null);
             get_due_date.setValue(null);
+            get_request_id_txt_fld.clear();
             status_choice_box.setValue(null);
             store_tb.setItems(bookList);
             Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View");
         });
         search_btn.setOnAction(actionEvent -> search());
+
+        store_tb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                int requestID = newValue.getIssueId();
+                String customer = newValue.getUsername();
+                LocalDate requestedDate = newValue.getPickedDate();
+                LocalDate dueDate = newValue.getReturnDate();
+
+                get_request_id_txt_fld.setText(String.valueOf(requestID));
+                get_customer_name_txt_fld.setText(customer);
+                get_borrowed_date.setValue(requestedDate);
+                get_due_date.setValue(dueDate);
+            }
+        });
     }
 }

@@ -109,12 +109,11 @@ public class LoginController implements Initializable {
     }
 
     public void stageTransforming(boolean isAdmin) {
-
-        /// mat khau dung thi ket thuc o day
         loading_img.setVisible(false);
         rotateTransition.stop();
         Stage currentStage = (Stage) login_btn.getScene().getWindow();
         Model.getInstance().getViewFactory().closeStage(currentStage);
+        Model.getInstance().getViewFactory().getSelectedAuthenticatonMode().set("");
         if (isAdmin) {
             Model.getInstance().getViewFactory().showAdminWindow();
             Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View");

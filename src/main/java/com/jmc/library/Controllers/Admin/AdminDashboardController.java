@@ -13,6 +13,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -115,5 +116,14 @@ public class AdminDashboardController implements Initializable {
         manage_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View"));
         go_to_request_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Request Management"));
         go_to_pending_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Pending Request Management"));
+        log_out_btn.setOnAction(actionEvent -> stageTransforming());
+    }
+
+    private void stageTransforming() {
+        Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
+        Model.getInstance().getViewFactory().closeStage(currentStage);
+        Model.getInstance().getViewFactory().showAuthenticationWindow();
+        Model.getInstance().getViewFactory().getSelectedAuthenticatonMode().set("Login");
+        Model.getInstance().getViewFactory().getSelectedAdminMode().set("");
     }
 }
