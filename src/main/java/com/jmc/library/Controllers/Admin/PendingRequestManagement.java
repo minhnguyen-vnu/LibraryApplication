@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 
 public class PendingRequestManagement extends RequestManagement implements Initializable {
     public Button update_btn;
+    public TextField get_request_id_txt_fld;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
