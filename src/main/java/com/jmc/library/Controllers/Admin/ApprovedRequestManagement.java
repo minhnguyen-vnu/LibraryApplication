@@ -17,8 +17,6 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class ApprovedRequestManagement extends RequestManagement implements Initializable {
-    public TextField get_issue_id_txt_fld;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ChoiceBoxInitialization();
