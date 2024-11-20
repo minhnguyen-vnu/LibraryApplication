@@ -20,7 +20,6 @@ public class AdminLibraryController extends LibraryController implements Initial
     public Button go_to_request_btn;
     public Button manage_btn;
     public Button go_to_dashboard_btn;
-    /** Them cai nay vao TT */
     public Button go_to_pending_btn;
 
     @Override
@@ -42,5 +41,6 @@ public class AdminLibraryController extends LibraryController implements Initial
         settings_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Managemental Book"));
         go_to_dashboard_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Dashboard View"));
         go_to_request_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Request Management"));
+        go_to_pending_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Pending Request Management"));
     }
 }

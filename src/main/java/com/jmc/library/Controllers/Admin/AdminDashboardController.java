@@ -37,7 +37,6 @@ public class AdminDashboardController implements Initializable {
     public Label total_hired_book_lbl;
     public LineChart<String, Number> customers_line_chart;
     public Label total_customers_lbl;
-    /** Them cai nay vao TT */
     public Button go_to_pending_btn;
 
     @Override
@@ -113,9 +112,8 @@ public class AdminDashboardController implements Initializable {
     }
 
     private void onAction() {
-        manage_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View");
-        });
+        manage_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View"));
         go_to_request_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Request Management"));
+        go_to_pending_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Pending Request Management"));
     }
 }
