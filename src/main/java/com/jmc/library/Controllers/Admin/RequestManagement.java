@@ -2,17 +2,25 @@ package com.jmc.library.Controllers.Admin;
 
 import com.jmc.library.Assets.RequestInfo;
 import com.jmc.library.Database.DBQuery;
+import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 public abstract class RequestManagement {
+    public TextField get_customer_name_txt_fld;
+    public DatePicker get_borrowed_date;
+    public DatePicker get_due_date;
+    public ChoiceBox<String> status_choice_box;
+    public Button search_btn;
+    public Button return_btn;
+
     public TableView<RequestInfo> store_tb;
     public ObservableList<RequestInfo> bookList;
 
@@ -66,5 +74,32 @@ public abstract class RequestManagement {
         Thread thread = new Thread(dbQuery);
         thread.setDaemon(true);
         thread.start();
+    }
+
+    protected void search() {
+        String customerName = get_customer_name_txt_fld.getText();
+        LocalDate borrowedDate = get_borrowed_date.getValue();
+        LocalDate dueDate = get_due_date.getValue();
+        String status = status_choice_box.getValue();
+
+        ObservableList<RequestInfo> filteredList = bookList.stream()
+                .filter(request -> (customerName.isEmpty() || request.getUsername().equals(customerName)) &&
+                        (borrowedDate == null || request.getPickedDate().equals(borrowedDate)) &&
+                        (dueDate == null || request.getReturnDate().equals(dueDate)) &&
+                        (status == null || status.isEmpty() || request.getRequestStatus().equals(status)))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        store_tb.setItems(filteredList);
+    }
+
+    protected void onAction() {
+        return_btn.setOnAction(actionEvent -> {
+            get_customer_name_txt_fld.clear();
+            get_borrowed_date.setValue(null);
+            get_due_date.setValue(null);
+            status_choice_box.setValue(null);
+            store_tb.setItems(bookList);
+            Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View");
+        });
+        search_btn.setOnAction(actionEvent -> search());
     }
 }

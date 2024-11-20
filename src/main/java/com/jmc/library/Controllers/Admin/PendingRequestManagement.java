@@ -3,10 +3,9 @@ package com.jmc.library.Controllers.Admin;
 import com.jmc.library.Assets.RequestInfo;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Models.Model;
+import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -16,24 +15,14 @@ import java.util.ResourceBundle;
 
 public class PendingRequestManagement extends RequestManagement implements Initializable {
     public Button update_btn;
-    public Button go_to_dashboard_btn;
-    public Button go_to_request_btn;
-    public Button manage_btn;
-    public Button log_out_btn;
-    public Button search_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setTable();
         onAction();
+        setTable();
         addBinding();
+        ChoiceBoxInitialization();
         showLibrary();
-    }
-
-    private void onAction() {
-        go_to_dashboard_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Dashboard View"));
-        go_to_request_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Request Management"));
-        manage_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View"));
     }
 
     @Override
@@ -64,8 +53,12 @@ public class PendingRequestManagement extends RequestManagement implements Initi
         thread.start();
     }
 
+    private void updateAction() {
+
+    }
+
     @Override
     protected void ChoiceBoxInitialization() {
-
+        status_choice_box.setItems(FXCollections.observableArrayList("Pending", "Accepted", "Rejected", ""));
     }
 }
