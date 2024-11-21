@@ -130,8 +130,6 @@ public class GoogleBookInfo {
         else {
             this.imageView = new ImageView(getClass().getResource("/IMAGES/UnknownBookCover.png").toExternalForm());
         }
-        this.imageView.setFitHeight(50);
-        this.imageView.setFitWidth(75);
     }
 
     private void getInfo() {
