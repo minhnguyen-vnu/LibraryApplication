@@ -1,0 +1,160 @@
+.Border {
+    -fx-border-color: #41445B;
+    -fx-border-width: 10;
+}
+
+
+.DetailBook {
+    -fx-border-color: #6943CE;
+    -fx-border-width: 0 0 0 1;
+}
+
+.Tile {
+    -fx-border-color: #6943CE;
+    -fx-border-width: 0 0 3 0;
+    -fx-text-fill: #1256d3;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.BigWhiteTitle {
+    -fx-font-size: 50;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.GetButton {
+    -fx-background-color: #6943CE;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20;
+    -fx-pref-width: 300;
+    -fx-font-weight: bold;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.GetButton:hover {
+    -fx-background-color: #7035d6;
+    -fx-text-fill: #b0ed99;
+}
+
+.BackButton {
+    -fx-background-color: transparent;
+    -fx-font-size: 20;
+    -fx-text-fill: #000000;
+    -fx-font-family: "Calibri", sans-serif;
+
+}
+
+.BackButton:hover {
+    -fx-text-fill: #579ae8;
+}
+
+.BackButton .image-view {
+}
+
+.BackButton:hover .image-view {
+    -fx-blend-mode: difference;
+}
+
+
+
+
+
+.BookName .label {
+    -fx-font-size: 50;
+    -fx-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.InfoText {
+    -fx-font-size: 20;
+    -fx-text-fill: #000000;
+}
+
+.BarGround {
+    -fx-background-color: #2F314B;
+}
+
+.BackGround {
+    -fx-background-color: #f0f0f0;
+}
+
+.tab-pane {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 0 0 15 15;
+    /*-fx-border-color: #6943CE;*/
+    /*-fx-border-width: 2;*/
+}
+
+/* Style for the Tab headers */
+.tab-pane .tab-header-area {
+    -fx-background-color: #6943CE;
+}
+
+.tab-pane .tab-header-area .tab {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #6943CE;
+    -fx-border-width: 0 0 2 0;
+    -fx-pref-width: 100;
+    -fx-pref-height: 30;
+}
+
+.tab-pane .tab-header-area .tab .tab-label {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    /*-fx-border-color: #6943CE;*/
+    -fx-text-fill: #1e1665;
+}
+
+.tab-pane .tab-header-area .tab:selected .tab-label {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    /*-fx-border-color: #6943CE;*/
+}
+
+.tab-pane .tab-header-area .tab:selected {
+    -fx-background-color: #6943CE;
+    -fx-text-fill: #ffffff;
+}
+
+/* Style for the Tab content */
+.tab-pane .tab-content-area {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 0 0 15 15;
+}
+
+
+.tab-header-background {
+    -fx-background-color: #361d81;
+    /*-fx-opacity: 0.5;*/
+    /*-fx-background-radius: 15 15 0 0;*/
+}
+
+.scroll-bar:horizontal {
+    -fx-pref-width: 0;
+    -fx-opacity: 0;
+}
+
+.scroll-bar:vertical {
+    -fx-opacity: 0;
+}
+
+.scroll-pane {
+    -fx-background-color: #ffffff;
+}
+.scroll-pane .viewport {
+    -fx-background-color: #ffffff;
+}
+.TextArea {
+    -fx-font-size: 20;
+    -fx-text-fill: #1e53ff;
+}
+
+.TextArea .content {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+}
