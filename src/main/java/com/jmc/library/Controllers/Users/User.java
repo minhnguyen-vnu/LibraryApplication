@@ -3,12 +3,12 @@ package com.jmc.library.Controllers.Users;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.DataBase.*;
 import com.jmc.library.Models.LibraryModel;
-import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class User {
     private String username;
@@ -67,7 +67,6 @@ public class User {
     public void loadAllList() {
         loadBookHiredList();
         loadBookPendingList();
-        loadCartEntityControllers();
     }
 
     public void loadBookPendingList() {
@@ -78,16 +77,16 @@ public class User {
                     "    r.bookName,\n" +
                     "    b.authorName,\n" +
                     "    r.bookId,\n" +
-                    "    r.pickedDate,\n" +
+                    "    r.requestDate,\n" +
                     "    r.returnDate,\n" +
                     "    r.cost,\n" +
                     "    r.requestStatus\n"+
-                    "from userRequest r\n" +
+                    "from PendingRequest r\n" +
                     "join bookStore b using(bookId)\n" +
                     "where r.username = ? order by r.requestStatus;", this.username);
             while (resultSet.next()) {
                 UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
-                        resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
+                        resultSet.getInt("bookId"), resultSet.getDate("requestDate").toLocalDate(),
                         resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"));
                 this.bookPendingList.add(userBookInfo);
             }
@@ -112,12 +111,12 @@ public class User {
                     "from  userRequest r\n" +
                     "join bookStore b using(bookId)\n" +
                     "where r.username = ? " +
-                    "and r.requestStatus = 'accepted';", this.username);
+                    "order by r.requestStatus;", this.username);
             while (resultSet.next()) {
                 UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
                         resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
                         resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"),
-                        resultSet.getString("status"));
+                        resultSet.getString("requestStatus"));
                 this.bookHiredList.add(userBookInfo);
             }
             resultSet.close();
@@ -126,56 +125,13 @@ public class User {
         }
     }
 
-    public void loadCartEntityControllers() {
-        cartEntityControllers.clear();
-        DBQuery dbQuery = new DBQuery("select\n" +
-                "    r.username,\n" +
-                "    r.bookName,\n" +
-                "    b.authorName,\n" +
-                "    r.bookId,\n" +
-                "    r.pickedDate,\n" +
-                "    r.returnDate,\n" +
-                "    r.cost,\n" +
-                "    r.requestStatus\n"+
-                "from userRequest r\n" +
-                "join bookStore b using(bookId)\n" +
-                "where r.username = ? " +
-                "and r.requestStatus = 'Need_to_payment';", this.username);
-        dbQuery.setOnSucceeded(event -> {
-            ResultSet resultSet = dbQuery.getValue();
-            try {
-                while (resultSet.next()) {
-                    UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
-                            resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
-                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"),
-                            resultSet.getString("requestStatus"));
-                    CartEntityController cartEntityController = new CartEntityController(userBookInfo);
-                    this.cartEntityControllers.add(cartEntityController);
-                }
-                resultSet.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        Thread thread = new Thread(dbQuery);
-        thread.start();
-        System.out.println(cartEntityControllers.size());
-    }
-
     public void removeCartEntityController(CartEntityController cartEntityController) {
-        DBUpdate dbUpdate = new DBUpdate("delete from userRequest where username = ? and bookId = ?",
-                this.username, cartEntityController.getUserBookInfo().getBookId());
-        Thread thread = new Thread(dbUpdate);
-        thread.start();
         this.cartEntityControllers.remove(cartEntityController);
     }
 
     public String getSubTotal() {
         double total = this.cartEntityControllers.stream().mapToDouble(cartEntityController -> cartEntityController.getUserBookInfo().getTotalCost()).sum();
-        System.out.println(total);
-        String result = Double.toString(total);
-        System.out.println(result);
-        return result;
+        return Double.toString(total);
 
     }
 
@@ -188,31 +144,43 @@ public class User {
     }
 
     public void userPayment() {
-        DBUpdate dbUpdate = new DBUpdate("update userRequest set requestStatus = 'pending' where username = ? and requestStatus = 'Need_to_payment';", this.username);
-        Thread thread = new Thread(dbUpdate);
-        thread.start();
         for(CartEntityController cartEntityController : this.cartEntityControllers) {
-            cartEntityController.getUserBookInfo().setRequestStatus("pending");
             LibraryModel.getInstance().getUser().getBookPendingList()
                     .add(cartEntityController.getUserBookInfo());
+            DBQuery dbQuery = new DBQuery("select max(requestId) from PendingRequest");
+            AtomicInteger requestId = new AtomicInteger();
+            dbQuery.setOnSucceeded(event -> {
+                try {
+                    ResultSet resultSet = dbQuery.getValue();
+                    if (resultSet.next()) {
+                       requestId.set(resultSet.getInt(1));
+                    }
+                    resultSet.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                DBUpdate dbUpdate = new DBUpdate("INSERT INTO PendingRequest(requestId, bookId, bookName, username, requestDate, returnDate, cost, requestStatus) " +
+                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+                        requestId.get(),
+                        cartEntityController.getUserBookInfo().getBookId(),
+                        cartEntityController.getUserBookInfo().getBookName(),
+                        this.username,
+                        cartEntityController.getUserBookInfo().getPickedDate(),
+                        cartEntityController.getUserBookInfo().getReturnDate(),
+                        cartEntityController.getUserBookInfo().getTotalCost(),
+                        cartEntityController.getUserBookInfo().getRequestStatus()
+                        );
+
+                Thread thread = new Thread(dbUpdate);
+                thread.start();
+            });
+            Thread thread = new Thread(dbQuery);
+            thread.start();
         }
     }
 
-    public void rebuiltCart() {
-        for(CartEntityController cartEntityController : this.cartEntityControllers) {
-            try {
-                cartEntityController.updReturnDateDB(cartEntityController.getUserBookInfo().getReturnDate());
-                cartEntityController.updCostDB();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
     public void clearCart() {
-        DBUpdate dbUpdate = new DBUpdate("delete from userRequest where username = ? and requestStatus = 'Need_to_payment';", this.username);
-        Thread thread = new Thread(dbUpdate);
-        thread.start();
         this.cartEntityControllers.clear();
     }
 

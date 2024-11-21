@@ -66,11 +66,12 @@ public class LoginController implements Initializable {
         thread.start();
     }
 
-    public void stageTransforming(){
+    public void stageTransforming() {
         Stage currentStage = (Stage) login_btn.getScene().getWindow();
         Model.getInstance().getViewFactory().closeStage(currentStage);
         Model.getInstance().getViewFactory().showUserWindow();
         Model.getInstance().getViewFactory().getSelectedUserMode().set("User Restart");
+        Model.getInstance().getViewFactory().getSelectedUserMode().set("User Cart");
         Model.getInstance().getViewFactory().getSelectedUserMode().set("User Dashboard");
     }
 }

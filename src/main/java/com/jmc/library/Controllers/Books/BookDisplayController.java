@@ -26,6 +26,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -66,22 +67,17 @@ public class BookDisplayController extends UserLibraryController implements Init
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
         });
         get_book_btn.setOnAction(actionEvent -> {
-            DBQuery dbQuery = getResultSetCaseSelectBook(displayBook);
-            dbQuery.setOnSucceeded(event -> {
-                ResultSet resultSet = dbQuery.getValue();
-                try {
-                    if (resultSet.next()) {
-                        System.out.println("Book already exists in the library");
-                        return;
-                    }
-                    updDatabaseCaseInsertBook(displayBook);
-                    System.out.println("Book added to the library");
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            });
-            Thread thread = new Thread(dbQuery);
-            thread.start();
+            UserBookInfo userBookInfo = new UserBookInfo(displayBook.getBookName(),
+                    displayBook.getAuthorName(),
+                    displayBook.getBookId(),
+                    LocalDate.now(),
+                    LocalDate.now(),
+                    displayBook.getLeastPrice(),
+                    "Pending",
+                    displayBook.getLeastPrice(),
+                    displayBook.getISBN()
+                    );
+            addBookForUser(userBookInfo);
         });
     }
 

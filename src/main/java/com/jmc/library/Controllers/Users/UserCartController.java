@@ -53,12 +53,11 @@ public class UserCartController extends User implements Initializable, CartUpdat
 
     private void setButtonListener() {
         back_library_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
         });
 
         check_out_btn.setOnAction(actionEvent -> {
             LibraryModel.getInstance().getUser().userPayment();
-            LibraryModel.getInstance().getUser().rebuiltCart();
             LibraryModel.getInstance().getUser().clearCart();
             setListBookVBox();
             updateCartSummary();

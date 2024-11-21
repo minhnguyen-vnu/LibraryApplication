@@ -31,12 +31,6 @@ public class CartEntityController extends User implements Initializable {
     private int day_borrow;
     private UserBookInfo userBookInfo;
 
-    /*private CartUpdateListener cartUpdateListener;
-
-    public void setCartUpdateListener(CartUpdateListener listener) {
-        this.cartUpdateListener = listener;
-    } */
-
     public CartEntityController() {
         this.userBookInfo = new UserBookInfo();
         this.day_borrow = 0;
@@ -70,27 +64,10 @@ public class CartEntityController extends User implements Initializable {
         setMaterialListener();
     }
 
-    public void updReturnDateDB(LocalDate date) throws SQLException {
-        DBUpdate dbUpdate = new DBUpdate("UPDATE userRequest SET returnDate = ? WHERE bookId = ?",
-                date, userBookInfo.getBookId());
-        Thread thread = new Thread(dbUpdate);
-        thread.start();
-    }
-
-    public void updCostDB() throws SQLException {
-        DBUpdate dbUpdate = new DBUpdate("UPDATE userRequest SET cost = ? WHERE bookId = ?",
-                userBookInfo.getSingleCost() * day_borrow, userBookInfo.getBookId());
-        Thread thread = new Thread(dbUpdate);
-        thread.start();
-
-    }
-
-    private void updCost() throws SQLException {
+    private void updCost() {
         cost_lbl.setText(String.valueOf(userBookInfo.getSingleCost()* day_borrow));
         userBookInfo.setReturnDate(userBookInfo.getPickedDate().plusDays(day_borrow - 1));
         userBookInfo.setTotalCost(userBookInfo.getSingleCost() * day_borrow);
-        //updReturnDateDB(userBookInfo.getReturnDate());
-        //updCostDB();
         InterfaceManager.getInstance().getCartUpdateListener().onCartUpdated();
     }
 
@@ -99,22 +76,14 @@ public class CartEntityController extends User implements Initializable {
             if (day_borrow > 1) {
                 day_borrow--;
                 num_day_borrow_txt_flw.setText(String.valueOf(day_borrow));
-                try {
-                    updCost();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                updCost();
             }
         });
 
         increase_btn.setOnAction(actionEvent -> {
             day_borrow++;
             num_day_borrow_txt_flw.setText(String.valueOf(day_borrow));
-            try {
-                updCost();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            updCost();
         });
 
         erase_btn.setOnAction(actionEvent -> {
@@ -139,11 +108,7 @@ public class CartEntityController extends User implements Initializable {
         });
 
         num_day_borrow_txt_flw.setOnAction(actionEvent -> {
-            try {
-                updCost();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            updCost();
         });
 
         System.out.println(userBookInfo.getISBN());

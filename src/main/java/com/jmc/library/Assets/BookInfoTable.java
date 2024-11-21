@@ -49,21 +49,25 @@ public class BookInfoTable {
 
     protected void showLibrary() {
         bookList.clear();
-        store_tb.setItems(bookList);
-        try {
-            ResultSet resultSet = DBUtlis.executeQuery("SELECT * " +
+        DBQuery dbQuery = new DBQuery("SELECT * " +
                     "FROM bookStore b" + ";");
-
-            while (resultSet.next()) {
+        dbQuery.setOnSucceeded(event -> {
+            ResultSet resultSet = dbQuery.getValue();
+            try {
+                while (resultSet.next()) {
                     BookInfo book = new BookInfo(resultSet.getInt("bookId"), resultSet.getString("bookName"),
                             resultSet.getDate("publishDate").toLocalDate(), resultSet.getString("authorName"),
                             resultSet.getInt("quantityInStock"), resultSet.getDouble("leastPrice"),
                             resultSet.getString("ISBN"));
                     bookList.add(book);
+                }
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            resultSet.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        });
+        Thread thread = new Thread(dbQuery);
+        thread.setDaemon(true);
+        thread.start();
     }
 }

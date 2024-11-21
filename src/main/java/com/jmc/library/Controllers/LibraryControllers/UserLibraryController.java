@@ -149,25 +149,22 @@ public class UserLibraryController extends LibraryController implements Initiali
         book_cover_tb_cl.setCellValueFactory(param -> {
             BookInfo bookInfo = param.getValue();
 
-            // Ảnh mặc định chỉ cần load một lần
             Image defaultCover = new Image(getClass().getResource("/IMAGES/UnknownBookCover.png").toExternalForm());
 
-            // Sử dụng Task để tải ảnh nền
             Task<Image> loadImageTask = new Task<>() {
                 @Override
                 protected Image call() {
                     if (bookInfo.getThumbnail() == null) {
                         return defaultCover;
                     } else {
-                        return new Image(bookInfo.getThumbnail(), 50, 75, true, true);  // Tải với kích thước tối ưu
+                        return new Image(bookInfo.getThumbnail(), 50, 75, true, true);
                     }
                 }
             };
 
-            // Tạo ImageView và cập nhật sau khi ảnh được tải xong
             ImageView bookCoverImage = new ImageView();
             loadImageTask.setOnSucceeded(e -> bookCoverImage.setImage(loadImageTask.getValue()));
-            new Thread(loadImageTask).start();  // Chạy Task trong luồng nền
+            new Thread(loadImageTask).start();
 
             bookCoverImage.setFitWidth(50);
             bookCoverImage.setFitHeight(75);
@@ -175,57 +172,34 @@ public class UserLibraryController extends LibraryController implements Initiali
         });
     }
 
-    private void addBookForUser(UserBookInfo addedBook){
+    public void addBookForUser(UserBookInfo addedBook) {
+        System.out.println(addedBook.getBookName());
+        if(LibraryModel.getInstance().getUser().getCartEntityControllers().stream()
+                .anyMatch(cartEntityController -> cartEntityController
+                        .getUserBookInfo().getBookId() == addedBook.getBookId())) {
+            System.out.println("Book already in cart");
+            return;
+        }
+
+        if(LibraryModel.getInstance().getUser().getBookPendingList().stream()
+                .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())) {
+            System.out.println("Book already in pending list");
+            return;
+        }
+
+        if(LibraryModel.getInstance().getUser().getBookHiredList().stream()
+                .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())
+        && LibraryModel.getInstance().getUser().getBookHiredList().stream()
+                .anyMatch(userBookInfo -> userBookInfo.getReturnDate().isAfter(LocalDate.now()))) {
+            System.out.println("You still have this book");
+            return;
+        }
+
         LibraryModel.getInstance().getUser()
                 .getCartEntityControllers().add(new CartEntityController(addedBook));
-        LibraryModel.getInstance().getUser()
-                        .getBookPendingList().add(addedBook);
+
         InterfaceManager.getInstance()
                 .getCartUpdateListener()
                 .onAddCartEntity(new CartEntityController(addedBook));
-    }
-
-    public void updDatabaseCaseInsertBook (BookInfo book) {
-        DBUpdate dbUpdate = new DBUpdate("update bookStore\n" +
-                "set quantityInStock = quantityInStock - 1\n" +
-                "where bookId = ?;", book.getBookId());
-        Thread thread = new Thread(dbUpdate);
-        thread.start();
-        book.setQuantityInStock(book.getQuantityInStock() - 1);
-        UserBookInfo userBookInfo = new UserBookInfo(book.getBookName(), book.getAuthorName(),
-                book.getBookId(), LocalDate.now(),
-                LocalDate.now(), book.getLeastPrice(),
-                "Need_to_payment");
-        DBQuery dbQuery = new DBQuery("select max(issueId) from userRequest;");
-        dbQuery.setOnSucceeded(event -> {
-            ResultSet resultSet = dbQuery.getValue();
-            try {
-                if (resultSet.next()) {
-                    DBUtlis.executeUpdate("insert into userRequest\n" +
-                                    "values(?, ?, ?, ?, ?, ?, ?, ?); ",
-                            resultSet.getInt(1) + 1,
-                            book.getBookId(), book.getBookName(),
-                            LibraryModel.getInstance().getUser().getUsername(),
-                            LocalDate.now(), LocalDate.now(),
-                            book.getLeastPrice(),
-                            "Need_to_payment");
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            addBookForUser(userBookInfo);
-        });
-        Thread thread1 = new Thread(dbQuery);
-        thread1.start();
-
-    }
-
-    public DBQuery getResultSetCaseSelectBook(BookInfo book)  {
-        DBQuery dbQuery = new DBQuery("select\n" +
-                "    username,\n" +
-                "    bookId\n" +
-                "from userRequest\n" +
-                "where username = ? and bookId = ?;", LibraryModel.getInstance().getUser().getUsername(), book.getBookId());
-        return dbQuery;
     }
 }
