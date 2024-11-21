@@ -81,6 +81,8 @@ public class LibraryTable {
                     byte[] imageBytes = blob.getBytes(1, (int) blob.length());
                     Image image = ImageUtils.byteArrayToImage(imageBytes);
                     ImageView imageView = new ImageView(image);
+                    imageView.setFitHeight(75);
+                    imageView.setFitWidth(50);
                     BookInfo currentBook = new BookInfo(resultSet.getInt("bookId"), resultSet.getString("bookName"),
                             resultSet.getString("authorName"), resultSet.getInt("quantityInStock"), resultSet.getDouble("leastPrice"),
                             resultSet.getDate("publishDate").toLocalDate(), resultSet.getString("ISBN"), resultSet.getString("publisher"),
