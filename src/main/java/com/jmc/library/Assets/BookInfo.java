@@ -1,5 +1,7 @@
 package com.jmc.library.Assets;
 
+import javafx.scene.image.ImageView;
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -11,6 +13,12 @@ public class BookInfo {
     private double leastPrice;
     private LocalDate publishedDate;
     private String ISBN;
+    private String publisher;
+    private String genre;
+    private String originalLanguage;
+    private String description;
+    private String thumbnail;
+    private ImageView imageView;
 
     public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate) {
         this.bookId = bookId;
@@ -29,6 +37,33 @@ public class BookInfo {
         this.leastPrice = leastPrice;
         this.publishedDate = publishedDate;
         this.ISBN = ISBN;
+    }
+
+    public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate, String ISBN, ImageView imageView) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.quantityInStock = quantityInStock;
+        this.leastPrice = leastPrice;
+        this.publishedDate = publishedDate;
+        this.ISBN = ISBN;
+        this.imageView = imageView;
+    }
+
+    public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate, String ISBN, String publisher, String genre, String originalLanguage, String description, String thumbnail, ImageView imageView) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.quantityInStock = quantityInStock;
+        this.leastPrice = leastPrice;
+        this.publishedDate = publishedDate;
+        this.ISBN = ISBN;
+        this.publisher = publisher;
+        this.genre = genre;
+        this.originalLanguage = originalLanguage;
+        this.description = description;
+        this.thumbnail = thumbnail;
+        this.imageView = imageView;
     }
 
     public int getBookId() {
@@ -82,6 +117,32 @@ public class BookInfo {
     public String getISBN() { return ISBN; }
 
     public void setISBN(String ISBN) { this.ISBN = ISBN; }
+
+    public String getPublisher() { return publisher; }
+
+    public void setPublisher(String publisher) { this.publisher = publisher; }
+
+    public String getGenre() { return genre; }
+
+    public void setGenre(String genre) { this.genre = genre; }
+
+    public String getOriginalLanguage() { return originalLanguage; }
+
+    public void setOriginalLanguage(String originalLanguage) { this.originalLanguage = originalLanguage; }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
+
+    public String getThumbnail() { return thumbnail; }
+
+    public void setThumbnail(String thumbnail) { this.thumbnail = thumbnail; }
+
+    public ImageView getImageView() { return imageView; }
+
+    public void setImageView(ImageView imageView) { this.imageView = imageView; }
+
+
 
     @Override
     public boolean equals(Object o) {

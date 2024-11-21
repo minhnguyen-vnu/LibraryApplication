@@ -1,9 +1,22 @@
 package com.jmc.library.Assets;
 
 import com.jmc.library.Controllers.GoogleBookAPI.GoogleBookAPIMethod;
+import javafx.scene.image.PixelFormat;
+import javafx.scene.image.WritableImage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import javafx.embed.swing.SwingFXUtils;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.time.LocalDate;
 
 public class GoogleBookInfo {
@@ -20,6 +33,13 @@ public class GoogleBookInfo {
     private JSONObject bookInfo;
     private JSONArray items;
     private JSONObject volumeInfo;
+
+    private String publisher;
+    private String genre;
+    private String originalLanguage;
+    private String description;
+    private String thumbnail;
+    private ImageView imageView;
 
 
     public GoogleBookInfo() {};
@@ -62,6 +82,58 @@ public class GoogleBookInfo {
 
     public void setLoaded(boolean loaded) { this.loaded = loaded; }
 
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher() {
+        this.publisher = volumeInfo.has("publisher") ? volumeInfo.getString("publisher") : "N/A";
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre() {
+        if (volumeInfo.has("categories")) {
+            JSONArray categoriesArray = volumeInfo.getJSONArray("categories");
+            this.genre = categoriesArray.join(", ").replace("\"", "");
+        } else {
+            this.genre = "N/A";
+        }
+    }
+
+    public String getOriginalLanguage() { return originalLanguage; }
+
+    public void setOriginalLanguage() {
+        originalLanguage = volumeInfo.has("language") ? volumeInfo.getString("language") : "N/A";
+    }
+
+    public String getDescription() { return description; }
+
+    public void setDescription() {
+        description = volumeInfo.has("description") ? volumeInfo.getString("description") : "No description available";
+    }
+
+    public String getThumbnail() { return thumbnail; }
+
+    public void setThumbnail() {
+        thumbnail = volumeInfo.has("imageLinks") ? volumeInfo.getJSONObject("imageLinks").getString("thumbnail") : null;
+    }
+
+    public ImageView getImageView() { return this.imageView; }
+
+    public void setImageView() {
+        if (this.thumbnail != null && !this.thumbnail.isEmpty()) {
+            this.imageView = new ImageView(new Image(this.thumbnail, 50, 75, true, true));
+        }
+        else {
+            this.imageView = new ImageView(getClass().getResource("/IMAGES/UnknownBookCover.png").toExternalForm());
+        }
+        this.imageView.setFitHeight(50);
+        this.imageView.setFitWidth(75);
+    }
+
     private void getInfo() {
         this.bookInfo = new GoogleBookAPIMethod().searchBook(this.ISBN);
         int indexes = new GoogleBookAPIMethod().getTotalItems(bookInfo) - 1;
@@ -75,6 +147,12 @@ public class GoogleBookInfo {
             if (authors != null && !authors.isEmpty()) {
                 this.authorName = authors.getString(0);
             }
+            setPublisher();
+            setGenre();
+            setOriginalLanguage();
+            setDescription();
+            setThumbnail();
+            setImageView();
         }
         else {
             this.exist = false;

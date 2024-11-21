@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 public class LibraryController extends LibraryTable {
     public TextField search_fld;
     public Button search_btn;
+    public TableColumn<BookInfo, ImageView> book_cover_tb_cl;
 
     protected void initialAction(){
         search_btn.setOnAction(actionEvent -> searchBook(search_fld.getText()));
@@ -70,5 +71,11 @@ public class LibraryController extends LibraryTable {
                 filteredList.clear();
             }
         });
+    }
+
+    @Override
+    protected void addBinding() {
+        super.addBinding();
+        book_cover_tb_cl.setCellValueFactory(new PropertyValueFactory<>("imageView"));
     }
 }

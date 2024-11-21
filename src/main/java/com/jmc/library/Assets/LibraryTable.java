@@ -1,6 +1,7 @@
 package com.jmc.library.Assets;
 
 import com.jmc.library.Controllers.Assets.LoadingController;
+import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Database.DBUtlis;
 import javafx.animation.RotateTransition;
@@ -8,12 +9,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 
 import java.awt.*;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -56,7 +59,7 @@ public class LibraryTable {
         store_tb.setItems(bookList);
     }
 
-    protected void addBinding(){
+    protected void addBinding() {
         book_id_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookId"));
         book_name_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookName"));
         author_tb_cl.setCellValueFactory(new PropertyValueFactory<>("authorName"));
@@ -74,9 +77,15 @@ public class LibraryTable {
             ResultSet resultSet = dbQuery.getValue();
             try {
                 while (resultSet.next()) {
+                    Blob blob = resultSet.getBlob("imageView");
+                    byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+                    Image image = ImageUtils.byteArrayToImage(imageBytes);
+                    ImageView imageView = new ImageView(image);
                     BookInfo currentBook = new BookInfo(resultSet.getInt("bookId"), resultSet.getString("bookName"),
                             resultSet.getString("authorName"), resultSet.getInt("quantityInStock"), resultSet.getDouble("leastPrice"),
-                            resultSet.getDate("publishDate").toLocalDate(), resultSet.getString("ISBN"));
+                            resultSet.getDate("publishDate").toLocalDate(), resultSet.getString("ISBN"), resultSet.getString("publisher"),
+                            resultSet.getString("genre"), resultSet.getString("originalLanguage"), resultSet.getString("description"),
+                            resultSet.getString("thumbnail"), imageView);
                     bookList.add(currentBook);
                 }
                 resultSet.close();

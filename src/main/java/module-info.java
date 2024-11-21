@@ -10,6 +10,7 @@ module com.jmc.library {
     requires com.google.api.client;
     requires com.google.api.client.json.gson;
     requires commons.logging;
+    requires javafx.swing;
 
     opens com.jmc.library to javafx.fxml;
     exports com.jmc.library.Controllers;

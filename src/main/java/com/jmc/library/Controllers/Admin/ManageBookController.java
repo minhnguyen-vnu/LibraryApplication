@@ -3,6 +3,7 @@ package com.jmc.library.Controllers.Admin;
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.GoogleBookInfo;
 import com.jmc.library.Assets.LibraryTable;
+import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Database.DBUtlis;
@@ -12,12 +13,14 @@ import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.awt.print.Book;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -112,11 +115,16 @@ public class ManageBookController extends LibraryTable implements Initializable 
                 if (googleBookInfo.isExist()) {
                     BookInfo bookInfo = new BookInfo(googleBookInfo.getBookId(), googleBookInfo.getBookName(),
                             googleBookInfo.getAuthorName(), googleBookInfo.getQuantityInStock(),
-                            googleBookInfo.getLeastPrice(), googleBookInfo.getPublishedDate(), googleBookInfo.getISBN());
-                    DBUpdate dbUpdate = new DBUpdate("insert into bookStore (bookId, bookName, publishDate, authorName, quantityInStock, leastPrice, ISBN) \n" +
-                            "values (?, ?, ?, ?, ?, ?, ?);", bookInfo.getBookId(), bookInfo.getBookName(),
+                            googleBookInfo.getLeastPrice(), googleBookInfo.getPublishedDate(), googleBookInfo.getISBN(),
+                            googleBookInfo.getPublisher(), googleBookInfo.getGenre(), googleBookInfo.getOriginalLanguage(),
+                            googleBookInfo.getDescription(), googleBookInfo.getThumbnail(), googleBookInfo.getImageView());
+                    DBUpdate dbUpdate = new DBUpdate("insert into bookStore (bookId, bookName, publishDate, authorName, quantityInStock, leastPrice, ISBN, publisher, genre, originalLanguage, description, thumbnail, imageView)\n" +
+                            "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", bookInfo.getBookId(), bookInfo.getBookName(),
                             bookInfo.getPublishedDate(), bookInfo.getAuthorName(), bookInfo.getQuantityInStock(),
-                            bookInfo.getLeastPrice(), bookInfo.getISBN());
+                            bookInfo.getLeastPrice(), bookInfo.getISBN(), bookInfo.getPublisher(), bookInfo.getGenre(),
+                            bookInfo.getOriginalLanguage(), bookInfo.getDescription(), bookInfo.getThumbnail(), ImageUtils.imageToByteArray(bookInfo.getImageView().getImage()));
+                    System.out.println(bookInfo.getPublisher() + ", " + bookInfo.getGenre() + ", " + bookInfo.getOriginalLanguage() + ", " +
+                            bookInfo.getDescription() + ", " + bookInfo.getThumbnail());
                     Thread thread = new Thread(dbUpdate);
                     thread.setDaemon(true);
                     thread.start();

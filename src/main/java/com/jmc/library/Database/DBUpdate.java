@@ -26,6 +26,7 @@ public class DBUpdate extends Task<Void> {
             }
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         } finally {
             DBUtlis.closeResources(preparedStatement, null, con);
