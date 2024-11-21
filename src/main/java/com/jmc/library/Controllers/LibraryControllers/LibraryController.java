@@ -3,6 +3,9 @@ package com.jmc.library.Controllers.LibraryControllers;
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.LibraryTable;
 import com.jmc.library.Database.DBUtlis;
+import com.jmc.library.Models.AdminLibraryModel;
+import com.jmc.library.Models.BookViewingModel;
+import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -77,5 +80,18 @@ public class LibraryController extends LibraryTable {
     protected void addBinding() {
         super.addBinding();
         book_cover_tb_cl.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+    }
+
+    protected void addTableClickListener() {
+        store_tb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                BookDisplay(newValue);
+            }
+        });
+    }
+
+    protected void BookDisplay(BookInfo bookInfo) {
+        BookViewingModel.getInstance().setBookInfo(bookInfo);
+        Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Book Viewing");
     }
 }

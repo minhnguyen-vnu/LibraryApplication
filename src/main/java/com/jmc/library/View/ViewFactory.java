@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class ViewFactory {
     private HBox adminDashboard;
     private HBox adminRequestManagement;
     private HBox adminPendingRequestManagement;
+    private VBox adminBookViewing;
     private final StringProperty selectedAuthenticatonMode;
     private final StringProperty selectedUserMode;
     private final StringProperty selectedAdminMode;
@@ -146,6 +148,17 @@ public class ViewFactory {
             }
         }
         return adminDashboard;
+    }
+
+    public VBox getAdminBookViewing() {
+        if (adminBookViewing == null) {
+            try {
+                adminBookViewing = new FXMLLoader(getClass().getResource("/FXML/BookDisplay.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return adminBookViewing;
     }
 
 

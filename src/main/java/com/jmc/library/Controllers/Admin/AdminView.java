@@ -21,6 +21,7 @@ public class AdminView implements Initializable {
                         case "Admin Dashboard View" -> admin_parent.setCenter(Model.getInstance().getViewFactory().getAdminDashboard());
                         case "Admin Request Management" -> admin_parent.setCenter(Model.getInstance().getViewFactory().getAdminRequestManagement());
                         case "Admin Pending Request Management" -> admin_parent.setCenter(Model.getInstance().getViewFactory().getAdminPendingRequestManagement());
+                        case "Admin Book Viewing" -> admin_parent.setCenter(Model.getInstance().getViewFactory().getAdminBookViewing());
                         default -> admin_parent.setCenter(Model.getInstance().getViewFactory().getAdminSettings());
                     }
                 } else {

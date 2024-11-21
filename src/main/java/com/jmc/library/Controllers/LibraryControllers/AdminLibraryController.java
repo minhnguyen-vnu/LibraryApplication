@@ -32,6 +32,7 @@ public class AdminLibraryController extends LibraryController implements Initial
         setTable();
         addBinding();
         onAction();
+        addTableClickListener();
         showLibrary();
     }
 

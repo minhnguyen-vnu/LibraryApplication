@@ -24,5 +24,6 @@ module com.jmc.library {
     exports com.jmc.library.Account;
     exports com.jmc.library.Database;
     exports com.jmc.library.Controllers.Assets;
+    exports com.jmc.library.Controllers.Display;
     opens com.jmc.library.Database to javafx.fxml;
 }
