@@ -23,9 +23,7 @@ public class UserView implements Initializable {
                         case "User Cart" -> user_parent.setCenter(Model.getInstance().getViewFactory().getUserCart());
                         case "User Pending" -> user_parent.setCenter(Model.getInstance().getViewFactory().getUserPending());
                         case "Book Detail" -> {
-                            System.out.println(2);
                             user_parent.setCenter(Model.getInstance().getViewFactory().getBookDetail());
-                            System.out.println(2);
                         }
                         case "User Restart"-> user_parent.setCenter(null);
                     }

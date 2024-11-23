@@ -25,6 +25,7 @@ public class ViewFactory {
     private Node userCart;
     private Node userPending;
     private Node bookDetail;
+    private FXMLLoader notificationView;
     private final StringProperty selectedAuthenticatonMode;
     private final StringProperty selectedUserMode;
 
@@ -134,6 +135,17 @@ public class ViewFactory {
         return bookDetail;
     }
 
+    public FXMLLoader getNotificationView() {
+        if (notificationView == null) {
+            try {
+                notificationView = new FXMLLoader(getClass().getResource("/FXML/Notification.fxml"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return notificationView;
+    }
+
     public void setBookDisplayController(BookDisplayController bookDisplayController) {
         this.bookDisplayController = bookDisplayController;
     }
@@ -215,5 +227,6 @@ public class ViewFactory {
         userCart = null;
         userPending = null;
         bookDetail = null;
+        notificationView = null;
     }
 }

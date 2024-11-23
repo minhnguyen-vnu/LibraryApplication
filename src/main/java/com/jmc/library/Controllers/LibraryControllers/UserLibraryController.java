@@ -38,9 +38,7 @@ public class UserLibraryController extends LibraryController implements Initiali
     
     public Label username_lbl;
     public ImageView account_avatar_img;
-    public TableColumn<BookInfo, Boolean> add_to_cart_tb_cl;
-    public TableColumn<BookInfo, String> book_name_tb_cl;
-    public ChoiceBox<Integer> num_row_shown;
+    public ChoiceBox<String> num_row_shown;
 
     public AnchorPane matte_screen;
     public AnchorPane user_info_pane;
@@ -93,11 +91,15 @@ public class UserLibraryController extends LibraryController implements Initiali
     }
 
     private void setNum_row_shown() {
-        num_row_shown.getItems().addAll(5, 10, 15, 20);
-        num_row_shown.setValue(5);
+        num_row_shown.getItems().addAll("5", "10", "15", "20", "All");
+        num_row_shown.setValue("All");
         num_row_shown.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             store_tb.refresh();
-            store_tb.setItems(FXCollections.observableArrayList(bookList.stream().limit(newVal).collect(Collectors.toList())));
+            if(newVal.equals("All")) {
+                store_tb.setItems(FXCollections.observableArrayList(bookList));
+            } else {
+                store_tb.setItems(FXCollections.observableArrayList(bookList.stream().limit(Integer.parseInt(newVal)).collect(Collectors.toList())));
+            }
         });
     }
 
@@ -170,36 +172,5 @@ public class UserLibraryController extends LibraryController implements Initiali
             bookCoverImage.setFitHeight(75);
             return new SimpleObjectProperty<>(bookCoverImage);
         });
-    }
-
-    public void addBookForUser(UserBookInfo addedBook) {
-        System.out.println(addedBook.getBookName());
-        if(LibraryModel.getInstance().getUser().getCartEntityControllers().stream()
-                .anyMatch(cartEntityController -> cartEntityController
-                        .getUserBookInfo().getBookId() == addedBook.getBookId())) {
-            System.out.println("Book already in cart");
-            return;
-        }
-
-        if(LibraryModel.getInstance().getUser().getBookPendingList().stream()
-                .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())) {
-            System.out.println("Book already in pending list");
-            return;
-        }
-
-        if(LibraryModel.getInstance().getUser().getBookHiredList().stream()
-                .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())
-        && LibraryModel.getInstance().getUser().getBookHiredList().stream()
-                .anyMatch(userBookInfo -> userBookInfo.getReturnDate().isAfter(LocalDate.now()))) {
-            System.out.println("You still have this book");
-            return;
-        }
-
-        LibraryModel.getInstance().getUser()
-                .getCartEntityControllers().add(new CartEntityController(addedBook));
-
-        InterfaceManager.getInstance()
-                .getCartUpdateListener()
-                .onAddCartEntity(new CartEntityController(addedBook));
     }
 }

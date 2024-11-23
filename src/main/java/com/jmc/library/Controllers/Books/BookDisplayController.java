@@ -3,7 +3,10 @@ package com.jmc.library.Controllers.Books;
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.GoogleBookAPI.GoogleBookAPIMethod;
+import com.jmc.library.Controllers.Interface.InterfaceManager;
 import com.jmc.library.Controllers.LibraryControllers.UserLibraryController;
+import com.jmc.library.Controllers.Notification.Overlay;
+import com.jmc.library.Controllers.Users.CartEntityController;
 import com.jmc.library.DataBase.*;
 import com.jmc.library.Models.BookModel;
 import com.jmc.library.Models.LibraryModel;
@@ -21,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -31,7 +35,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class BookDisplayController extends UserLibraryController implements Initializable {
+public class BookDisplayController implements Initializable {
     public TextFlow book_name_txt_flw;
     public Label publication_date_lbl;
     public Label author_lbl;
@@ -77,7 +81,11 @@ public class BookDisplayController extends UserLibraryController implements Init
                     displayBook.getLeastPrice(),
                     displayBook.getISBN()
                     );
-            addBookForUser(userBookInfo);
+            try {
+                addBookForUser(userBookInfo);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -98,6 +106,39 @@ public class BookDisplayController extends UserLibraryController implements Init
 
             book_img.setImage(new Image(Objects.requireNonNullElse(displayBook.getThumbnail(), getClass().getResource("/IMAGES/UnknownBookCover.png").toExternalForm())));
         }
+    }
+
+    public void addBookForUser(UserBookInfo addedBook) throws IOException {
+        System.out.println(addedBook.getBookName());
+        if(LibraryModel.getInstance().getUser().getCartEntityControllers().stream()
+                .anyMatch(cartEntityController -> cartEntityController
+                        .getUserBookInfo().getBookId() == addedBook.getBookId())) {
+            Overlay overlay = new Overlay("Book already in cart.", get_book_btn.getScene());
+            return;
+        }
+
+        if(LibraryModel.getInstance().getUser().getBookPendingList().stream()
+                .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())) {
+            Overlay overlay = new Overlay("Book already requested.", get_book_btn.getScene());
+            return;
+        }
+
+        if(LibraryModel.getInstance().getUser().getBookHiredList().stream()
+                .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())
+                && LibraryModel.getInstance().getUser().getBookHiredList().stream()
+                .anyMatch(userBookInfo -> userBookInfo.getReturnDate().isAfter(LocalDate.now()))) {
+            Overlay overlay = new Overlay("Book already hired.", get_book_btn.getScene());
+            return;
+        }
+
+        LibraryModel.getInstance().getUser()
+                .getCartEntityControllers().add(new CartEntityController(addedBook));
+
+        InterfaceManager.getInstance()
+                .getCartUpdateListener()
+                .onAddCartEntity(new CartEntityController(addedBook));
+
+        Overlay overlay = new Overlay("Book added to cart.", get_book_btn.getScene());
     }
 }
 

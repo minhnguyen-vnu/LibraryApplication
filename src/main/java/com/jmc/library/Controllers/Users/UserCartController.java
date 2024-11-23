@@ -2,6 +2,7 @@ package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Controllers.Interface.CartUpdateListener;
 import com.jmc.library.Controllers.Interface.InterfaceManager;
+import com.jmc.library.Controllers.Notification.Overlay;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.net.URL;
+import java.nio.channels.OverlappingFileLockException;
 import java.util.ResourceBundle;
 
 public class UserCartController extends User implements Initializable, CartUpdateListener {
@@ -61,6 +64,11 @@ public class UserCartController extends User implements Initializable, CartUpdat
             LibraryModel.getInstance().getUser().clearCart();
             setListBookVBox();
             updateCartSummary();
+            try {
+                Overlay overlay = new Overlay("Payment Successful!!", check_out_btn.getScene());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Pending");
         });
     }

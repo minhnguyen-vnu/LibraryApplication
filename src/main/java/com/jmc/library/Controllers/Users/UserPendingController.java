@@ -37,29 +37,38 @@ public class UserPendingController extends User implements Initializable {
     public TableColumn<UserBookInfo, LocalDate> return_day_tb_cl;
     public TableColumn<UserBookInfo, LocalDate> picked_day_tb_cl;
     public Button go_to_dashboard_btn;
-    public ChoiceBox<Integer> num_row_shown;
+    public ChoiceBox<String> num_row_shown;
     public TableView<UserBookInfo> store_tb;
 
     private ObservableList<UserBookInfo> bookList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        bookList = FXCollections.observableArrayList(LibraryModel.getInstance().getUser().getBookPendingList());
         setMaterialListener();
         addBinding();
         setButtonListener();
     }
 
     private void setMaterialListener() {
-        account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png")
-                .toExternalForm()).getImage());
-        bookList = LibraryModel.getInstance().getUser().getBookPendingList();
-        username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
+        setUsername_lbl();
+        setNum_row_shown();
+    }
 
-        num_row_shown.getItems().addAll(5, 10, 15, 20);
-        num_row_shown.setValue(5);
+    private void setUsername_lbl() {
+        username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
+    }
+
+    private void setNum_row_shown() {
+        num_row_shown.getItems().addAll("5", "10", "15", "20", "All");
+        num_row_shown.setValue("All");
         num_row_shown.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             store_tb.refresh();
-            store_tb.setItems(FXCollections.observableArrayList(bookList.stream().limit(newVal).collect(Collectors.toList())));
+            if(newVal.equals("All")) {
+                store_tb.setItems(FXCollections.observableArrayList(bookList));
+            } else {
+                store_tb.setItems(FXCollections.observableArrayList(bookList.stream().limit(Integer.parseInt(newVal)).collect(Collectors.toList())));
+            }
         });
     }
 

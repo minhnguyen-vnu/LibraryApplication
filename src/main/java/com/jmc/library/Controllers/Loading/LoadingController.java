@@ -25,5 +25,4 @@ public class LoadingController implements Initializable {
         rotate.play();
     }
 
-
 }

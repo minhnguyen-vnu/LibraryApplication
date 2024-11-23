@@ -42,7 +42,7 @@ public class UserBookController extends User implements Initializable {
     public ImageView account_avatar_img;
     public Button log_out_btn;
     public ObservableList<UserBookInfo> bookList;
-    public ChoiceBox<Integer> num_row_shown;
+    public ChoiceBox<String> num_row_shown;
     public Button go_to_dashboard_btn;
     /**
      * This is the same as the go_to_dashboard_btn
@@ -55,6 +55,7 @@ public class UserBookController extends User implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        bookList = FXCollections.observableArrayList(LibraryModel.getInstance().getUser().getBookHiredList());
         setMaterialListener();
         addBinding();
         priceFormating();
@@ -62,17 +63,31 @@ public class UserBookController extends User implements Initializable {
     }
 
     private void setMaterialListener() {
-        account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png")
-                .toExternalForm()).getImage());
-        bookList = LibraryModel.getInstance().getUser().getBookHiredList();
-        username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
+        setUsername_lbl();
+        setNum_row_shown();
+        setAccount_avatar_img();
+    }
 
-        num_row_shown.getItems().addAll(5, 10, 15, 20);
-        num_row_shown.setValue(5);
+    private void setUsername_lbl() {
+        username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
+    }
+
+    private void setNum_row_shown() {
+        num_row_shown.getItems().addAll("5", "10", "15", "20", "All");
+        num_row_shown.setValue("All");
         num_row_shown.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             store_tb.refresh();
-            store_tb.setItems(FXCollections.observableArrayList(bookList.stream().limit(newVal).collect(Collectors.toList())));
+            if(newVal.equals("All")) {
+                store_tb.setItems(FXCollections.observableArrayList(bookList));
+            } else {
+                store_tb.setItems(FXCollections.observableArrayList(bookList.stream().limit(Integer.parseInt(newVal)).collect(Collectors.toList())));
+            }
         });
+    }
+
+    private void setAccount_avatar_img() {
+        account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png")
+                .toExternalForm()).getImage());
 
         account_avatar_img.setOnMouseClicked(mouseEvent -> {
             if(user_info_pane.getChildren().isEmpty()) {

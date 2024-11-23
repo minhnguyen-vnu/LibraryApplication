@@ -1,18 +1,30 @@
 package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.UserBookInfo;
+import com.jmc.library.Controllers.Notification.NotificationController;
 import com.jmc.library.DataBase.*;
 import com.jmc.library.Models.LibraryModel;
+import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class User {
     private String username;
-    private String token;
+    private String password;
+    private String name;
+    private LocalDate birthDate;
+    private int ID;
 
     private ObservableList<UserBookInfo> bookPendingList;
     private ObservableList<UserBookInfo> bookHiredList;
@@ -24,20 +36,44 @@ public class User {
         this.cartEntityControllers = FXCollections.observableArrayList();
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public ObservableList<UserBookInfo> getBookPendingList() {
@@ -64,6 +100,27 @@ public class User {
         this.cartEntityControllers = cartEntityControllers;
     }
 
+    public void loadUserInfo() {
+        DBQuery dbQuery = new DBQuery("select * from user where username = ?", this.username);
+        dbQuery.setOnSucceeded(event -> {
+            ResultSet resultSet = dbQuery.getValue();
+            try {
+                if (resultSet.next()) {
+                    this.username = resultSet.getString("username");
+                    this.password = resultSet.getString("password");
+                    this.name = resultSet.getString("name");
+                    this.birthDate = resultSet.getDate("birthDate").toLocalDate();
+                    this.ID = resultSet.getInt("ID");
+                }
+                resultSet.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        Thread thread = new Thread(dbQuery);
+        thread.setDaemon(true);
+        thread.start();
+    }
     public void loadAllList() {
         loadBookHiredList();
         loadBookPendingList();
@@ -71,58 +128,69 @@ public class User {
 
     public void loadBookPendingList() {
         bookPendingList.clear();
-        try {
-            ResultSet resultSet = DBUtlis.executeQuery("select\n" +
-                    "    r.username,\n" +
-                    "    r.bookName,\n" +
-                    "    b.authorName,\n" +
-                    "    r.bookId,\n" +
-                    "    r.requestDate,\n" +
-                    "    r.returnDate,\n" +
-                    "    r.cost,\n" +
-                    "    r.requestStatus\n"+
-                    "from PendingRequest r\n" +
-                    "join bookStore b using(bookId)\n" +
-                    "where r.username = ? order by r.requestStatus;", this.username);
-            while (resultSet.next()) {
-                UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
-                        resultSet.getInt("bookId"), resultSet.getDate("requestDate").toLocalDate(),
-                        resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"));
-                this.bookPendingList.add(userBookInfo);
+        DBQuery dbQuery = new DBQuery("select\n" +
+                "    r.username,\n" +
+                "    r.bookName,\n" +
+                "    b.authorName,\n" +
+                "    r.bookId,\n" +
+                "    r.requestDate,\n" +
+                "    r.returnDate,\n" +
+                "    r.cost,\n" +
+                "    r.requestStatus\n"+
+                "from PendingRequest r\n" +
+                "join bookStore b using(bookId)\n" +
+                "where r.username = ? order by r.requestStatus;", this.username);
+        dbQuery.setOnSucceeded(event -> {
+            ResultSet resultSet = dbQuery.getValue();
+            try {
+                while (resultSet.next()) {
+                    UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
+                            resultSet.getInt("bookId"), resultSet.getDate("requestDate").toLocalDate(),
+                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"));
+                    this.bookPendingList.add(userBookInfo);
+                }
+                resultSet.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-            resultSet.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        });
+        Thread thread = new Thread(dbQuery);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     public void loadBookHiredList() {
         bookHiredList.clear();
-        try {
-            ResultSet resultSet = DBUtlis.executeQuery("select\n" +
-                    "    r.username,\n" +
-                    "    r.bookName,\n" +
-                    "    b.authorName,\n" +
-                    "    r.bookId,\n" +
-                    "    r.pickedDate,\n" +
-                    "    r.returnDate,\n" +
-                    "    r.cost,\n" +
-                    "    r.requestStatus\n"+
-                    "from  userRequest r\n" +
-                    "join bookStore b using(bookId)\n" +
-                    "where r.username = ? " +
-                    "order by r.requestStatus;", this.username);
-            while (resultSet.next()) {
-                UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
-                        resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
-                        resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"),
-                        resultSet.getString("requestStatus"));
-                this.bookHiredList.add(userBookInfo);
+        DBQuery dbQuery = new DBQuery("select\n" +
+                "    r.username,\n" +
+                "    r.bookName,\n" +
+                "    b.authorName,\n" +
+                "    r.bookId,\n" +
+                "    r.pickedDate,\n" +
+                "    r.returnDate,\n" +
+                "    r.cost,\n" +
+                "    r.requestStatus\n"+
+                "from  userRequest r\n" +
+                "join bookStore b using(bookId)\n" +
+                "where r.username = ? " +
+                "order by r.requestStatus;", this.username);
+        dbQuery.setOnSucceeded(event -> {
+            ResultSet resultSet = dbQuery.getValue();
+            try {
+                while (resultSet.next()) {
+                    UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
+                            resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
+                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"));
+                    this.bookHiredList.add(userBookInfo);
+                }
+                resultSet.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-            resultSet.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        });
+        Thread thread = new Thread(dbQuery);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     public void removeCartEntityController(CartEntityController cartEntityController) {
@@ -132,7 +200,6 @@ public class User {
     public String getSubTotal() {
         double total = this.cartEntityControllers.stream().mapToDouble(cartEntityController -> cartEntityController.getUserBookInfo().getTotalCost()).sum();
         return Double.toString(total);
-
     }
 
     public String getAdditional() {
@@ -162,7 +229,7 @@ public class User {
 
                 DBUpdate dbUpdate = new DBUpdate("INSERT INTO PendingRequest(requestId, bookId, bookName, username, requestDate, returnDate, cost, requestStatus) " +
                         "VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
-                        requestId.get(),
+                        requestId.get() + 1,
                         cartEntityController.getUserBookInfo().getBookId(),
                         cartEntityController.getUserBookInfo().getBookName(),
                         this.username,
@@ -191,6 +258,5 @@ public class User {
         this.cartEntityControllers.clear();
 
         this.username = null;
-        this.token = null;
     }
 }

@@ -50,6 +50,7 @@ public class LoginController implements Initializable {
                     error_lbl.setAlignment(Pos.CENTER_LEFT);
                     LibraryModel.getInstance().setUser(acc_address_fld.getText(), password_fld.getText());
                     LibraryModel.getInstance().getUser().loadAllList();
+                    LibraryModel.getInstance().getUser().loadUserInfo();
                     stageTransforming();
                 }
                 else{
