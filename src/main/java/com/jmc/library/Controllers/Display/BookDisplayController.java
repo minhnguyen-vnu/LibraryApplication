@@ -1,5 +1,7 @@
 package com.jmc.library.Controllers.Display;
 
+import com.jmc.library.Assets.BookInfo;
+import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Models.BookViewingModel;
 import com.jmc.library.Models.Model;
 import javafx.fxml.Initializable;
@@ -29,14 +31,27 @@ public class BookDisplayController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         onAction();
         setValue();
+        addListeners();
     }
 
     private void setValue() {
-        book_img.setImage(BookViewingModel.getInstance().getBookInfo().getImageView().getImage());
-        preview_txt_flw.textProperty().set(BookViewingModel.getInstance().getBookInfo().getDescription());
+        BookInfo bookInfo = BookViewingModel.getInstance().getBookInfo();
+        if (bookInfo != null) {
+            book_img.setImage(bookInfo.getImageView().getImage());
+            preview_txt_flw.textProperty().set(bookInfo.getDescription());
+        }
     }
 
     private void onAction() {
         go_to_back_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View"));
+    }
+
+    private void addListeners() {
+        BookViewingModel.getInstance().bookInfoProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                book_img.setImage(ImageUtils.enhanceImageQuality(ImageUtils.scaleImage(newValue.getImageView().getImage(), 300, 400).getImage()));
+                preview_txt_flw.textProperty().set(newValue.getDescription());
+            }
+        });
     }
 }

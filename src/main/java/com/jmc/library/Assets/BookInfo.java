@@ -1,5 +1,7 @@
 package com.jmc.library.Assets;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.ImageView;
 import java.awt.*;
 import java.time.LocalDate;
@@ -18,7 +20,7 @@ public class BookInfo {
     private String originalLanguage;
     private String description;
     private String thumbnail;
-    private ImageView imageView;
+    private ObjectProperty<ImageView> imageView;
 
     public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate) {
         this.bookId = bookId;
@@ -47,7 +49,7 @@ public class BookInfo {
         this.leastPrice = leastPrice;
         this.publishedDate = publishedDate;
         this.ISBN = ISBN;
-        this.imageView = imageView;
+        this.imageView =  new SimpleObjectProperty<>(imageView);
     }
 
     public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate, String ISBN, String publisher, String genre, String originalLanguage, String description, String thumbnail, ImageView imageView) {
@@ -63,7 +65,7 @@ public class BookInfo {
         this.originalLanguage = originalLanguage;
         this.description = description;
         this.thumbnail = thumbnail;
-        this.imageView = imageView;
+        this.imageView =  new SimpleObjectProperty<>(imageView);
     }
 
     public int getBookId() {
@@ -138,10 +140,11 @@ public class BookInfo {
 
     public void setThumbnail(String thumbnail) { this.thumbnail = thumbnail; }
 
-    public ImageView getImageView() { return imageView; }
+    public ImageView getImageView() { return imageView.get(); }
 
-    public void setImageView(ImageView imageView) { this.imageView = imageView; }
+    public void setImageView(ImageView imageView) { this.imageView.set(imageView); }
 
+    public ObjectProperty<ImageView> imageViewProperty() { return imageView; }
 
 
     @Override

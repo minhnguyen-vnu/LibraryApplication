@@ -1,7 +1,9 @@
 package com.jmc.library.Controllers.Image;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -30,5 +32,24 @@ public class ImageUtils {
             e.printStackTrace();
         }
         return byteArrayOutputStream.toByteArray();
+    }
+
+    public static Image enhanceImageQuality(Image image) {
+        ImageView imageView = new ImageView(image);
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setBrightness(0.1);
+        colorAdjust.setContrast(0.1);
+        colorAdjust.setHue(0.05);
+        colorAdjust.setSaturation(0.2);
+        imageView.setEffect(colorAdjust);
+        return imageView.snapshot(null, null);
+    }
+
+    public static ImageView scaleImage(Image image, double width, double height) {
+        ImageView imageView = new ImageView(image);
+        imageView.setPreserveRatio(true);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+        return imageView;
     }
 }

@@ -20,6 +20,7 @@ import javafx.scene.input.KeyCode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class LibraryController extends LibraryTable {
