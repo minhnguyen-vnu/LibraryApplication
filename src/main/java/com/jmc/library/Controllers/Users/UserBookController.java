@@ -56,6 +56,7 @@ public class UserBookController extends User implements Initializable {
     public AnchorPane matte_screen;
     public Button reload_btn;
     public TableColumn cover_book_tb_cl;
+    public TableColumn get_rate_tb_cl;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

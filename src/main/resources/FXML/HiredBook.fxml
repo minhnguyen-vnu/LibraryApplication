@@ -153,6 +153,7 @@
                                 <TableColumn fx:id="picked_day_tb_cl" prefWidth="120.0" text="Picked Date" />
                                 <TableColumn fx:id="return_day_tb_cl" maxWidth="187.199951171875" minWidth="67.60003662109375" prefWidth="120.0" text="Return Date" />
                                 <TableColumn fx:id="total_cost_tb_cl" prefWidth="150.0" text="Cost" />
+                        <TableColumn fx:id="get_rate_tb_cl" prefWidth="75.0" text="rate it" />
                             </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

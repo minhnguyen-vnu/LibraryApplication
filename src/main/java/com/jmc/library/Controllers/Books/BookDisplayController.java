@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.json.JSONArray;
@@ -47,6 +48,7 @@ public class BookDisplayController implements Initializable {
     public Button get_book_btn;
     public Button go_to_back_btn;
     public ImageView book_img;
+    public HBox rate_holder;
 
     private BookInfo displayBook;
 
