@@ -1,7 +1,9 @@
 package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.BookInfo;
+import com.jmc.library.Assets.LibraryTable;
 import com.jmc.library.Assets.UserBookInfo;
+import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
@@ -20,123 +22,71 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class UserBookController extends com.jmc.library.Controllers.Users.User implements Initializable {
-    public Button go_to_setting_btn;
-    public Label username_lbl;
-
-    public TableView<UserBookInfo> store_tb;
-    public TableColumn<UserBookInfo, String> book_name_tb_cl;
-    public TableColumn<UserBookInfo, String> author_tb_cl;
-    public TableColumn<UserBookInfo, Integer> book_id_tb_cl;
-    public TableColumn<UserBookInfo, LocalDate> return_day_tb_cl;
-    public TableColumn<UserBookInfo, LocalDate> picked_day_tb_cl;
+public class UserBookController extends UserLibraryTable implements Initializable {
     public TableColumn<UserBookInfo, Double> total_cost_tb_cl;
 
-    public TextField search_fld;
-    public Button search_btn;
-
-    public Button go_to_store_btn;
-    public Button go_to_library_btn;
-    public ImageView account_avatar_img;
-    public Button log_out_btn;
-    public ObservableList<UserBookInfo> bookList;
-    public ChoiceBox<String> num_row_shown;
-    /**
-     * This is the same as the go_to_dashboard_btn
-     */
-    public Button back_to_dashboard_btn;
-    public Button cart_btn;
-    public Button pending_btn;
     public AnchorPane user_info_pane;
     public AnchorPane matte_screen;
-    public Button reload_btn;
     public TableColumn cover_book_tb_cl;
     public TableColumn get_rate_tb_cl;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        bookList = FXCollections.observableArrayList(LibraryModel.getInstance().getUser().getBookHiredList());
-        setMaterialListener();
+        setListenerMaterial();
+        setTable();
         addBinding();
         priceFormating();
         setButtonListener();
+        showLibrary();
     }
 
-    private void setMaterialListener() {
-        setUsername_lbl();
-        setNum_row_shown();
-        setAccount_avatar_img();
+    @Override
+    protected void addBinding() {
+        super.addBinding();
+        total_cost_tb_cl.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
     }
 
-    private void setUsername_lbl() {
-        username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
-    }
-
-    private void setNum_row_shown() {
-        num_row_shown.getItems().addAll("5", "10", "15", "20", "All");
-        num_row_shown.setValue("All");
-        num_row_shown.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            store_tb.refresh();
-            if(newVal.equals("All")) {
-                store_tb.setItems(FXCollections.observableArrayList(bookList));
-            } else {
-                store_tb.setItems(FXCollections.observableArrayList(bookList.stream().limit(Integer.parseInt(newVal)).collect(Collectors.toList())));
-            }
-        });
-    }
-
-    private void setAccount_avatar_img() {
-        account_avatar_img = new ImageView(LibraryModel.getInstance().getUser().getAvatar());
-    }
-
-    private void setButtonListener() {
-        search_btn.setOnAction(actionEvent -> searchBookByAuthor(search_fld.getText()));
-        go_to_store_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
-        });
-        go_to_library_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
-        });
-        log_out_btn.setOnAction(actionEvent -> {
-            LibraryModel.getInstance().getUser().resetAll();
-            Model.getInstance().getViewFactory().resetAll();
-            Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
-            Model.getInstance().getViewFactory().closeStage(currentStage);
-            Model.getInstance().getViewFactory().showAuthenticationWindow();
-        });
-
-        back_to_dashboard_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Dashboard");
-        });
-        cart_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Cart");
-        });
-        pending_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Pending");
-        });
-        go_to_setting_btn.setOnAction(actionEvent -> {
-            Scene currentScene = go_to_setting_btn.getScene();
+    @Override
+    protected void showLibrary() {
+        bookList.clear();
+        store_tb.setItems(bookList);
+        DBQuery dbQuery = new DBQuery("select\n" +
+                "    r.username,\n" +
+                "    r.bookName,\n" +
+                "    b.authorName,\n" +
+                "    r.bookId,\n" +
+                "    r.pickedDate,\n" +
+                "    r.returnDate,\n" +
+                "    r.cost,\n" +
+                "    r.requestStatus\n"+
+                "from  userRequest r\n" +
+                "join bookStore b using(bookId)\n" +
+                "where r.username = ? " +
+                "order by r.requestStatus;", LibraryModel.getInstance().getUser().getUsername());
+        dbQuery.setOnSucceeded(event -> {
+            ResultSet resultSet = dbQuery.getValue();
             try {
-                UserInfoOverlay userInfoOverlay = new UserInfoOverlay(currentScene);
-            } catch (IOException e) {
+                while (resultSet.next()) {
+                    UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
+                            resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
+                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"));
+                    bookList.add(userBookInfo);
+                }
+                resultSet.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    private void addBinding() {
-        book_name_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookName"));
-        author_tb_cl.setCellValueFactory(new PropertyValueFactory<>("authorName"));
-        book_id_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookId"));
-        picked_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("pickedDate"));
-        return_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
-        total_cost_tb_cl.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
-
-        store_tb.setItems(bookList);
+        Thread thread = new Thread(dbQuery);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     private void priceFormating() {
@@ -156,13 +106,5 @@ public class UserBookController extends com.jmc.library.Controllers.Users.User i
                 };
             }
         });
-    }
-
-    private void searchBookByAuthor(String authorName) {
-        ObservableList<UserBookInfo> filteredList = bookList.stream()
-                .filter(book -> book.getAuthorName().equalsIgnoreCase(authorName))
-                .collect(Collectors.toCollection(FXCollections::observableArrayList));
-        store_tb.setItems(filteredList);
-        filteredList.clear();
     }
 }

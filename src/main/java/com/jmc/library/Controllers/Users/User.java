@@ -166,8 +166,6 @@ public class User {
     }
 
     public void loadBookPendingList() {
-//        addLoading();
-        bookPendingList.clear();
         DBQuery dbQuery = new DBQuery("select\n" +
                 "    r.username,\n" +
                 "    r.bookName,\n" +
@@ -190,7 +188,6 @@ public class User {
                     this.bookPendingList.add(userBookInfo);
                 }
                 resultSet.close();
-//                returnLoading();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -201,8 +198,6 @@ public class User {
     }
 
     public void loadBookHiredList() {
-//        addLoading();
-        bookHiredList.clear();
         DBQuery dbQuery = new DBQuery("select\n" +
                 "    r.username,\n" +
                 "    r.bookName,\n" +
@@ -226,8 +221,8 @@ public class User {
                     this.bookHiredList.add(userBookInfo);
                 }
                 resultSet.close();
-//                returnLoading();
             } catch (SQLException e) {
+                System.out.println(e.getMessage());
                 throw new RuntimeException(e);
             }
         });

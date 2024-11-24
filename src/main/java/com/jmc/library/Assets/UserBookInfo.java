@@ -33,7 +33,7 @@ public class UserBookInfo {
         this.requestStatus = status;
 
         try {
-            ResultSet rs = DBUtlis.executeQuery("SELECT ISBN,leastPrice FROM bookStore WHERE bookId = " + bookId);
+            ResultSet rs = DBUtlis.executeQuery("SELECT ISBN, leastPrice FROM bookStore WHERE bookId = " + bookId);
             if (rs.next()) {
                 this.ISBN = rs.getString("ISBN");
                 this.singleCost = rs.getDouble("leastPrice");
