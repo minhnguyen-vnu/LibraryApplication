@@ -1,6 +1,7 @@
 package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.UserBookInfo;
+import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Controllers.Notification.NotificationController;
 import com.jmc.library.DataBase.*;
 import com.jmc.library.Models.LibraryModel;
@@ -9,14 +10,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
+import javafx.scene.image.ImageView;
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class User {
@@ -25,6 +31,7 @@ public class User {
     private String name;
     private LocalDate birthDate;
     private int ID;
+    private Image avatar;
 
     private ObservableList<UserBookInfo> bookPendingList;
     private ObservableList<UserBookInfo> bookHiredList;
@@ -76,6 +83,14 @@ public class User {
         this.ID = ID;
     }
 
+    public Image getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Image avatar) {
+        this.avatar = avatar;
+    }
+
     public ObservableList<UserBookInfo> getBookPendingList() {
         return bookPendingList;
     }
@@ -101,16 +116,23 @@ public class User {
     }
 
     public void loadUserInfo() {
-        DBQuery dbQuery = new DBQuery("select * from user where username = ?", this.username);
+        DBQuery dbQuery = new DBQuery("select * from users where username = ?", this.username);
         dbQuery.setOnSucceeded(event -> {
             ResultSet resultSet = dbQuery.getValue();
             try {
                 if (resultSet.next()) {
                     this.username = resultSet.getString("username");
                     this.password = resultSet.getString("password");
-                    this.name = resultSet.getString("name");
-                    this.birthDate = resultSet.getDate("birthDate").toLocalDate();
+
+                    this.name = (resultSet.getString("name") == null) ? "" : resultSet.getString("name");
+                    this.birthDate = (resultSet.getDate("birthDate") == null) ? LocalDate.now().plusDays(1) : resultSet.getDate("birthDate").toLocalDate();
                     this.ID = resultSet.getInt("ID");
+                    Blob blob = resultSet.getBlob("imageView");
+                    if (blob != null) {
+                        this.avatar = ImageUtils.byteArrayToImage(blob.getBytes(1, (int) blob.length()));
+                    } else {
+                        this.avatar = new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/avatar.png")).toExternalForm());
+                    }
                 }
                 resultSet.close();
             } catch (SQLException e) {
@@ -121,6 +143,7 @@ public class User {
         thread.setDaemon(true);
         thread.start();
     }
+
     public void loadAllList() {
         loadBookHiredList();
         loadBookPendingList();

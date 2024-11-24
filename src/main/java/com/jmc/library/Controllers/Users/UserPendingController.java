@@ -7,12 +7,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -53,6 +55,7 @@ public class UserPendingController extends User implements Initializable {
     private void setMaterialListener() {
         setUsername_lbl();
         setNum_row_shown();
+        setAccount_avatar_img();
     }
 
     private void setUsername_lbl() {
@@ -72,8 +75,11 @@ public class UserPendingController extends User implements Initializable {
         });
     }
 
-    private void setButtonListener() {
+    private void setAccount_avatar_img() {
+        account_avatar_img = new ImageView(LibraryModel.getInstance().getUser().getAvatar());
+    }
 
+    private void setButtonListener() {
         search_btn.setOnAction(actionEvent -> searchBookByAuthor(search_fld.getText()));
         go_to_store_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
@@ -99,6 +105,14 @@ public class UserPendingController extends User implements Initializable {
         });
         pending_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Pending");
+        });
+        go_to_setting_btn.setOnAction(actionEvent -> {
+            Scene currentScene = go_to_setting_btn.getScene();
+            try {
+                UserInfoOverlay userInfoOverlay = new UserInfoOverlay(currentScene);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 

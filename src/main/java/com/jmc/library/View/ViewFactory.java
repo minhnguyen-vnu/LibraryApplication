@@ -229,4 +229,8 @@ public class ViewFactory {
         bookDetail = null;
         notificationView = null;
     }
+
+    public ThreadLocal<String> getSelectedAdminMode() {
+        return null;
+    }
 }

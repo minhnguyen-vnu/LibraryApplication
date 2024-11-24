@@ -1,13 +1,18 @@
 package com.jmc.library.Controllers;
 
-import com.jmc.library.DataBase.*;
+import com.jmc.library.DataBase.DBUpdate;
+import com.jmc.library.DataBase.DBQuery;
 import com.jmc.library.Models.Model;
+import javafx.animation.RotateTransition;
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.sql.Connection;
@@ -24,9 +29,14 @@ public class SignUpController implements Initializable {
     public Label error_lbl;
     public PasswordField confirm_su;
     public Label back_lbl;
+    public ImageView loading_img;
+    public RotateTransition rotateTransition;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {addListener();}
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        addListener();
+        setRotateTransition();
+    }
 
     public void addListener(){
         sign_up_btn.setOnAction(actionEvent -> signUp());
@@ -37,32 +47,89 @@ public class SignUpController implements Initializable {
             confirm_su.clear();
             password_su.clear();
         });
+        username_su.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                password_su.requestFocus();
+            }
+        });
+        password_su.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                confirm_su.requestFocus();
+            }
+        });
+        confirm_su.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                signUp();
+            }
+        });
+
+    }
+
+    public void setRotateTransition(){
+        rotateTransition = new RotateTransition();
+        rotateTransition.setNode(loading_img);
+        rotateTransition.setByAngle(360);
+        rotateTransition.setCycleCount(1000);
+        rotateTransition.setAutoReverse(false);
+        rotateTransition.play();
     }
 
     public void signUp(){
+        loading_img.setVisible(true);
+        rotateTransition.play();
         if(!Objects.equals(password_su.getText(), confirm_su.getText())){
             error_lbl.setText("Your Confirmation Password didn't match the Password");
             error_lbl.setStyle("-fx-text-fill: red");
         }
         else {
-            ResultSet resultSet = null;
-            try {
-                resultSet = DBUtlis.executeQuery("select * from users where username = ?", username_su.getText());
-
-                if (!resultSet.next()) {
-                    DBUtlis.executeUpdate("insert into users values(?, ?)", username_su.getText(), password_su.getText());
-                    error_lbl.setText("Account is created succesfully!");
-                    error_lbl.setStyle("-fx-text-fill: green");
-                } else {
-                    error_lbl.setText("Account name already exists");
-                    error_lbl.setStyle("-fx-text-fill: red;");
-                    BorderPane.setAlignment(error_lbl, Pos.CENTER);
+            DBQuery dbQuery = new DBQuery("select * from users where username = ?", username_su.getText());
+            dbQuery.setOnSucceeded(workerStateEvent -> {
+                ResultSet resultSet = dbQuery.getValue();
+                try {
+                    if (!resultSet.next()) {
+                        DBUpdate dbUpdate = new DBUpdate("insert into users (username, password, isAdmin, registeredDate) values(?, ?, ?, ?)", username_su.getText(), password_su.getText(), 0, LocalDate.now());
+                        dbUpdate.setOnSucceeded(event -> {
+                            Platform.runLater(() -> {
+                                System.out.println("Update Successfully");
+                            });
+                        });
+                        dbUpdate.setOnFailed(event -> {
+                            Platform.runLater(() -> {
+                                System.out.println("Update failed");
+                            });
+                        });
+                        Thread thread = new Thread(dbUpdate);
+                        thread.setDaemon(true);
+                        thread.start();
+                        loading_img.setVisible(false);
+                        rotateTransition.stop();
+                        error_lbl.setText("Account is created succesfully!");
+                        error_lbl.setStyle("-fx-text-fill: green");
+                    } else {
+                        loading_img.setVisible(false);
+                        rotateTransition.stop();
+                        error_lbl.setText("Account name already exists");
+                        error_lbl.setStyle("-fx-text-fill: red;");
+                        BorderPane.setAlignment(error_lbl, Pos.CENTER);
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    try {
+                        resultSet.close();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                DBUtlis.closeResources(null, resultSet, null);
-            }
+            });
+
+            dbQuery.setOnFailed(workerStateEvent -> {
+                System.out.println("Query failed");
+            });
+
+            Thread thread = new Thread(dbQuery);
+            thread.setDaemon(true);
+            thread.start();
         }
     }
 }

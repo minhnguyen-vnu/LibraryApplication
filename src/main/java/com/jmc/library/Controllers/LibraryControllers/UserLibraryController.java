@@ -1,28 +1,23 @@
 package com.jmc.library.Controllers.LibraryControllers;
 
 import com.jmc.library.Assets.BookInfo;
-import com.jmc.library.Assets.UserBookInfo;
-import com.jmc.library.Controllers.Interface.InterfaceManager;
-import com.jmc.library.Controllers.Users.CartEntityController;
-import com.jmc.library.DataBase.*;
-import com.jmc.library.Models.BookModel;
+
+import com.jmc.library.Controllers.Users.UserInfoOverlay;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -78,6 +73,14 @@ public class UserLibraryController extends LibraryController implements Initiali
         pending_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Pending");
         });
+        go_to_setting_btn.setOnAction(actionEvent -> {
+            Scene currentScene = go_to_setting_btn.getScene();
+            try {
+                UserInfoOverlay userInfoOverlay = new UserInfoOverlay(currentScene);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void setMaterialListener() {
@@ -104,31 +107,7 @@ public class UserLibraryController extends LibraryController implements Initiali
     }
 
     private void setAccount_avatar_img() {
-        account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png")
-                .toExternalForm()).getImage());
-
-        account_avatar_img.setOnMouseClicked(mouseEvent -> {
-            if(user_info_pane.getChildren().isEmpty()) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/UserInfo.fxml"));
-                try {
-                    user_info_pane.getChildren().add(loader.load());
-                    matte_screen.setVisible(true);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                user_info_pane.getChildren().clear();
-                matte_screen.setVisible(false);
-            }
-        });
-        matte_screen.setOnMouseClicked(mouseEvent -> {
-            if(!user_info_pane.getChildren().isEmpty()) {
-                user_info_pane.getChildren().clear();
-                matte_screen.setVisible(false);
-            }
-        });
+        account_avatar_img.setImage(LibraryModel.getInstance().getUser().getAvatar());
     }
 
     private void onAction() {

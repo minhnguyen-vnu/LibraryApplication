@@ -27,4 +27,5 @@ module com.jmc.library {
     exports com.jmc.library.Controllers.Interface;
     exports com.jmc.library.Controllers.Loading;
     exports com.jmc.library.Controllers.Notification;
+    exports com.jmc.library.Controllers.Image;
 }

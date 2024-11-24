@@ -9,6 +9,7 @@ import com.jmc.library.Models.Model;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -107,7 +109,12 @@ public class UserDashboardController extends User implements Initializable, Dash
         });
 
         go_to_setting_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("Setting");
+            Scene currentScene = go_to_setting_btn.getScene();
+            try {
+                UserInfoOverlay userInfoOverlay = new UserInfoOverlay(currentScene);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         log_out_btn.setOnAction(actionEvent -> {

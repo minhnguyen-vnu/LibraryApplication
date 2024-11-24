@@ -1,4 +1,4 @@
-package com.jmc.library.Controllers.Notification;
+package com.jmc.library.Controllers.Users;
 
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXMLLoader;
@@ -11,30 +11,26 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
-public class Overlay {
+public class UserInfoOverlay {
     private final AnchorPane overlayPane;
-    private final AnchorPane notificationPane;
+    private final AnchorPane userInfoPane;
 
-    public Overlay(String notificationMessage, Scene currentScene) throws IOException {
+    public UserInfoOverlay(Scene currentScene) throws IOException {
         Pane root = (Pane) currentScene.getRoot();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Notification.fxml"));
-        notificationPane = loader.load();
-        NotificationController notificationController = loader.getController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/UserInfo.fxml"));
+        userInfoPane = loader.load();
+        UserInfoController userInfoController = loader.getController();
 
-        notificationController.setNotification(notificationMessage);
-        notificationController.setOnCloseCallback(() -> closeOverlay(currentScene));
-
-        overlayPane = new AnchorPane(notificationPane);
+        overlayPane = new AnchorPane(userInfoPane);
         overlayPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
 
+        AnchorPane.setTopAnchor(userInfoPane, 100.0);
+        AnchorPane.setRightAnchor(userInfoPane, 50.0);
+        AnchorPane.setBottomAnchor(userInfoPane, 100.0);
+        AnchorPane.setLeftAnchor(userInfoPane, 50.0);
 
-        AnchorPane.setTopAnchor(notificationPane, 100.0);
-        AnchorPane.setRightAnchor(notificationPane, 50.0);
-        AnchorPane.setBottomAnchor(notificationPane, 100.0);
-        AnchorPane.setLeftAnchor(notificationPane, 50.0);
-
-        playZoomInEffect(notificationPane);
+        playZoomInEffect(userInfoPane);
 
         if (!(root instanceof StackPane)) {
             StackPane stackPane = new StackPane(root);
@@ -48,7 +44,7 @@ public class Overlay {
             double clickX = event.getSceneX();
             double clickY = event.getSceneY();
 
-            Bounds boundsInScene = notificationPane.localToScene(notificationPane.getBoundsInLocal());
+            Bounds boundsInScene = userInfoPane.localToScene(userInfoPane.getBoundsInLocal());
 
             if (!boundsInScene.contains(clickX, clickY)) {
                 closeOverlay(currentScene);
@@ -57,7 +53,7 @@ public class Overlay {
     }
 
     private void closeOverlay(Scene currentScene) {
-        playZoomOutEffect(notificationPane, () -> {
+        playZoomOutEffect(userInfoPane, () -> {
             Pane root = (Pane) currentScene.getRoot();
             root.getChildren().remove(overlayPane);
         });

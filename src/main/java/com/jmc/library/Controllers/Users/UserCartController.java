@@ -2,7 +2,7 @@ package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Controllers.Interface.CartUpdateListener;
 import com.jmc.library.Controllers.Interface.InterfaceManager;
-import com.jmc.library.Controllers.Notification.Overlay;
+import com.jmc.library.Controllers.Notification.NotificationOverlay;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.fxml.FXMLLoader;
@@ -65,7 +65,7 @@ public class UserCartController extends User implements Initializable, CartUpdat
             setListBookVBox();
             updateCartSummary();
             try {
-                Overlay overlay = new Overlay("Payment Successful!!", check_out_btn.getScene());
+                NotificationOverlay overlay = new NotificationOverlay("Payment Successful!!", check_out_btn.getScene());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

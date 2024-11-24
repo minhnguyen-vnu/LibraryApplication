@@ -9,6 +9,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -86,31 +88,7 @@ public class UserBookController extends User implements Initializable {
     }
 
     private void setAccount_avatar_img() {
-        account_avatar_img.setImage(new ImageView(getClass().getResource("/IMAGES/avatar.png")
-                .toExternalForm()).getImage());
-
-        account_avatar_img.setOnMouseClicked(mouseEvent -> {
-            if(user_info_pane.getChildren().isEmpty()) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/UserInfo.fxml"));
-                try {
-                    user_info_pane.getChildren().add(loader.load());
-                    matte_screen.setVisible(true);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                user_info_pane.getChildren().clear();
-                matte_screen.setVisible(false);
-            }
-        });
-        matte_screen.setOnMouseClicked(mouseEvent -> {
-            if(!user_info_pane.getChildren().isEmpty()) {
-                user_info_pane.getChildren().clear();
-                matte_screen.setVisible(false);
-            }
-        });
+        account_avatar_img = new ImageView(LibraryModel.getInstance().getUser().getAvatar());
     }
 
     private void setButtonListener() {
@@ -139,6 +117,14 @@ public class UserBookController extends User implements Initializable {
         });
         pending_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Pending");
+        });
+        go_to_setting_btn.setOnAction(actionEvent -> {
+            Scene currentScene = go_to_setting_btn.getScene();
+            try {
+                UserInfoOverlay userInfoOverlay = new UserInfoOverlay(currentScene);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 

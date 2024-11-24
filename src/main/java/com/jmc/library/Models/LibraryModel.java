@@ -22,7 +22,6 @@ public class LibraryModel {
 
     public void setUser(String username, String usertoken) {
         this.user.setUsername(username);
-        this.user.setToken(usertoken);
     }
 
 }

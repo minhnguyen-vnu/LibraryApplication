@@ -5,7 +5,7 @@ import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.GoogleBookAPI.GoogleBookAPIMethod;
 import com.jmc.library.Controllers.Interface.InterfaceManager;
 import com.jmc.library.Controllers.LibraryControllers.UserLibraryController;
-import com.jmc.library.Controllers.Notification.Overlay;
+import com.jmc.library.Controllers.Notification.NotificationOverlay;
 import com.jmc.library.Controllers.Users.CartEntityController;
 import com.jmc.library.DataBase.*;
 import com.jmc.library.Models.BookModel;
@@ -113,13 +113,13 @@ public class BookDisplayController implements Initializable {
         if(LibraryModel.getInstance().getUser().getCartEntityControllers().stream()
                 .anyMatch(cartEntityController -> cartEntityController
                         .getUserBookInfo().getBookId() == addedBook.getBookId())) {
-            Overlay overlay = new Overlay("Book already in cart.", get_book_btn.getScene());
+            NotificationOverlay overlay = new NotificationOverlay("Book already in cart.", get_book_btn.getScene());
             return;
         }
 
         if(LibraryModel.getInstance().getUser().getBookPendingList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())) {
-            Overlay overlay = new Overlay("Book already requested.", get_book_btn.getScene());
+            NotificationOverlay overlay = new NotificationOverlay("Book already requested.", get_book_btn.getScene());
             return;
         }
 
@@ -127,7 +127,7 @@ public class BookDisplayController implements Initializable {
                 .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())
                 && LibraryModel.getInstance().getUser().getBookHiredList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getReturnDate().isAfter(LocalDate.now()))) {
-            Overlay overlay = new Overlay("Book already hired.", get_book_btn.getScene());
+            NotificationOverlay overlay = new NotificationOverlay("Book already hired.", get_book_btn.getScene());
             return;
         }
 
@@ -138,7 +138,7 @@ public class BookDisplayController implements Initializable {
                 .getCartUpdateListener()
                 .onAddCartEntity(new CartEntityController(addedBook));
 
-        Overlay overlay = new Overlay("Book added to cart.", get_book_btn.getScene());
+        NotificationOverlay overlay = new NotificationOverlay("Book added to cart.", get_book_btn.getScene());
     }
 }
 
