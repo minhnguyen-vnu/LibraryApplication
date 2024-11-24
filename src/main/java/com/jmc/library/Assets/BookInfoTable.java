@@ -1,5 +1,6 @@
 package com.jmc.library.Assets;
 
+import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.DataBase.DBQuery;
 import com.jmc.library.DataBase.DBUtlis;
 import com.jmc.library.Models.BookModel;
@@ -10,7 +11,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -47,24 +51,35 @@ public class BookInfoTable {
         });
     }
 
-    protected void showLibrary() {
+        protected void showLibrary() {
         bookList.clear();
-        DBQuery dbQuery = new DBQuery("SELECT * " +
-                    "FROM bookStore b" + ";");
+        store_tb.setItems(bookList);
+        DBQuery dbQuery = new DBQuery("select * from bookStore");
         dbQuery.setOnSucceeded(event -> {
             ResultSet resultSet = dbQuery.getValue();
             try {
                 while (resultSet.next()) {
-                    BookInfo book = new BookInfo(resultSet.getInt("bookId"), resultSet.getString("bookName"),
-                            resultSet.getDate("publishDate").toLocalDate(), resultSet.getString("authorName"),
-                            resultSet.getInt("quantityInStock"), resultSet.getDouble("leastPrice"),
-                            resultSet.getString("ISBN"));
-                    bookList.add(book);
+                    Blob blob = resultSet.getBlob("imageView");
+                    byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+                    Image image = ImageUtils.byteArrayToImage(imageBytes);
+                    image = ImageUtils.enhanceImageQuality(image);
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitHeight(75);
+                    imageView.setFitWidth(50);
+                    BookInfo currentBook = new BookInfo(resultSet.getInt("bookId"), resultSet.getString("bookName"),
+                            resultSet.getString("authorName"), resultSet.getInt("quantityInStock"), resultSet.getDouble("leastPrice"),
+                            resultSet.getDate("publishDate").toLocalDate(), resultSet.getString("ISBN"), resultSet.getString("publisher"),
+                            resultSet.getString("genre"), resultSet.getString("originalLanguage"), resultSet.getString("description"),
+                            resultSet.getString("thumbnail"), imageView);
+                    bookList.add(currentBook);
                 }
                 resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException e){
+                throw new RuntimeException(e);
             }
+        });
+        dbQuery.setOnFailed(event -> {
+            System.out.println("Failed");
         });
         Thread thread = new Thread(dbQuery);
         thread.setDaemon(true);

@@ -1,46 +1,42 @@
 package com.jmc.library.Assets;
 
-import com.jmc.library.Controllers.GoogleBookAPI.GoogleBookAPIMethod;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.image.ImageView;
+import java.awt.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class BookInfo {
     private int bookId;
     private String bookName;
     private String authorName;
+    private int quantityInStock;
+    private double leastPrice;
+    private LocalDate publishedDate;
     private String ISBN;
     private String publisher;
     private String genre;
-    private LocalDate publishedDate;
     private String originalLanguage;
     private String description;
     private String thumbnail;
+    private boolean exist;
+    private ObjectProperty<ImageView> imageView;
 
-    private JSONObject bookInfo;
-    private JSONArray items;
-    private JSONObject volumeInfo;
-
-    private int quantityInStock;
-    private double leastPrice;
-
-    public BookInfo() {
-        bookId = 0;
-        bookName = "";
-        authorName = "";
-        ISBN = "";
-        publisher = "";
-        genre = "";
-        publishedDate = LocalDate.now();
-        originalLanguage = "";
-        description = "";
-        thumbnail = "";
-        quantityInStock = 0;
-        leastPrice = 0.0;
+    public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.quantityInStock = quantityInStock;
+        this.leastPrice = leastPrice;
+        this.publishedDate = publishedDate;
     }
 
-    public BookInfo(int bookId, String bookName, LocalDate publishedDate, String authorName, int quantityInStock, double leastPrice, String ISBN) {
+    public BookInfo() {
+        this.exist = false;
+    }
+
+    public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate, String ISBN) {
         this.bookId = bookId;
         this.bookName = bookName;
         this.authorName = authorName;
@@ -48,12 +44,36 @@ public class BookInfo {
         this.leastPrice = leastPrice;
         this.publishedDate = publishedDate;
         this.ISBN = ISBN;
-        this.genre = "";
-        this.publisher = "";
-        this.originalLanguage = "";
-        this.description = "";
-        this.thumbnail = "";
-        setBookInfo();
+        this.exist = true;
+    }
+
+    public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate, String ISBN, ImageView imageView) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.quantityInStock = quantityInStock;
+        this.leastPrice = leastPrice;
+        this.publishedDate = publishedDate;
+        this.ISBN = ISBN;
+        this.imageView =  new SimpleObjectProperty<>(imageView);
+        this.exist = true;
+    }
+
+    public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate, String ISBN, String publisher, String genre, String originalLanguage, String description, String thumbnail, ImageView imageView) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.quantityInStock = quantityInStock;
+        this.leastPrice = leastPrice;
+        this.publishedDate = publishedDate;
+        this.ISBN = ISBN;
+        this.publisher = publisher;
+        this.genre = genre;
+        this.originalLanguage = originalLanguage;
+        this.description = description;
+        this.thumbnail = thumbnail;
+        this.imageView =  new SimpleObjectProperty<>(imageView);
+        this.exist = true;
     }
 
     public int getBookId() {
@@ -104,78 +124,62 @@ public class BookInfo {
         this.publishedDate = publishedDate;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public boolean isExist() { return exist; }
+
+    public String getISBN() { return ISBN; }
+
+    public void setISBN(String ISBN) { this.ISBN = ISBN; }
+
+    public String getPublisher() { return publisher; }
+
+    public void setPublisher(String publisher) { this.publisher = publisher; }
+
+    public String getGenre() { return genre; }
+
+    public void setGenre(String genre) { this.genre = genre; }
+
+    public String getOriginalLanguage() { return originalLanguage; }
+
+    public void setOriginalLanguage(String originalLanguage) { this.originalLanguage = originalLanguage; }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
+
+    public String getThumbnail() { return thumbnail; }
+
+    public void setThumbnail(String thumbnail) { this.thumbnail = thumbnail; }
+
+    public ImageView getImageView() { return imageView.get(); }
+
+    public void setImageView(ImageView imageView) { this.imageView.set(imageView); }
+
+    public ObjectProperty<ImageView> imageViewProperty() { return imageView; }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookInfo bookInfo = (BookInfo) o;
+        return bookId == bookInfo.bookId && quantityInStock == bookInfo.quantityInStock && Double.compare(leastPrice, bookInfo.leastPrice) == 0 && Objects.equals(bookName, bookInfo.bookName) && Objects.equals(authorName, bookInfo.authorName) && Objects.equals(publishedDate, bookInfo.publishedDate) && Objects.equals(ISBN, bookInfo.ISBN);
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookId, bookName, authorName, quantityInStock, leastPrice, publishedDate, ISBN);
     }
 
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher() {
-        this.publisher = volumeInfo.has("publisher") ? volumeInfo.getString("publisher") : "N/A";
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre() {
-        if (volumeInfo.has("categories")) {
-            JSONArray categoriesArray = volumeInfo.getJSONArray("categories");
-            this.genre = categoriesArray.join(", ").replace("\"", "");
-        } else {
-            this.genre = "N/A";
-        }
-    }
-
-    public String getOriginalLanguage() {
-        return originalLanguage;
-    }
-
-    public void setOriginalLanguage() {
-        originalLanguage = volumeInfo.has("language") ? volumeInfo.getString("language") : "N/A";
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription() {
-        description = volumeInfo.has("description") ? volumeInfo.getString("description") : "No description available";
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail() {
-        thumbnail = volumeInfo.has("imageLinks") ? volumeInfo.getJSONObject("imageLinks").getString("thumbnail") : null;
-    }
-
-    public JSONObject getBookInfo() {
-        return bookInfo;
-    }
-
-    public JSONArray getItems() {
-        return items;
-    }
-
-    public void setBookInfo() {
-        this.bookInfo = new GoogleBookAPIMethod().searchBook(this.ISBN);
-        int totalItems = new GoogleBookAPIMethod().getTotalItems(bookInfo) - 1;
-        this.items = bookInfo.getJSONArray("items");
-        if (items != null) {
-            this.volumeInfo = items.getJSONObject(totalItems).getJSONObject("volumeInfo");
-            setPublisher();
-            setGenre();
-            setOriginalLanguage();
-            setDescription();
-            setThumbnail();
-        }
+    @Override
+    public String toString() {
+        return "BookInfo{" +
+                "bookId=" + bookId +
+                ", bookName='" + bookName + '\'' +
+                ", authorName='" + authorName + '\'' +
+                ", quantityInStock=" + quantityInStock +
+                ", leastPrice=" + leastPrice +
+                ", publishedDate=" + publishedDate +
+                ", ISBN='" + ISBN + '\'' +
+                '}';
     }
 }

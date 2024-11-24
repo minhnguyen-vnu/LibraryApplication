@@ -94,7 +94,7 @@ public class BookDisplayController implements Initializable {
 
     private void setMaterialListener() {
         System.out.println(displayBook.getISBN());
-        if (displayBook.getItems() != null) {
+        if (displayBook.isExist()) {
             book_name_txt_flw.getChildren().setAll(new Label(displayBook.getBookName()));
             author_lbl.setText("Author: " + displayBook.getAuthorName());
             publisher_lbl.setText("Publisher: " + displayBook.getPublisher());

@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class UserLibraryController extends LibraryController implements Initializable {
     public Button go_to_setting_btn;
     public Button go_to_user_library_btn;
-    public Button go_to_dashboard_btn;
+    public Button back_to_dashboard_btn;
     public Button go_to_store_btn;
     public Button cart_btn;
     public Button pending_btn;
@@ -55,7 +55,7 @@ public class UserLibraryController extends LibraryController implements Initiali
         go_to_user_library_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
         });
-        go_to_dashboard_btn.setOnAction(actionEvent -> {
+        back_to_dashboard_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Dashboard");
         });
         go_to_store_btn.setOnAction(actionEvent -> {
