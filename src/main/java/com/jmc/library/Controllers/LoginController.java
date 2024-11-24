@@ -1,8 +1,7 @@
 package com.jmc.library.Controllers;
 
-import com.jmc.library.DataBase.DBQuery;
-import com.jmc.library.DataBase.DBUpdate;
-import com.jmc.library.DataBase.DBUtlis;
+import com.jmc.library.Database.DBQuery;
+import com.jmc.library.Database.DBUtlis;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.application.Platform;

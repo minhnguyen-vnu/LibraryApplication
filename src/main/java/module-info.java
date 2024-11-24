@@ -17,7 +17,7 @@ module com.jmc.library {
     exports com.jmc.library.Models;
     exports com.jmc.library.View;
     exports com.jmc.library.Assets;
-    exports com.jmc.library.DataBase;
+    exports com.jmc.library.Database;
     exports com.jmc.library.Controllers;
     exports com.jmc.library.Controllers.Users;
     exports com.jmc.library.Controllers.LibraryControllers;
@@ -25,7 +25,7 @@ module com.jmc.library {
     exports com.jmc.library.Controllers.GoogleBookAPI;
     exports com.jmc.library.Controllers.Books;
     exports com.jmc.library.Controllers.Interface;
-    exports com.jmc.library.Controllers.Loading;
+    exports com.jmc.library.Controllers.Assets;
     exports com.jmc.library.Controllers.Notification;
     exports com.jmc.library.Controllers.Image;
 }

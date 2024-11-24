@@ -1,4 +1,4 @@
-package com.jmc.library.Controllers.Loading;
+package com.jmc.library.Controllers.Assets;
 
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;

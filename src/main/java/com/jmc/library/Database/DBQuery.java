@@ -1,4 +1,4 @@
-package com.jmc.library.DataBase;
+package com.jmc.library.Database;
 
 import javafx.concurrent.Task;
 

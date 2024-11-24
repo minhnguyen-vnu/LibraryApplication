@@ -2,16 +2,12 @@ package com.jmc.library.Controllers.Books;
 
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.UserBookInfo;
-import com.jmc.library.Controllers.GoogleBookAPI.GoogleBookAPIMethod;
 import com.jmc.library.Controllers.Interface.InterfaceManager;
-import com.jmc.library.Controllers.LibraryControllers.UserLibraryController;
 import com.jmc.library.Controllers.Notification.NotificationOverlay;
 import com.jmc.library.Controllers.Users.CartEntityController;
-import com.jmc.library.DataBase.*;
 import com.jmc.library.Models.BookModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,19 +16,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Stage;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
 

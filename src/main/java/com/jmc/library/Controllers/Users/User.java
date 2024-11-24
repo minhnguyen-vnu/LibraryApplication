@@ -2,22 +2,12 @@ package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.Image.ImageUtils;
-import com.jmc.library.Controllers.Notification.NotificationController;
-import com.jmc.library.DataBase.*;
+import com.jmc.library.Database.*;
 import com.jmc.library.Models.LibraryModel;
-import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 
-import javafx.scene.image.ImageView;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -3,6 +3,7 @@ package com.jmc.library.Controllers.LibraryControllers;
 import com.jmc.library.Assets.BookInfo;
 
 import com.jmc.library.Controllers.Users.UserInfoOverlay;
+import com.jmc.library.Models.BookModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.beans.property.SimpleObjectProperty;
@@ -80,6 +81,14 @@ public class UserLibraryController extends LibraryController implements Initiali
                 UserInfoOverlay userInfoOverlay = new UserInfoOverlay(currentScene);
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            }
+        });
+        store_tb.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getClickCount() == 2) {
+                BookInfo book = store_tb.getSelectionModel().getSelectedItem();
+                BookModel.getInstance().setBookInfo(book);
+                Model.getInstance().getViewFactory().getSelectedUserMode().set("Book Detail");
+                Model.getInstance().getViewFactory().getBookDisplayController().setDisplayBook(book);
             }
         });
     }

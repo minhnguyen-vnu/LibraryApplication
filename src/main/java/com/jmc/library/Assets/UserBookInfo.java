@@ -1,6 +1,6 @@
 package com.jmc.library.Assets;
 
-import com.jmc.library.DataBase.*;
+import com.jmc.library.Database.*;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;

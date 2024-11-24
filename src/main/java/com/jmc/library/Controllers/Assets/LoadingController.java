@@ -1,4 +1,4 @@
-package com.jmc.library.Controllers.Loading;
+package com.jmc.library.Controllers.Assets;
 
 import javafx.animation.RotateTransition;
 import javafx.fxml.Initializable;

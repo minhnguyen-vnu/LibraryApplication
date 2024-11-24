@@ -1,7 +1,7 @@
 package com.jmc.library.Controllers;
 
-import com.jmc.library.DataBase.DBUpdate;
-import com.jmc.library.DataBase.DBQuery;
+import com.jmc.library.Database.DBUpdate;
+import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Models.Model;
 import javafx.animation.RotateTransition;
 import javafx.application.Platform;
@@ -15,11 +15,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 public class SignUpController implements Initializable {
     public ChoiceBox acc_selector;

@@ -1,7 +1,7 @@
 package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Controllers.Image.ImageUtils;
-import com.jmc.library.DataBase.DBUpdate;
+import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Models.LibraryModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
