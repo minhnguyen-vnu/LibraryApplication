@@ -179,5 +179,6 @@ public class ManageBookController extends LibraryTable implements Initializable 
         });
 
         clear_btn.setOnAction(actionEvent -> clear());
+        reload_btn.setOnAction(actionEvent -> showLibrary());
     }
 }

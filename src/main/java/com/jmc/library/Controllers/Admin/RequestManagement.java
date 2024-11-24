@@ -21,6 +21,7 @@ public abstract class RequestManagement {
     public TextField get_request_id_txt_fld;
     public Button search_btn;
     public Button return_btn;
+    public Button reload_btn;
 
     public TableView<RequestInfo> store_tb;
     public ObservableList<RequestInfo> bookList;
@@ -120,5 +121,6 @@ public abstract class RequestManagement {
                 get_due_date.setValue(dueDate);
             }
         });
+        reload_btn.setOnAction(actionEvent -> showLibrary());
     }
 }
