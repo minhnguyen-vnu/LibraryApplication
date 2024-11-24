@@ -37,6 +37,7 @@ public class UserPendingController extends UserLibraryTable implements Initializ
 
     @Override
     protected void showLibrary() {
+        addLoading();
         bookList.clear();
         store_tb.setItems(bookList);
         DBQuery dbQuery = new DBQuery("select\n" +
@@ -61,6 +62,7 @@ public class UserPendingController extends UserLibraryTable implements Initializ
                     bookList.add(userBookInfo);
                 }
                 resultSet.close();
+                returnLoading();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

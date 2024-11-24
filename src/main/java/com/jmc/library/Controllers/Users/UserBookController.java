@@ -54,6 +54,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
 
     @Override
     protected void showLibrary() {
+        addLoading();
         bookList.clear();
         store_tb.setItems(bookList);
         DBQuery dbQuery = new DBQuery("select\n" +
@@ -79,6 +80,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
                     bookList.add(userBookInfo);
                 }
                 resultSet.close();
+                returnLoading();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
                 throw new RuntimeException(e);
