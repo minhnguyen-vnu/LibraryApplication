@@ -139,6 +139,20 @@
                      </columnResizePolicy>
                   </TableView>
                   <Button fx:id="settings_btn" layoutX="844.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="164.0" styleClass="MainButton" text="Settings" />
+                  <HBox alignment="CENTER" layoutX="47.0" layoutY="19.0" spacing="20.0">
+                     <children>
+                        <Button fx:id="reload_btn" mnemonicParsing="false" styleClass="IconButton">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0">
+                                 <image>
+                                    <Image url="@../IMAGES/ReloadIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label styleClass="Title" text="Reload" />
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
          </children>

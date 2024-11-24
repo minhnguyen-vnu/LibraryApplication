@@ -154,11 +154,11 @@
                         </Button>
                         <HBox layoutX="42.0" layoutY="14.0">
                             <children>
-                                <Button fx:id="go_to_dashboard_btn" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="IconButton">
+                                <Button fx:id="reload_btn" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="IconButton">
                                     <graphic>
                                         <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@../IMAGES/GoBackIcon.png" />
+                                                <Image url="@../IMAGES/ReloadIcon.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>

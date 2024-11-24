@@ -39,6 +39,7 @@ public class UserBookController implements Initializable {
     public ChoiceBox num_row_shown;
     public Button go_to_dashboard_btn;
     public Button back_to_dashboard_btn;
+    public Button reload_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

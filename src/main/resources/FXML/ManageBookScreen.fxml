@@ -121,6 +121,15 @@
                         <Label styleClass="MainTitle" text="Manage Books" />
                     </children>
                 </HBox>
+            <Button fx:id="reload_btn" layoutX="47.0" layoutY="101.0" mnemonicParsing="false" styleClass="IconButton" stylesheets="@../STYLES/UserLibraryStore.css">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0">
+                     <image>
+                        <Image url="@../IMAGES/ReloadIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             </children>
         </AnchorPane>
     </children>

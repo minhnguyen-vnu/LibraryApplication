@@ -34,6 +34,7 @@ public class ManageBookController extends LibraryTable implements Initializable 
     public Button update_book_btn;
     public Button return_btn;
     public Button clear_btn;
+    public Button reload_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
