@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Loading.RatingController">
+   <children>
+      <ImageView fx:id="star1" fitHeight="20.0" fitWidth="20.0">
+         <image>
+            <Image url="@../IMAGES/Star.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="star2" fitHeight="20.0" fitWidth="20.0">
+         <image>
+            <Image url="@../IMAGES/Star.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="star3" fitHeight="20.0" fitWidth="20.0">
+         <image>
+            <Image url="@../IMAGES/Star.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="star4" fitHeight="20.0" fitWidth="20.0">
+         <image>
+            <Image url="@../IMAGES/Star.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="star5" fitHeight="20.0" fitWidth="20.0">
+         <image>
+            <Image url="@../IMAGES/Star.png" />
+         </image>
+      </ImageView>
+   </children>
+</HBox>

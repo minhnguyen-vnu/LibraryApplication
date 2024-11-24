@@ -41,6 +41,8 @@ public class UserPendingController extends User implements Initializable {
     public Button go_to_dashboard_btn;
     public ChoiceBox<String> num_row_shown;
     public TableView<UserBookInfo> store_tb;
+    public TableColumn book_cover_tb_cl;
+    public Button reload_btn;
 
     private ObservableList<UserBookInfo> bookList;
 

@@ -38,6 +38,7 @@ public class UserLibraryController extends LibraryController implements Initiali
     public AnchorPane matte_screen;
     public AnchorPane user_info_pane;
     public TableColumn<BookInfo, ImageView> book_cover_tb_cl;
+    public Button reload_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
