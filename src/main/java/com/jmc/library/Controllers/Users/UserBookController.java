@@ -45,7 +45,6 @@ public class UserBookController extends User implements Initializable {
     public Button log_out_btn;
     public ObservableList<UserBookInfo> bookList;
     public ChoiceBox<String> num_row_shown;
-    public Button go_to_dashboard_btn;
     /**
      * This is the same as the go_to_dashboard_btn
      */
@@ -109,9 +108,7 @@ public class UserBookController extends User implements Initializable {
             Model.getInstance().getViewFactory().closeStage(currentStage);
             Model.getInstance().getViewFactory().showAuthenticationWindow();
         });
-        go_to_dashboard_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Dashboard");
-        });
+
         back_to_dashboard_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Dashboard");
         });

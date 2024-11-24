@@ -38,7 +38,6 @@ public class UserPendingController extends User implements Initializable {
     public TableColumn<UserBookInfo, Integer> book_id_tb_cl;
     public TableColumn<UserBookInfo, LocalDate> return_day_tb_cl;
     public TableColumn<UserBookInfo, LocalDate> picked_day_tb_cl;
-    public Button go_to_dashboard_btn;
     public ChoiceBox<String> num_row_shown;
     public TableView<UserBookInfo> store_tb;
     public TableColumn book_cover_tb_cl;
@@ -96,9 +95,7 @@ public class UserPendingController extends User implements Initializable {
             Model.getInstance().getViewFactory().closeStage(currentStage);
             Model.getInstance().getViewFactory().showAuthenticationWindow();
         });
-        go_to_dashboard_btn.setOnAction(actionEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Dashboard");
-        });
+
         back_to_dashboard_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Dashboard");
         });
