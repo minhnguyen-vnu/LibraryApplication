@@ -1,0 +1,6 @@
+.NoDataLabel {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-text-fill: #4385da;
+}

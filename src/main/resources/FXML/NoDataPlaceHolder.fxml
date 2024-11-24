@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+
+
+<Label styleClass="NoDataLabel" stylesheets="@../STYLES/Stuff.css" text="Not found any data" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" />

@@ -52,33 +52,33 @@
                 </Pane>
                 <Button fx:id="sign_up_btn" layoutX="261.0" layoutY="471.0" mnemonicParsing="false" styleClass="LoginButton" text="Sign Up" />
                 <Label fx:id="error_lbl" layoutX="261.0" layoutY="561.0" prefHeight="17.0" prefWidth="400.0" styleClass="error_lbl" />
-                <PasswordField fx:id="confirm_su" layoutX="261.0" layoutY="392.0" styleClass="input_field" />
-                <Pane layoutX="295.0" layoutY="381.0" styleClass="instructions_panel">
-                    <children>
-                        <HBox>
-                            <children>
-                                <Label styleClass="instructions_lbl" text="Confirm password" />
-                                <Label styleClass="redStar" text=" *" textFill="#ff0101" />
-                            </children>
-                        </HBox>
-                    </children>
-                </Pane>
-                <Label fx:id="back_lbl" layoutX="488.0" layoutY="598.0" styleClass="link_lbl" text="Back to Log In" />
-                <Text layoutX="324.0" layoutY="613.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already have the account?">
-                    <font>
-                        <Font size="13.0" />
-                    </font>
-                </Text>
-                <Label layoutX="389.0" layoutY="121.0" styleClass="tile" text="Account Register" />
-                <Pane layoutX="515.0" layoutY="478.0">
-                    <children>
-                        <ImageView fx:id="loading_img" fitHeight="35.0" fitWidth="35.0" visible="false">
-                            <image>
-                                <Image url="@../IMAGES/loadingImage.png" />
-                            </image>
-                        </ImageView>
-                    </children>
-                </Pane>
+            <PasswordField fx:id="confirm_su" layoutX="261.0" layoutY="392.0" styleClass="input_field" />
+            <Pane layoutX="295.0" layoutY="381.0" styleClass="instructions_panel">
+               <children>
+                  <HBox>
+                     <children>
+                        <Label styleClass="instructions_lbl" text="Confirm password" />
+                        <Label styleClass="redStar" text=" *" textFill="#ff0101" />
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+            <Label fx:id="back_lbl" layoutX="488.0" layoutY="598.0" styleClass="link_lbl" text="Back to Log In" />
+            <Text layoutX="324.0" layoutY="613.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already have the account?">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Text>
+                  <Label layoutX="389.0" layoutY="121.0" styleClass="tile" text="Account Register" />
+            <Pane layoutX="515.0" layoutY="478.0">
+               <children>
+                  <ImageView fx:id="loading_img" fitHeight="35.0" fitWidth="35.0" visible="false">
+                     <image>
+                        <Image url="@../IMAGES/loadingImage.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
             </children></AnchorPane>
     </children>
 </HBox>

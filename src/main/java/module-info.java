@@ -26,6 +26,7 @@ module com.jmc.library {
     exports com.jmc.library.Controllers.Books;
     exports com.jmc.library.Controllers.Interface;
     exports com.jmc.library.Controllers.Assets;
+    exports com.jmc.library.Controllers.Display;
     exports com.jmc.library.Controllers.Notification;
     exports com.jmc.library.Controllers.Image;
 }

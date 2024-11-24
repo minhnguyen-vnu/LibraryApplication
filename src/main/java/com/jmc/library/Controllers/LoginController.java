@@ -1,6 +1,7 @@
 package com.jmc.library.Controllers;
 
 import com.jmc.library.Database.DBQuery;
+import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Database.DBUtlis;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
@@ -79,6 +80,7 @@ public class LoginController implements Initializable {
                             error_lbl.setStyle("-fx-text-fill: green");
                             error_lbl.setAlignment(Pos.CENTER_LEFT);
                             LibraryModel.getInstance().setUser(acc_address_fld.getText(), password_fld.getText());
+                            LibraryModel.getInstance().getUser().loadAllList();
                         });
                     }
                     Platform.runLater(() -> stageTransforming(isAdmin));
@@ -117,12 +119,8 @@ public class LoginController implements Initializable {
             Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View");
         }
         else {
-            LibraryModel.getInstance().getUser().loadUserInfo();
-            LibraryModel.getInstance().getUser().loadAllList();
             Model.getInstance().getViewFactory().showUserWindow();
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Restart");
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Cart");
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Dashboard");
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
         }
     }
 }

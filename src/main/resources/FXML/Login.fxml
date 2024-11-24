@@ -64,15 +64,15 @@
                         <Font size="13.0" />
                     </font>
                 </Text>
-                <Pane layoutX="528.0" layoutY="416.0">
-                    <children>
-                        <ImageView fx:id="loading_img" fitHeight="35.0" fitWidth="35.0" visible="false">
-                            <image>
-                                <Image url="@../IMAGES/loadingImage.png" />
-                            </image>
-                        </ImageView>
-                    </children>
-                </Pane>
+            <Pane layoutX="528.0" layoutY="416.0">
+               <children>
+                  <ImageView fx:id="loading_img" fitHeight="35.0" fitWidth="35.0" visible="false">
+                     <image>
+                        <Image url="@../IMAGES/loadingImage.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
             </children></AnchorPane>
     </children>
 </HBox>
