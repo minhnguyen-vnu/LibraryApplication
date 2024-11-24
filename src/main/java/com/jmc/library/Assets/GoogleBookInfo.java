@@ -129,6 +129,8 @@ public class GoogleBookInfo {
         }
         else {
             this.imageView = new ImageView(getClass().getResource("/IMAGES/UnknownBookCover.png").toExternalForm());
+            this.imageView.fitHeightProperty().setValue(75);
+            this.imageView.fitWidthProperty().setValue(50);
         }
     }
 
