@@ -24,7 +24,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class UserBookController extends User implements Initializable {
+public class UserBookController extends com.jmc.library.Controllers.Users.User implements Initializable {
     public Button go_to_setting_btn;
     public Label username_lbl;
 

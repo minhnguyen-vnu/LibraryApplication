@@ -18,7 +18,7 @@ import java.net.URL;
 import java.nio.channels.OverlappingFileLockException;
 import java.util.ResourceBundle;
 
-public class UserCartController extends User implements Initializable, CartUpdateListener {
+public class UserCartController extends com.jmc.library.Controllers.Users.User implements Initializable, CartUpdateListener {
     public Button back_library_btn;
     public ChoiceBox<String> sort_choice_box;
     public VBox list_book_vbox;

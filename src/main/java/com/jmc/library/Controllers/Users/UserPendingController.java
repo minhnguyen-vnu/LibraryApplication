@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class UserPendingController extends User implements Initializable {
+public class UserPendingController extends com.jmc.library.Controllers.Users.User implements Initializable {
     public Button back_to_dashboard_btn;
     public Button go_to_library_btn;
     public Button go_to_store_btn;

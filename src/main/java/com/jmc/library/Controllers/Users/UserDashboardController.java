@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
  * now every thing is not designed
  */
 
-public class UserDashboardController extends User implements Initializable, DashboardUpdateListener {
+public class UserDashboardController extends com.jmc.library.Controllers.Users.User implements Initializable, DashboardUpdateListener {
 
     public Button go_to_library_btn;
     public Button go_to_store_btn;

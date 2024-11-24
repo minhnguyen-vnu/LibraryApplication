@@ -6,7 +6,11 @@ import com.jmc.library.Database.*;
 import com.jmc.library.Models.LibraryModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.sql.Blob;
 import java.sql.ResultSet;
@@ -16,6 +20,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class User {
+//    public TableView<UserBookInfo> store_tb;
     private String username;
     private String password;
     private String name;
@@ -26,6 +31,27 @@ public class User {
     private ObservableList<UserBookInfo> bookPendingList;
     private ObservableList<UserBookInfo> bookHiredList;
     private ObservableList<CartEntityController> cartEntityControllers;
+
+//    private void addLoading() {
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
+//        try {
+//            ImageView loading_img = loader.load();
+//            store_tb.setPlaceholder(loading_img);
+//
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    private void returnLoading() {
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
+//        try {
+//            Label label = loader.load();
+//            store_tb.setPlaceholder(label);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public User() {
         this.bookPendingList = FXCollections.observableArrayList();
@@ -140,6 +166,7 @@ public class User {
     }
 
     public void loadBookPendingList() {
+//        addLoading();
         bookPendingList.clear();
         DBQuery dbQuery = new DBQuery("select\n" +
                 "    r.username,\n" +
@@ -163,6 +190,7 @@ public class User {
                     this.bookPendingList.add(userBookInfo);
                 }
                 resultSet.close();
+//                returnLoading();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -173,6 +201,7 @@ public class User {
     }
 
     public void loadBookHiredList() {
+//        addLoading();
         bookHiredList.clear();
         DBQuery dbQuery = new DBQuery("select\n" +
                 "    r.username,\n" +
@@ -197,6 +226,7 @@ public class User {
                     this.bookHiredList.add(userBookInfo);
                 }
                 resultSet.close();
+//                returnLoading();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import java.util.ResourceBundle;
 import java.net.URL;
 
-public class CartEntityController extends User implements Initializable {
+public class CartEntityController extends com.jmc.library.Controllers.Users.User implements Initializable {
     public ImageView book_img;
     public Label book_name_lbl;
     public Label author_lbl;

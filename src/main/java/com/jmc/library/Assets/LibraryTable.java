@@ -33,26 +33,26 @@ public class LibraryTable {
     public TableView<BookInfo> store_tb;
     public ObservableList<BookInfo> bookList;
 
-//    private void addLoading() {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
-//        try {
-//            ImageView loading_img = loader.load();
-//            store_tb.setPlaceholder(loading_img);
-//
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    private void addLoading() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
+        try {
+            ImageView loading_img = loader.load();
+            store_tb.setPlaceholder(loading_img);
 
-//    private void returnLoading() {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
-//        try {
-//            Label label = loader.load();
-//            store_tb.setPlaceholder(label);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void returnLoading() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
+        try {
+            Label label = loader.load();
+            store_tb.setPlaceholder(label);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     protected void setTable() {
         bookList = FXCollections.observableArrayList();
@@ -69,7 +69,7 @@ public class LibraryTable {
     }
 
     protected void showLibrary() {
-//        addLoading();
+        addLoading();
         bookList.clear();
         store_tb.setItems(bookList);
         DBQuery dbQuery = new DBQuery("select * from bookStore");
@@ -95,11 +95,11 @@ public class LibraryTable {
             } catch (SQLException e){
                 throw new RuntimeException(e);
             }
-//            returnLoading();
+            returnLoading();
         });
         dbQuery.setOnFailed(event -> {
             System.out.println("Failed");
-//            returnLoading();
+            returnLoading();
         });
         Thread thread = new Thread(dbQuery);
         thread.setDaemon(true);
