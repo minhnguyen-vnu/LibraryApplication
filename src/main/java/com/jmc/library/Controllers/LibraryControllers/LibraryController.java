@@ -103,7 +103,7 @@ public class LibraryController extends LibraryTable {
                         filteredList.add(bookInfo);
                         break;
                     }
-                    else if (getDifference(text, bookInfo.getBookName()) <= 2) {
+                    else if (getDifference(text, bookInfo.getBookName()) == 0) {
                         filteredList.add(bookInfo);
                         break;
                     }

@@ -126,6 +126,8 @@ public class ManageBookController extends LibraryTable implements Initializable 
                             bookInfo.getOriginalLanguage(), bookInfo.getDescription(), bookInfo.getThumbnail(), ImageUtils.imageToByteArray(bookInfo.getImageView().getImage()));
                     System.out.println(bookInfo.getPublisher() + ", " + bookInfo.getGenre() + ", " + bookInfo.getOriginalLanguage() + ", " +
                             bookInfo.getDescription() + ", " + bookInfo.getThumbnail());
+                    bookInfo.getImageView().setFitHeight(75);
+                    bookInfo.getImageView().setFitWidth(50);
                     Thread thread = new Thread(dbUpdate);
                     thread.setDaemon(true);
                     thread.start();

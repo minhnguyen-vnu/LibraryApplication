@@ -80,7 +80,6 @@ public class LibraryTable {
                     Blob blob = resultSet.getBlob("imageView");
                     byte[] imageBytes = blob.getBytes(1, (int) blob.length());
                     Image image = ImageUtils.byteArrayToImage(imageBytes);
-                    image = ImageUtils.enhanceImageQuality(image);
                     ImageView imageView = new ImageView(image);
                     imageView.setFitHeight(75);
                     imageView.setFitWidth(50);

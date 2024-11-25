@@ -125,7 +125,7 @@ public class GoogleBookInfo {
 
     public void setImageView() {
         if (this.thumbnail != null && !this.thumbnail.isEmpty()) {
-            this.imageView = new ImageView(new Image(this.thumbnail, 50, 75, true, true));
+            this.imageView = new ImageView(new Image(this.thumbnail, 128, 175, true, true));
         }
         else {
             this.imageView = new ImageView(getClass().getResource("/IMAGES/UnknownBookCover.png").toExternalForm());
