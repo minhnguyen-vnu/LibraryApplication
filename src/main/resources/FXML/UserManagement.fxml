@@ -99,12 +99,12 @@
             <children>
                 <TableView fx:id="store_tb" layoutX="47.0" layoutY="153.0" prefHeight="550.0" prefWidth="776.0" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
                     <columns>
-                        <TableColumn fx:id="username_tb_cl" prefWidth="75.0" text="Username" />
-                        <TableColumn fx:id="full_name_tb_cl" prefWidth="75.0" text="Full name" />
-                        <TableColumn fx:id="date_of_birth_tb_cl" prefWidth="75.0" text="Date of Birth" />
-                        <TableColumn fx:id="total_paid_tb_cl" prefWidth="75.0" text="Total Paid" />
-                        <TableColumn fx:id="total_issue_tb_cl" prefWidth="75.0" text="Total Issue" />
-                        <TableColumn fx:id="status_tb_cl" prefWidth="75.0" text="Status" />
+                        <TableColumn fx:id="username_tb_cl" prefWidth="100.0" text="Username" />
+                        <TableColumn fx:id="full_name_tb_cl" prefWidth="145.0" text="Full name" />
+                        <TableColumn fx:id="date_of_birth_tb_cl" prefWidth="115.0" text="Date of Birth" />
+                        <TableColumn fx:id="total_paid_tb_cl" prefWidth="139.0" text="Total Paid" />
+                        <TableColumn fx:id="total_borrowed_tb_cl" prefWidth="157.0" text="Book Borrowed" />
+                        <TableColumn fx:id="status_tb_cl" prefWidth="115.0" text="Status" />
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

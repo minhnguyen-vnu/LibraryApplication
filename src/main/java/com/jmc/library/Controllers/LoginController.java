@@ -82,6 +82,13 @@ public class LoginController implements Initializable {
                         LibraryModel.getInstance().setUser(acc_address_fld.getText(), password_fld.getText());
                         LibraryModel.getInstance().getUser().loadPendingBooks();
                         LibraryModel.getInstance().getUser().loadHiredBooks();
+                        DBUpdate dbUpdate = new DBUpdate("update users\n" +
+                                "set status = ?\n" +
+                                "where username = ?;", "online", LibraryModel.getInstance().getUser().getUsername());
+                        Thread thread = new Thread(dbUpdate);
+                        thread.setDaemon(true);
+                        thread.start();
+
                     }
                     Platform.runLater(() -> stageTransforming(isAdmin));
                 } else {

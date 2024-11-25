@@ -23,6 +23,9 @@ public class User {
     private LocalDate birthDate;
     private int ID;
     private Image avatar;
+    private double totalPaid;
+    private int totalBorrowed;
+    private String status;
 
     private ObservableList<UserBookInfo> PendingBookList;
     private ObservableList<UserBookInfo> HiredBookList;
@@ -32,6 +35,18 @@ public class User {
         this.PendingBookList = FXCollections.observableArrayList();
         this.HiredBookList = FXCollections.observableArrayList();
         this.cartEntityControllers = FXCollections.observableArrayList();
+    }
+
+    public User(String username, String password, String name, LocalDate birthDate, int ID, Image avatar, double totalPaid, int totalBorrowed, String status) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.ID = ID;
+        this.avatar = avatar;
+        this.totalPaid = totalPaid;
+        this.totalBorrowed = totalBorrowed;
+        this.status = status;
     }
 
     public String getUsername() {
@@ -123,7 +138,6 @@ public class User {
                 if (resultSet.next()) {
                     this.username = resultSet.getString("username");
                     this.password = resultSet.getString("password");
-                    System.out.println("User.loadUserInfo " + username + "-1");
                     this.name = (resultSet.getString("name") == null) ? "" : resultSet.getString("name");
                     this.birthDate = (resultSet.getDate("birthDate") == null) ? LocalDate.now().plusDays(1) : resultSet.getDate("birthDate").toLocalDate();
                     this.ID = resultSet.getInt("ID");
@@ -137,7 +151,6 @@ public class User {
                     }
                 }
                 resultSet.close();
-                System.out.println("User.loadUserInfo" + this.password);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -278,5 +291,27 @@ public class User {
         this.cartEntityControllers.clear();
 
         this.username = null;
+    }
+
+    public double getTotalPaid() { return totalPaid; }
+
+    public void setTotalPaid(int totalPaid) {
+        this.totalPaid = totalPaid;
+    }
+
+    public int getTotalBorrowed() {
+        return totalBorrowed;
+    }
+
+    public void setTotalBorrowed(int totalBorrowed) {
+        this.totalBorrowed = totalBorrowed;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -67,6 +67,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
+                        <Button fx:id="user_management_btn" mnemonicParsing="false" styleClass="MenuButton" text="User Management" />
                      </children>
                   </VBox>
                   <Button fx:id="log_out_btn" layoutY="600.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="MenuButton" text="Log out">

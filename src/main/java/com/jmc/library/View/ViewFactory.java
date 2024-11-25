@@ -34,6 +34,7 @@ public class ViewFactory {
     private HBox adminRequestManagement;
     private HBox adminPendingRequestManagement;
     private VBox adminBookViewing;
+    private HBox adminUserManagement;
     private final StringProperty selectedAuthenticatonMode;
     private final StringProperty selectedUserMode;
     private final StringProperty selectedAdminMode;
@@ -197,6 +198,17 @@ public class ViewFactory {
             }
         }
         return adminRequestManagement;
+    }
+
+    public HBox getAdminUserManagement() {
+        if (adminUserManagement == null) {
+            try {
+                adminUserManagement = new FXMLLoader(getClass().getResource("/FXML/UserManagement.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return adminUserManagement;
     }
 
     public HBox getAdminPendingRequestManagement() {
