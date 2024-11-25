@@ -226,5 +226,6 @@ public abstract class UserLibraryTable {
                 throw new RuntimeException(e);
             }
         });
+        reload_btn.setOnAction(actionEvent -> showLibrary());
     }
 }

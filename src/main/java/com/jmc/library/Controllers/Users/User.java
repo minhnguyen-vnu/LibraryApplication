@@ -32,27 +32,6 @@ public class User {
     private ObservableList<UserBookInfo> bookHiredList;
     private ObservableList<CartEntityController> cartEntityControllers;
 
-//    private void addLoading() {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
-//        try {
-//            ImageView loading_img = loader.load();
-//            store_tb.setPlaceholder(loading_img);
-//
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    private void returnLoading() {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
-//        try {
-//            Label label = loader.load();
-//            store_tb.setPlaceholder(label);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
     public User() {
         this.bookPendingList = FXCollections.observableArrayList();
         this.bookHiredList = FXCollections.observableArrayList();
@@ -250,37 +229,22 @@ public class User {
 
     public void userPayment() {
         for(CartEntityController cartEntityController : this.cartEntityControllers) {
+            System.out.println(cartEntityController.getUserBookInfo().getBookName());
             LibraryModel.getInstance().getUser().getBookPendingList()
                     .add(cartEntityController.getUserBookInfo());
-            DBQuery dbQuery = new DBQuery("select max(requestId) from PendingRequest");
-            AtomicInteger requestId = new AtomicInteger();
-            dbQuery.setOnSucceeded(event -> {
-                try {
-                    ResultSet resultSet = dbQuery.getValue();
-                    if (resultSet.next()) {
-                       requestId.set(resultSet.getInt(1));
-                    }
-                    resultSet.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
 
-                DBUpdate dbUpdate = new DBUpdate("INSERT INTO PendingRequest(requestId, bookId, bookName, username, requestDate, returnDate, cost, requestStatus) " +
-                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
-                        requestId.get() + 1,
-                        cartEntityController.getUserBookInfo().getBookId(),
-                        cartEntityController.getUserBookInfo().getBookName(),
-                        this.username,
-                        cartEntityController.getUserBookInfo().getPickedDate(),
-                        cartEntityController.getUserBookInfo().getReturnDate(),
-                        cartEntityController.getUserBookInfo().getTotalCost(),
-                        cartEntityController.getUserBookInfo().getRequestStatus()
-                        );
+            DBUpdate dbUpdate = new DBUpdate("INSERT INTO PendingRequest(bookId, bookName, username, requestDate, returnDate, cost, requestStatus) " +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?)",
+                    cartEntityController.getUserBookInfo().getBookId(),
+                    cartEntityController.getUserBookInfo().getBookName(),
+                    this.username,
+                    cartEntityController.getUserBookInfo().getPickedDate(),
+                    cartEntityController.getUserBookInfo().getReturnDate(),
+                    cartEntityController.getUserBookInfo().getTotalCost(),
+                    cartEntityController.getUserBookInfo().getRequestStatus()
+            );
 
-                Thread thread = new Thread(dbUpdate);
-                thread.start();
-            });
-            Thread thread = new Thread(dbQuery);
+            Thread thread = new Thread(dbUpdate);
             thread.start();
         }
     }
