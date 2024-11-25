@@ -114,12 +114,16 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
         });
 
         log_out_btn.setOnAction(actionEvent -> {
-            LibraryModel.getInstance().getUser().resetAll();
-            Model.getInstance().getViewFactory().resetAll();
-            Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
-            Model.getInstance().getViewFactory().closeStage(currentStage);
-            Model.getInstance().getViewFactory().showAuthenticationWindow();
+            stageTransforming();
         });
+    }
+
+    private void stageTransforming() {
+        Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
+        Model.getInstance().getViewFactory().closeStage(currentStage);
+        Model.getInstance().getViewFactory().showAuthenticationWindow();
+        Model.getInstance().getViewFactory().getSelectedAuthenticatonMode().set("Login");
+        Model.getInstance().getViewFactory().getSelectedAdminMode().set("");
     }
 
     private void setMaterialListener() {
