@@ -146,8 +146,8 @@
                     <children>
                         <TableView fx:id="store_tb" cacheShape="false" centerShape="false" layoutX="50.0" layoutY="70.0" prefHeight="550.0" prefWidth="960.0" scaleShape="false" styleClass="TableListView" stylesheets="@../STYLES/TableView.css">
                             <columns>
-                        <TableColumn fx:id="book_cover_tb_cl" prefWidth="75.0" text="Cover" />
-                                <TableColumn fx:id="book_name_tb_cl" prefWidth="150.0" text="Book's name" />
+                        <TableColumn fx:id="book_cover_tb_cl" prefWidth="125.0" text="Cover" />
+                                <TableColumn fx:id="book_name_tb_cl" prefWidth="168.0" text="Book's name" />
                                 <TableColumn fx:id="author_tb_cl" prefWidth="150.0" text="Author's name" />
                                 <TableColumn fx:id="book_id_tb_cl" prefWidth="120.0" text="Book's ID" />
                                 <TableColumn fx:id="picked_day_tb_cl" prefWidth="120.0" text="Picked Date" />

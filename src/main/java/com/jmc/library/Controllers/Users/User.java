@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.sql.Blob;
 import java.sql.ResultSet;
@@ -122,7 +123,7 @@ public class User {
                 if (resultSet.next()) {
                     this.username = resultSet.getString("username");
                     this.password = resultSet.getString("password");
-                    System.out.println("User.loadUserInfo " + this.password);
+                    System.out.println("User.loadUserInfo " + username + "-1");
                     this.name = (resultSet.getString("name") == null) ? "" : resultSet.getString("name");
                     this.birthDate = (resultSet.getDate("birthDate") == null) ? LocalDate.now().plusDays(1) : resultSet.getDate("birthDate").toLocalDate();
                     this.ID = resultSet.getInt("ID");
@@ -155,7 +156,8 @@ public class User {
                 "    r.requestDate,\n" +
                 "    r.returnDate,\n" +
                 "    r.cost,\n" +
-                "    r.requestStatus\n"+
+                "    r.requestStatus, \n" +
+                "    b.imageView\n" +
                 "from PendingRequest r\n" +
                 "join bookStore b using(bookId)\n" +
                 "where r.username = ? order by r.requestStatus;", LibraryModel.getInstance().getUser().getUsername());
@@ -163,19 +165,26 @@ public class User {
             ResultSet resultSet = dbQuery.getValue();
             try {
                 while (resultSet.next()) {
+                    Blob blob = resultSet.getBlob("imageView");
+                    byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+                    Image image = ImageUtils.byteArrayToImage(imageBytes);
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitHeight(75);
+                    imageView.setFitWidth(50);
                     UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
                             resultSet.getInt("bookId"), resultSet.getDate("requestDate").toLocalDate(),
-                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"));
-//                    Platform.runLater(() -> this.PendingBookList.add(userBookInfo));
+                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"), imageView);
+                    this.PendingBookList.add(userBookInfo);
                 }
                 resultSet.close();
             } catch (SQLException e) {
+                System.out.println(e.getMessage());
                 throw new RuntimeException(e);
             }
         });
-//        Thread thread = new Thread(dbQuery);
-//        thread.setDaemon(true);
-//        thread.start();
+        Thread thread = new Thread(dbQuery);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     public void loadHiredBooks() {
@@ -188,7 +197,8 @@ public class User {
                 "    r.returnDate,\n" +
                 "    r.cost,\n" +
                 "    r.requestStatus,\n"+
-                "    r.isRated\n"+
+                "    r.isRated, \n"+
+                "    b.imageView\n" +
                 "from  userRequest r\n" +
                 "join bookStore b using(bookId)\n" +
                 "where r.username = ? " +
@@ -197,9 +207,15 @@ public class User {
             ResultSet resultSet = dbQuery.getValue();
             try {
                 while (resultSet.next()) {
+                    Blob blob = resultSet.getBlob("imageView");
+                    byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+                    Image image = ImageUtils.byteArrayToImage(imageBytes);
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitHeight(75);
+                    imageView.setFitWidth(50);
                     UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
                             resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
-                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"), resultSet.getBoolean("isRated"));
+                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"), resultSet.getBoolean("isRated"), imageView);
                     this.HiredBookList.add(userBookInfo);
                 }
                 resultSet.close();

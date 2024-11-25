@@ -2,6 +2,7 @@ package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.Assets.RatingController;
+import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Models.LibraryModel;
 import javafx.beans.property.SimpleObjectProperty;
@@ -12,6 +13,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,6 +22,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -28,7 +32,6 @@ public class UserBookController extends UserLibraryTable implements Initializabl
 
     public AnchorPane user_info_pane;
     public AnchorPane matte_screen;
-    public TableColumn cover_book_tb_cl;
     public TableColumn<UserBookInfo, CheckBox> get_rate_tb_cl;
 
     @Override
@@ -38,7 +41,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
         addBinding();
         priceFormating();
         setButtonListener();
-        showLibrary();
+//        showLibrary();
     }
 
     @Override
@@ -48,8 +51,10 @@ public class UserBookController extends UserLibraryTable implements Initializabl
         get_rate_tb_cl.setCellValueFactory(new PropertyValueFactory<>("Rate"));
     }
 
+
     @Override
     protected void setTable() {
+//        bookList = FXCollections.observableArrayList();
         bookList = LibraryModel.getInstance().getUser().getHiredBookList();
         store_tb.setItems(bookList);
     }
@@ -68,7 +73,8 @@ public class UserBookController extends UserLibraryTable implements Initializabl
                 "    r.returnDate,\n" +
                 "    r.cost,\n" +
                 "    r.requestStatus,\n"+
-                "    r.isRated\n"+
+                "    r.isRated, \n"+
+                "    b.imageView\n" +
                 "from  userRequest r\n" +
                 "join bookStore b using(bookId)\n" +
                 "where r.username = ? " +
@@ -77,9 +83,15 @@ public class UserBookController extends UserLibraryTable implements Initializabl
             ResultSet resultSet = dbQuery.getValue();
             try {
                 while (resultSet.next()) {
+                    Blob blob = resultSet.getBlob("imageView");
+                    byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+                    Image image = ImageUtils.byteArrayToImage(imageBytes);
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitHeight(75);
+                    imageView.setFitWidth(50);
                     UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
                             resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
-                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"), resultSet.getBoolean("isRated"));
+                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"), resultSet.getBoolean("isRated"), imageView);
                     bookList.add(userBookInfo);
                 }
                 resultSet.close();
