@@ -106,15 +106,15 @@ public class BookDisplayController implements Initializable {
             return;
         }
 
-        if(LibraryModel.getInstance().getUser().getBookPendingList().stream()
+        if(LibraryModel.getInstance().getUser().getPendingBookList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())) {
             NotificationOverlay overlay = new NotificationOverlay("Book already requested.", get_book_btn.getScene());
             return;
         }
 
-        if(LibraryModel.getInstance().getUser().getBookHiredList().stream()
+        if(LibraryModel.getInstance().getUser().getHiredBookList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())
-                && LibraryModel.getInstance().getUser().getBookHiredList().stream()
+                && LibraryModel.getInstance().getUser().getHiredBookList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getReturnDate().isAfter(LocalDate.now()))) {
             NotificationOverlay overlay = new NotificationOverlay("Book already hired.", get_book_btn.getScene());
             return;

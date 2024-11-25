@@ -3,25 +3,14 @@ package com.jmc.library.Controllers.Users;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Models.LibraryModel;
-import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class UserPendingController extends UserLibraryTable implements Initializable {
     public TableColumn book_cover_tb_cl;
@@ -32,7 +21,14 @@ public class UserPendingController extends UserLibraryTable implements Initializ
         setTable();
         addBinding();
         setButtonListener();
-        showLibrary();
+//        showLibrary();
+    }
+
+    @Override
+    protected void setTable() {
+        bookList = FXCollections.observableArrayList();
+//        bookList = LibraryModel.getInstance().getUser().getPendingBookList();
+        store_tb.setItems(bookList);
     }
 
     @Override

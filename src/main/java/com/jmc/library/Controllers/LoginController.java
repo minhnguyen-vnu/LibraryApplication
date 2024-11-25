@@ -80,7 +80,9 @@ public class LoginController implements Initializable {
                             error_lbl.setStyle("-fx-text-fill: green");
                             error_lbl.setAlignment(Pos.CENTER_LEFT);
                             LibraryModel.getInstance().setUser(acc_address_fld.getText(), password_fld.getText());
+//                            LibraryModel.getInstance().getUser().loadPendingBooks();
                         });
+                        LibraryModel.getInstance().getUser().loadPendingBooks();
                     }
                     Platform.runLater(() -> stageTransforming(isAdmin));
                 } else {
