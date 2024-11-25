@@ -147,12 +147,12 @@
                     <children>
                         <TableView fx:id="store_tb" layoutX="50.0" layoutY="70.0" prefHeight="550.0" prefWidth="995.0" styleClass="TableListView">
                         <columns>
-                        <TableColumn fx:id="book_cover_tb_cl" prefWidth="75.0" text="Cover" />
-                           <TableColumn fx:id="book_id_tb_cl" prefWidth="71.0" text="Book's ID" />
-                           <TableColumn fx:id="book_name_tb_cl" prefWidth="131.0" text="Book's name" />
-                           <TableColumn fx:id="author_tb_cl" prefWidth="102.0" text="Author " />
-                           <TableColumn fx:id="quantity_tb_cl" prefWidth="105.0" text="Quantity" />
-                           <TableColumn fx:id="least_price_tb_cl" prefWidth="126.0" text="Least Price" />
+                        <TableColumn fx:id="book_cover_tb_cl" prefWidth="143.0" text="Cover" />
+                           <TableColumn fx:id="book_id_tb_cl" prefWidth="85.0" text="Book's ID" />
+                           <TableColumn fx:id="book_name_tb_cl" prefWidth="205.0" text="Book's name" />
+                           <TableColumn fx:id="author_tb_cl" prefWidth="155.0" text="Author " />
+                           <TableColumn fx:id="quantity_tb_cl" prefWidth="132.0" text="Quantity" />
+                           <TableColumn fx:id="least_price_tb_cl" prefWidth="110.0" text="Least Price" />
                            <TableColumn fx:id="published_date_tb_cl" prefWidth="113.0" text="Published Date" />
                         </columns>
                      <stylesheets>

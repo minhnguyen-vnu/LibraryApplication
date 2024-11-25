@@ -18,6 +18,7 @@ import javafx.scene.input.KeyCode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class LibraryController extends LibraryTable {
@@ -36,23 +37,81 @@ public class LibraryController extends LibraryTable {
 
     private void searchBook(String text) {
         if (text.isEmpty()) {
-            showLibrary();
+            store_tb.setItems(bookList);
         } else {
             if (text.charAt(0) != '#') searchBookByName(text);
             else searchBookById(text.substring(1));
         }
     }
 
-    private void searchBookByName(String text) {
-        ObservableList<BookInfo> filteredList = bookList.stream()
-                .filter(book -> book.getBookName().equalsIgnoreCase(text))
-                .collect(Collectors.toCollection(FXCollections::observableArrayList));
-        store_tb.setItems(filteredList);
-        store_tb.getItems().addListener((ListChangeListener<BookInfo>) change -> {
-            if (!change.next() || change.wasAdded() || change.wasRemoved()) {
-                filteredList.clear();
+    private String sortString(String str) {
+        str = str.toLowerCase();
+        char[] charArray = str.toCharArray();
+        Arrays.sort(charArray);
+        return new String(charArray);
+    }
+
+    private int getDifference(String a, String b) {
+        int end = Math.min(a.length(), b.length());
+        int cnt = 0;
+
+        a = sortString(subString(a, 0, end - 1));
+        b = sortString(subString(b, 0, end - 1));
+
+        for (int i = 0; i < end; i++) {
+            if (a.charAt(i) != b.charAt(i)) {
+                cnt++;
             }
-        });
+        }
+
+        return cnt;
+    }
+
+    private String subString(String a, int l, int r) {
+        StringBuilder res = new StringBuilder();
+        for (int i = l; i <= r; i++) {
+            res.append(a.charAt(i));
+        }
+        return res.toString();
+    }
+
+    private void searchBookByName(String text) {
+        ObservableList<BookInfo> filteredList = FXCollections.observableArrayList();
+
+        for (BookInfo bookInfo : bookList) {
+            int end;
+
+            if (text.length() > bookInfo.getBookName().length()) {
+                end = bookInfo.getBookName().length();
+                for (int start = 0; start <= text.length() - end; start++) {
+                    String new_string = subString(text, start, start + end - 1);
+                    if (new_string.equalsIgnoreCase(bookInfo.getBookName())) {
+                        filteredList.add(bookInfo);
+                        break;
+                    }
+                    else if (getDifference(text, bookInfo.getBookName()) <= 2) {
+                        filteredList.add(bookInfo);
+                        break;
+                    }
+                }
+            }
+            else {
+                end = text.length();
+                for (int start = 0; start <= bookInfo.getBookName().length() - end; start++) {
+                    String new_string = subString(bookInfo.getBookName(), start, start + end - 1);
+                    if (new_string.equalsIgnoreCase(text)) {
+                        filteredList.add(bookInfo);
+                        break;
+                    }
+                    else if (getDifference(text, bookInfo.getBookName()) == 0) {
+                        filteredList.add(bookInfo);
+                        break;
+                    }
+                }
+            }
+        }
+
+        store_tb.setItems(filteredList);
     }
 
 

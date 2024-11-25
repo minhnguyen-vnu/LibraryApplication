@@ -17,8 +17,6 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class ApprovedRequestManagement extends RequestManagement implements Initializable {
-    public Button reload_btn;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ChoiceBoxInitialization();

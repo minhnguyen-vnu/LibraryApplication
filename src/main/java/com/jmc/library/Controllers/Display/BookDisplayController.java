@@ -49,7 +49,7 @@ public class BookDisplayController implements Initializable {
     private void addListeners() {
         BookViewingModel.getInstance().bookInfoProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                book_img.setImage(ImageUtils.enhanceImageQuality(ImageUtils.scaleImage(newValue.getImageView().getImage(), 300, 400).getImage()));
+                book_img.setImage(newValue.getImageView().getImage());
                 preview_txt_flw.textProperty().set(newValue.getDescription());
             }
         });

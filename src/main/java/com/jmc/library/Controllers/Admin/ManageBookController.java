@@ -59,10 +59,10 @@ public class ManageBookController extends LibraryTable implements Initializable 
         boolean ok = true;
 
         String bookId = enter_book_id_txt_fld.getText();
-        String bookName = enter_ISBN_txt_fld.getText();
+        String bookISBN = enter_ISBN_txt_fld.getText();
 
         for (BookInfo book : bookList) {
-            if (book.getBookId() == Integer.parseInt(bookId) || book.getBookName().equals(bookName)) {
+            if (book.getBookId() == Integer.parseInt(bookId) || book.getISBN().equals(bookISBN)) {
                 ok = false;
                 break;
             }
@@ -126,6 +126,8 @@ public class ManageBookController extends LibraryTable implements Initializable 
                             bookInfo.getOriginalLanguage(), bookInfo.getDescription(), bookInfo.getThumbnail(), ImageUtils.imageToByteArray(bookInfo.getImageView().getImage()));
                     System.out.println(bookInfo.getPublisher() + ", " + bookInfo.getGenre() + ", " + bookInfo.getOriginalLanguage() + ", " +
                             bookInfo.getDescription() + ", " + bookInfo.getThumbnail());
+                    bookInfo.getImageView().setFitHeight(75);
+                    bookInfo.getImageView().setFitWidth(50);
                     Thread thread = new Thread(dbUpdate);
                     thread.setDaemon(true);
                     thread.start();

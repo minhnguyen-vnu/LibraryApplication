@@ -149,8 +149,8 @@
                         <TableColumn fx:id="cover_book_tb_cl" prefWidth="75.0" text="Cover" />
                                 <TableColumn fx:id="book_name_tb_cl" prefWidth="194.0" text="Book's name" />
                         <TableColumn fx:id="author_tb_cl" prefWidth="135.0" text="Author's name" />
-                                <TableColumn fx:id="book_id_tb_cl" prefWidth="91.0" text="Book's ID" />
-                                <TableColumn fx:id="picked_day_tb_cl" prefWidth="147.0" text="Picked Date" />
+                                <TableColumn fx:id="book_id_tb_cl" prefWidth="98.0" text="Book's ID" />
+                                <TableColumn fx:id="picked_day_tb_cl" prefWidth="140.0" text="Picked Date" />
                                 <TableColumn fx:id="return_day_tb_cl" maxWidth="187.199951171875" minWidth="67.60003662109375" prefWidth="140.0" text="Return Date" />
                                 <TableColumn fx:id="total_cost_tb_cl" prefWidth="103.0" text="Cost" />
                         <TableColumn fx:id="get_rate_tb_cl" prefWidth="75.0" text="Rate" />

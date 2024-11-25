@@ -12,6 +12,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -31,25 +32,29 @@ public class UserLibraryController extends LibraryController implements Initiali
     public Button cart_btn;
     public Button pending_btn;
     public Button log_out_btn;
-    
+
     public Label username_lbl;
     public ImageView account_avatar_img;
     public ChoiceBox<String> num_row_shown;
 
     public AnchorPane matte_screen;
     public AnchorPane user_info_pane;
-    public TableColumn<BookInfo, ImageView> book_cover_tb_cl;
     public Button reload_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addBinding();
-        onAction();
         initialAction();
         setButtonListener();
         setMaterialListener();
         setTable();
         showLibrary();
+    }
+
+    @Override
+    protected void addBinding() {
+        super.addBinding();
+        book_cover_tb_cl.setCellValueFactory(new PropertyValueFactory<>("imageView"));
     }
 
     private void setButtonListener() {
@@ -118,48 +123,5 @@ public class UserLibraryController extends LibraryController implements Initiali
 
     private void setAccount_avatar_img() {
         account_avatar_img.setImage(LibraryModel.getInstance().getUser().getAvatar());
-    }
-
-    private void onAction() {
-        setBook_cover_tb_cl();
-    }
-
-    private void setBook_cover_tb_cl() {
-        book_cover_tb_cl.setCellFactory(col -> new TableCell<BookInfo, ImageView>() {
-            @Override
-            protected void updateItem(ImageView imageView, boolean empty) {
-                super.updateItem(imageView, empty);
-                if (empty || imageView == null) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(imageView);
-                }
-            }
-        });
-
-        book_cover_tb_cl.setCellValueFactory(param -> {
-            BookInfo bookInfo = param.getValue();
-
-            Image defaultCover = new Image(getClass().getResource("/IMAGES/UnknownBookCover.png").toExternalForm());
-
-            Task<Image> loadImageTask = new Task<>() {
-                @Override
-                protected Image call() {
-                    if (bookInfo.getThumbnail() == null) {
-                        return defaultCover;
-                    } else {
-                        return new Image(bookInfo.getThumbnail(), 50, 75, true, true);
-                    }
-                }
-            };
-
-            ImageView bookCoverImage = new ImageView();
-            loadImageTask.setOnSucceeded(e -> bookCoverImage.setImage(loadImageTask.getValue()));
-            new Thread(loadImageTask).start();
-
-            bookCoverImage.setFitWidth(50);
-            bookCoverImage.setFitHeight(75);
-            return new SimpleObjectProperty<>(bookCoverImage);
-        });
     }
 }
