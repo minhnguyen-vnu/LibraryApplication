@@ -3,20 +3,24 @@ package com.jmc.library.Controllers.Users;
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.LibraryTable;
 import com.jmc.library.Assets.UserBookInfo;
+import com.jmc.library.Controllers.Assets.RatingController;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -34,7 +38,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
     public AnchorPane user_info_pane;
     public AnchorPane matte_screen;
     public TableColumn cover_book_tb_cl;
-    public TableColumn get_rate_tb_cl;
+    public TableColumn<UserBookInfo, CheckBox> get_rate_tb_cl;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -50,6 +54,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
     protected void addBinding() {
         super.addBinding();
         total_cost_tb_cl.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
+        get_rate_tb_cl.setCellValueFactory(new PropertyValueFactory<>("Rate"));
     }
 
     @Override
@@ -65,7 +70,8 @@ public class UserBookController extends UserLibraryTable implements Initializabl
                 "    r.pickedDate,\n" +
                 "    r.returnDate,\n" +
                 "    r.cost,\n" +
-                "    r.requestStatus\n"+
+                "    r.requestStatus,\n"+
+                "    r.isRated\n"+
                 "from  userRequest r\n" +
                 "join bookStore b using(bookId)\n" +
                 "where r.username = ? " +
@@ -76,7 +82,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
                 while (resultSet.next()) {
                     UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
                             resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
-                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"));
+                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"), resultSet.getBoolean("isRated"));
                     bookList.add(userBookInfo);
                 }
                 resultSet.close();
@@ -108,5 +114,66 @@ public class UserBookController extends UserLibraryTable implements Initializabl
                 };
             }
         });
+
+        get_rate_tb_cl.setCellValueFactory(param -> {
+            UserBookInfo userBookInfo = param.getValue();
+            return new SimpleObjectProperty<>(new CheckBox());
+        });
+        get_rate_tb_cl.setCellFactory(new Callback<TableColumn<UserBookInfo, CheckBox>, TableCell<UserBookInfo, CheckBox>>() {
+            @Override
+            public TableCell<UserBookInfo, CheckBox> call(TableColumn<UserBookInfo, CheckBox> param) {
+                return new TableCell<UserBookInfo, CheckBox>() {
+                    private final CheckBox checkBox = new CheckBox();
+                    {
+                        checkBox.setOnAction(event -> {
+                            UserBookInfo bookInfo = getTableView().getItems().get(getIndex());
+                            if (!checkBox.isSelected()) return;
+
+                            boolean rated = showRatingDialog();
+
+                            if (rated) {
+                                bookInfo.setRated(true);
+                                checkBox.setDisable(true);
+                            } else {
+                                checkBox.setSelected(false);
+                            }
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(CheckBox item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty || getIndex() >= getTableView().getItems().size()) {
+                            setGraphic(null);
+                            return;
+                        }
+
+                        UserBookInfo bookInfo = getTableView().getItems().get(getIndex());
+                        checkBox.setSelected(bookInfo.getRated());
+                        checkBox.setDisable(bookInfo.getRated());
+                        setGraphic(checkBox);
+                    }
+                };
+            }
+        });
+    }
+    private boolean showRatingDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/RateStar.fxml"));
+            Parent ratingRoot = loader.load();
+            Stage ratingStage = new Stage();
+            ratingStage.setTitle("Rate the Book");
+            ratingStage.setScene(new Scene(ratingRoot));
+            ratingStage.initModality(Modality.APPLICATION_MODAL);
+
+            RatingController controller = loader.getController();
+            ratingStage.show();
+
+            return controller.isRated();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

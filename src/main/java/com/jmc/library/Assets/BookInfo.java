@@ -22,6 +22,8 @@ public class BookInfo {
     private String thumbnail;
     private boolean exist;
     private ObjectProperty<ImageView> imageView;
+    private double rating;
+    private int rateQuantities;
 
     public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate) {
         this.bookId = bookId;
@@ -76,6 +78,25 @@ public class BookInfo {
         this.exist = true;
     }
 
+    public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate, String ISBN, String publisher, String genre, String originalLanguage, String description, String thumbnail, ImageView imageView, double rating, int rateQuantities) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.quantityInStock = quantityInStock;
+        this.leastPrice = leastPrice;
+        this.publishedDate = publishedDate;
+        this.ISBN = ISBN;
+        this.publisher = publisher;
+        this.genre = genre;
+        this.originalLanguage = originalLanguage;
+        this.description = description;
+        this.thumbnail = thumbnail;
+        this.imageView =  new SimpleObjectProperty<>(imageView);
+        this.exist = true;
+        this.rating = rating;
+        this.rateQuantities = rateQuantities;
+    }
+
     public int getBookId() {
         return bookId;
     }
@@ -123,6 +144,14 @@ public class BookInfo {
     public void setPublishedDate(LocalDate publishedDate) {
         this.publishedDate = publishedDate;
     }
+
+    public double getRating() { return rating; }
+
+    public void setRating(double rating) { this.rating = rating; }
+
+    public int getRateQuantities() { return rateQuantities; }
+
+    public void setRateQuantities(int rateQuantities) { this.rateQuantities = rateQuantities; }
 
     public boolean isExist() { return exist; }
 

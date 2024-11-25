@@ -1,6 +1,7 @@
 package com.jmc.library.Controllers.Assets;
 
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -18,15 +19,24 @@ public class RatingController implements Initializable {
     public Image fullStar;
     public Image halfStar;
     public int rating = 0;
-    
+    public Button btn1;
+    public Button btn2;
+    public Button btn3;
+    public Button btn4;
+    public Button btn5;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addListener();
         setMaterialListener();
     }
+
+    public boolean isRated() {
+        return rating != 0;
+    }
     
     private void addListener() {
-        star1.setOnMouseClicked(e -> {
+        btn1.setOnAction(e -> {
             star1.setImage(fullStar);
             star2.setImage(emptyStar);
             star3.setImage(emptyStar);
@@ -34,7 +44,7 @@ public class RatingController implements Initializable {
             star5.setImage(emptyStar);
             rating = 1;
         });
-        star2.setOnMouseClicked(e -> {
+        btn2.setOnAction(e -> {
             star1.setImage(fullStar);
             star2.setImage(fullStar);
             star3.setImage(emptyStar);
@@ -42,7 +52,7 @@ public class RatingController implements Initializable {
             star5.setImage(emptyStar);
             rating = 2;
         });
-        star3.setOnMouseClicked(e -> {
+        btn3.setOnAction(e -> {
             star1.setImage(fullStar);
             star2.setImage(fullStar);
             star3.setImage(fullStar);
@@ -50,7 +60,7 @@ public class RatingController implements Initializable {
             star5.setImage(emptyStar);
             rating = 3;
         });
-        star4.setOnMouseClicked(e -> {
+        btn4.setOnAction(e -> {
             star1.setImage(fullStar);
             star2.setImage(fullStar);
             star3.setImage(fullStar);
@@ -58,7 +68,7 @@ public class RatingController implements Initializable {
             star5.setImage(emptyStar);
             rating = 4;
         });
-        star5.setOnMouseClicked(e -> {
+        btn5.setOnAction(e -> {
             star1.setImage(fullStar);
             star2.setImage(fullStar);
             star3.setImage(fullStar);
@@ -69,8 +79,8 @@ public class RatingController implements Initializable {
     }
     
     private void setMaterialListener() {
-        emptyStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/jmc/library/Resources/EmptyStar.png")));
-        halfStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/jmc/library/Resources/HalfStar.png")));
+        emptyStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/IMAGES/EmptyStar.png")));
+        halfStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/IMAGES/HalfStar.png")));
         fullStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/IMAGES/Star.png")));
         star1.setImage(emptyStar);
         star2.setImage(emptyStar);
