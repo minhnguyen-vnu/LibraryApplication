@@ -4,14 +4,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.jmc.library.Controllers.Notification.NotificationController"
-            prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: white;
-            -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 5);">
+<AnchorPane prefHeight="300.0" prefWidth="500.0" styleClass="Notifications" stylesheets="@../STYLES/Stuff.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Notification.NotificationController">
     <children>
-        <Button fx:id="cancel_btn" layoutX="370.0" layoutY="10.0" mnemonicParsing="false" text="X"
-                style="-fx-font-size: 14px; -fx-text-fill: red; -fx-background-color: transparent;"/>
-        <Label fx:id="notification_lbl" layoutX="20.0" layoutY="80.0" text="Đây là thông báo!"
-               style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-font-weight: bold;"/>
+        <Button fx:id="cancel_btn" layoutX="370.0" layoutY="10.0" mnemonicParsing="false" style="-fx-font-size: 15; -fx-text-fill: blue; -fx-background-color: transparent;" text="X" AnchorPane.rightAnchor="2.0" />
+        <Label fx:id="notification_lbl" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="200.0" minWidth="400.0" prefHeight="147.0" prefWidth="448.0" text="Đây là thông báo!" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0" />
     </children>
 </AnchorPane>

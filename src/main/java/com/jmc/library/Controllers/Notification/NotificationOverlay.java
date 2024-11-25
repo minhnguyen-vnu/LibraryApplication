@@ -26,13 +26,22 @@ public class NotificationOverlay {
         notificationController.setOnCloseCallback(() -> closeOverlay(currentScene));
 
         overlayPane = new AnchorPane(notificationPane);
-        overlayPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
+        overlayPane.getStyleClass().add("MatteBackground");
 
+        double senceWidth = currentScene.getWidth();
+        double senceHeight = currentScene.getHeight();
+        double overlayWidth = notificationPane.getPrefWidth();
+        double overlayHeight = notificationPane.getPrefHeight();
 
-        AnchorPane.setTopAnchor(notificationPane, 100.0);
-        AnchorPane.setRightAnchor(notificationPane, 50.0);
-        AnchorPane.setBottomAnchor(notificationPane, 100.0);
-        AnchorPane.setLeftAnchor(notificationPane, 50.0);
+        System.out.println("senceWidth: " + senceWidth);
+        System.out.println("senceHeight: " + senceHeight);
+        System.out.println("overlayWidth: " + overlayWidth);
+        System.out.println("overlayHeight: " + overlayHeight);
+
+        AnchorPane.setTopAnchor(notificationPane, senceHeight / 2 - overlayHeight / 2);
+        AnchorPane.setRightAnchor(notificationPane, senceWidth / 2 - overlayWidth / 2);
+//        AnchorPane.setBottomAnchor(notificationPane, senceHeight / 2 - overlayHeight / 2);
+//        AnchorPane.setLeftAnchor(notificationPane, senceWidth / 2 - overlayWidth / 2);
 
         playZoomInEffect(notificationPane);
 
@@ -42,7 +51,9 @@ public class NotificationOverlay {
             root = stackPane;
         }
 
+        root.getStylesheets().add(getClass().getResource("/STYLES/Stuff.css").toExternalForm());
         root.getChildren().add(overlayPane);
+
 
         overlayPane.setOnMouseClicked(event -> {
             double clickX = event.getSceneX();
