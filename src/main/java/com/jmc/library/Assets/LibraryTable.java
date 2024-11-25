@@ -33,6 +33,14 @@ public class LibraryTable {
     public TableView<BookInfo> store_tb;
     public ObservableList<BookInfo> bookList;
 
+    public ObservableList<BookInfo> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(ObservableList<BookInfo> bookList) {
+        this.bookList = bookList;
+    }
+
     private void addLoading() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
         try {

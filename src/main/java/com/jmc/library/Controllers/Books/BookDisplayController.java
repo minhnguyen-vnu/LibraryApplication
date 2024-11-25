@@ -52,6 +52,7 @@ public class BookDisplayController implements Initializable {
 
     public void setDisplayBook(BookInfo displayBook) {
         this.displayBook = displayBook;
+        System.out.println("Book rate" + displayBook.getRating());
         setMaterialListener();
     }
 

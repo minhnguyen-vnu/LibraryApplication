@@ -1,9 +1,16 @@
 package com.jmc.library.Controllers.Assets;
 
+import com.jmc.library.Assets.BookInfo;
+import com.jmc.library.Database.DBUpdate;
+import com.jmc.library.Models.LibraryModel;
+import com.jmc.library.Models.Model;
+import javafx.animation.PauseTransition;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.Objects;
@@ -25,16 +32,22 @@ public class RatingController implements Initializable {
     public Button btn4;
     public Button btn5;
 
+    private int bookId;
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addListener();
         setMaterialListener();
     }
 
-    public boolean isRated() {
-        return rating != 0;
-    }
-    
     private void addListener() {
         btn1.setOnAction(e -> {
             star1.setImage(fullStar);
@@ -43,6 +56,7 @@ public class RatingController implements Initializable {
             star4.setImage(emptyStar);
             star5.setImage(emptyStar);
             rating = 1;
+            closeStage();
         });
         btn2.setOnAction(e -> {
             star1.setImage(fullStar);
@@ -51,6 +65,7 @@ public class RatingController implements Initializable {
             star4.setImage(emptyStar);
             star5.setImage(emptyStar);
             rating = 2;
+            closeStage();
         });
         btn3.setOnAction(e -> {
             star1.setImage(fullStar);
@@ -59,6 +74,7 @@ public class RatingController implements Initializable {
             star4.setImage(emptyStar);
             star5.setImage(emptyStar);
             rating = 3;
+            closeStage();
         });
         btn4.setOnAction(e -> {
             star1.setImage(fullStar);
@@ -67,6 +83,7 @@ public class RatingController implements Initializable {
             star4.setImage(fullStar);
             star5.setImage(emptyStar);
             rating = 4;
+            closeStage();
         });
         btn5.setOnAction(e -> {
             star1.setImage(fullStar);
@@ -75,9 +92,51 @@ public class RatingController implements Initializable {
             star4.setImage(fullStar);
             star5.setImage(fullStar);
             rating = 5;
+            closeStage();
         });
     }
-    
+
+    private void closeStage() {
+        System.out.println(bookId);
+        DBUpdate dbUpdate = new DBUpdate("update userRequest set isRated = true where username = ? and bookId = ? and isRated = false",
+                LibraryModel.getInstance().getUser().getUsername(), bookId);
+        dbUpdate.setOnSucceeded(e -> {
+            System.out.println("update success 1");
+            //LibraryModel.getInstance().getUser().getBookHiredList().
+        });
+        Thread thread = new Thread(dbUpdate);
+        thread.setDaemon(true);
+        thread.start();
+
+        DBUpdate dbUpdate1 = new DBUpdate("UPDATE bookStore SET rateQuantities = rateQuantities + 1, " +
+                "rate = ((rate * (rateQuantities - 1)) + ?) / rateQuantities " +
+                "WHERE bookId = ?",
+                rating, bookId);
+        dbUpdate1.setOnSucceeded(e -> {
+            System.out.println("update success 2");
+            ObservableList<BookInfo> bookList = Model
+                    .getInstance().getViewFactory()
+                    .getUserStoreController()
+                    .getBookList();
+            for (BookInfo book : bookList) {
+                if (book.getBookId() == bookId) {
+                    book.setRateQuantities(book.getRateQuantities() + 1);
+                    book.setRating((book.getRating() * (book.getRateQuantities() - 1) + rating) / book.getRateQuantities());
+                    break;
+                }
+            }
+        });
+        Thread thread1 = new Thread(dbUpdate1);
+        thread1.setDaemon(true);
+        thread1.start();
+
+        PauseTransition pause = new PauseTransition(Duration.millis(2000));
+        pause.setOnFinished(e -> {
+            star1.getScene().getWindow().hide();
+        });
+        pause.play();
+    }
+
     private void setMaterialListener() {
         emptyStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/IMAGES/EmptyStar.png")));
         halfStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/IMAGES/HalfStar.png")));
@@ -156,6 +215,9 @@ public class RatingController implements Initializable {
         } else if (rate == 5) {
             star1.setImage(fullStar);
             star2.setImage(fullStar);
+            star3.setImage(fullStar);
+            star4.setImage(fullStar);
+            star5.setImage(fullStar);
         }
     }
 }

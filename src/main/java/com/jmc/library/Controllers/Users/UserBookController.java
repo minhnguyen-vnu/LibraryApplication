@@ -116,7 +116,6 @@ public class UserBookController extends UserLibraryTable implements Initializabl
         });
 
         get_rate_tb_cl.setCellValueFactory(param -> {
-            UserBookInfo userBookInfo = param.getValue();
             return new SimpleObjectProperty<>(new CheckBox());
         });
         get_rate_tb_cl.setCellFactory(new Callback<TableColumn<UserBookInfo, CheckBox>, TableCell<UserBookInfo, CheckBox>>() {
@@ -129,7 +128,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
                             UserBookInfo bookInfo = getTableView().getItems().get(getIndex());
                             if (!checkBox.isSelected()) return;
 
-                            boolean rated = showRatingDialog();
+                            boolean rated = showRatingDialog(bookInfo);
 
                             if (rated) {
                                 bookInfo.setRated(true);
@@ -158,7 +157,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
             }
         });
     }
-    private boolean showRatingDialog() {
+    private boolean showRatingDialog(UserBookInfo bookInfo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/RateStar.fxml"));
             Parent ratingRoot = loader.load();
@@ -168,9 +167,10 @@ public class UserBookController extends UserLibraryTable implements Initializabl
             ratingStage.initModality(Modality.APPLICATION_MODAL);
 
             RatingController controller = loader.getController();
+            controller.setBookId(bookInfo.getBookId());
             ratingStage.show();
 
-            return controller.isRated();
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
             return false;

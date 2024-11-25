@@ -4,6 +4,7 @@ import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Controllers.Admin.AdminView;
 import com.jmc.library.Controllers.Authentication;
 import com.jmc.library.Controllers.Books.BookDisplayController;
+import com.jmc.library.Controllers.LibraryControllers.UserLibraryController;
 import com.jmc.library.Controllers.Users.UserView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -39,6 +40,7 @@ public class ViewFactory {
     private final StringProperty selectedAdminMode;
 
     private BookDisplayController bookDisplayController;
+    private UserLibraryController userStore;
 
     public ViewFactory() {
         this.selectedAuthenticatonMode = new SimpleStringProperty("");
@@ -88,12 +90,18 @@ public class ViewFactory {
     public HBox getUserLibrary() {
         if (userLibrary == null) {
             try {
-                userLibrary = new FXMLLoader(getClass().getResource("/FXML/Library.fxml")).load();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Library.fxml"));
+                userLibrary = loader.load();
+                userStore = loader.getController();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return userLibrary;
+    }
+
+    public UserLibraryController getUserStoreController() {
+        return userStore;
     }
 
     public HBox getUserStore() {

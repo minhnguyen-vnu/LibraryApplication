@@ -185,7 +185,6 @@ public class BookInfo {
 
     public ObjectProperty<ImageView> imageViewProperty() { return imageView; }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
