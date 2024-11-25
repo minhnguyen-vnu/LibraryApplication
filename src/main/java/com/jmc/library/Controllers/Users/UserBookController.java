@@ -1,25 +1,18 @@
 package com.jmc.library.Controllers.Users;
 
-import com.jmc.library.Assets.BookInfo;
-import com.jmc.library.Assets.LibraryTable;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.Assets.RatingController;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Models.LibraryModel;
-import com.jmc.library.Models.Model;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -28,9 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class UserBookController extends UserLibraryTable implements Initializable {
     public TableColumn<UserBookInfo, Double> total_cost_tb_cl;
@@ -55,6 +46,12 @@ public class UserBookController extends UserLibraryTable implements Initializabl
         super.addBinding();
         total_cost_tb_cl.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
         get_rate_tb_cl.setCellValueFactory(new PropertyValueFactory<>("Rate"));
+    }
+
+    @Override
+    protected void setTable() {
+        bookList = LibraryModel.getInstance().getUser().getHiredBookList();
+        store_tb.setItems(bookList);
     }
 
     @Override

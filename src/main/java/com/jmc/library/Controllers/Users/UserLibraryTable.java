@@ -76,10 +76,7 @@ public abstract class UserLibraryTable {
         }
     }
 
-    protected void setTable() {
-        bookList = FXCollections.observableArrayList();
-        store_tb.setItems(bookList);
-    }
+    protected abstract void setTable();
 
     protected abstract void showLibrary();
 
