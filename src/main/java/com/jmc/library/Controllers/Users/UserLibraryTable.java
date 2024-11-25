@@ -199,11 +199,7 @@ public abstract class UserLibraryTable {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
         });
         log_out_btn.setOnAction(actionEvent -> {
-            LibraryModel.getInstance().getUser().resetAll();
-            Model.getInstance().getViewFactory().resetAll();
-            Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
-            Model.getInstance().getViewFactory().closeStage(currentStage);
-            Model.getInstance().getViewFactory().showAuthenticationWindow();
+            stageTransforming();
         });
 
         back_to_dashboard_btn.setOnAction(actionEvent -> {
@@ -224,5 +220,13 @@ public abstract class UserLibraryTable {
             }
         });
         reload_btn.setOnAction(actionEvent -> showLibrary());
+    }
+
+    private void stageTransforming() {
+        Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
+        Model.getInstance().getViewFactory().closeStage(currentStage);
+        Model.getInstance().getViewFactory().showAuthenticationWindow();
+        Model.getInstance().getViewFactory().getSelectedAuthenticatonMode().set("Login");
+        Model.getInstance().getViewFactory().getSelectedAdminMode().set("");
     }
 }

@@ -121,7 +121,9 @@ public class LoginController implements Initializable {
         }
         else {
             Model.getInstance().getViewFactory().showUserWindow();
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Restart");
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
+
         }
     }
 }
