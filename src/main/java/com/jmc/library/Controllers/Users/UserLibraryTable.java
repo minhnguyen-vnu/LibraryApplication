@@ -1,5 +1,6 @@
 package com.jmc.library.Controllers.Users;
 
+import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
@@ -9,10 +10,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public abstract class UserLibraryTable {
@@ -58,12 +61,82 @@ public abstract class UserLibraryTable {
 
     protected abstract void showLibrary();
 
-    protected void searchBookByAuthor(String authorName) {
-        ObservableList<UserBookInfo> filteredList = bookList.stream()
-                .filter(book -> book.getAuthorName().equalsIgnoreCase(authorName))
-                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+    private void searchBook(String text) {
+        if (text.isEmpty()) {
+            store_tb.setItems(bookList);
+        } else {
+            searchBookByName(text);
+        }
+    }
+
+    private String sortString(String str) {
+        str = str.toLowerCase();
+        char[] charArray = str.toCharArray();
+        Arrays.sort(charArray);
+        return new String(charArray);
+    }
+
+    private int getDifference(String a, String b) {
+        int end = Math.min(a.length(), b.length());
+        int cnt = 0;
+
+        a = sortString(subString(a, 0, end - 1));
+        b = sortString(subString(b, 0, end - 1));
+
+        for (int i = 0; i < end; i++) {
+            if (a.charAt(i) != b.charAt(i)) {
+                cnt++;
+            }
+        }
+
+        return cnt;
+    }
+
+    private String subString(String a, int l, int r) {
+        StringBuilder res = new StringBuilder();
+        for (int i = l; i <= r; i++) {
+            res.append(a.charAt(i));
+        }
+        return res.toString();
+    }
+
+    private void searchBookByName(String text) {
+        ObservableList<UserBookInfo> filteredList = FXCollections.observableArrayList();
+
+        for (UserBookInfo bookInfo : bookList) {
+            int end;
+
+            if (text.length() > bookInfo.getBookName().length()) {
+                end = bookInfo.getBookName().length();
+                for (int start = 0; start <= text.length() - end; start++) {
+                    String new_string = subString(text, start, start + end - 1);
+                    if (new_string.equalsIgnoreCase(bookInfo.getBookName())) {
+                        filteredList.add(bookInfo);
+                        break;
+                    }
+                    else if (getDifference(text, bookInfo.getBookName()) <= 2) {
+                        filteredList.add(bookInfo);
+                        break;
+                    }
+                }
+            }
+            else {
+                end = text.length();
+                for (int start = 0; start <= bookInfo.getBookName().length() - end; start++) {
+                    String new_string = subString(bookInfo.getBookName(), start, start + end - 1);
+                    if (new_string.equalsIgnoreCase(text)) {
+                        filteredList.add(bookInfo);
+                        break;
+                    }
+                    else if (getDifference(text, bookInfo.getBookName()) <= 2) {
+                        filteredList.add(bookInfo);
+                        break;
+                    }
+                }
+            }
+        }
+
         store_tb.setItems(filteredList);
-        filteredList.clear();
     }
 
     protected void setUsername_lbl() {
@@ -94,7 +167,12 @@ public abstract class UserLibraryTable {
     }
 
     protected void setButtonListener() {
-        search_btn.setOnAction(actionEvent -> searchBookByAuthor(search_fld.getText()));
+        search_btn.setOnAction(actionEvent -> searchBook(search_fld.getText()));
+        search_fld.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                searchBook(search_fld.getText());
+            }
+        });
         go_to_store_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
         });

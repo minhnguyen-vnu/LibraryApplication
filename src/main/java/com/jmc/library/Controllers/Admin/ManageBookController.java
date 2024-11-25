@@ -59,10 +59,10 @@ public class ManageBookController extends LibraryTable implements Initializable 
         boolean ok = true;
 
         String bookId = enter_book_id_txt_fld.getText();
-        String bookName = enter_ISBN_txt_fld.getText();
+        String bookISBN = enter_ISBN_txt_fld.getText();
 
         for (BookInfo book : bookList) {
-            if (book.getBookId() == Integer.parseInt(bookId) || book.getBookName().equals(bookName)) {
+            if (book.getBookId() == Integer.parseInt(bookId) || book.getISBN().equals(bookISBN)) {
                 ok = false;
                 break;
             }
