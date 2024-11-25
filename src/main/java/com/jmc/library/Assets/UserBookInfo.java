@@ -15,6 +15,7 @@ public class UserBookInfo {
 
     private double singleCost;
     private String ISBN;
+    private boolean isRated;
 
     public UserBookInfo() {
 
@@ -56,6 +57,20 @@ public class UserBookInfo {
         this.requestStatus = status;
         this.singleCost = singleCost;
         this.ISBN = ISBN;
+    }
+
+    public UserBookInfo(String bookName, String authorName,
+                        int bookId, LocalDate pickedDate,
+                        LocalDate returnDate, double totalCost,
+                        String status, boolean isRated) {
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.bookId = bookId;
+        this.pickedDate = pickedDate;
+        this.returnDate = returnDate;
+        this.requestStatus = status;
+        this.totalCost = totalCost;
+        this.isRated = isRated;
     }
 
     public String getISBN() {
@@ -128,6 +143,14 @@ public class UserBookInfo {
 
     public void setRequestStatus(String status) {
         this.requestStatus = status;
+    }
+
+    public boolean getRated() {
+        return isRated;
+    }
+
+    public void setRated(boolean isRated) {
+        this.isRated = isRated;
     }
 
     @Override

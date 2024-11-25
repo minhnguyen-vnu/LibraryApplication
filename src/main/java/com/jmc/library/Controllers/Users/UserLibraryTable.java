@@ -6,6 +6,7 @@ import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -52,6 +53,27 @@ public abstract class UserLibraryTable {
         return_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
 
         store_tb.setItems(bookList);
+    }
+
+    protected void addLoading() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
+        try {
+            ImageView loading_img = loader.load();
+            store_tb.setPlaceholder(loading_img);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void returnLoading() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
+        try {
+            Label label = loader.load();
+            store_tb.setPlaceholder(label);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void setTable() {
