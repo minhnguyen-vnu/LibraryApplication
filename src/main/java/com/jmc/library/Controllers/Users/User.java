@@ -55,6 +55,9 @@ public class User {
     }
 
     public String getName() {
+        if(name == null) {
+            return username;
+        }
         return name;
     }
 
@@ -63,6 +66,9 @@ public class User {
     }
 
     public LocalDate getBirthDate() {
+        if(birthDate == null) {
+            return LocalDate.now().plusDays(1);
+        }
         return birthDate;
     }
 
@@ -79,6 +85,9 @@ public class User {
     }
 
     public Image getAvatar() {
+        if(avatar == null) {
+            return new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/avatar.png")).toExternalForm());
+        }
         return avatar;
     }
 
@@ -118,18 +127,21 @@ public class User {
                 if (resultSet.next()) {
                     this.username = resultSet.getString("username");
                     this.password = resultSet.getString("password");
-
+                    System.out.println("User.loadUserInfo " + this.password);
                     this.name = (resultSet.getString("name") == null) ? "" : resultSet.getString("name");
                     this.birthDate = (resultSet.getDate("birthDate") == null) ? LocalDate.now().plusDays(1) : resultSet.getDate("birthDate").toLocalDate();
                     this.ID = resultSet.getInt("ID");
                     Blob blob = resultSet.getBlob("imageView");
-                    if (blob != null) {
-                        this.avatar = ImageUtils.byteArrayToImage(blob.getBytes(1, (int) blob.length()));
+
+                    if (blob != null && blob.length() > 0) {
+                        byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+                        this.avatar = ImageUtils.byteArrayToImage(imageBytes);
                     } else {
                         this.avatar = new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/avatar.png")).toExternalForm());
                     }
                 }
                 resultSet.close();
+                System.out.println("User.loadUserInfo" + this.password);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

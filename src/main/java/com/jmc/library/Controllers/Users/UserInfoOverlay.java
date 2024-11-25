@@ -23,12 +23,17 @@ public class UserInfoOverlay {
         UserInfoController userInfoController = loader.getController();
 
         overlayPane = new AnchorPane(userInfoPane);
-        overlayPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
+        overlayPane.getStyleClass().add("MatteBackground");
 
-        AnchorPane.setTopAnchor(userInfoPane, 100.0);
-        AnchorPane.setRightAnchor(userInfoPane, 50.0);
-        AnchorPane.setBottomAnchor(userInfoPane, 100.0);
-        AnchorPane.setLeftAnchor(userInfoPane, 50.0);
+        double senceWidth = currentScene.getWidth();
+        double senceHeight = currentScene.getHeight();
+        double overlayWidth = userInfoPane.getPrefWidth();
+        double overlayHeight = userInfoPane.getPrefHeight();
+
+        AnchorPane.setTopAnchor(userInfoPane, senceHeight / 2 - overlayHeight / 2);
+        AnchorPane.setRightAnchor(userInfoPane, senceWidth / 2 - overlayWidth / 2);
+        AnchorPane.setBottomAnchor(userInfoPane, senceHeight / 2 - overlayHeight / 2);
+        AnchorPane.setLeftAnchor(userInfoPane, senceWidth / 2 - overlayWidth / 2);
 
         playZoomInEffect(userInfoPane);
 
@@ -38,6 +43,7 @@ public class UserInfoOverlay {
             root = stackPane;
         }
 
+        root.getStylesheets().add(getClass().getResource("/STYLES/Stuff.css").toExternalForm());
         root.getChildren().add(overlayPane);
 
         overlayPane.setOnMouseClicked(event -> {
