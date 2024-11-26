@@ -71,9 +71,10 @@
                   </HBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" layoutY="600.0" prefWidth="400.0">
+            <HBox alignment="CENTER" layoutY="600.0" prefWidth="400.0" spacing="30.0">
                <children>
-                  <Button fx:id="search_btn" mnemonicParsing="false" styleClass="SearchButton" text="Search" />
+                  <Button fx:id="search_btn" mnemonicParsing="false" styleClass="ManageBarButton" text="Search" />
+                  <Button fx:id="return_book_btn" mnemonicParsing="false" styleClass="ManageBarButton" text="Return" />
                </children>
             </HBox>
             <Button fx:id="return_btn" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" styleClass="TextButton" text="Back" />
