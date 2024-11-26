@@ -98,6 +98,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
                             resultSet.getBoolean("isRated"),
                             imageView);
                     bookList.add(userBookInfo);
+                    System.out.println(bookList.size());
                 }
                 resultSet.close();
                 returnLoading();

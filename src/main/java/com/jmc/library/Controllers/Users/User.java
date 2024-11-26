@@ -4,6 +4,7 @@ import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Database.*;
 import com.jmc.library.Models.LibraryModel;
+import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -28,13 +29,9 @@ public class User {
     private int ID;
     private Image avatar;
 
-    private ObservableList<UserBookInfo> bookPendingList;
-    private ObservableList<UserBookInfo> bookHiredList;
     private ObservableList<CartEntityController> cartEntityControllers;
 
     public User() {
-        this.bookPendingList = FXCollections.observableArrayList();
-        this.bookHiredList = FXCollections.observableArrayList();
         this.cartEntityControllers = FXCollections.observableArrayList();
     }
 
@@ -95,22 +92,6 @@ public class User {
         this.avatar = avatar;
     }
 
-    public ObservableList<UserBookInfo> getBookPendingList() {
-        return bookPendingList;
-    }
-
-    public void setBookPendingList(ObservableList<UserBookInfo> bookList) {
-        this.bookPendingList = bookList;
-    }
-
-    public ObservableList<UserBookInfo> getBookHiredList() {
-        return bookHiredList;
-    }
-
-    public void setBookHiredList(ObservableList<UserBookInfo> bookHiredList) {
-        this.bookHiredList = bookHiredList;
-    }
-
     public ObservableList<CartEntityController> getCartEntityControllers() {
 
         return cartEntityControllers;
@@ -152,76 +133,6 @@ public class User {
         thread.start();
     }
 
-    public void loadAllList() {
-        loadBookHiredList();
-        loadBookPendingList();
-    }
-
-    public void loadBookPendingList() {
-        DBQuery dbQuery = new DBQuery("select\n" +
-                "    r.username,\n" +
-                "    r.bookName,\n" +
-                "    b.authorName,\n" +
-                "    r.bookId,\n" +
-                "    r.requestDate,\n" +
-                "    r.returnDate,\n" +
-                "    r.cost,\n" +
-                "    r.requestStatus\n"+
-                "from PendingRequest r\n" +
-                "join bookStore b using(bookId)\n" +
-                "where r.username = ? order by r.requestStatus;", this.username);
-        dbQuery.setOnSucceeded(event -> {
-            ResultSet resultSet = dbQuery.getValue();
-            try {
-                while (resultSet.next()) {
-                    UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
-                            resultSet.getInt("bookId"), resultSet.getDate("requestDate").toLocalDate(),
-                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"));
-                    this.bookPendingList.add(userBookInfo);
-                }
-                resultSet.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        Thread thread = new Thread(dbQuery);
-        thread.setDaemon(true);
-        thread.start();
-    }
-
-    public void loadBookHiredList() {
-        DBQuery dbQuery = new DBQuery("select\n" +
-                "    r.username,\n" +
-                "    r.bookName,\n" +
-                "    b.authorName,\n" +
-                "    r.bookId,\n" +
-                "    r.pickedDate,\n" +
-                "    r.returnDate,\n" +
-                "    r.cost,\n" +
-                "    r.requestStatus\n"+
-                "from  userRequest r\n" +
-                "join bookStore b using(bookId)\n" +
-                "where r.username = ? " +
-                "order by r.requestStatus;", this.username);
-        dbQuery.setOnSucceeded(event -> {
-            ResultSet resultSet = dbQuery.getValue();
-            try {
-                while (resultSet.next()) {
-                    UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
-                            resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
-                            resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"));
-                    this.bookHiredList.add(userBookInfo);
-                }
-                resultSet.close();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-                throw new RuntimeException(e);
-            }
-        });
-        Thread thread = new Thread(dbQuery);
-        thread.setDaemon(true);
-        thread.start();
-    }
 
     public void removeCartEntityController(CartEntityController cartEntityController) {
         this.cartEntityControllers.remove(cartEntityController);
@@ -242,8 +153,7 @@ public class User {
 
     public void userPayment() {
         for(CartEntityController cartEntityController : this.cartEntityControllers) {
-            System.out.println(cartEntityController.getUserBookInfo().getBookName());
-            LibraryModel.getInstance().getUser().getBookPendingList()
+            Model.getInstance().getViewFactory().getUserPendingController().getBookList()
                     .add(cartEntityController.getUserBookInfo());
 
             DBUpdate dbUpdate = new DBUpdate("INSERT INTO PendingRequest(bookId, bookName, username, requestDate, returnDate, cost, requestStatus) " +
@@ -268,8 +178,7 @@ public class User {
 
     public void resetAll() {
         System.out.println("User.resetAll");
-        this.bookPendingList.clear();
-        this.bookHiredList.clear();
+
         this.cartEntityControllers.clear();
 
         this.username = null;

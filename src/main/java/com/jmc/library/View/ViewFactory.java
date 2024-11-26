@@ -1,17 +1,17 @@
 package com.jmc.library.View;
 
-import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Controllers.Admin.AdminView;
 import com.jmc.library.Controllers.Authentication;
-import com.jmc.library.Controllers.Books.BookDisplayController;
+import com.jmc.library.Controllers.Books.UserBookDisplayController;
 import com.jmc.library.Controllers.LibraryControllers.UserLibraryController;
+import com.jmc.library.Controllers.Users.UserBookController;
 import com.jmc.library.Controllers.Users.UserCartController;
+import com.jmc.library.Controllers.Users.UserPendingController;
 import com.jmc.library.Controllers.Users.UserView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
@@ -40,9 +40,11 @@ public class ViewFactory {
     private final StringProperty selectedUserMode;
     private final StringProperty selectedAdminMode;
 
-    private BookDisplayController bookDisplayController;
+    private UserBookDisplayController bookDisplayController;
     private UserLibraryController userStore;
     private UserCartController userCartController;
+    private UserPendingController userPendingController;
+    private UserBookController userBookController;
 
     public ViewFactory() {
         this.selectedAuthenticatonMode = new SimpleStringProperty("");
@@ -112,12 +114,21 @@ public class ViewFactory {
     public HBox getUserHiredBook() {
         if (userHiredBook == null) {
             try {
-                userHiredBook = new FXMLLoader(getClass().getResource("/FXML/HiredBook.fxml")).load();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/HiredBook.fxml"));
+                userHiredBook = loader.load();
+                userBookController = loader.getController();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return userHiredBook;
+    }
+
+    public UserBookController getUserBookController() {
+        if(userBookController == null) {
+            getUserHiredBook();
+        }
+        return userBookController;
     }
 
     public HBox getUserDashboard() {
@@ -179,11 +190,11 @@ public class ViewFactory {
         return notificationView;
     }
 
-    public void setBookDisplayController(BookDisplayController bookDisplayController) {
+    public void setBookDisplayController(UserBookDisplayController bookDisplayController) {
         this.bookDisplayController = bookDisplayController;
     }
 
-    public BookDisplayController getBookDisplayController() {
+    public UserBookDisplayController getBookDisplayController() {
         if(bookDisplayController == null) {
             getBookDetail();
         }
@@ -193,12 +204,21 @@ public class ViewFactory {
     public Node getUserPending() {
         if (userPending == null) {
             try {
-                userPending = new FXMLLoader(getClass().getResource("/FXML/UserPending.fxml")).load();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/UserPending.fxml"));
+                userPending = loader.load();
+                userPendingController = loader.getController();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return userPending;
+    }
+
+    public UserPendingController getUserPendingController() {
+        if(userPendingController == null) {
+            getUserPending();
+        }
+        return userPendingController;
     }
 
     public HBox getAdminLibrary() {

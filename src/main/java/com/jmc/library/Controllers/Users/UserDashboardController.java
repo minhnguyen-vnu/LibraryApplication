@@ -68,8 +68,7 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
 
     @Override
     public void onDashBoardUpdate() {
-        ObservableList<UserBookInfo> bookList = LibraryModel
-                .getInstance().getUser().getBookHiredList();
+        ObservableList<UserBookInfo> bookList = Model.getInstance().getViewFactory().getUserBookController().getBookList();
         int countReadBook = 0;
         int countHiredBook = 0;
         int countNewReadBook = 0;
@@ -160,7 +159,7 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Book Borrowed");
         int[] borrowedBook = new int[12];
-        for (UserBookInfo book : LibraryModel.getInstance().getUser().getBookHiredList()) {
+        for (UserBookInfo book : Model.getInstance().getViewFactory().getUserBookController().getBookList()) {
             if (book.getPickedDate().getYear() == LocalDate.now().getYear()
                     || (book.getPickedDate().getYear() == LocalDate.now().getYear()
                     && book.getPickedDate().getMonthValue() >= LocalDate.now().getMonthValue())) {
@@ -180,7 +179,7 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
         series1.setName("Read");
 
         int[] readBook = new int[12];
-        for (UserBookInfo book : LibraryModel.getInstance().getUser().getBookHiredList()) {
+        for (UserBookInfo book : Model.getInstance().getViewFactory().getUserBookController().getBookList()) {
             if (book.getReturnDate().getYear() == LocalDate.now().getYear()
                     || (book.getReturnDate().getYear() == LocalDate.now().getYear()
                     && book.getReturnDate().getMonthValue() >= LocalDate.now().getMonthValue())) {
@@ -197,7 +196,7 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         series2.setName("Hired");
         int[] hiredBook = new int[12];
-        for (UserBookInfo book : LibraryModel.getInstance().getUser().getBookHiredList()) {
+        for (UserBookInfo book : Model.getInstance().getViewFactory().getUserBookController().getBookList()) {
             if (book.getPickedDate().getYear() == LocalDate.now().getYear()
                     || (book.getPickedDate().getYear() == LocalDate.now().getYear()
                     && book.getPickedDate().getMonthValue() >= LocalDate.now().getMonthValue())) {

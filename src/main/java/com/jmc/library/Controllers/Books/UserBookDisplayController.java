@@ -2,17 +2,14 @@ package com.jmc.library.Controllers.Books;
 
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.UserBookInfo;
-import com.jmc.library.Controllers.Interface.InterfaceManager;
 import com.jmc.library.Controllers.Notification.NotificationOverlay;
 import com.jmc.library.Controllers.Users.CartEntityController;
-import com.jmc.library.Models.BookModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.TextFlow;
@@ -20,10 +17,9 @@ import javafx.scene.text.TextFlow;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class BookDisplayController implements Initializable {
+public class UserBookDisplayController implements Initializable {
     public TextFlow book_name_txt_flw;
     public Label publication_date_lbl;
     public Label author_lbl;
@@ -41,16 +37,13 @@ public class BookDisplayController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setDisplayBook(BookModel.getInstance().getBookInfo());
-        if (displayBook == null) {
-            System.out.println("No book selected.");
-            return;
-        }
-        System.out.println("Book selected: " + displayBook.getBookName());
+//        setDisplayBook(Model.getInstance().getViewFactory().getBookDisplayController().displayBook);
+
         setButtonListener();
     }
 
     public void setDisplayBook(BookInfo displayBook) {
+        System.out.println("Setting display book.");
         this.displayBook = displayBook;
         setMaterialListener();
     }
@@ -72,6 +65,7 @@ public class BookDisplayController implements Initializable {
                     displayBook.getImageView()
                     );
             try {
+
                 System.out.println(userBookInfo.getImageView());
                 addBookForUser(userBookInfo);
             } catch (IOException e) {
@@ -108,15 +102,15 @@ public class BookDisplayController implements Initializable {
             return;
         }
 
-        if(LibraryModel.getInstance().getUser().getBookPendingList().stream()
+        if(Model.getInstance().getViewFactory().getUserPendingController().getBookList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())) {
             NotificationOverlay overlay = new NotificationOverlay("Book already requested.", get_book_btn.getScene());
             return;
         }
 
-        if(LibraryModel.getInstance().getUser().getBookHiredList().stream()
+        if(Model.getInstance().getViewFactory().getUserBookController().getBookList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())
-                && LibraryModel.getInstance().getUser().getBookHiredList().stream()
+                && Model.getInstance().getViewFactory().getUserBookController().getBookList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getReturnDate().isAfter(LocalDate.now()))) {
             NotificationOverlay overlay = new NotificationOverlay("Book already hired.", get_book_btn.getScene());
             return;

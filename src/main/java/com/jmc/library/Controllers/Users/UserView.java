@@ -25,7 +25,11 @@ public class UserView implements Initializable {
                         case "Book Detail" -> {
                             user_parent.setCenter(Model.getInstance().getViewFactory().getBookDetail());
                         }
-                        case "User Restart"-> user_parent.setCenter(null);
+                        case "User Restart"-> {
+                            Model.getInstance().getViewFactory().getUserPendingController();
+                            Model.getInstance().getViewFactory().getUserBookController();
+                            user_parent.setCenter(null);
+                        }
                     }
                 } else {
                     System.err.println("Parent BorderPane is not initialized.");

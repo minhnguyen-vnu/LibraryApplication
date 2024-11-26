@@ -233,4 +233,8 @@ public abstract class UserLibraryTable {
         Model.getInstance().getViewFactory().getSelectedAuthenticatonMode().set("Login");
         Model.getInstance().getViewFactory().getSelectedAdminMode().set("");
     }
+
+    public ObservableList<UserBookInfo> getBookList() {
+        return bookList;
+    }
 }
