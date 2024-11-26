@@ -39,6 +39,7 @@ public class AdminDashboardController implements Initializable {
     public LineChart<String, Number> customers_line_chart;
     public Label total_customers_lbl;
     public Button go_to_pending_btn;
+    public Button user_management_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
