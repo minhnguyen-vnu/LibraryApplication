@@ -1,6 +1,8 @@
 package com.jmc.library.Assets;
 
 import com.jmc.library.Database.*;
+import javafx.beans.property.ObjectProperty;
+import javafx.scene.image.ImageView;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -13,9 +15,8 @@ public class UserBookInfo {
     private double totalCost;
     private String requestStatus;
 
-    private double singleCost;
-    private String ISBN;
     private boolean isRated;
+    private ImageView imageView;
 
     public UserBookInfo() {
 
@@ -32,31 +33,6 @@ public class UserBookInfo {
         this.returnDate = returnDate;
         this.totalCost = totalCost;
         this.requestStatus = status;
-
-        try {
-            ResultSet rs = DBUtlis.executeQuery("SELECT ISBN, leastPrice FROM bookStore WHERE bookId = " + bookId);
-            if (rs.next()) {
-                this.ISBN = rs.getString("ISBN");
-                this.singleCost = rs.getDouble("leastPrice");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public UserBookInfo(String bookName, String authorName,
-                        int bookId, LocalDate pickedDate,
-                        LocalDate returnDate, double totalCost,
-                        String status, double singleCost, String ISBN) {
-        this.bookName = bookName;
-        this.authorName = authorName;
-        this.bookId = bookId;
-        this.pickedDate = pickedDate;
-        this.returnDate = returnDate;
-        this.totalCost = totalCost;
-        this.requestStatus = status;
-        this.singleCost = singleCost;
-        this.ISBN = ISBN;
     }
 
     public UserBookInfo(String bookName, String authorName,
@@ -68,25 +44,32 @@ public class UserBookInfo {
         this.bookId = bookId;
         this.pickedDate = pickedDate;
         this.returnDate = returnDate;
-        this.requestStatus = status;
         this.totalCost = totalCost;
+        this.requestStatus = status;
         this.isRated = isRated;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public UserBookInfo(String bookName, String authorName,
+                        int bookId, LocalDate pickedDate,
+                        LocalDate returnDate, double totalCost,
+                        String status, boolean isRated, ImageView imageView) {
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.bookId = bookId;
+        this.pickedDate = pickedDate;
+        this.returnDate = returnDate;
+        this.totalCost = totalCost;
+        this.requestStatus = status;
+        this.isRated = isRated;
+        this.imageView = imageView;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
     }
 
-    public double getSingleCost() {
-        return singleCost;
-    }
-
-    public void setSingleCost(double singleCost) {
-        this.singleCost = singleCost;
+    public ImageView getImageView() {
+        return imageView;
     }
 
     public String getBookName() {
@@ -163,6 +146,7 @@ public class UserBookInfo {
                 ", pickedDate=" + pickedDate +
                 ", totalCost=" + totalCost +
                 ", requestStatus='" + requestStatus + '\'' +
+                ", isRated=" + isRated +
                 '}';
     }
 }

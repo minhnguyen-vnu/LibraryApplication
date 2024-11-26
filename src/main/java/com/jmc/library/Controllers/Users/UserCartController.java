@@ -22,8 +22,6 @@ public class UserCartController extends com.jmc.library.Controllers.Users.User i
     public Button back_library_btn;
     public ChoiceBox<String> sort_choice_box;
     public VBox list_book_vbox;
-    public Label sub_total_lbl;
-    public Label additional_lbl;
     public Label total_lbl;
     public Button check_out_btn;
     public Label show_total_lbl;
@@ -112,8 +110,6 @@ public class UserCartController extends com.jmc.library.Controllers.Users.User i
     }
 
     public void updateCartSummary() {
-        sub_total_lbl.setText(LibraryModel.getInstance().getUser().getSubTotal() + " $");
-        additional_lbl.setText(LibraryModel.getInstance().getUser().getAdditional() + " $");
         total_lbl.setText(LibraryModel.getInstance().getUser().getTotal() + " $");
         show_total_lbl.setText(LibraryModel.getInstance().getUser().getTotal() + " $");
     }

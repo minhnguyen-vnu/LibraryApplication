@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class UserPendingController extends UserLibraryTable implements Initializable {
-    public TableColumn book_cover_tb_cl;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

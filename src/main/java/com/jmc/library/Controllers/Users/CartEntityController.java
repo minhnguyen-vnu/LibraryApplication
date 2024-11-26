@@ -25,17 +25,20 @@ public class CartEntityController extends com.jmc.library.Controllers.Users.User
     public TextField num_day_borrow_txt_flw;
 
     private int day_borrow;
+    private int old_day_borrow;
     private UserBookInfo userBookInfo;
 
     public CartEntityController() {
         this.userBookInfo = new UserBookInfo();
         this.day_borrow = 0;
+        this.old_day_borrow = day_borrow;
     }
     public CartEntityController(UserBookInfo userBookInfo) {
         this.userBookInfo = userBookInfo;
         this.day_borrow  = (int) java.time.temporal.ChronoUnit.DAYS.between(
                 userBookInfo.getPickedDate(),
                 userBookInfo.getReturnDate()) + 1;
+        this.old_day_borrow = day_borrow;
     }
 
     public UserBookInfo getUserBookInfo() {
@@ -61,9 +64,10 @@ public class CartEntityController extends com.jmc.library.Controllers.Users.User
     }
 
     private void updCost() {
-        cost_lbl.setText(String.valueOf(userBookInfo.getSingleCost()* day_borrow));
+        cost_lbl.setText(String.valueOf(userBookInfo.getTotalCost() / old_day_borrow  * day_borrow));
         userBookInfo.setReturnDate(userBookInfo.getPickedDate().plusDays(day_borrow - 1));
-        userBookInfo.setTotalCost(userBookInfo.getSingleCost() * day_borrow);
+        userBookInfo.setTotalCost(userBookInfo.getTotalCost() / old_day_borrow * day_borrow);
+        old_day_borrow = day_borrow;
         InterfaceManager.getInstance().getCartUpdateListener().onCartUpdated();
     }
 
@@ -90,7 +94,7 @@ public class CartEntityController extends com.jmc.library.Controllers.Users.User
     private void setMaterialListener() {
         book_name_lbl.setText(userBookInfo.getBookName());
         author_lbl.setText(userBookInfo.getAuthorName());
-        cost_lbl.setText(String.valueOf(userBookInfo.getSingleCost()* day_borrow));
+        cost_lbl.setText(String.valueOf(userBookInfo.getTotalCost()* day_borrow));
 
         num_day_borrow_txt_flw.setText(String.valueOf(day_borrow));
         num_day_borrow_txt_flw.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -107,18 +111,6 @@ public class CartEntityController extends com.jmc.library.Controllers.Users.User
             updCost();
         });
 
-        System.out.println(userBookInfo.getISBN());
-        JSONObject bookInfo = new GoogleBookAPIMethod().searchBook(userBookInfo.getISBN());
-        JSONArray items = bookInfo.getJSONArray("items");
-        int totalItems = new GoogleBookAPIMethod().getTotalItems(bookInfo) - 1;
-        if (items != null) {
-            JSONObject volumeInfo = items.getJSONObject(totalItems).getJSONObject("volumeInfo");
-            String thumbnail = volumeInfo.has("imageLinks") ? volumeInfo.getJSONObject("imageLinks").getString("thumbnail") : null;
-            if (thumbnail != null) {
-                book_img.setImage(new javafx.scene.image.Image(thumbnail));
-            } else {
-                book_img.setImage(new javafx.scene.image.Image("https://via.placeholder.com/150"));
-            }
-        }
+        book_img.setImage(userBookInfo.getImageView().getImage());
     }
 }

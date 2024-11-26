@@ -181,6 +181,7 @@ public class BookInfo {
 
     public ImageView getImageView() { return imageView.get(); }
 
+    public ObjectProperty<ImageView> getOImageView() { return imageView; }
     public void setImageView(ImageView imageView) { this.imageView.set(imageView); }
 
     public ObjectProperty<ImageView> imageViewProperty() { return imageView; }

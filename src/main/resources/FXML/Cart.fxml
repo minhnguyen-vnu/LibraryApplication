@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="GreyBlock" stylesheets="@../STYLES/Cart.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserCartController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="GreyBlock" stylesheets="@../STYLES/Cart.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserCartController">
    <children>
       <AnchorPane prefHeight="80.0" prefWidth="1300.0">
          <children>
@@ -50,34 +44,6 @@
                         </Label>
                         <VBox alignment="TOP_CENTER" spacing="10.0">
                            <children>
-                              <HBox>
-                                 <children>
-                                    <Label prefHeight="17.0" prefWidth="116.0" styleClass="DarkText" text="Sub total:">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="sub_total_lbl" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="229.0" styleClass="DarkText" text="1000$">
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <Label prefHeight="17.0" prefWidth="116.0" styleClass="DarkText" text="Additional:">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="additional_lbl" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="229.0" styleClass="DarkText" text="1000$">
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                 </children>
-                              </HBox>
                               <HBox>
                                  <children>
                                     <Label prefHeight="17.0" prefWidth="116.0" styleClass="DarkText" text="Total:">

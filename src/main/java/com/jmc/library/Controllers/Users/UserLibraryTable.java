@@ -25,6 +25,7 @@ public abstract class UserLibraryTable {
     public TableColumn<UserBookInfo, Integer> book_id_tb_cl;
     public TableColumn<UserBookInfo, LocalDate> return_day_tb_cl;
     public TableColumn<UserBookInfo, LocalDate> picked_day_tb_cl;
+    public TableColumn<UserBookInfo, ImageView> cover_book_tb_cl;
     public TableView<UserBookInfo> store_tb;
     protected ObservableList<UserBookInfo> bookList;
 
@@ -51,7 +52,7 @@ public abstract class UserLibraryTable {
         book_id_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookId"));
         picked_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("pickedDate"));
         return_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
-
+        cover_book_tb_cl.setCellValueFactory(new PropertyValueFactory<>("imageView"));
         store_tb.setItems(bookList);
     }
 

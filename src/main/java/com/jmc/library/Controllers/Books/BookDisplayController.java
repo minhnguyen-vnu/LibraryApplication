@@ -52,7 +52,6 @@ public class BookDisplayController implements Initializable {
 
     public void setDisplayBook(BookInfo displayBook) {
         this.displayBook = displayBook;
-        System.out.println("Book rate" + displayBook.getRating());
         setMaterialListener();
     }
 
@@ -61,17 +60,19 @@ public class BookDisplayController implements Initializable {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
         });
         get_book_btn.setOnAction(actionEvent -> {
-            UserBookInfo userBookInfo = new UserBookInfo(displayBook.getBookName(),
+            UserBookInfo userBookInfo = new UserBookInfo(
+                    displayBook.getBookName(),
                     displayBook.getAuthorName(),
                     displayBook.getBookId(),
                     LocalDate.now(),
                     LocalDate.now(),
                     displayBook.getLeastPrice(),
                     "Pending",
-                    displayBook.getLeastPrice(),
-                    displayBook.getISBN()
+                    false,
+                    displayBook.getImageView()
                     );
             try {
+                System.out.println(userBookInfo.getImageView());
                 addBookForUser(userBookInfo);
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -94,7 +95,7 @@ public class BookDisplayController implements Initializable {
             preview_txt_flw.setWrapText(true);
             preview_txt_flw.setText(displayBook.getDescription());
 
-            book_img.setImage(new Image(Objects.requireNonNullElse(displayBook.getThumbnail(), getClass().getResource("/IMAGES/UnknownBookCover.png").toExternalForm())));
+            book_img.setImage(displayBook.getImageView().getImage());
         }
     }
 
