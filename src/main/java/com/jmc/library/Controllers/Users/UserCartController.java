@@ -1,10 +1,12 @@
 package com.jmc.library.Controllers.Users;
 
-import com.jmc.library.Controllers.Interface.CartUpdateListener;
-import com.jmc.library.Controllers.Interface.InterfaceManager;
 import com.jmc.library.Controllers.Notification.NotificationOverlay;
+import com.jmc.library.Models.CartModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -15,10 +17,9 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.channels.OverlappingFileLockException;
 import java.util.ResourceBundle;
 
-public class UserCartController extends com.jmc.library.Controllers.Users.User implements Initializable, CartUpdateListener {
+public class UserCartController extends com.jmc.library.Controllers.Users.User implements Initializable {
     public Button back_library_btn;
     public ChoiceBox<String> sort_choice_box;
     public VBox list_book_vbox;
@@ -30,28 +31,33 @@ public class UserCartController extends com.jmc.library.Controllers.Users.User i
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        InterfaceManager.getInstance().setCartUpdateListener(this);
         setButtonListener();
         setMaterialListener();
-        setListBookVBox();
+        addBinding();
     }
 
-    @Override
-    public void onCartUpdated() {
-        updateCartSummary();
-    }
-
-    @Override
-    public void onRemoveCartEntity(CartEntityController cartEntityController) {
-        LibraryModel.getInstance().getUser().removeCartEntityController(cartEntityController);
+    private void addBinding() {
         setListBookVBox();
-        updateCartSummary();
-    }
+        sub_total_lbl.setText(CartModel.getInstance().getUserCartInfo().getTotal());
+        additional_lbl.setText(CartModel.getInstance().getUserCartInfo().getAdditional());
+        total_lbl.setText(CartModel.getInstance().getUserCartInfo().getTotal());
+        show_total_lbl.setText(CartModel.getInstance().getUserCartInfo().getTotal());
 
-    @Override
-    public void onAddCartEntity(CartEntityController cartEntityController) {
-        setListBookVBox();
-        updateCartSummary();
+        CartModel.getInstance().getUserCartInfo().getList_book_vbox().getChildren().addListener((ListChangeListener<Node>) change -> {
+            while (change.next()) {
+                setListBookVBox();
+                break;
+            }
+        });
+
+        CartModel.getInstance().getUserCartInfo().getSub_total_lbl().textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                sub_total_lbl.setText(newValue);
+                total_lbl.setText(newValue);
+                show_total_lbl.setText(newValue);
+            }
+        });
     }
 
     private void setButtonListener() {
@@ -61,9 +67,8 @@ public class UserCartController extends com.jmc.library.Controllers.Users.User i
 
         check_out_btn.setOnAction(actionEvent -> {
             LibraryModel.getInstance().getUser().userPayment();
-            LibraryModel.getInstance().getUser().clearCart();
+            CartModel.getInstance().getUserCartInfo().getCartList().clear();
             setListBookVBox();
-            updateCartSummary();
             try {
                 NotificationOverlay overlay = new NotificationOverlay("Payment Successful!!", check_out_btn.getScene());
             } catch (IOException e) {
@@ -76,7 +81,7 @@ public class UserCartController extends com.jmc.library.Controllers.Users.User i
     private void setListBookVBox() {
         list_book_vbox.getChildren().clear();
 
-        for (CartEntityController cartEntityController : LibraryModel.getInstance().getUser().getCartEntityControllers()) {
+        for (CartEntityController cartEntityController : CartModel.getInstance().getUserCartInfo().getCartList()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/CartEntity.fxml"));
             loader.setController(cartEntityController);
             try {
@@ -97,24 +102,16 @@ public class UserCartController extends com.jmc.library.Controllers.Users.User i
                 .addListener((observableValue, oldValue, newValue) -> {
                     switch (newValue) {
                         case "Sort by name":
-                            LibraryModel.getInstance().getUser().getCartEntityControllers().sort((o1, o2) -> o1.getUserBookInfo().getBookName().compareTo(o2.getUserBookInfo().getBookName()));
+                            CartModel.getInstance().getUserCartInfo().getCartList().sort((o1, o2) -> o1.getUserBookInfo().getBookName().compareTo(o2.getUserBookInfo().getBookName()));
                             break;
                         case "Sort by author":
-                            LibraryModel.getInstance().getUser().getCartEntityControllers().sort((o1, o2) -> o1.getUserBookInfo().getAuthorName().compareTo(o2.getUserBookInfo().getAuthorName()));
+                            CartModel.getInstance().getUserCartInfo().getCartList().sort((o1, o2) -> o1.getUserBookInfo().getAuthorName().compareTo(o2.getUserBookInfo().getAuthorName()));
                             break;
                         case "Sort by price":
-                            LibraryModel.getInstance().getUser().getCartEntityControllers().sort((o1, o2) -> Double.compare(o1.getUserBookInfo().getTotalCost(), o2.getUserBookInfo().getTotalCost()));
+                            CartModel.getInstance().getUserCartInfo().getCartList().sort((o1, o2) -> Double.compare(o1.getUserBookInfo().getTotalCost(), o2.getUserBookInfo().getTotalCost()));
                             break;
                     }
                     setListBookVBox();
                 });
-        updateCartSummary();
-    }
-
-    public void updateCartSummary() {
-        sub_total_lbl.setText(LibraryModel.getInstance().getUser().getSubTotal() + " $");
-        additional_lbl.setText(LibraryModel.getInstance().getUser().getAdditional() + " $");
-        total_lbl.setText(LibraryModel.getInstance().getUser().getTotal() + " $");
-        show_total_lbl.setText(LibraryModel.getInstance().getUser().getTotal() + " $");
     }
 }

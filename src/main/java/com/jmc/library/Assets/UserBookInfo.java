@@ -36,21 +36,7 @@ public class UserBookInfo {
         this.totalCost = totalCost;
         this.requestStatus = status;
         this.imageView = imageView;
-    }
-
-    public UserBookInfo(String bookName, String authorName,
-                        int bookId, LocalDate pickedDate,
-                        LocalDate returnDate, double totalCost,
-                        String status, double singleCost, String ISBN) {
-        this.bookName = bookName;
-        this.authorName = authorName;
-        this.bookId = bookId;
-        this.pickedDate = pickedDate;
-        this.returnDate = returnDate;
-        this.totalCost = totalCost;
-        this.requestStatus = status;
-        this.singleCost = singleCost;
-        this.ISBN = ISBN;
+        this.singleCost = totalCost;
     }
 
     public UserBookInfo(String bookName, String authorName,
@@ -67,19 +53,6 @@ public class UserBookInfo {
         this.isRated = isRated;
         this.imageView = imageView;
     }
-
-
-//    public UserBookInfo(String bookName, String authorName, int bookId, LocalDate pickedDate, LocalDate returnDate, double totalCost, String requestStatus, boolean isRated, ImageView imageView) {
-//        this.bookName = bookName;
-//        this.authorName = authorName;
-//        this.bookId = bookId;
-//        this.returnDate = returnDate;
-//        this.pickedDate = pickedDate;
-//        this.totalCost = totalCost;
-//        this.requestStatus = requestStatus;
-//        this.imageView = imageView;
-//        this.isRated = isRated;
-//    }
 
     public String getISBN() {
         return ISBN;

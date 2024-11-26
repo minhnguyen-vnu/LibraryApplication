@@ -88,7 +88,6 @@ public class LoginController implements Initializable {
                         Thread thread = new Thread(dbUpdate);
                         thread.setDaemon(true);
                         thread.start();
-
                     }
                     Platform.runLater(() -> stageTransforming(isAdmin));
                 } else {

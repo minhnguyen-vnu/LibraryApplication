@@ -23,13 +23,6 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ResourceBundle;
 
-
-/**
- * this scene is the user dashboard
- * it not complete yet
- * now every thing is not designed
- */
-
 public class UserDashboardController extends com.jmc.library.Controllers.Users.User implements Initializable, DashboardUpdateListener {
 
     public Button go_to_library_btn;

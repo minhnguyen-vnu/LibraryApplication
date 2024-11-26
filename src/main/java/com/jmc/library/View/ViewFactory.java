@@ -5,6 +5,9 @@ import com.jmc.library.Controllers.Admin.AdminView;
 import com.jmc.library.Controllers.Authentication;
 import com.jmc.library.Controllers.Books.BookDisplayController;
 import com.jmc.library.Controllers.Users.UserView;
+import com.jmc.library.Database.DBUpdate;
+import com.jmc.library.Database.DBUtlis;
+import com.jmc.library.Models.LibraryModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -270,15 +274,6 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
-    public void showUserDashboard() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/UserDashboard.fxml"));
-        createStage(fxmlLoader);
-    }
-
-    public void showDisplayBook() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/DisplayBook.fxml"));
-        createStage(fxmlLoader);
-    }
     void createStage(FXMLLoader loader) {
         Scene scene = null;
         try {
@@ -291,6 +286,12 @@ public class ViewFactory {
         stage.setScene(scene);
         stage.setTitle("Library Application");
         stage.show();
+        stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, windowEvent -> {
+            System.out.println(LibraryModel.getInstance().getUser().getUsername());
+            DBUtlis.executeUpdate("update users\n" +
+                    "set status = ?\n" +
+                    "where username = ?;", "offline", LibraryModel.getInstance().getUser().getUsername());
+        });
     }
 
     void createStage(Parent loader) {

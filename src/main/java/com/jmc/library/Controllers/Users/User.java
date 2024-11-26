@@ -3,6 +3,7 @@ package com.jmc.library.Controllers.Users;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Database.*;
+import com.jmc.library.Models.CartModel;
 import com.jmc.library.Models.LibraryModel;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -242,9 +243,6 @@ public class User {
         thread.start();
     }
 
-    public void removeCartEntityController(CartEntityController cartEntityController) {
-        this.cartEntityControllers.remove(cartEntityController);
-    }
 
     public String getSubTotal() {
         double total = this.cartEntityControllers.stream().mapToDouble(cartEntityController -> cartEntityController.getUserBookInfo().getTotalCost()).sum();
@@ -260,7 +258,8 @@ public class User {
     }
 
     public void userPayment() {
-        for(CartEntityController cartEntityController : this.cartEntityControllers) {
+        for(CartEntityController cartEntityController : CartModel.getInstance().getUserCartInfo().getCartList()) {
+            System.out.println(cartEntityController.getUserBookInfo());
             LibraryModel.getInstance().getUser().getPendingBookList()
                     .add(cartEntityController.getUserBookInfo());
 

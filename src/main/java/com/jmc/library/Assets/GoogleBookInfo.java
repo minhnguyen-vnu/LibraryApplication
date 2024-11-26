@@ -41,7 +41,6 @@ public class GoogleBookInfo {
     private String thumbnail;
     private ImageView imageView;
 
-
     public GoogleBookInfo() {};
 
     public GoogleBookInfo(int bookId, int quantityInStock, double leastPrice, String ISBN) {

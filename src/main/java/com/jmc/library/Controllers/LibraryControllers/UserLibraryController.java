@@ -100,7 +100,6 @@ public class UserLibraryController extends LibraryController implements Initiali
                 BookInfo book = store_tb.getSelectionModel().getSelectedItem();
                 BookModel.getInstance().setBookInfo(book);
                 Model.getInstance().getViewFactory().getSelectedUserMode().set("Book Detail");
-                Model.getInstance().getViewFactory().getBookDisplayController().setDisplayBook(book);
             }
         });
     }

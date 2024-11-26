@@ -6,6 +6,7 @@ import com.jmc.library.Controllers.Interface.InterfaceManager;
 import com.jmc.library.Controllers.Notification.NotificationOverlay;
 import com.jmc.library.Controllers.Users.CartEntityController;
 import com.jmc.library.Models.BookModel;
+import com.jmc.library.Models.CartModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.fxml.Initializable;
@@ -41,18 +42,12 @@ public class BookDisplayController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setDisplayBook(BookModel.getInstance().getBookInfo());
-        if (displayBook == null) {
+        setMaterialListener();
+        if (BookModel.getInstance().getBookInfo() == null) {
             System.out.println("No book selected.");
             return;
         }
-        System.out.println("Book selected: " + displayBook.getBookName());
         setButtonListener();
-    }
-
-    public void setDisplayBook(BookInfo displayBook) {
-        this.displayBook = displayBook;
-        setMaterialListener();
     }
 
     private void setButtonListener() {
@@ -60,16 +55,15 @@ public class BookDisplayController implements Initializable {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
         });
         get_book_btn.setOnAction(actionEvent -> {
-            UserBookInfo userBookInfo = new UserBookInfo(displayBook.getBookName(),
-                    displayBook.getAuthorName(),
-                    displayBook.getBookId(),
+            UserBookInfo userBookInfo = new UserBookInfo(BookModel.getInstance().getBookInfo().getBookName(),
+                    BookModel.getInstance().getBookInfo().getAuthorName(),
+                    BookModel.getInstance().getBookInfo().getBookId(),
                     LocalDate.now(),
                     LocalDate.now(),
-                    displayBook.getLeastPrice(),
+                    BookModel.getInstance().getBookInfo().getLeastPrice(),
                     "Pending",
-                    displayBook.getLeastPrice(),
-                    displayBook.getISBN()
-                    );
+                    BookModel.getInstance().getBookInfo().getImageView()
+            );
             try {
                 addBookForUser(userBookInfo);
             } catch (IOException e) {
@@ -80,26 +74,23 @@ public class BookDisplayController implements Initializable {
 
 
     private void setMaterialListener() {
-        System.out.println(displayBook.getISBN());
-        if (displayBook.isExist()) {
-            book_name_txt_flw.getChildren().setAll(new Label(displayBook.getBookName()));
-            author_lbl.setText("Author: " + displayBook.getAuthorName());
-            publisher_lbl.setText("Publisher: " + displayBook.getPublisher());
-            isbn_lbl.setText("ISBN(13): " + displayBook.getISBN());
-            publication_date_lbl.setText("Publication Date: " + displayBook.getPublishedDate().toString());
-            book_genres_lbl.setText("Genres: " + displayBook.getGenre());
-            original_language_lbl.setText("Original Language: " + displayBook.getOriginalLanguage().toUpperCase());
+        if (BookModel.getInstance().getBookInfo().isExist()) {
+            book_name_txt_flw.getChildren().setAll(new Label(BookModel.getInstance().getBookInfo().getBookName()));
+            author_lbl.setText("Author: " + BookModel.getInstance().getBookInfo().getAuthorName());
+            publisher_lbl.setText("Publisher: " + BookModel.getInstance().getBookInfo().getPublisher());
+            isbn_lbl.setText("ISBN(13): " + BookModel.getInstance().getBookInfo().getISBN());
+            publication_date_lbl.setText("Publication Date: " + BookModel.getInstance().getBookInfo().getPublishedDate().toString());
+            book_genres_lbl.setText("Genres: " + BookModel.getInstance().getBookInfo().getGenre());
+            original_language_lbl.setText("Original Language: " + BookModel.getInstance().getBookInfo().getOriginalLanguage().toUpperCase());
             preview_txt_flw.setEditable(false);
             preview_txt_flw.setWrapText(true);
-            preview_txt_flw.setText(displayBook.getDescription());
-
-            book_img.setImage(new Image(Objects.requireNonNullElse(displayBook.getThumbnail(), getClass().getResource("/IMAGES/UnknownBookCover.png").toExternalForm())));
+            preview_txt_flw.setText(BookModel.getInstance().getBookInfo().getDescription());
+            book_img.setImage(BookModel.getInstance().getBookInfo().getImageView().getImage());
         }
     }
 
     public void addBookForUser(UserBookInfo addedBook) throws IOException {
-        System.out.println(addedBook.getBookName());
-        if(LibraryModel.getInstance().getUser().getCartEntityControllers().stream()
+        if(CartModel.getInstance().getUserCartInfo().getCartList().stream()
                 .anyMatch(cartEntityController -> cartEntityController
                         .getUserBookInfo().getBookId() == addedBook.getBookId())) {
             NotificationOverlay overlay = new NotificationOverlay("Book already in cart.", get_book_btn.getScene());
@@ -120,12 +111,8 @@ public class BookDisplayController implements Initializable {
             return;
         }
 
-        LibraryModel.getInstance().getUser()
-                .getCartEntityControllers().add(new CartEntityController(addedBook));
-
-        InterfaceManager.getInstance()
-                .getCartUpdateListener()
-                .onAddCartEntity(new CartEntityController(addedBook));
+        CartModel.getInstance().getUserCartInfo().getCartList().add(new CartEntityController(addedBook));
+        CartModel.getInstance().getUserCartInfo().AddCartEntity(new CartEntityController(addedBook));
 
         NotificationOverlay overlay = new NotificationOverlay("Book added to cart.", get_book_btn.getScene());
     }

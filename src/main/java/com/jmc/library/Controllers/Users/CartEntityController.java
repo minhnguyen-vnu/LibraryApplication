@@ -3,6 +3,7 @@ package com.jmc.library.Controllers.Users;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.GoogleBookAPI.GoogleBookAPIMethod;
 import com.jmc.library.Controllers.Interface.InterfaceManager;
+import com.jmc.library.Models.CartModel;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,7 +15,7 @@ import org.json.JSONObject;
 import java.util.ResourceBundle;
 import java.net.URL;
 
-public class CartEntityController extends com.jmc.library.Controllers.Users.User implements Initializable {
+public class CartEntityController implements Initializable {
     public ImageView book_img;
     public Label book_name_lbl;
     public Label author_lbl;
@@ -31,6 +32,7 @@ public class CartEntityController extends com.jmc.library.Controllers.Users.User
         this.userBookInfo = new UserBookInfo();
         this.day_borrow = 0;
     }
+
     public CartEntityController(UserBookInfo userBookInfo) {
         this.userBookInfo = userBookInfo;
         this.day_borrow  = (int) java.time.temporal.ChronoUnit.DAYS.between(
@@ -61,10 +63,10 @@ public class CartEntityController extends com.jmc.library.Controllers.Users.User
     }
 
     private void updCost() {
-        cost_lbl.setText(String.valueOf(userBookInfo.getSingleCost()* day_borrow));
+        cost_lbl.setText(String.valueOf(String.format("%.2f", userBookInfo.getSingleCost() * day_borrow)));
         userBookInfo.setReturnDate(userBookInfo.getPickedDate().plusDays(day_borrow - 1));
         userBookInfo.setTotalCost(userBookInfo.getSingleCost() * day_borrow);
-        InterfaceManager.getInstance().getCartUpdateListener().onCartUpdated();
+        CartModel.getInstance().getUserCartInfo().CartUpdate();
     }
 
     private void setButtonListener() {
@@ -83,7 +85,7 @@ public class CartEntityController extends com.jmc.library.Controllers.Users.User
         });
 
         erase_btn.setOnAction(actionEvent -> {
-            InterfaceManager.getInstance().getCartUpdateListener().onRemoveCartEntity(this);
+            CartModel.getInstance().getUserCartInfo().DeleteCartEntity(this);
         });
     }
 
@@ -103,22 +105,7 @@ public class CartEntityController extends com.jmc.library.Controllers.Users.User
             }
         });
 
-        num_day_borrow_txt_flw.setOnAction(actionEvent -> {
-            updCost();
-        });
-
-        System.out.println(userBookInfo.getISBN());
-        JSONObject bookInfo = new GoogleBookAPIMethod().searchBook(userBookInfo.getISBN());
-        JSONArray items = bookInfo.getJSONArray("items");
-        int totalItems = new GoogleBookAPIMethod().getTotalItems(bookInfo) - 1;
-        if (items != null) {
-            JSONObject volumeInfo = items.getJSONObject(totalItems).getJSONObject("volumeInfo");
-            String thumbnail = volumeInfo.has("imageLinks") ? volumeInfo.getJSONObject("imageLinks").getString("thumbnail") : null;
-            if (thumbnail != null) {
-                book_img.setImage(new javafx.scene.image.Image(thumbnail));
-            } else {
-                book_img.setImage(new javafx.scene.image.Image("https://via.placeholder.com/150"));
-            }
-        }
+        num_day_borrow_txt_flw.setOnAction(actionEvent -> updCost());
+        book_img.setImage(userBookInfo.getImageView().getImage());
     }
 }

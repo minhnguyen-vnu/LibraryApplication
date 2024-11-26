@@ -53,12 +53,12 @@ public class UserPendingController extends UserLibraryTable implements Initializ
                 "    r.bookName,\n" +
                 "    b.authorName,\n" +
                 "    r.bookId,\n" +
-                "    r.pickedDate,\n" +
+                "    r.requestDate,\n" +
                 "    r.returnDate,\n" +
                 "    r.cost,\n" +
                 "    r.requestStatus, \n"+
                 "    b.imageView\n" +
-                "from userRequest r\n" +
+                "from PendingRequest r\n" +
                 "join bookStore b using(bookId)\n" +
                 "where r.username = ? order by r.requestStatus;", LibraryModel.getInstance().getUser().getUsername());
         dbQuery.setOnSucceeded(event -> {
@@ -72,7 +72,7 @@ public class UserPendingController extends UserLibraryTable implements Initializ
                     imageView.setFitHeight(75);
                     imageView.setFitWidth(50);
                     UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
-                            resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
+                            resultSet.getInt("bookId"), resultSet.getDate("requestDate").toLocalDate(),
                             resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"), imageView);
                     bookList.add(userBookInfo);
                 }
