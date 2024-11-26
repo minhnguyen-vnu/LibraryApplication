@@ -26,7 +26,6 @@ public class LoginController implements Initializable {
     public Button login_btn;
     public Label error_lbl;
     public Label signup_lbl;
-    public Button register;
     public TextFlow welcome_text_txt_flw;
     public ImageView loading_img;
     private RotateTransition rotateTransition;
@@ -79,10 +78,17 @@ public class LoginController implements Initializable {
                             error_lbl.setText("Login Successfully");
                             error_lbl.setStyle("-fx-text-fill: green");
                             error_lbl.setAlignment(Pos.CENTER_LEFT);
-                            LibraryModel.getInstance().setUser(acc_address_fld.getText(), password_fld.getText());
-//                            LibraryModel.getInstance().getUser().loadPendingBooks();
                         });
+                        LibraryModel.getInstance().setUser(acc_address_fld.getText(), password_fld.getText());
                         LibraryModel.getInstance().getUser().loadPendingBooks();
+                        LibraryModel.getInstance().getUser().loadHiredBooks();
+                        DBUpdate dbUpdate = new DBUpdate("update users\n" +
+                                "set status = ?\n" +
+                                "where username = ?;", "online", LibraryModel.getInstance().getUser().getUsername());
+                        Thread thread = new Thread(dbUpdate);
+                        thread.setDaemon(true);
+                        thread.start();
+
                     }
                     Platform.runLater(() -> stageTransforming(isAdmin));
                 } else {
@@ -123,7 +129,6 @@ public class LoginController implements Initializable {
             Model.getInstance().getViewFactory().showUserWindow();
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Restart");
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
-
         }
     }
 }

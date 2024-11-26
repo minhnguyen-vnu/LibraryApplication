@@ -27,6 +27,7 @@ public class AdminLibraryController extends LibraryController implements Initial
     public Button go_to_dashboard_btn;
     public Button go_to_pending_btn;
     public Button reload_btn;
+    public Button user_management_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -55,6 +56,7 @@ public class AdminLibraryController extends LibraryController implements Initial
         go_to_dashboard_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Dashboard View"));
         go_to_request_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Request Management"));
         go_to_pending_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Pending Request Management"));
+        user_management_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin User Management"));
         log_out_btn.setOnAction(actionEvent -> stageTransforming());
     }
 

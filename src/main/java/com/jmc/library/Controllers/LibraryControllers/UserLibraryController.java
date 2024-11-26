@@ -3,6 +3,7 @@ package com.jmc.library.Controllers.LibraryControllers;
 import com.jmc.library.Assets.BookInfo;
 
 import com.jmc.library.Controllers.Users.UserInfoOverlay;
+import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Models.BookModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
@@ -73,6 +74,12 @@ public class UserLibraryController extends LibraryController implements Initiali
             Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(currentStage);
             Model.getInstance().getViewFactory().showAuthenticationWindow();
+            DBUpdate dbUpdate = new DBUpdate("update users\n" +
+                    "set status = ?\n" +
+                    "where username = ?;", "offline", LibraryModel.getInstance().getUser().getUsername());
+            Thread thread = new Thread(dbUpdate);
+            thread.setDaemon(true);
+            thread.start();
         });
         cart_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Cart");
