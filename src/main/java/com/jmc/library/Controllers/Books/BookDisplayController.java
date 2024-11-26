@@ -2,13 +2,9 @@ package com.jmc.library.Controllers.Books;
 
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.UserBookInfo;
-import com.jmc.library.Controllers.Interface.InterfaceManager;
 import com.jmc.library.Controllers.Notification.NotificationOverlay;
 import com.jmc.library.Controllers.Users.CartEntityController;
-import com.jmc.library.Models.BookModel;
-import com.jmc.library.Models.CartModel;
-import com.jmc.library.Models.LibraryModel;
-import com.jmc.library.Models.Model;
+import com.jmc.library.Models.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,7 +17,6 @@ import javafx.scene.text.TextFlow;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class BookDisplayController implements Initializable {
@@ -38,11 +33,9 @@ public class BookDisplayController implements Initializable {
     public ImageView book_img;
     public HBox rate_holder;
 
-    private BookInfo displayBook;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setMaterialListener();
+        addListeners();
         if (BookModel.getInstance().getBookInfo() == null) {
             System.out.println("No book selected.");
             return;
@@ -62,7 +55,7 @@ public class BookDisplayController implements Initializable {
                     LocalDate.now(),
                     BookModel.getInstance().getBookInfo().getLeastPrice(),
                     "Pending",
-                    BookModel.getInstance().getBookInfo().getImageView()
+                    new ImageView(BookModel.getInstance().getBookInfo().getImageView().getImage())
             );
             try {
                 addBookForUser(userBookInfo);
@@ -73,20 +66,24 @@ public class BookDisplayController implements Initializable {
     }
 
 
-    private void setMaterialListener() {
-        if (BookModel.getInstance().getBookInfo().isExist()) {
-            book_name_txt_flw.getChildren().setAll(new Label(BookModel.getInstance().getBookInfo().getBookName()));
-            author_lbl.setText("Author: " + BookModel.getInstance().getBookInfo().getAuthorName());
-            publisher_lbl.setText("Publisher: " + BookModel.getInstance().getBookInfo().getPublisher());
-            isbn_lbl.setText("ISBN(13): " + BookModel.getInstance().getBookInfo().getISBN());
-            publication_date_lbl.setText("Publication Date: " + BookModel.getInstance().getBookInfo().getPublishedDate().toString());
-            book_genres_lbl.setText("Genres: " + BookModel.getInstance().getBookInfo().getGenre());
-            original_language_lbl.setText("Original Language: " + BookModel.getInstance().getBookInfo().getOriginalLanguage().toUpperCase());
-            preview_txt_flw.setEditable(false);
-            preview_txt_flw.setWrapText(true);
-            preview_txt_flw.setText(BookModel.getInstance().getBookInfo().getDescription());
-            book_img.setImage(BookModel.getInstance().getBookInfo().getImageView().getImage());
-        }
+    private void addListeners() {
+        book_name_txt_flw.getChildren().setAll(new Label(BookModel.getInstance().getBookInfo().getBookName()));
+        author_lbl.setText("Author: " + BookModel.getInstance().getBookInfo().getAuthorName());
+        publisher_lbl.setText("Publisher: " + BookModel.getInstance().getBookInfo().getPublisher());
+        isbn_lbl.setText("ISBN(13): " + BookModel.getInstance().getBookInfo().getISBN());
+        publication_date_lbl.setText("Publication Date: " + BookModel.getInstance().getBookInfo().getPublishedDate().toString());
+        book_genres_lbl.setText("Genres: " + BookModel.getInstance().getBookInfo().getGenre());
+        original_language_lbl.setText("Original Language: " + BookModel.getInstance().getBookInfo().getOriginalLanguage().toUpperCase());
+        preview_txt_flw.setEditable(false);
+        preview_txt_flw.setWrapText(true);
+        preview_txt_flw.setText(BookModel.getInstance().getBookInfo().getDescription());
+        book_img.setImage(BookModel.getInstance().getBookInfo().getImageView().getImage());
+
+        BookModel.getInstance().bookInfoProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                addListeners();
+            }
+        });
     }
 
     public void addBookForUser(UserBookInfo addedBook) throws IOException {

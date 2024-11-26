@@ -57,6 +57,14 @@ public class LibraryTable {
     protected void setTable() {
         bookList = FXCollections.observableArrayList();
         store_tb.setItems(bookList);
+
+
+        bookList.addListener(new ListChangeListener<BookInfo>() {
+            @Override
+            public void onChanged(Change<? extends BookInfo> change) {
+                System.out.println("-23");
+            }
+        });
     }
 
     protected void addBinding() {

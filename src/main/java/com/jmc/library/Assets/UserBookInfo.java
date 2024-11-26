@@ -35,6 +35,8 @@ public class UserBookInfo {
         this.returnDate = returnDate;
         this.totalCost = totalCost;
         this.requestStatus = status;
+        imageView.setFitHeight(75);
+        imageView.setFitWidth(50);
         this.imageView = imageView;
         this.singleCost = totalCost;
     }

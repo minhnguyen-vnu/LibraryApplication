@@ -1,13 +1,15 @@
 package com.jmc.library.Models;
 
 import com.jmc.library.Assets.BookInfo;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 public class BookModel {
     private static BookModel bookModel;
-    private static BookInfo bookInfo;
+    private SimpleObjectProperty<BookInfo> bookInfo;
 
     private BookModel() {
-        BookModel.bookInfo = new BookInfo();
+        bookInfo = new SimpleObjectProperty<>();
     }
 
     public static synchronized BookModel getInstance(){
@@ -16,10 +18,14 @@ public class BookModel {
     }
 
     public BookInfo getBookInfo() {
-        return bookInfo;
+        return bookInfo.get();
     }
 
     public void setBookInfo(BookInfo bookInfo) {
-        BookModel.bookInfo = bookInfo;
+        this.bookInfo.set(bookInfo);
+    }
+
+    public ObjectProperty<BookInfo> bookInfoProperty() {
+        return bookInfo;
     }
 }

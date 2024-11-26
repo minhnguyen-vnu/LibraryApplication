@@ -11,6 +11,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class UserInfoController {
 
@@ -114,12 +115,14 @@ public class UserInfoController {
                 mssv,
                 ImageUtils.imageToByteArray(avatar.getImage()),
                 LibraryModel.getInstance().getUser().getUsername()
-                );
+        );
         dbUpdate.setOnSucceeded(event -> {
             LibraryModel.getInstance().getUser().loadUserInfo();
             setStatusMessage("Saved completed", "green");
+//            System.out.println(Arrays.toString(ImageUtils.imageToByteArray(avatar.getImage())));
         });
         Thread thread = new Thread(dbUpdate);
+        thread.setDaemon(true);
         thread.start();
     }
 

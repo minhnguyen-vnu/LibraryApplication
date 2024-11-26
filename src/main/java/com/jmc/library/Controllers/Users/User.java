@@ -30,12 +30,10 @@ public class User {
 
     private ObservableList<UserBookInfo> PendingBookList;
     private ObservableList<UserBookInfo> HiredBookList;
-    private ObservableList<CartEntityController> cartEntityControllers;
 
     public User() {
         this.PendingBookList = FXCollections.observableArrayList();
         this.HiredBookList = FXCollections.observableArrayList();
-        this.cartEntityControllers = FXCollections.observableArrayList();
     }
 
     public User(String username, String password, String name, LocalDate birthDate, int ID, Image avatar, double totalPaid, int totalBorrowed, String status) {
@@ -123,14 +121,6 @@ public class User {
         this.HiredBookList = hiredBookList;
     }
 
-    public ObservableList<CartEntityController> getCartEntityControllers() {
-        return cartEntityControllers;
-    }
-
-    public void setCartEntityControllers(ObservableList<CartEntityController> cartEntityControllers) {
-        this.cartEntityControllers = cartEntityControllers;
-    }
-
     public void loadUserInfo() {
         DBQuery dbQuery = new DBQuery("select * from users where username = ?", this.username);
         dbQuery.setOnSucceeded(event -> {
@@ -146,8 +136,11 @@ public class User {
 
                     if (blob != null && blob.length() > 0) {
                         byte[] imageBytes = blob.getBytes(1, (int) blob.length());
-                        this.avatar = ImageUtils.byteArrayToImage(imageBytes);
+                        Platform.runLater(() -> {
+                            this.avatar = ImageUtils.byteArrayToImage(imageBytes);
+                        });
                     } else {
+                        System.out.println(1);
                         this.avatar = new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/avatar.png")).toExternalForm());
                     }
                 }
@@ -244,22 +237,8 @@ public class User {
     }
 
 
-    public String getSubTotal() {
-        double total = this.cartEntityControllers.stream().mapToDouble(cartEntityController -> cartEntityController.getUserBookInfo().getTotalCost()).sum();
-        return Double.toString(total);
-    }
-
-    public String getAdditional() {
-        return "0.00";
-    }
-
-    public String getTotal() {
-        return String.format("%.2f",Double.parseDouble(getSubTotal()) + Double.parseDouble(getAdditional()));
-    }
-
     public void userPayment() {
         for(CartEntityController cartEntityController : CartModel.getInstance().getUserCartInfo().getCartList()) {
-            System.out.println(cartEntityController.getUserBookInfo());
             LibraryModel.getInstance().getUser().getPendingBookList()
                     .add(cartEntityController.getUserBookInfo());
 
@@ -275,19 +254,14 @@ public class User {
             );
 
             Thread thread = new Thread(dbUpdate);
+            thread.setDaemon(true);
             thread.start();
         }
     }
 
-    public void clearCart() {
-        this.cartEntityControllers.clear();
-    }
-
     public void resetAll() {
-        System.out.println("User.resetAll");
         this.PendingBookList.clear();
         this.HiredBookList.clear();
-        this.cartEntityControllers.clear();
 
         this.username = null;
     }

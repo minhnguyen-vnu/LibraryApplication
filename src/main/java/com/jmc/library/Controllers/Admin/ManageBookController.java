@@ -71,18 +71,6 @@ public class ManageBookController extends LibraryTable implements Initializable 
         return ok;
     }
 
-    private boolean isExist() {
-        boolean ok = isFilled();
-
-        try {
-            int number = Integer.parseInt(enter_book_id_txt_fld.getText());
-        } catch (Exception e) {
-            ok = false;
-        }
-
-        return ok;
-    }
-
     private void clear() {
         enter_ISBN_txt_fld.clear();
         enter_book_id_txt_fld.clear();
@@ -158,7 +146,8 @@ public class ManageBookController extends LibraryTable implements Initializable 
         update_book_btn.setOnAction(actionEvent -> {
             boolean ok = isFilled();
 
-            if (ok) {int BookId = Integer.parseInt(enter_book_id_txt_fld.getText());
+            if (ok) {
+                int BookId = Integer.parseInt(enter_book_id_txt_fld.getText());
                 int Quantity = Integer.parseInt(enter_quantity_txt_fld.getText());
                 double Price = Double.parseDouble(enter_price_txt_fld.getText());
                 String ISBN = enter_ISBN_txt_fld.getText();

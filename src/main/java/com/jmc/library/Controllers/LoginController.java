@@ -79,7 +79,9 @@ public class LoginController implements Initializable {
                             error_lbl.setStyle("-fx-text-fill: green");
                             error_lbl.setAlignment(Pos.CENTER_LEFT);
                         });
-                        LibraryModel.getInstance().setUser(acc_address_fld.getText(), password_fld.getText());
+                        LibraryModel.getInstance().setUser(acc_address_fld.getText());
+                        acc_address_fld.clear();
+                        password_fld.clear();
                         LibraryModel.getInstance().getUser().loadPendingBooks();
                         LibraryModel.getInstance().getUser().loadHiredBooks();
                         DBUpdate dbUpdate = new DBUpdate("update users\n" +

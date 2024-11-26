@@ -2,6 +2,7 @@ package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.UserBookInfo;
+import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
@@ -201,6 +202,13 @@ public abstract class UserLibraryTable {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
         });
         log_out_btn.setOnAction(actionEvent -> {
+            DBUpdate dbUpdate = new DBUpdate("update users\n" +
+                    "set status = ?\n" +
+                    "where username = ?;", "offline", LibraryModel.getInstance().getUser().getUsername());
+            Thread thread = new Thread(dbUpdate);
+            thread.setDaemon(true);
+            thread.start();
+            LibraryModel.getInstance().getUser().resetAll();
             stageTransforming();
         });
 

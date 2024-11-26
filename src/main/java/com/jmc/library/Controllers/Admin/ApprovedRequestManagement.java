@@ -28,7 +28,7 @@ public class ApprovedRequestManagement extends RequestManagement implements Init
 
     @Override
     protected void ChoiceBoxInitialization() {
-        status_choice_box.setItems(FXCollections.observableArrayList("Pending", "Need_to_payment", ""));
+        status_choice_box.setItems(FXCollections.observableArrayList("Borrowing", "Returned", ""));
     }
 
 }

@@ -88,7 +88,7 @@ public class PendingRequestManagement extends RequestManagement implements Initi
                         System.out.println(foundElement);
                         DBUpdate dbUpdate = new DBUpdate("insert into userRequest(bookId, bookName, username, pickedDate, returnDate, cost, requestStatus)\n" +
                                 "values(?, ?, ?, ?, ?, ?, ?); ", foundElement.getBookId(), foundElement.getBookName(), foundElement.getUsername(),
-                                foundElement.getPickedDate(), foundElement.getReturnDate(), foundElement.getTotalCost(), "Pending");
+                                foundElement.getPickedDate(), foundElement.getReturnDate(), foundElement.getTotalCost(), "Borrowing");
                         Thread thread = new Thread(dbUpdate);
                         thread.setDaemon(true);
                         thread.start();

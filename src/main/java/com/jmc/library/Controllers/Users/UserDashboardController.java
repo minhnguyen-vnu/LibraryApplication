@@ -16,6 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import javax.sound.sampled.Line;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -107,6 +108,13 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
         });
 
         log_out_btn.setOnAction(actionEvent -> {
+            DBUpdate dbUpdate = new DBUpdate("update users\n" +
+                    "set status = ?\n" +
+                    "where username = ?;", "offline", LibraryModel.getInstance().getUser().getUsername());
+            Thread thread = new Thread(dbUpdate);
+            thread.setDaemon(true);
+            thread.start();
+            LibraryModel.getInstance().getUser().resetAll();
             stageTransforming();
         });
     }

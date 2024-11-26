@@ -2,6 +2,7 @@ package com.jmc.library.Controllers.LibraryControllers;
 
 import com.jmc.library.Assets.BookInfo;
 
+import com.jmc.library.Controllers.Users.User;
 import com.jmc.library.Controllers.Users.UserInfoOverlay;
 import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Models.BookModel;
@@ -9,8 +10,10 @@ import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.concurrent.Task;
 import javafx.fxml.Initializable;
+import javafx.scene.LightBase;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -56,6 +59,7 @@ public class UserLibraryController extends LibraryController implements Initiali
     protected void addBinding() {
         super.addBinding();
         book_cover_tb_cl.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+
     }
 
     private void setButtonListener() {
@@ -69,7 +73,6 @@ public class UserLibraryController extends LibraryController implements Initiali
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
         });
         log_out_btn.setOnAction(actionEvent -> {
-            LibraryModel.getInstance().getUser().resetAll();
             Model.getInstance().getViewFactory().resetAll();
             Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(currentStage);
@@ -80,6 +83,7 @@ public class UserLibraryController extends LibraryController implements Initiali
             Thread thread = new Thread(dbUpdate);
             thread.setDaemon(true);
             thread.start();
+            LibraryModel.getInstance().getUser().resetAll();
         });
         cart_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Cart");
