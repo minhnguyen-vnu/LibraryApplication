@@ -1,7 +1,5 @@
 package com.jmc.library.Controllers.Users;
 
-import com.jmc.library.Controllers.Interface.CartUpdateListener;
-import com.jmc.library.Controllers.Interface.InterfaceManager;
 import com.jmc.library.Controllers.Notification.NotificationOverlay;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
@@ -15,10 +13,9 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.channels.OverlappingFileLockException;
 import java.util.ResourceBundle;
 
-public class UserCartController extends com.jmc.library.Controllers.Users.User implements Initializable, CartUpdateListener {
+public class UserCartController extends com.jmc.library.Controllers.Users.User implements Initializable {
     public Button back_library_btn;
     public ChoiceBox<String> sort_choice_box;
     public VBox list_book_vbox;
@@ -28,25 +25,24 @@ public class UserCartController extends com.jmc.library.Controllers.Users.User i
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        InterfaceManager.getInstance().setCartUpdateListener(this);
         setButtonListener();
         setMaterialListener();
         setListBookVBox();
     }
 
-    @Override
+//    @Override
     public void onCartUpdated() {
         updateCartSummary();
     }
 
-    @Override
+//    @Override
     public void onRemoveCartEntity(CartEntityController cartEntityController) {
         LibraryModel.getInstance().getUser().removeCartEntityController(cartEntityController);
         setListBookVBox();
         updateCartSummary();
     }
 
-    @Override
+//    @Override
     public void onAddCartEntity(CartEntityController cartEntityController) {
         setListBookVBox();
         updateCartSummary();

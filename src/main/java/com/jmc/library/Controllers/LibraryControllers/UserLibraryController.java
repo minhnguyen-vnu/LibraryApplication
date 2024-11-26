@@ -6,6 +6,7 @@ import com.jmc.library.Controllers.Users.UserInfoOverlay;
 import com.jmc.library.Models.BookModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
+import com.jmc.library.View.ViewFactory;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
@@ -91,7 +92,8 @@ public class UserLibraryController extends LibraryController implements Initiali
         store_tb.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getClickCount() == 2) {
                 BookInfo book = store_tb.getSelectionModel().getSelectedItem();
-                BookModel.getInstance().setBookInfo(book);
+//                BookModel.getInstance().setBookInfo(book);
+                Model.getInstance().getViewFactory().getBookDisplayController().setDisplayBook(book);
                 Model.getInstance().getViewFactory().getSelectedUserMode().set("Book Detail");
             }
         });

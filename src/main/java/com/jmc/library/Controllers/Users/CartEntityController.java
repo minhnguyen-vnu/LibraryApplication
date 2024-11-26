@@ -3,6 +3,7 @@ package com.jmc.library.Controllers.Users;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.GoogleBookAPI.GoogleBookAPIMethod;
 import com.jmc.library.Controllers.Interface.InterfaceManager;
+import com.jmc.library.Models.Model;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -68,7 +69,8 @@ public class CartEntityController extends com.jmc.library.Controllers.Users.User
         userBookInfo.setReturnDate(userBookInfo.getPickedDate().plusDays(day_borrow - 1));
         userBookInfo.setTotalCost(userBookInfo.getTotalCost() / old_day_borrow * day_borrow);
         old_day_borrow = day_borrow;
-        InterfaceManager.getInstance().getCartUpdateListener().onCartUpdated();
+//        InterfaceManager.getInstance().getCartUpdateListener().onCartUpdated();
+        Model.getInstance().getViewFactory().getUserCartController().onCartUpdated();
     }
 
     private void setButtonListener() {
@@ -87,7 +89,9 @@ public class CartEntityController extends com.jmc.library.Controllers.Users.User
         });
 
         erase_btn.setOnAction(actionEvent -> {
-            InterfaceManager.getInstance().getCartUpdateListener().onRemoveCartEntity(this);
+//            InterfaceManager.getInstance().getCartUpdateListener().onRemoveCartEntity(this);
+            Model.getInstance().getViewFactory().getUserCartController().onRemoveCartEntity(this);
+
         });
     }
 

@@ -125,8 +125,7 @@ public class BookDisplayController implements Initializable {
         LibraryModel.getInstance().getUser()
                 .getCartEntityControllers().add(new CartEntityController(addedBook));
 
-        InterfaceManager.getInstance()
-                .getCartUpdateListener()
+        Model.getInstance().getViewFactory().getUserCartController()
                 .onAddCartEntity(new CartEntityController(addedBook));
 
         NotificationOverlay overlay = new NotificationOverlay("Book added to cart.", get_book_btn.getScene());

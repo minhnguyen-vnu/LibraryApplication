@@ -112,6 +112,7 @@ public class User {
     }
 
     public ObservableList<CartEntityController> getCartEntityControllers() {
+
         return cartEntityControllers;
     }
 

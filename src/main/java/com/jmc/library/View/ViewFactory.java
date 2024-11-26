@@ -5,6 +5,7 @@ import com.jmc.library.Controllers.Admin.AdminView;
 import com.jmc.library.Controllers.Authentication;
 import com.jmc.library.Controllers.Books.BookDisplayController;
 import com.jmc.library.Controllers.LibraryControllers.UserLibraryController;
+import com.jmc.library.Controllers.Users.UserCartController;
 import com.jmc.library.Controllers.Users.UserView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -41,6 +42,7 @@ public class ViewFactory {
 
     private BookDisplayController bookDisplayController;
     private UserLibraryController userStore;
+    private UserCartController userCartController;
 
     public ViewFactory() {
         this.selectedAuthenticatonMode = new SimpleStringProperty("");
@@ -133,13 +135,24 @@ public class ViewFactory {
     public Node getUserCart() {
         if (userCart == null) {
             try {
-                userCart = new FXMLLoader(getClass().getResource("/FXML/Cart.fxml")).load();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Cart.fxml"));
+                userCart = loader.load();
+                userCartController = loader.getController();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return userCart;
     }
+
+    public UserCartController getUserCartController() {
+        if(userCartController == null) {
+            getUserCart();
+        }
+        return userCartController;
+    }
+
+
 
     public Node getBookDetail() {
         if (bookDetail == null) {
@@ -171,6 +184,9 @@ public class ViewFactory {
     }
 
     public BookDisplayController getBookDisplayController() {
+        if(bookDisplayController == null) {
+            getBookDetail();
+        }
         return bookDisplayController;
     }
 
