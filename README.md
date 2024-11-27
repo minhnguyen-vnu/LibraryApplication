@@ -6,7 +6,7 @@
   + Nguyễn Lê Minh - MSV : 23020114
   + Nguyễn Tùng Lâm - MSV : 23020096
   + Đỗ Đình Nam - MSV : 23020120
-Bài tập lớn : Phát triển phần mềm quản lý thư viện
++ Bài tập lớn : Phát triển phần mềm quản lý thư viện
 
 # Mô tả
 
