@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UserCartController extends com.jmc.library.Controllers.Users.User implements Initializable {
+public class UserCartController implements Initializable {
     public Button back_library_btn;
     public ChoiceBox<String> sort_choice_box;
     public VBox list_book_vbox;

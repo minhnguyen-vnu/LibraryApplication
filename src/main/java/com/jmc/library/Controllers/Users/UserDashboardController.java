@@ -1,6 +1,7 @@
 package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.UserBookInfo;
+import com.jmc.library.Assets.UserDashboardInfo;
 import com.jmc.library.Database.*;
 import com.jmc.library.Models.DashboardModel;
 import com.jmc.library.Models.LibraryModel;
@@ -27,7 +28,11 @@ import java.time.Month;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class UserDashboardController extends com.jmc.library.Controllers.Users.User implements Initializable {
+public class UserDashboardController implements Initializable {
+
+    public int countReadBook;
+    public int countHiredBook;
+    public int countNewReadBook;
 
     public Button go_to_library_btn;
     public Button go_to_store_btn;
@@ -92,6 +97,10 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
             }
         });
 
+        reload_btn.setOnAction(event -> {
+            onDashboardUpdate();
+        });
+
         log_out_btn.setOnAction(actionEvent -> {
             DBUpdate dbUpdate = new DBUpdate("update users\n" +
                     "set status = ?\n" +
@@ -102,6 +111,33 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
             LibraryModel.getInstance().getUser().resetAll();
             stageTransforming();
         });
+    }
+    public void onDashboardUpdate() {
+        DBQuery dbQuery = new DBQuery("select pickedDate from userRequest where userName = ?", LibraryModel.getInstance().getUser().getUsername());
+        dbQuery.setOnSucceeded( event -> {
+            ResultSet resultSet = dbQuery.getValue();
+            int countHiredBook = 0;
+
+            for (int i = 0; i < 12; i++) {
+                borrowedBooks.set(i, 0);
+            }
+            try {
+                while (resultSet.next()) {
+                    LocalDate pickedDate = resultSet.getDate("pickedDate").toLocalDate();
+                    int month = pickedDate.getMonthValue() - 1;
+                    borrowedBooks.set(month, borrowedBooks.get(month) + 1);
+                    countHiredBook ++;
+                }
+                resultSet.close();
+                DashboardModel.getInstance().getUserDashboardInfo().setBorrowedBooks((ObservableList<Integer>) borrowedBooks);
+                DashboardModel.getInstance().getUserDashboardInfo().setCountHiredBook(countHiredBook);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        });
+        Thread thread = new Thread(dbQuery);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     private void stageTransforming() {
@@ -155,7 +191,7 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
                 total_read_book_lbl.setText(newVal);
                 total_hired_book_lbl.setText(newVal);
                 new_books_read_lbl.setText(newVal);
-
+                System.out.println("Total hired book: " + newVal);
                 welcome_username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
             }
         });
