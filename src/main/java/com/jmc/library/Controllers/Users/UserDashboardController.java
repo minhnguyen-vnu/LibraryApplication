@@ -1,11 +1,13 @@
 package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.UserBookInfo;
-import com.jmc.library.Controllers.Interface.DashboardUpdateListener;
-import com.jmc.library.Controllers.Interface.InterfaceManager;
 import com.jmc.library.Database.*;
+import com.jmc.library.Models.DashboardModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
+import javafx.beans.property.ListProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -16,15 +18,16 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
-import javax.sound.sampled.Line;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class UserDashboardController extends com.jmc.library.Controllers.Users.User implements Initializable, DashboardUpdateListener {
+public class UserDashboardController extends com.jmc.library.Controllers.Users.User implements Initializable {
 
     public Button go_to_library_btn;
     public Button go_to_store_btn;
@@ -42,7 +45,10 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
     public Label new_books_read_lbl;
     public Label total_hired_book_lbl;
 
-    public ListView<Pair<String, String>> hot_book_list;
+    public ListView<String> hot_book_list;
+
+    public List<Integer> borrowedBooks;
+    public List<Integer> readBooks;
 
     public LineChart<String, Number> over_view_line_chart;
     public NumberAxis book_borrowed_over_view_na;
@@ -54,31 +60,9 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        InterfaceManager.getInstance().setDashboardUpdateListener(this);
         addBinding();
         setButtonListener();
         setMaterialListener();
-    }
-
-    @Override
-    public void onDashBoardUpdate() {
-        ObservableList<UserBookInfo> bookList = LibraryModel
-                .getInstance().getUser().getHiredBookList();
-        int countReadBook = 0;
-        int countHiredBook = 0;
-        int countNewReadBook = 0;
-        for (UserBookInfo book : bookList) {
-            if (book.getReturnDate().isBefore(LocalDate.now())) {
-                countReadBook ++;
-                if(book.getReturnDate().isBefore(LocalDate.now().minusDays(7))) {
-                    countNewReadBook ++;
-                }
-            }
-            countHiredBook ++;
-        }
-        total_read_book_lbl.setText(String.valueOf(countReadBook));
-        new_books_read_lbl.setText(String.valueOf(countNewReadBook));
-        total_hired_book_lbl.setText(String.valueOf(countHiredBook));
     }
 
     private void setButtonListener() {
@@ -128,7 +112,6 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
     }
 
     private void setMaterialListener() {
-        //lam sau
         view_all_lbl.setOnMouseClicked(mouseEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
         });
@@ -137,40 +120,80 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
     }
 
     private void setHotBookList() {
-        try {
-            ResultSet resultSet = DBUtlis.executeQuery("select bookName, " +
-                    "authorName from bookStore order by quantityInStock DESC limit 3;");
-            while (resultSet.next()) {
-                hot_book_list.getItems().add(new Pair<>(resultSet.getString("bookName"),
-                        resultSet.getString("authorName")));
+        DBQuery dbQuery = new DBQuery("select bookName from bookStore order by quantityInStock DESC limit 3;");
+        dbQuery.setOnSucceeded(event -> {
+            try {
+                ResultSet resultSet = dbQuery.getValue();
+                while (resultSet.next()) {
+                    hot_book_list.getItems().add(resultSet.getString("bookName"));
+                }
+                resultSet.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        });
+
+        Thread thread = new Thread(dbQuery);
+        thread.setDaemon(true);
+        thread.start();
     }
+
     private void addBinding() {
         setHotBookList();
-        System.err.println("UserDashboardController.addBinding");
-        onDashBoardUpdate();
+        total_read_book_lbl.setText(String.valueOf(DashboardModel.getInstance().getUserDashboardInfo().getCountReadBook()));
+        total_hired_book_lbl.setText(String.valueOf(DashboardModel.getInstance().getUserDashboardInfo().getCountHiredBook()));
+        new_books_read_lbl.setText(String.valueOf(DashboardModel.getInstance().getUserDashboardInfo().getCountNewReadBook()));
+
+        borrowedBooks = DashboardModel.getInstance().getUserDashboardInfo().getBorrowedBooks();
+        readBooks = DashboardModel.getInstance().getUserDashboardInfo().getReadBooks();
+        setChart();
+
+        DashboardModel.getInstance().getUserDashboardInfo().getTotal_hired_book_lbl().textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldVal, String newVal) {
+                total_read_book_lbl.setText(newVal);
+                total_hired_book_lbl.setText(newVal);
+                new_books_read_lbl.setText(newVal);
+
+                welcome_username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
+            }
+        });
+
+        DashboardModel.getInstance().getUserDashboardInfo().borrowedBooksProperty().addListener((observableValue, oldValue, newValue) -> {
+            borrowedBooks = newValue;
+            total_hired_book_lbl.setText(String.valueOf(DashboardModel.getInstance().getUserDashboardInfo().getCountHiredBook()));
+            if (borrowedBooks.size() == 12) {
+                setChart();
+            }
+        });
+
+        DashboardModel.getInstance().getUserDashboardInfo().readBooksProperty().addListener((observableValue, oldValue, newValue) -> {
+            readBooks = newValue;
+            total_read_book_lbl.setText(String.valueOf(DashboardModel.getInstance().getUserDashboardInfo().getCountReadBook()));
+            if (borrowedBooks.size() == 12) {
+                setChart();
+            }
+        });
+    }
+
+    private void setChart() {
+        clearChart();
         setOverViewLineChart();
         setReadAndHiredBarChart();
+    }
+
+    private void clearChart() {
+        over_view_line_chart.getData().clear();
+        read_and_hired_bar_chart.getData().clear();
     }
 
     private void setOverViewLineChart() {
         over_view_line_chart.setTitle("Book Borrowed Overview");
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Book Borrowed");
-        int[] borrowedBook = new int[12];
-        for (UserBookInfo book : LibraryModel.getInstance().getUser().getHiredBookList()) {
-            if (book.getPickedDate().getYear() == LocalDate.now().getYear()
-                    || (book.getPickedDate().getYear() == LocalDate.now().getYear()
-                    && book.getPickedDate().getMonthValue() >= LocalDate.now().getMonthValue())) {
-                borrowedBook[book.getPickedDate().getMonthValue() - 1] ++;
-            }
-        }
         int startMonth = LocalDate.now().getMonthValue() + 1;
         for(int i = startMonth; i < startMonth + 12; i ++) {
-            series.getData().add(new XYChart.Data<>(Month.of((i - 1) % 12 + 1).toString(), borrowedBook[(i - 1) % 12]));
+            series.getData().add(new XYChart.Data<>(Month.of((i - 1) % 12 + 1).toString(), borrowedBooks.get((i - 1) % 12)));
         }
         over_view_line_chart.getData().add(series);
     }
@@ -180,35 +203,16 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         series1.setName("Read");
 
-        int[] readBook = new int[12];
-        for (UserBookInfo book : LibraryModel.getInstance().getUser().getHiredBookList()) {
-            if (book.getReturnDate().getYear() == LocalDate.now().getYear()
-                    || (book.getReturnDate().getYear() == LocalDate.now().getYear()
-                    && book.getReturnDate().getMonthValue() >= LocalDate.now().getMonthValue())) {
-                if (book.getReturnDate().isBefore(LocalDate.now())) {
-                    readBook[book.getReturnDate().getMonthValue() - 1] ++;
-                }
-            }
-        }
         int startMonth = LocalDate.now().getMonthValue() + 1;
         for(int i = startMonth; i < startMonth + 12; i ++) {
-            series1.getData().add(new XYChart.Data<>(Month.of((i - 1) % 12 + 1).toString(), readBook[(i - 1) % 12]));
+            series1.getData().add(new XYChart.Data<>(Month.of((i - 1) % 12 + 1).toString(), readBooks.get((i - 1) % 12)));
         }
 
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         series2.setName("Hired");
-        int[] hiredBook = new int[12];
-        for (UserBookInfo book : LibraryModel.getInstance().getUser().getHiredBookList()) {
-            if (book.getPickedDate().getYear() == LocalDate.now().getYear()
-                    || (book.getPickedDate().getYear() == LocalDate.now().getYear()
-                    && book.getPickedDate().getMonthValue() >= LocalDate.now().getMonthValue())) {
-                hiredBook[book.getPickedDate().getMonthValue() - 1] ++;
-            }
-        }
         for(int i = startMonth; i < startMonth + 12; i ++) {
-            series2.getData().add(new XYChart.Data<>(Month.of((i - 1) % 12 + 1).toString(), hiredBook[(i - 1) % 12]));
+            series2.getData().add(new XYChart.Data<>(Month.of((i - 1) % 12 + 1).toString(), borrowedBooks.get((i - 1) % 12)));
         }
-
         read_and_hired_bar_chart.getData().addAll(series1, series2);
     }
 }

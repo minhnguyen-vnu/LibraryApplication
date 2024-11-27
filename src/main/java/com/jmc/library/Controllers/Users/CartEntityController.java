@@ -1,16 +1,12 @@
 package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.UserBookInfo;
-import com.jmc.library.Controllers.GoogleBookAPI.GoogleBookAPIMethod;
-import com.jmc.library.Controllers.Interface.InterfaceManager;
 import com.jmc.library.Models.CartModel;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ResourceBundle;
 import java.net.URL;

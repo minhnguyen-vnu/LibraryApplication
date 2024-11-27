@@ -4,6 +4,7 @@ import com.jmc.library.Assets.RequestInfo;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Database.DBUtlis;
+import com.jmc.library.Models.DashboardModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
@@ -86,6 +87,7 @@ public class PendingRequestManagement extends RequestManagement implements Initi
                 if (!new_status.equals(foundElement.getRequestStatus()) && !new_status.isEmpty()) {
                     if (new_status.equals("Accepted")) {
                         System.out.println(foundElement);
+                        DashboardModel.getInstance().getUserDashboardInfo().onDashboardUpdate(foundElement.getPickedDate().getMonthValue());
                         DBUpdate dbUpdate = new DBUpdate("insert into userRequest(bookId, bookName, username, pickedDate, returnDate, cost, requestStatus)\n" +
                                 "values(?, ?, ?, ?, ?, ?, ?); ", foundElement.getBookId(), foundElement.getBookName(), foundElement.getUsername(),
                                 foundElement.getPickedDate(), foundElement.getReturnDate(), foundElement.getTotalCost(), "Borrowing");

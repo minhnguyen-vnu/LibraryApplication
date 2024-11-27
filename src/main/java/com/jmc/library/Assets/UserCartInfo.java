@@ -131,4 +131,10 @@ public class UserCartInfo {
         setListBookVBox();
         updateCartSummary();
     }
+
+    public void clear() {
+        cartList.clear();
+        setListBookVBox();
+        updateCartSummary();
+    }
 }
