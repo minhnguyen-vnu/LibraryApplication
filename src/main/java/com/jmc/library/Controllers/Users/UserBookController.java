@@ -121,6 +121,19 @@ public class UserBookController extends UserLibraryTable implements Initializabl
             }
         });
 
+        get_rate_tb_cl.setCellValueFactory(param -> {
+            UserBookInfo bookInfo = param.getValue();
+            CheckBox checkBox = new CheckBox();
+            checkBox.setSelected(bookInfo.getRate());
+            checkBox.setDisable(bookInfo.getRate());
+            checkBox.setOnAction(event -> {
+                if (!bookInfo.getRate()) {
+                    showRatingDialog(bookInfo, checkBox);
+                }
+            });
+            return new SimpleObjectProperty<>(checkBox);
+        });
+
         get_rate_tb_cl.setCellFactory(new Callback<TableColumn<UserBookInfo, CheckBox>, TableCell<UserBookInfo, CheckBox>>() {
             @Override
             public TableCell<UserBookInfo, CheckBox> call(TableColumn<UserBookInfo, CheckBox> param) {
@@ -138,12 +151,12 @@ public class UserBookController extends UserLibraryTable implements Initializabl
 
                         UserBookInfo bookInfo = getTableView().getItems().get(getIndex());
 
-                        checkBox.setSelected(bookInfo.getRated());
-                        checkBox.setDisable(bookInfo.getRated());
+                        checkBox.setSelected(bookInfo.getRate());
+                        checkBox.setDisable(bookInfo.getRate());
                         setGraphic(checkBox);
 
                         checkBox.setOnAction(event -> {
-                            if (!bookInfo.getRated()) {
+                            if (!bookInfo.getRate()) {
                                 showRatingDialog(bookInfo, checkBox);
                             }
                         });

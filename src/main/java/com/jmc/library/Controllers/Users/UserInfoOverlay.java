@@ -20,7 +20,6 @@ public class UserInfoOverlay {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/UserInfo.fxml"));
         userInfoPane = loader.load();
-        UserInfoController userInfoController = loader.getController();
 
         overlayPane = new AnchorPane(userInfoPane);
         overlayPane.getStyleClass().add("MatteBackground");

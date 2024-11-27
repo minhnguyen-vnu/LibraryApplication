@@ -125,7 +125,7 @@ public class RatingController implements Initializable {
         DBUpdate dbUpdate = new DBUpdate("update userRequest set isRated = true where username = ? and bookId = ? and isRated = false",
                 LibraryModel.getInstance().getUser().getUsername(), userBookInfo.getBookId());
         dbUpdate.setOnSucceeded(e -> {
-            userBookInfo.setRated(true);
+            userBookInfo.setRate(true);
             System.out.println("update success 1");
         });
         Thread thread = new Thread(dbUpdate);

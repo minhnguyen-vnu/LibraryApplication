@@ -37,13 +37,14 @@ public class UserInfoController {
         cancel_btn.setOnAction(actionEvent -> handleCancel());
     }
 
-    private void setMaterialListener() {
+    public void setMaterialListener() {
         name_txt.setText(LibraryModel.getInstance().getUser().getName());
         dob_txt.setValue(LibraryModel.getInstance().getUser().getBirthDate());
         mssv_txt.setText(String.valueOf(LibraryModel.getInstance().getUser().getID()));
         avatar_img.setImage(LibraryModel.getInstance().getUser().getAvatar());
         Circle clip = new Circle(avatar_img.getFitWidth() / 2, avatar_img.getFitHeight() / 2, Math.min(avatar_img.getFitWidth(), avatar_img.getFitHeight()) / 2);
         avatar_img.setClip(clip);
+        System.out.println(LibraryModel.getInstance().getUser().getName());
     }
 
     private void handleChangePhoto() {
@@ -57,8 +58,6 @@ public class UserInfoController {
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             Image image = new Image(selectedFile.toURI().toString());
-            LibraryModel.getInstance().getUser()
-                    .setAvatar(image);
             avatar_img.setImage(image);
         }
     }
@@ -70,7 +69,8 @@ public class UserInfoController {
         String password = password_txt.getText();
         String newPassword = newPassword_txt.getText();
         String confirmPassword = confirmPassword_txt.getText();
-        ImageView avatar = avatar_img;
+        ImageView avatar = new ImageView();
+        avatar.setImage(avatar_img.getImage());
 
         if(password == null) {
             password = "";
@@ -97,6 +97,7 @@ public class UserInfoController {
         LibraryModel.getInstance().getUser().setName(name);
         LibraryModel.getInstance().getUser().setBirthDate(dob);
         LibraryModel.getInstance().getUser().setID(Integer.parseInt(mssv));
+        LibraryModel.getInstance().getUser().setAvatar(avatar.getImage());
 
         if (!newPassword.isEmpty()) {
             LibraryModel.getInstance().getUser().setPassword(newPassword);
@@ -115,7 +116,6 @@ public class UserInfoController {
                 LibraryModel.getInstance().getUser().getUsername()
         );
         dbUpdate.setOnSucceeded(event -> {
-            LibraryModel.getInstance().getUser().loadUserInfo();
             setStatusMessage("Saved completed", "green");
         });
         Thread thread = new Thread(dbUpdate);

@@ -1,7 +1,9 @@
 package com.jmc.library.Assets;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.ImageView;
 import java.time.LocalDate;
 
@@ -12,18 +14,15 @@ public class UserBookInfo {
     private LocalDate returnDate, pickedDate;
     private double totalCost;
     private String requestStatus;
-    private ImageView imageView;
+    private ObjectProperty<ImageView> imageView = new SimpleObjectProperty<>();
 
     private double singleCost;
     private String ISBN;
 
-    // Chuyển `isRated` thành thuộc tính observable
-    private final BooleanProperty rated = new SimpleBooleanProperty(false);
+    public BooleanProperty rate = new SimpleBooleanProperty(false);
 
-    // Constructor mặc định
     public UserBookInfo() {}
 
-    // Constructor đầy đủ
     public UserBookInfo(String bookName, String authorName,
                         int bookId, LocalDate pickedDate,
                         LocalDate returnDate, double totalCost,
@@ -37,20 +36,18 @@ public class UserBookInfo {
         this.requestStatus = status;
         imageView.setFitHeight(75);
         imageView.setFitWidth(50);
-        this.imageView = imageView;
+        this.imageView.set(imageView);
         this.singleCost = totalCost;
     }
 
-    // Constructor có thêm `rated`
     public UserBookInfo(String bookName, String authorName,
                         int bookId, LocalDate pickedDate,
                         LocalDate returnDate, double totalCost,
-                        String status, boolean isRated, ImageView imageView) {
+                        String status, boolean isRate, ImageView imageView) {
         this(bookName, authorName, bookId, pickedDate, returnDate, totalCost, status, imageView);
-        this.setRated(isRated); // Đồng bộ giá trị `isRated`
+        this.setRate(isRate);
     }
 
-    // Getter và Setter cho ISBN
     public String getISBN() {
         return ISBN;
     }
@@ -59,7 +56,6 @@ public class UserBookInfo {
         this.ISBN = ISBN;
     }
 
-    // Getter và Setter cho singleCost
     public double getSingleCost() {
         return singleCost;
     }
@@ -68,7 +64,6 @@ public class UserBookInfo {
         this.singleCost = singleCost;
     }
 
-    // Getter và Setter cho các thuộc tính cơ bản
     public String getBookName() {
         return bookName;
     }
@@ -125,26 +120,24 @@ public class UserBookInfo {
         this.requestStatus = status;
     }
 
-    // Getter và Setter cho thuộc tính `rated` sử dụng BooleanProperty
-    public boolean getRated() {
-        return rated.get();
+    public boolean getRate() {
+        return rate.get();
     }
 
-    public void setRated(boolean value) {
-        this.rated.set(value);
+    public void setRate(boolean value) {
+        this.rate.set(value);
     }
 
-    public BooleanProperty ratedProperty() {
-        return rated;
+    public BooleanProperty rateProperty() {
+        return rate;
     }
 
-    // Getter và Setter cho imageView
     public ImageView getImageView() {
-        return imageView;
+        return imageView.get();
     }
 
     public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
+        this.imageView.set(imageView);
     }
 
     @Override
