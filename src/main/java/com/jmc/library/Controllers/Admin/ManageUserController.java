@@ -1,5 +1,6 @@
 package com.jmc.library.Controllers.Admin;
 
+import com.jmc.library.Assets.RequestInfo;
 import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Controllers.Users.User;
 import com.jmc.library.Database.DBQuery;
@@ -20,12 +21,13 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class ManageUserController implements Initializable {
     public TextField username_txt_fld;
     public TextField full_name_txt_fld;
     public DatePicker date_of_birth_date_picker;
-    public ChoiceBox status_choice_box;
+    public ChoiceBox<String> status_choice_box;
     public Button search_btn;
     public Button return_btn;
     public Button reload_btn;
@@ -43,8 +45,9 @@ public class ManageUserController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setTable();
         addBinding();
-        showUsers();
         onAction();
+        ChoiceBoxInitialization();
+        showUsers();
     }
 
     private void addBinding() {
@@ -63,7 +66,34 @@ public class ManageUserController implements Initializable {
 
     private void onAction() {
         reload_btn.setOnAction(actionEvent -> showUsers());
-        return_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View"));
+        return_btn.setOnAction(actionEvent -> {
+            username_txt_fld.clear();
+            full_name_txt_fld.clear();
+            date_of_birth_date_picker.setValue(null);
+            store_tb.setItems(userList);
+            Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View");
+        });
+        search_btn.setOnAction(actionEvent -> search());
+    }
+
+    private void ChoiceBoxInitialization() {
+        status_choice_box.setItems(FXCollections.observableArrayList("online", "offline", ""));
+    }
+
+    private void search() {
+        String username = username_txt_fld.getText();
+        String fullname = full_name_txt_fld.getText();
+        LocalDate doB = date_of_birth_date_picker.getValue();
+        String status = status_choice_box.getValue();
+
+        ObservableList<User> filteredList = userList.stream()
+                .filter(request ->
+                        (username.isEmpty() || request.getUsername().equals(username)) &&
+                        (fullname.isEmpty() || request.getName().equals(fullname)) &&
+                        (doB == null || request.getBirthDate().equals(doB)) &&
+                        (status == null || status.isEmpty() || request.getStatus().equals(status)))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        store_tb.setItems(filteredList);
     }
 
     private void showUsers() {

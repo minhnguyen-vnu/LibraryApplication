@@ -211,7 +211,7 @@ public class User {
                 "    b.imageView\n" +
                 "from  userRequest r\n" +
                 "join bookStore b using(bookId)\n" +
-                "where r.username = ? " +
+                "where r.username = ? and r.requestStatus = 'Borrowing'" +
                 "order by r.requestStatus;", LibraryModel.getInstance().getUser().getUsername());
         dbQuery.setOnSucceeded(event -> {
             ResultSet resultSet = dbQuery.getValue();
@@ -265,6 +265,7 @@ public class User {
     public void resetAll() {
         this.PendingBookList.clear();
         this.HiredBookList.clear();
+        CartModel.getInstance().getUserCartInfo().getCartList().clear();
 
         this.username = null;
     }
