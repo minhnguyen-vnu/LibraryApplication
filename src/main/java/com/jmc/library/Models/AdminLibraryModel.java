@@ -2,7 +2,6 @@ package com.jmc.library.Models;
 
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Database.DBQuery;
-import com.jmc.library.Database.DBUtlis;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -54,7 +53,7 @@ public class AdminLibraryModel {
         this.totalUser30PreviousDays = totalUser30PreviousDays;
     }
 
-    public int getTotalHiredBooks() {
+    public int getTotalBorrowedBooks() {
         return totalHiredBooks;
     }
 

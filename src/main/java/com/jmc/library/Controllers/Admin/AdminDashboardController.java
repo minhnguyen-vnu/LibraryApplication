@@ -1,14 +1,11 @@
 package com.jmc.library.Controllers.Admin;
 
 import com.jmc.library.Database.DBQuery;
-import com.jmc.library.Database.DBUtlis;
 import com.jmc.library.Models.AdminLibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,14 +13,11 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.util.*;
-import java.util.concurrent.CountDownLatch;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class AdminDashboardController implements Initializable {
@@ -35,7 +29,7 @@ public class AdminDashboardController implements Initializable {
     public Label view_all_lbl;
     public Label welcome_admin_lbl;
     public Label diff_lbl;
-    public Label total_hired_book_lbl;
+    public Label total_borrowed_book_lbl;
     public LineChart<String, Number> customers_line_chart;
     public Label total_customers_lbl;
     public Button go_to_pending_btn;
@@ -54,7 +48,7 @@ public class AdminDashboardController implements Initializable {
                     Platform.runLater(() -> {
                         total_customers_lbl.setText(String.valueOf(AdminLibraryModel.getInstance().getTotalUsers()));
                         diff_lbl.setText(String.valueOf(AdminLibraryModel.getInstance().getTotalUsers() - AdminLibraryModel.getInstance().getTotalUser30PreviousDays()));
-                        total_hired_book_lbl.setText(String.valueOf(AdminLibraryModel.getInstance().getTotalHiredBooks()));
+                        total_borrowed_book_lbl.setText(String.valueOf(AdminLibraryModel.getInstance().getTotalBorrowedBooks()));
                     });
                     break;
                 }

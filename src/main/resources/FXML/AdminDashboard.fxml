@@ -141,7 +141,7 @@
                                     <image>
                                         <Image url="@../IMAGES/LightDashBoardBG.png" />
                                     </image></ImageView>
-                                <Label fx:id="total_hired_book_lbl" layoutX="29.0" layoutY="56.0" styleClass="CountNumber" text="10" />
+                                <Label fx:id="total_borrowed_book_lbl" layoutX="29.0" layoutY="56.0" styleClass="CountNumber" text="10" />
                                 <Label layoutX="22.0" layoutY="14.0" styleClass="TitleText" text="Hired Books" textFill="#716f6f" />
                             </children>
                         </AnchorPane>
