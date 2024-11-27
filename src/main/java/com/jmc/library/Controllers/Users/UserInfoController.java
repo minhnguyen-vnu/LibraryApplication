@@ -89,7 +89,7 @@ public class UserInfoController {
             }
 
             if (password.isEmpty() || !password.equals(LibraryModel.getInstance().getUser().getPassword())) {
-                setStatusMessage("Wrong recent password", "red");
+                setStatusMessage("Wrong current password", "red");
                 return;
             }
         }
@@ -115,6 +115,7 @@ public class UserInfoController {
                 LibraryModel.getInstance().getUser().getUsername()
         );
         dbUpdate.setOnSucceeded(event -> {
+            System.out.println(LibraryModel.getInstance().getUser().getUsername());
             LibraryModel.getInstance().getUser().loadUserInfo();
             setStatusMessage("Saved completed", "green");
         });

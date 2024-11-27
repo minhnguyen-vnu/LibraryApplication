@@ -103,8 +103,8 @@ public class RatingController implements Initializable {
     private void closeStage() {
         star1.getScene().getWindow().hide();
     }
+
     private void UpdateDB() {
-        System.out.println(bookId);
         DBUpdate dbUpdate = new DBUpdate("update userRequest set isRated = true where username = ? and bookId = ? and isRated = false",
                 LibraryModel.getInstance().getUser().getUsername(), bookId);
         dbUpdate.setOnSucceeded(e -> {
@@ -125,7 +125,6 @@ public class RatingController implements Initializable {
                 if (book.getBookId() == bookId) {
                     book.setRateQuantities(book.getRateQuantities() + 1);
                     book.setRating((book.getRating() * (book.getRateQuantities() - 1) + rating) / book.getRateQuantities());
-                    BookDisplayController.setRateHolder();
                     break;
                 }
             }

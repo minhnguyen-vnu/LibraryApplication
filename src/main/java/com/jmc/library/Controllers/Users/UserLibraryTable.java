@@ -64,6 +64,10 @@ public abstract class UserLibraryTable {
         Circle clip = new Circle(account_avatar_img.getFitWidth() / 2, account_avatar_img.getFitHeight() / 2, Math.min(account_avatar_img.getFitWidth(), account_avatar_img.getFitHeight()) / 2);
         account_avatar_img.setClip(clip);
         store_tb.setItems(bookList);
+
+        LibraryModel.getInstance().getUser().avatarProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("-100");
+        });
     }
 
     protected void addLoading() {
