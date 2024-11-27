@@ -86,11 +86,10 @@ public class BookDisplayController implements Initializable {
         rate_holder.getChildren().clear();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ShowRate.fxml"));
-        ShowRateController controller = new ShowRateController(BookModel.getInstance().getBookInfo().getRating());
-        System.out.println("input " + BookModel.getInstance().getBookInfo().getRating());
-        loader.setController(controller);
         try {
             Node newNode = loader.load();
+            ShowRateController controller = loader.getController();
+            controller.disPlay(BookModel.getInstance().getBookInfo().getRating());
             rate_holder.getChildren().add(newNode);
         } catch (IOException e) {
             e.printStackTrace();
