@@ -2,10 +2,14 @@ package com.jmc.library.Controllers.Books;
 
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.UserBookInfo;
+import com.jmc.library.Controllers.Assets.RatingController;
+import com.jmc.library.Controllers.Assets.ShowRateController;
 import com.jmc.library.Controllers.Notification.NotificationOverlay;
 import com.jmc.library.Controllers.Users.CartEntityController;
 import com.jmc.library.Models.*;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -78,6 +82,18 @@ public class BookDisplayController implements Initializable {
         preview_txt_flw.setWrapText(true);
         preview_txt_flw.setText(BookModel.getInstance().getBookInfo().getDescription());
         book_img.setImage(BookModel.getInstance().getBookInfo().getImageView().getImage());
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ShowRate.fxml"));
+
+        loader.setController(new ShowRateController(BookModel.getInstance().getBookInfo().getRating()));
+//        try {
+////            Node newNode = loader.load();
+//            rate_holder.getChildren().add(loader.load());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
 
         BookModel.getInstance().bookInfoProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

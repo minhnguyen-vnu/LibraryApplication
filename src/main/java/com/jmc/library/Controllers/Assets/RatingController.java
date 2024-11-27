@@ -91,7 +91,7 @@ public class RatingController implements Initializable {
     }
 
     public void disPlay(double rate) {
-       // make rate is multiple of 0.5
+        // make rate is multiple of 0.5
         rate = Math.round(rate * 2) / 2.0;
         if (rate == 0) {
             star1.setImage(emptyStar);
@@ -158,4 +158,7 @@ public class RatingController implements Initializable {
             star2.setImage(fullStar);
         }
     }
+
+
+
 }
