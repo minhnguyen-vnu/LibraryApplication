@@ -267,6 +267,7 @@ public class User {
     public void resetAll() {
         this.PendingBookList.clear();
         this.HiredBookList.clear();
+        CartModel.getInstance().getUserCartInfo().getCartList().clear();
 
         this.username = null;
 
