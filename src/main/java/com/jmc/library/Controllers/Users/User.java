@@ -9,6 +9,8 @@ import com.jmc.library.Models.CartModel;
 import com.jmc.library.Models.DashboardModel;
 import com.jmc.library.Models.LibraryModel;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -23,10 +25,10 @@ import java.util.Objects;
 public class User {
     private String username;
     private String password;
-    private String name;
+    private SimpleStringProperty name;
     private LocalDate birthDate;
     private int ID;
-    private Image avatar;
+    private SimpleObjectProperty<Image> avatar;
     private double totalPaid;
     private int totalBorrowed;
     private String status;
@@ -37,15 +39,17 @@ public class User {
     public User() {
         this.PendingBookList = FXCollections.observableArrayList();
         this.HiredBookList = FXCollections.observableArrayList();
+        avatar = new SimpleObjectProperty<>();
+        name = new SimpleStringProperty();
     }
 
     public User(String username, String password, String name, LocalDate birthDate, int ID, Image avatar, double totalPaid, int totalBorrowed, String status) {
         this.username = username;
         this.password = password;
-        this.name = name;
+        this.name = new SimpleStringProperty(name);
         this.birthDate = birthDate;
         this.ID = ID;
-        this.avatar = avatar;
+        this.avatar = new SimpleObjectProperty<>(avatar);
         this.totalPaid = totalPaid;
         this.totalBorrowed = totalBorrowed;
         this.status = status;
@@ -68,14 +72,14 @@ public class User {
     }
 
     public String getName() {
-        if(name == null) {
+        if(name.get().isEmpty()) {
             return username;
         }
-        return name;
+        return name.get();
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name.set(name);
     }
 
     public LocalDate getBirthDate() {
@@ -83,6 +87,10 @@ public class User {
             return LocalDate.now().plusDays(1);
         }
         return birthDate;
+    }
+
+    public SimpleStringProperty nameProperty() {
+        return name;
     }
 
     public void setBirthDate(LocalDate birthDate) {
@@ -97,13 +105,11 @@ public class User {
         this.ID = ID;
     }
 
-    public Image getAvatar() {
-        return avatar;
-    }
+    public Image getAvatar() { return avatar.get(); }
 
-    public void setAvatar(Image avatar) {
-        this.avatar = avatar;
-    }
+    public void setAvatar(Image avatar) { this.avatar.set(avatar); }
+
+    public SimpleObjectProperty<Image> avatarProperty() { return avatar; }
 
     public ObservableList<UserBookInfo> getPendingBookList() {
         return PendingBookList;
@@ -124,16 +130,17 @@ public class User {
     public void loadUserInfo(ResultSet resultSet) throws SQLException {
             this.username = resultSet.getString("username");
             this.password = resultSet.getString("password");
-            this.name = (resultSet.getString("name") == null) ? "" : resultSet.getString("name");
+            String fetchedName = (resultSet.getString("name") == null) ? "" : resultSet.getString("name");
+            this.name.set(fetchedName);
             this.birthDate = (resultSet.getDate("birthDate") == null) ? LocalDate.now().plusDays(1) : resultSet.getDate("birthDate").toLocalDate();
             this.ID = resultSet.getInt("ID");
             Blob blob = resultSet.getBlob("imageView");
 
             if (blob != null && blob.length() > 0) {
                 byte[] imageBytes = blob.getBytes(1, (int) blob.length());
-                this.avatar = ImageUtils.byteArrayToImage(imageBytes);
+                this.avatar.set(ImageUtils.byteArrayToImage(imageBytes));
             } else {
-                this.avatar = new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/avatar.png")).toExternalForm());
+                this.avatar.set(new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/avatar.png")).toExternalForm()));
             }
             resultSet.close();
     }

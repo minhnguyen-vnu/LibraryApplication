@@ -31,7 +31,6 @@ public class UserInfoController {
     @FXML
     public void initialize() {
         setMaterialListener();
-
         changePhoto_btn.setOnAction(actionEvent -> handleChangePhoto());
         save_btn.setOnAction(actionEvent -> handleSaveChanges());
         cancel_btn.setOnAction(actionEvent -> handleCancel());
@@ -114,8 +113,6 @@ public class UserInfoController {
         );
         dbUpdate.setOnSucceeded(event -> {
             LibraryModel.getInstance().getUser().loadUserInfo();
-            UserLibraryTable.setImage(avatar.getImage());
-            UserLibraryController.setImage(avatar.getImage());
             setStatusMessage("Saved completed", "green");
         });
         Thread thread = new Thread(dbUpdate);
