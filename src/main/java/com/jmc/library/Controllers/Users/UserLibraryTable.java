@@ -93,13 +93,10 @@ public abstract class UserLibraryTable {
     protected abstract void showLibrary();
 
     private void searchBook(String text) {
-        if (text.isEmpty()) {
-            store_tb.setItems(bookList);
-        } else {
+        if(!text.isEmpty())
             searchBookByName(text);
-        }
-    }
 
+    }
     private String sortString(String str) {
         str = str.toLowerCase();
         char[] charArray = str.toCharArray();

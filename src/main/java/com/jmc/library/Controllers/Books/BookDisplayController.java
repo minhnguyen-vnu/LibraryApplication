@@ -56,7 +56,7 @@ public class BookDisplayController implements Initializable {
                     BookModel.getInstance().getBookInfo().getAuthorName(),
                     BookModel.getInstance().getBookInfo().getBookId(),
                     LocalDate.now(),
-                    LocalDate.now(),
+                    LocalDate.now().plusDays(1),
                     BookModel.getInstance().getBookInfo().getLeastPrice(),
                     "Pending",
                     new ImageView(BookModel.getInstance().getBookInfo().getImageView().getImage())

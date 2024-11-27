@@ -38,9 +38,7 @@ public class UserPendingController extends UserLibraryTable implements Initializ
 
     @Override
     protected void setTable() {
-//        bookList = FXCollections.observableArrayList();
         bookList = LibraryModel.getInstance().getUser().getPendingBookList();
-        store_tb.setItems(bookList);
     }
 
     @Override
@@ -48,7 +46,6 @@ public class UserPendingController extends UserLibraryTable implements Initializ
         addLoading();
         bookList.clear();
         LibraryModel.getInstance().getUser().getPendingBookList().clear();
-        store_tb.setItems(bookList);
         DBQuery dbQuery = new DBQuery("select\n" +
                 "    r.username,\n" +
                 "    r.bookName,\n" +

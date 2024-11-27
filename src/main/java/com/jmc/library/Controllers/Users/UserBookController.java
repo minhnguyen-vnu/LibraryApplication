@@ -41,7 +41,6 @@ public class UserBookController extends UserLibraryTable implements Initializabl
         addBinding();
         priceFormating();
         setButtonListener();
-//        showLibrary();
     }
 
     @Override
@@ -54,9 +53,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
 
     @Override
     protected void setTable() {
-//        bookList = FXCollections.observableArrayList();
         bookList = LibraryModel.getInstance().getUser().getHiredBookList();
-        store_tb.setItems(bookList);
     }
 
     @Override
@@ -64,7 +61,6 @@ public class UserBookController extends UserLibraryTable implements Initializabl
         addLoading();
         bookList.clear();
         LibraryModel.getInstance().getUser().getHiredBookList().clear();
-        store_tb.setItems(bookList);
         DBQuery dbQuery = new DBQuery("select\n" +
                 "    r.username,\n" +
                 "    r.bookName,\n" +

@@ -92,13 +92,17 @@ public class RatingController implements Initializable {
             star5.setImage(fullStar);
             rating = 5;
         });
-
         accept_btn.setOnAction(e -> {
+            UpdateDB();
             closeStage();
         });
+        cancel_btn.setOnAction(e -> closeStage());
     }
 
     private void closeStage() {
+        star1.getScene().getWindow().hide();
+    }
+    private void UpdateDB() {
         System.out.println(bookId);
         DBUpdate dbUpdate = new DBUpdate("update userRequest set isRated = true where username = ? and bookId = ? and isRated = false",
                 LibraryModel.getInstance().getUser().getUsername(), bookId);
@@ -127,12 +131,6 @@ public class RatingController implements Initializable {
         Thread thread1 = new Thread(dbUpdate1);
         thread1.setDaemon(true);
         thread1.start();
-
-        PauseTransition pause = new PauseTransition(Duration.millis(2000));
-        pause.setOnFinished(e -> {
-            star1.getScene().getWindow().hide();
-        });
-        pause.play();
     }
 
     private void setMaterialListener() {
@@ -144,6 +142,5 @@ public class RatingController implements Initializable {
         star3.setImage(emptyStar);
         star4.setImage(emptyStar);
         star5.setImage(emptyStar);
-
     }
 }
