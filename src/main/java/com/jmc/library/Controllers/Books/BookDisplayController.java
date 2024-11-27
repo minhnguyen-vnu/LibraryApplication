@@ -87,7 +87,6 @@ public class BookDisplayController implements Initializable {
         try {
             Node rate = loader.load();
             ShowRateController controller = loader.getController();
-            System.out.println(BookModel.getInstance().getBookInfo().getRating());
             controller.disPlay(BookModel.getInstance().getBookInfo().getRating());
             rate_holder.getChildren().clear();
             rate_holder.getChildren().add(rate);

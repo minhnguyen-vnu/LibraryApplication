@@ -1,6 +1,7 @@
 package com.jmc.library.Assets;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.ImageView;
 import java.awt.*;
@@ -22,7 +23,7 @@ public class BookInfo {
     private String thumbnail;
     private boolean exist;
     private ObjectProperty<ImageView> imageView;
-    private double rating;
+    private SimpleDoubleProperty rating = new SimpleDoubleProperty();
     private int rateQuantities;
 
     public BookInfo(int bookId, String bookName, String authorName, int quantityInStock, double leastPrice, LocalDate publishedDate) {
@@ -93,7 +94,7 @@ public class BookInfo {
         this.thumbnail = thumbnail;
         this.imageView =  new SimpleObjectProperty<>(imageView);
         this.exist = true;
-        this.rating = rating;
+        this.rating.set(rating);
         this.rateQuantities = rateQuantities;
     }
 
@@ -145,9 +146,11 @@ public class BookInfo {
         this.publishedDate = publishedDate;
     }
 
-    public double getRating() { return rating; }
+    public double getRating() { return rating.get(); }
 
-    public void setRating(double rating) { this.rating = rating; }
+    public void setRating(double rating) { this.rating.set(rating); }
+
+    public SimpleDoubleProperty doubleProperty() { return rating; }
 
     public int getRateQuantities() { return rateQuantities; }
 

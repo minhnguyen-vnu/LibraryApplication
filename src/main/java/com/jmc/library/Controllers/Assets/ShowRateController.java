@@ -1,5 +1,7 @@
 package com.jmc.library.Controllers.Assets;
 
+import com.jmc.library.Models.BookModel;
+import com.jmc.library.Models.LibraryModel;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,10 +35,13 @@ public class ShowRateController implements Initializable {
         star3.setImage(emptyStar);
         star4.setImage(emptyStar);
         star5.setImage(emptyStar);
+
+        BookModel.getInstance().getBookInfo().doubleProperty().addListener(((observableValue, number, t1) -> {
+            disPlay(t1.doubleValue());
+        }));
     }
 
     public void disPlay(double rate) {
-        // make rate is multiple of 0.5
         rate = Math.round(rate * 2) / 2.0;
         star1.setImage(fullStar);
         star2.setImage(fullStar);

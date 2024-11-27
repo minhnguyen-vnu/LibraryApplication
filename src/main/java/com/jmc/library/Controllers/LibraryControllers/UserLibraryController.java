@@ -39,7 +39,6 @@ public class UserLibraryController extends LibraryController implements Initiali
 
     public Label username_lbl;
 
-    private static SimpleObjectProperty<Image> image = new SimpleObjectProperty<>();
     public ImageView account_avatar_img;
     public ChoiceBox<String> num_row_shown;
 
