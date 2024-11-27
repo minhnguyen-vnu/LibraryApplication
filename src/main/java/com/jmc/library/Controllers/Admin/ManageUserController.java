@@ -7,6 +7,7 @@ import com.jmc.library.Models.AdminLibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -48,6 +49,26 @@ public class ManageUserController implements Initializable {
         onAction();
     }
 
+    protected void addLoading() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
+        try {
+            ImageView loading_img = loader.load();
+            store_tb.setPlaceholder(loading_img);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void returnLoading() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
+        try {
+            Label label = loader.load();
+            store_tb.setPlaceholder(label);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void addBinding() {
         username_tb_cl.setCellValueFactory(new PropertyValueFactory<>("username"));
         full_name_tb_cl.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -68,6 +89,7 @@ public class ManageUserController implements Initializable {
     }
 
     private void showUsers() {
+        addLoading();
         userList.clear();
         store_tb.setItems(userList);
         DBQuery dbQuery = new DBQuery("select\n" +
@@ -112,11 +134,12 @@ public class ManageUserController implements Initializable {
                     }
                     User user = new User(resultSet.getString("username"), resultSet.getString("password"),
                             name, birthdate, id,
-                            image, resultSet.getDouble("totalPaid"),
+                            image, Math.round(resultSet.getDouble("totalPaid") * 100.0 )/100.0,
                             resultSet.getInt("totalBorrowed"), resultSet.getString("status"));
                     userList.add(user);
                 }
                 resultSet.close();
+                returnLoading();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

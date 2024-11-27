@@ -2,6 +2,7 @@ package com.jmc.library.Controllers.Assets;
 
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.LibraryTable;
+import com.jmc.library.Controllers.Books.BookDisplayController;
 import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
@@ -124,6 +125,7 @@ public class RatingController implements Initializable {
                 if (book.getBookId() == bookId) {
                     book.setRateQuantities(book.getRateQuantities() + 1);
                     book.setRating((book.getRating() * (book.getRateQuantities() - 1) + rating) / book.getRateQuantities());
+                    BookDisplayController.setRateHolder();
                     break;
                 }
             }

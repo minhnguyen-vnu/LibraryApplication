@@ -5,8 +5,10 @@ import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,6 +40,26 @@ public abstract class RequestManagement {
 
     protected abstract void ChoiceBoxInitialization();
 
+    protected void addLoading() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
+        try {
+            ImageView loading_img = loader.load();
+            store_tb.setPlaceholder(loading_img);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void returnLoading() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
+        try {
+            Label label = loader.load();
+            store_tb.setPlaceholder(label);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     protected void setTable() {
         bookList = FXCollections.observableArrayList();
         store_tb.setItems(bookList);
@@ -54,6 +76,7 @@ public abstract class RequestManagement {
     }
 
     protected void showLibrary() {
+        addLoading();
         bookList.clear();
         store_tb.setItems(bookList);
         DBQuery dbQuery = new DBQuery("select * from userRequest");
@@ -68,6 +91,7 @@ public abstract class RequestManagement {
                     bookList.add(currentBook);
                 }
                 resultSet.close();
+                returnLoading();
             } catch (SQLException e){
                 throw new RuntimeException(e);
             }

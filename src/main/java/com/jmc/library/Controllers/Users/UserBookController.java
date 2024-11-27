@@ -53,6 +53,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
 
     @Override
     protected void setTable() {
+        returnLoading();
         bookList = LibraryModel.getInstance().getUser().getHiredBookList();
     }
 
