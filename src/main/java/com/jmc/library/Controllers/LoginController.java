@@ -79,7 +79,7 @@ public class LoginController implements Initializable {
                             error_lbl.setStyle("-fx-text-fill: green");
                             error_lbl.setAlignment(Pos.CENTER_LEFT);
                         });
-                        LibraryModel.getInstance().setUser(acc_address_fld.getText());
+                        LibraryModel.getInstance().getUser().loadUserInfo(resultSet);
                         acc_address_fld.clear();
                         password_fld.clear();
                         LibraryModel.getInstance().getUser().loadPendingBooks();
@@ -99,11 +99,10 @@ public class LoginController implements Initializable {
                         rotateTransition.stop();
                         error_lbl.setStyle("-fx-text-fill: red");
                     });
+                    DBUtlis.closeResources(null, resultSet, null);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
-            } finally {
-                DBUtlis.closeResources(null, resultSet, null);
             }
         });
 

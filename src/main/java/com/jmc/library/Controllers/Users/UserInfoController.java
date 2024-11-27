@@ -41,7 +41,6 @@ public class UserInfoController {
         dob_txt.setValue(LibraryModel.getInstance().getUser().getBirthDate());
         mssv_txt.setText(String.valueOf(LibraryModel.getInstance().getUser().getID()));
         avatar_img.setImage(LibraryModel.getInstance().getUser().getAvatar());
-//        password_txt.setText(LibraryModel.getInstance().getUser().getPassword());
     }
 
     private void handleChangePhoto() {
@@ -92,10 +91,6 @@ public class UserInfoController {
             }
         }
 
-
-//        password = LibraryModel.getInstance().getUser().getPassword();
-
-
         LibraryModel.getInstance().getUser().setName(name);
         LibraryModel.getInstance().getUser().setBirthDate(dob);
         LibraryModel.getInstance().getUser().setID(Integer.parseInt(mssv));
@@ -119,7 +114,6 @@ public class UserInfoController {
         dbUpdate.setOnSucceeded(event -> {
             LibraryModel.getInstance().getUser().loadUserInfo();
             setStatusMessage("Saved completed", "green");
-//            System.out.println(Arrays.toString(ImageUtils.imageToByteArray(avatar.getImage())));
         });
         Thread thread = new Thread(dbUpdate);
         thread.setDaemon(true);

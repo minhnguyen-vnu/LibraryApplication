@@ -5,6 +5,7 @@ import com.jmc.library.Controllers.Users.User;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.sql.ResultSet;
 import java.time.LocalDate;
 
 public class LibraryModel {
@@ -27,11 +28,6 @@ public class LibraryModel {
 
     public User getUser() {
         return user;
-    }
-
-    public void setUser(String username) {
-        this.user.setUsername(username);
-        this.user.loadUserInfo();
     }
 
 }

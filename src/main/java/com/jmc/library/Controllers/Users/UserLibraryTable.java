@@ -166,7 +166,7 @@ public abstract class UserLibraryTable {
     }
 
     protected void setAccount_avatar_img() {
-        account_avatar_img = new ImageView(LibraryModel.getInstance().getUser().getAvatar());
+        account_avatar_img.setImage(LibraryModel.getInstance().getUser().getAvatar());
     }
 
     protected void setNum_row_shown() {

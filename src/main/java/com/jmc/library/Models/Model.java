@@ -19,12 +19,4 @@ public class Model {
     public ViewFactory getViewFactory(){
         return this.viewFactory;
     }
-
-    /*public BookInfo getBookInfo() {
-        return bookInfo;
-    }
-
-    public void setBookInfo(BookInfo bookInfo) {
-        Model.bookInfo = bookInfo;
-    }*/
 }

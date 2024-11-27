@@ -39,13 +39,11 @@ public class ViewFactory {
     private HBox adminRequestManagement;
     private HBox adminPendingRequestManagement;
     private VBox adminBookViewing;
-    private UserLibraryController userStore;
     private HBox adminUserManagement;
     private final StringProperty selectedAuthenticatonMode;
     private final StringProperty selectedUserMode;
     private final StringProperty selectedAdminMode;
 
-    private BookDisplayController bookDisplayController;
 
     public ViewFactory() {
         this.selectedAuthenticatonMode = new SimpleStringProperty("");
@@ -60,8 +58,6 @@ public class ViewFactory {
     public StringProperty getSelectedUserMode() {
         return selectedUserMode;
     }
-
-//    public StringProperty getSelectedAdminMode() { return selectedAdminMode; }
 
     public HBox getSignUpView() {
         if (signUpView == null) {
@@ -97,16 +93,11 @@ public class ViewFactory {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Library.fxml"));
                 userLibrary = loader.load();
-                userStore = loader.getController();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return userLibrary;
-    }
-
-    public UserLibraryController getUserStoreController() {
-        return userStore;
     }
 
     public HBox getUserStore() {
@@ -151,7 +142,6 @@ public class ViewFactory {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/DisplayBook.fxml"));
                 bookDetail = loader.load();
-                bookDisplayController = loader.getController();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -169,14 +159,6 @@ public class ViewFactory {
             }
         }
         return notificationView;
-    }
-
-    public void setBookDisplayController(BookDisplayController bookDisplayController) {
-        this.bookDisplayController = bookDisplayController;
-    }
-
-    public BookDisplayController getBookDisplayController() {
-        return bookDisplayController;
     }
 
     public Node getUserPending() {

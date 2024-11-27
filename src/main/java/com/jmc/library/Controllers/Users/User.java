@@ -1,7 +1,9 @@
 package com.jmc.library.Controllers.Users;
 
+import com.jmc.library.Assets.LibraryTable;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.Image.ImageUtils;
+import com.jmc.library.Controllers.LibraryControllers.UserLibraryController;
 import com.jmc.library.Database.*;
 import com.jmc.library.Models.CartModel;
 import com.jmc.library.Models.LibraryModel;
@@ -95,9 +97,6 @@ public class User {
     }
 
     public Image getAvatar() {
-        if(avatar == null) {
-            return new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/avatar.png")).toExternalForm());
-        }
         return avatar;
     }
 
@@ -121,28 +120,31 @@ public class User {
         this.HiredBookList = hiredBookList;
     }
 
+    public void loadUserInfo(ResultSet resultSet) throws SQLException {
+            this.username = resultSet.getString("username");
+            this.password = resultSet.getString("password");
+            this.name = (resultSet.getString("name") == null) ? "" : resultSet.getString("name");
+            this.birthDate = (resultSet.getDate("birthDate") == null) ? LocalDate.now().plusDays(1) : resultSet.getDate("birthDate").toLocalDate();
+            this.ID = resultSet.getInt("ID");
+            Blob blob = resultSet.getBlob("imageView");
+
+            if (blob != null && blob.length() > 0) {
+                byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+                this.avatar = ImageUtils.byteArrayToImage(imageBytes);
+            } else {
+                this.avatar = new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/avatar.png")).toExternalForm());
+            }
+            resultSet.close();
+    }
+
     public void loadUserInfo() {
-        DBQuery dbQuery = new DBQuery("select * from users where username = ?", this.username);
+        DBQuery dbQuery = new DBQuery("select * " +
+                "from users where username = ?", this.username);
         dbQuery.setOnSucceeded(event -> {
             ResultSet resultSet = dbQuery.getValue();
             try {
                 if (resultSet.next()) {
-                    this.username = resultSet.getString("username");
-                    this.password = resultSet.getString("password");
-                    this.name = (resultSet.getString("name") == null) ? "" : resultSet.getString("name");
-                    this.birthDate = (resultSet.getDate("birthDate") == null) ? LocalDate.now().plusDays(1) : resultSet.getDate("birthDate").toLocalDate();
-                    this.ID = resultSet.getInt("ID");
-                    Blob blob = resultSet.getBlob("imageView");
-
-                    if (blob != null && blob.length() > 0) {
-                        byte[] imageBytes = blob.getBytes(1, (int) blob.length());
-                        Platform.runLater(() -> {
-                            this.avatar = ImageUtils.byteArrayToImage(imageBytes);
-                        });
-                    } else {
-                        System.out.println(1);
-                        this.avatar = new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/avatar.png")).toExternalForm());
-                    }
+                    loadUserInfo(resultSet);
                 }
                 resultSet.close();
             } catch (SQLException e) {
@@ -152,6 +154,7 @@ public class User {
         Thread thread = new Thread(dbQuery);
         thread.setDaemon(true);
         thread.start();
+
     }
 
     public void loadPendingBooks() {
