@@ -26,6 +26,9 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+/**
+ * Abstract class for managing the user library table, including displaying and searching books.
+ */
 public abstract class UserLibraryTable {
     public TableColumn<UserBookInfo, String> book_name_tb_cl;
     public TableColumn<UserBookInfo, String> author_tb_cl;
@@ -53,6 +56,9 @@ public abstract class UserLibraryTable {
     public ChoiceBox<String> num_row_shown;
     public Label username_lbl;
 
+    /**
+     * Adds bindings to the UI components.
+     */
     protected void addBinding() {
         book_name_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookName"));
         author_tb_cl.setCellValueFactory(new PropertyValueFactory<>("authorName"));
@@ -70,6 +76,9 @@ public abstract class UserLibraryTable {
         });
     }
 
+    /**
+     * Adds a loading placeholder to the table.
+     */
     protected void addLoading() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
         try {
@@ -80,6 +89,9 @@ public abstract class UserLibraryTable {
         }
     }
 
+    /**
+     * Adds a placeholder for when no data is available.
+     */
     protected void returnLoading() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
         try {
@@ -90,15 +102,33 @@ public abstract class UserLibraryTable {
         }
     }
 
+    /**
+     * Abstract method to set the table data.
+     */
     protected abstract void setTable();
 
+    /**
+     * Abstract method to show the library data.
+     */
     protected abstract void showLibrary();
 
+    /**
+     * Searches for books by name.
+     *
+     * @param text The text to search for.
+     */
     private void searchBook(String text) {
-        if(!text.isEmpty())
+        if (!text.isEmpty())
             searchBookByName(text);
 
     }
+
+    /**
+     * Sorts a string alphabetically.
+     *
+     * @param str The string to sort.
+     * @return The sorted string.
+     */
     private String sortString(String str) {
         str = str.toLowerCase();
         char[] charArray = str.toCharArray();
@@ -106,6 +136,13 @@ public abstract class UserLibraryTable {
         return new String(charArray);
     }
 
+    /**
+     * Gets the difference between two strings.
+     *
+     * @param a The first string.
+     * @param b The second string.
+     * @return The number of differing characters.
+     */
     private int getDifference(String a, String b) {
         int end = Math.min(a.length(), b.length());
         int cnt = 0;
@@ -122,6 +159,14 @@ public abstract class UserLibraryTable {
         return cnt;
     }
 
+    /**
+     * Gets a substring of a string.
+     *
+     * @param a The string.
+     * @param l The start index.
+     * @param r The end index.
+     * @return The substring.
+     */
     private String subString(String a, int l, int r) {
         StringBuilder res = new StringBuilder();
         for (int i = l; i <= r; i++) {
@@ -130,6 +175,11 @@ public abstract class UserLibraryTable {
         return res.toString();
     }
 
+    /**
+     * Searches for books by name.
+     *
+     * @param text The text to search for.
+     */
     private void searchBookByName(String text) {
         ObservableList<UserBookInfo> filteredList = FXCollections.observableArrayList();
 
@@ -143,22 +193,19 @@ public abstract class UserLibraryTable {
                     if (new_string.equalsIgnoreCase(bookInfo.getBookName())) {
                         filteredList.add(bookInfo);
                         break;
-                    }
-                    else if (getDifference(text, bookInfo.getBookName()) <= 2) {
+                    } else if (getDifference(text, bookInfo.getBookName()) <= 2) {
                         filteredList.add(bookInfo);
                         break;
                     }
                 }
-            }
-            else {
+            } else {
                 end = text.length();
                 for (int start = 0; start <= bookInfo.getBookName().length() - end; start++) {
                     String new_string = subString(bookInfo.getBookName(), start, start + end - 1);
                     if (new_string.equalsIgnoreCase(text)) {
                         filteredList.add(bookInfo);
                         break;
-                    }
-                    else if (getDifference(text, bookInfo.getBookName()) <= 2) {
+                    } else if (getDifference(text, bookInfo.getBookName()) <= 2) {
                         filteredList.add(bookInfo);
                         break;
                     }
@@ -169,16 +216,22 @@ public abstract class UserLibraryTable {
         store_tb.setItems(filteredList);
     }
 
+    /**
+     * Sets the username label.
+     */
     protected void setUsername_lbl() {
         username_lbl.setText(LibraryModel.getInstance().getUser().getName());
     }
 
+    /**
+     * Sets the number of rows shown in the table.
+     */
     protected void setNum_row_shown() {
         num_row_shown.getItems().addAll("5", "10", "15", "20", "All");
         num_row_shown.setValue("All");
         num_row_shown.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             store_tb.refresh();
-            if(newVal.equals("All")) {
+            if (newVal.equals("All")) {
                 store_tb.setItems(FXCollections.observableArrayList(bookList));
             } else {
                 store_tb.setItems(FXCollections.observableArrayList(bookList.stream().limit(Integer.parseInt(newVal)).collect(Collectors.toList())));
@@ -186,6 +239,9 @@ public abstract class UserLibraryTable {
         });
     }
 
+    /**
+     * Sets the listener for material changes.
+     */
     protected void setListenerMaterial() {
         setUsername_lbl();
         setNum_row_shown();
@@ -194,6 +250,9 @@ public abstract class UserLibraryTable {
         }));
     }
 
+    /**
+     * Sets the button listeners for various actions.
+     */
     protected void setButtonListener() {
         search_btn.setOnAction(actionEvent -> searchBook(search_fld.getText()));
         search_fld.setOnKeyPressed(event -> {
@@ -238,6 +297,9 @@ public abstract class UserLibraryTable {
         reload_btn.setOnAction(actionEvent -> showLibrary());
     }
 
+    /**
+     * Transforms the stage to the authentication window.
+     */
     private void stageTransforming() {
         Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
         Model.getInstance().getViewFactory().closeStage(currentStage);

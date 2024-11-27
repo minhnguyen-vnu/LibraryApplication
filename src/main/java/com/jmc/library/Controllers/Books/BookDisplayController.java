@@ -1,8 +1,6 @@
 package com.jmc.library.Controllers.Books;
 
-import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.UserBookInfo;
-import com.jmc.library.Controllers.Assets.RatingController;
 import com.jmc.library.Controllers.Assets.ShowRateController;
 import com.jmc.library.Controllers.Notification.NotificationOverlay;
 import com.jmc.library.Controllers.Users.CartEntityController;
@@ -13,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.TextFlow;
@@ -117,9 +114,9 @@ public class BookDisplayController implements Initializable {
             return;
         }
 
-        if(LibraryModel.getInstance().getUser().getHiredBookList().stream()
+        if(LibraryModel.getInstance().getUser().getBorrowedBookList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())
-                && LibraryModel.getInstance().getUser().getHiredBookList().stream()
+                && LibraryModel.getInstance().getUser().getBorrowedBookList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getReturnDate().isAfter(LocalDate.now()))) {
             NotificationOverlay overlay = new NotificationOverlay("Book already hired.", get_book_btn.getScene());
             return;

@@ -128,7 +128,7 @@
                                     <image>
                                         <Image url="@../IMAGES/DashboardBoardBG.png" />
                                     </image></ImageView>
-                                <Label layoutX="14.0" layoutY="14.0" styleClass="TitleText" text="Read Books" textFill="WHITE">
+                                <Label layoutX="14.0" layoutY="14.0" styleClass="TitleText" text="Returned Books" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="17.0" />
                                     </font></Label>
@@ -150,7 +150,7 @@
                                     <image>
                                         <Image url="@../IMAGES/LightDashBoardBG.png" />
                                     </image></ImageView>
-                                <Label fx:id="total_hired_book_lbl" layoutX="29.0" layoutY="56.0" styleClass="CountNumber" text="10" />
+                                <Label fx:id="total_borrowed_book_lbl" layoutX="29.0" layoutY="56.0" styleClass="CountNumber" text="10" />
                                 <Label layoutX="22.0" layoutY="14.0" styleClass="TitleText" text="Hired Books" textFill="#716f6f" />
                             </children>
                         </AnchorPane>
@@ -169,12 +169,12 @@
                         </AnchorPane>
                         <AnchorPane layoutX="566.0" layoutY="360.0" prefHeight="327.0" prefWidth="480.0" styleClass="LightCountBoard" stylesheets="@../STYLES/Dashboard.css">
                             <children>
-                                <BarChart fx:id="read_and_hired_bar_chart" layoutY="50.0" prefHeight="274.0" prefWidth="480.0" styleClass="BarChart">
+                                <BarChart fx:id="read_and_borrowed_bar_chart" layoutY="50.0" prefHeight="274.0" prefWidth="480.0" styleClass="BarChart">
                                     <xAxis>
-                                        <CategoryAxis fx:id="month_total_read_hired_ca" side="BOTTOM" />
+                                        <CategoryAxis fx:id="month_total_read_borrowed_ca" side="BOTTOM" />
                                     </xAxis>
                                     <yAxis>
-                                        <NumberAxis fx:id="read_hired_bar_chart_na" side="LEFT" />
+                                        <NumberAxis fx:id="read_borrowed_bar_chart_na" side="LEFT" />
                                     </yAxis>
                                 </BarChart>
                                 <Label layoutX="14.0" layoutY="14.0" styleClass="TitleText" text="Read and Hired Books Chart" />

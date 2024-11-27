@@ -1,16 +1,12 @@
 package com.jmc.library.Assets;
 
-import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Models.LibraryModel;
 import javafx.beans.property.ListProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 
-import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -80,7 +76,7 @@ public class UserDashboardInfo {
         this.new_books_read_lbl = new_books_read_lbl;
     }
 
-    public Label getTotal_hired_book_lbl() {
+    public Label getTotal_borrowed_book_lbl() {
         return total_hired_book_lbl;
     }
 
@@ -88,7 +84,7 @@ public class UserDashboardInfo {
         this.total_hired_book_lbl = total_hired_book_lbl;
     }
 
-    public void setCountHiredBook(int countHiredBook) {
+    public void setCountBorrowedBook(int countHiredBook) {
         this.countHiredBook = countHiredBook;
     }
 
@@ -100,7 +96,7 @@ public class UserDashboardInfo {
         this.countNewReadBook = countNewReadBook;
     }
 
-    public int getCountHiredBook() {
+    public int getCountBorrowedBook() {
         return countHiredBook;
     }
 
@@ -121,7 +117,7 @@ public class UserDashboardInfo {
             tempBorrowedBooks.add(0);
         }
 
-        for (UserBookInfo book : LibraryModel.getInstance().getUser().getHiredBookList()) {
+        for (UserBookInfo book : LibraryModel.getInstance().getUser().getBorrowedBookList()) {
             int month = book.getPickedDate().getMonthValue() - 1;
             if (book.getReturnDate().isBefore(LocalDate.now())) {
                 countReadBook ++;

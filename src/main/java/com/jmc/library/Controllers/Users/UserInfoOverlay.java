@@ -11,10 +11,19 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
+/**
+ * Manages the user information overlay, including displaying and closing the overlay with animations.
+ */
 public class UserInfoOverlay {
     private final AnchorPane overlayPane;
     private final AnchorPane userInfoPane;
 
+    /**
+     * Constructs a UserInfoOverlay and initializes the overlay pane.
+     *
+     * @param currentScene The current scene where the overlay will be displayed.
+     * @throws IOException If loading the FXML file fails.
+     */
     public UserInfoOverlay(Scene currentScene) throws IOException {
         Pane root = (Pane) currentScene.getRoot();
 
@@ -58,6 +67,11 @@ public class UserInfoOverlay {
         });
     }
 
+    /**
+     * Closes the overlay with a zoom-out effect.
+     *
+     * @param currentScene The current scene where the overlay is displayed.
+     */
     private void closeOverlay(Scene currentScene) {
         playZoomOutEffect(userInfoPane, () -> {
             Pane root = (Pane) currentScene.getRoot();
@@ -65,6 +79,11 @@ public class UserInfoOverlay {
         });
     }
 
+    /**
+     * Plays a zoom-in effect on the specified pane.
+     *
+     * @param pane The pane to apply the zoom-in effect to.
+     */
     private void playZoomInEffect(AnchorPane pane) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(300), pane);
         scaleTransition.setFromX(0.0);
@@ -75,6 +94,12 @@ public class UserInfoOverlay {
         scaleTransition.play();
     }
 
+    /**
+     * Plays a zoom-out effect on the specified pane and runs the specified action upon completion.
+     *
+     * @param pane       The pane to apply the zoom-out effect to.
+     * @param onFinished The action to run upon completion of the zoom-out effect.
+     */
     private void playZoomOutEffect(AnchorPane pane, Runnable onFinished) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(300), pane);
         scaleTransition.setFromX(1.0);

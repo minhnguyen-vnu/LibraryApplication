@@ -6,7 +6,6 @@ import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Models.LibraryModel;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -27,6 +26,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing user books, including displaying and rating books.
+ */
 public class UserBookController extends UserLibraryTable implements Initializable {
     public TableColumn<UserBookInfo, Double> total_cost_tb_cl;
 
@@ -54,7 +56,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
     @Override
     protected void setTable() {
         returnLoading();
-        bookList = LibraryModel.getInstance().getUser().getHiredBookList();
+        bookList = LibraryModel.getInstance().getUser().getBorrowedBookList();
     }
 
     @Override
@@ -69,8 +71,8 @@ public class UserBookController extends UserLibraryTable implements Initializabl
                 "    r.pickedDate,\n" +
                 "    r.returnDate,\n" +
                 "    r.cost,\n" +
-                "    r.requestStatus,\n"+
-                "    r.isRated, \n"+
+                "    r.requestStatus,\n" +
+                "    r.isRated, \n" +
                 "    b.imageView\n" +
                 "from  userRequest r\n" +
                 "join bookStore b using(bookId)\n" +
@@ -103,6 +105,9 @@ public class UserBookController extends UserLibraryTable implements Initializabl
         thread.start();
     }
 
+    /**
+     * Formats the price column in the table.
+     */
     private void priceFormating() {
         total_cost_tb_cl.setCellFactory(new Callback<TableColumn<UserBookInfo, Double>, TableCell<UserBookInfo, Double>>() {
             @Override
@@ -130,6 +135,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
             public TableCell<UserBookInfo, CheckBox> call(TableColumn<UserBookInfo, CheckBox> param) {
                 return new TableCell<UserBookInfo, CheckBox>() {
                     private final CheckBox checkBox = new CheckBox();
+
                     {
                         checkBox.setOnAction(event -> {
                             UserBookInfo bookInfo = getTableView().getItems().get(getIndex());
@@ -164,6 +170,13 @@ public class UserBookController extends UserLibraryTable implements Initializabl
             }
         });
     }
+
+    /**
+     * Shows the rating dialog for a book.
+     *
+     * @param bookID The ID of the book to be rated.
+     * @return true if the dialog was shown successfully, false otherwise.
+     */
     private boolean showRatingDialog(int bookID) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/RateStar.fxml"));

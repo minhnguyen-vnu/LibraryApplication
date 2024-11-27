@@ -18,6 +18,9 @@ import java.util.ResourceBundle;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controller class for managing the sign-up view, including user registration and account creation.
+ */
 public class SignUpController implements Initializable {
     public ChoiceBox acc_selector;
     public TextField username_su;
@@ -35,7 +38,10 @@ public class SignUpController implements Initializable {
         setRotateTransition();
     }
 
-    public void addListener(){
+    /**
+     * Adds listeners for the sign-up button, back label, and text fields.
+     */
+    public void addListener() {
         sign_up_btn.setOnAction(actionEvent -> signUp());
         back_lbl.setOnMouseClicked(mouseEvent -> {
             Model.getInstance().getViewFactory().getSelectedAuthenticatonMode().set("Log In");
@@ -62,7 +68,10 @@ public class SignUpController implements Initializable {
 
     }
 
-    public void setRotateTransition(){
+    /**
+     * Sets the rotation transition for the loading image.
+     */
+    public void setRotateTransition() {
         rotateTransition = new RotateTransition();
         rotateTransition.setNode(loading_img);
         rotateTransition.setByAngle(360);
@@ -71,14 +80,16 @@ public class SignUpController implements Initializable {
         rotateTransition.play();
     }
 
-    public void signUp(){
+    /**
+     * Authenticates the user and signs up.
+     */
+    public void signUp() {
         loading_img.setVisible(true);
         rotateTransition.play();
-        if(!Objects.equals(password_su.getText(), confirm_su.getText())){
+        if (!Objects.equals(password_su.getText(), confirm_su.getText())) {
             error_lbl.setText("Your Confirmation Password didn't match the Password");
             error_lbl.setStyle("-fx-text-fill: red");
-        }
-        else {
+        } else {
             DBQuery dbQuery = new DBQuery("select * from users where username = ?", username_su.getText());
             dbQuery.setOnSucceeded(workerStateEvent -> {
                 ResultSet resultSet = dbQuery.getValue();

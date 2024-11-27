@@ -4,9 +4,12 @@ import com.jmc.library.Assets.BookInfo;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+/**
+ * Model class for the book view.
+ */
 public class BookViewingModel {
     private static BookViewingModel bookViewingModel;
-    private SimpleObjectProperty<BookInfo> bookInfo;
+    private final SimpleObjectProperty<BookInfo> bookInfo;
 
     private BookViewingModel() {
         bookInfo = new SimpleObjectProperty<>();

@@ -8,6 +8,9 @@ import javafx.scene.image.ImageView;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 
+/**
+ * Model class for the library view.
+ */
 public class LibraryModel {
     private static LibraryModel model;
     private User user;
@@ -17,7 +20,7 @@ public class LibraryModel {
     }
 
     public static synchronized LibraryModel getInstance() {
-        if(model == null) model = new LibraryModel();
+        if (model == null) model = new LibraryModel();
         return model;
     }
 

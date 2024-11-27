@@ -4,16 +4,19 @@ import com.jmc.library.Assets.BookInfo;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+/**
+ * Model class for the book view.
+ */
 public class BookModel {
     private static BookModel bookModel;
-    private SimpleObjectProperty<BookInfo> bookInfo;
+    private final SimpleObjectProperty<BookInfo> bookInfo;
 
     private BookModel() {
         bookInfo = new SimpleObjectProperty<>();
     }
 
-    public static synchronized BookModel getInstance(){
-        if(bookModel == null) bookModel = new BookModel();
+    public static synchronized BookModel getInstance() {
+        if (bookModel == null) bookModel = new BookModel();
         return bookModel;
     }
 

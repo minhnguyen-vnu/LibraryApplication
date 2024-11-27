@@ -1,19 +1,14 @@
 package com.jmc.library.View;
 
-import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Controllers.Admin.AdminView;
 import com.jmc.library.Controllers.Authentication;
-import com.jmc.library.Controllers.Books.BookDisplayController;
-import com.jmc.library.Controllers.LibraryControllers.UserLibraryController;
 import com.jmc.library.Controllers.Users.UserView;
-import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Database.DBUtlis;
 import com.jmc.library.Models.LibraryModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
@@ -23,11 +18,14 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
+/**
+ * Factory class for creating views.
+ */
 public class ViewFactory {
     private HBox logInView;
     private HBox signUpView;
     private HBox userLibrary;
-    private HBox userHiredBook;
+    private HBox userBorrowedBook;
     private HBox userDashboard;
     private Node userCart;
     private Node userPending;
@@ -45,12 +43,18 @@ public class ViewFactory {
     private final StringProperty selectedAdminMode;
 
 
+    /**
+     * Constructs a ViewFactory and initializes the mode properties.
+     */
     public ViewFactory() {
         this.selectedAuthenticatonMode = new SimpleStringProperty("");
         this.selectedUserMode = new SimpleStringProperty("");
         this.selectedAdminMode = new SimpleStringProperty("");
     }
 
+    /**
+     * Shows the authentication window.
+     */
     public StringProperty getSelectedAuthenticatonMode() {
         return selectedAuthenticatonMode;
     }
@@ -103,15 +107,16 @@ public class ViewFactory {
     public HBox getUserStore() {
         return getUserLibrary();
     }
-    public HBox getUserHiredBook() {
-        if (userHiredBook == null) {
+
+    public HBox getUserBorrowedBook() {
+        if (userBorrowedBook == null) {
             try {
-                userHiredBook = new FXMLLoader(getClass().getResource("/FXML/HiredBook.fxml")).load();
+                userBorrowedBook = new FXMLLoader(getClass().getResource("/FXML/BorrowedBook.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return userHiredBook;
+        return userBorrowedBook;
     }
 
     public HBox getUserDashboard() {
@@ -249,7 +254,9 @@ public class ViewFactory {
         return adminBookViewing;
     }
 
-
+    /**
+     * Shows the user window.
+     */
     public void showUserWindow() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/UserView.fxml"));
         UserView user = new UserView();
@@ -257,6 +264,9 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
+    /**
+     * Shows the admin window.
+     */
     public void showAdminWindow() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/AdminView.fxml"));
         AdminView adminView = new AdminView();
@@ -264,6 +274,11 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
+    /**
+     * Creates a new stage with the specified loader.
+     *
+     * @param loader The FXMLLoader to use for creating the stage.
+     */
     void createStage(FXMLLoader loader) {
         Scene scene = null;
         try {
@@ -284,6 +299,11 @@ public class ViewFactory {
         });
     }
 
+    /**
+     * Creates a new stage with the specified parent.
+     *
+     * @param loader The Parent to use for creating the stage.
+     */
     void createStage(Parent loader) {
         Scene scene = new Scene(loader);
         Stage stage = new Stage();
@@ -292,16 +312,24 @@ public class ViewFactory {
         stage.show();
     }
 
+    /**
+     * Closes the specified stage.
+     *
+     * @param stage The stage to close.
+     */
     public void closeStage(Stage stage) {
         stage.close();
     }
 
+    /**
+     * Resets all views to null.
+     */
     public void resetAll() {
         System.out.println("ViewFactory.resetAll");
         logInView = null;
         signUpView = null;
         userLibrary = null;
-        userHiredBook = null;
+        userBorrowedBook = null;
         userDashboard = null;
         userCart = null;
         userPending = null;
@@ -309,5 +337,7 @@ public class ViewFactory {
         notificationView = null;
     }
 
-    public StringProperty getSelectedAdminMode() { return selectedAdminMode; }
+    public StringProperty getSelectedAdminMode() {
+        return selectedAdminMode;
+    }
 }

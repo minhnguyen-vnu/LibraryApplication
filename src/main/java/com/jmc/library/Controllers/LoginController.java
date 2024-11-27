@@ -1,11 +1,8 @@
 package com.jmc.library.Controllers;
 
-import com.jmc.library.Controllers.Image.ImageUtils;
-import com.jmc.library.Controllers.Users.UserLibraryTable;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Database.DBUtlis;
-import com.jmc.library.Models.DashboardModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.application.Platform;
@@ -20,9 +17,11 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing the login view, including user authentication and login.
+ */
 public class LoginController implements Initializable {
     public ChoiceBox acc_selector;
     public TextField acc_address_fld;
@@ -40,10 +39,16 @@ public class LoginController implements Initializable {
         setRotateTransition();
     }
 
+    /**
+     * Sets the listener for the sign-up button.
+     */
     public void onSignUp() {
         Model.getInstance().getViewFactory().getSelectedAuthenticatonMode().set("Sign Up");
     }
 
+    /**
+     * Adds listeners for the login button, sign-up label, and text fields.
+     */
     void addListener() {
         welcome_text_txt_flw.getChildren().add(new Label("Welcome to Library\nManagement System"));
         login_btn.setOnAction(event -> login()); /// bat dau quay o day
@@ -60,6 +65,9 @@ public class LoginController implements Initializable {
         });
     }
 
+    /**
+     * Sets the rotation transition for the loading image.
+     */
     private void setRotateTransition() {
         rotateTransition = new RotateTransition();
         rotateTransition.setNode(loading_img);
@@ -68,6 +76,9 @@ public class LoginController implements Initializable {
         rotateTransition.setAutoReverse(false);
     }
 
+    /**
+     * Authenticates the user and logs in.
+     */
     public void login() {
         loading_img.setVisible(true);
         rotateTransition.play();
@@ -87,7 +98,7 @@ public class LoginController implements Initializable {
                         acc_address_fld.clear();
                         password_fld.clear();
                         LibraryModel.getInstance().getUser().loadPendingBooks();
-                        LibraryModel.getInstance().getUser().loadHiredBooks();
+                        LibraryModel.getInstance().getUser().loadBorrowedBook();
                         DBUpdate dbUpdate = new DBUpdate("update users\n" +
                                 "set status = ?\n" +
                                 "where username = ?;", "online", LibraryModel.getInstance().getUser().getUsername());
@@ -119,6 +130,11 @@ public class LoginController implements Initializable {
         thread.start();
     }
 
+    /**
+     * Transforms the stage to the user or admin view.
+     *
+     * @param isAdmin True if the user is an admin, false otherwise.
+     */
     public void stageTransforming(boolean isAdmin) {
         loading_img.setVisible(false);
         rotateTransition.stop();
@@ -128,8 +144,7 @@ public class LoginController implements Initializable {
         if (isAdmin) {
             Model.getInstance().getViewFactory().showAdminWindow();
             Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View");
-        }
-        else {
+        } else {
             Model.getInstance().getViewFactory().showUserWindow();
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Restart");
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");

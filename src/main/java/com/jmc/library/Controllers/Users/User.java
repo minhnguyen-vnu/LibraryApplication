@@ -1,14 +1,11 @@
 package com.jmc.library.Controllers.Users;
 
-import com.jmc.library.Assets.LibraryTable;
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.Image.ImageUtils;
-import com.jmc.library.Controllers.LibraryControllers.UserLibraryController;
 import com.jmc.library.Database.*;
 import com.jmc.library.Models.CartModel;
 import com.jmc.library.Models.DashboardModel;
 import com.jmc.library.Models.LibraryModel;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -23,23 +20,26 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Represents a user in the library system, including their personal information, avatar, and book lists.
+ */
 public class User {
     private String username;
     private String password;
-    private SimpleStringProperty name;
+    private final SimpleStringProperty name;
     private LocalDate birthDate;
     private int ID;
-    private SimpleObjectProperty<Image> avatar;
+    private final SimpleObjectProperty<Image> avatar;
     private double totalPaid;
     private int totalBorrowed;
     private String status;
 
     private ObservableList<UserBookInfo> PendingBookList;
-    private ObservableList<UserBookInfo> HiredBookList;
+    private ObservableList<UserBookInfo> BorrowedBookList;
 
     public User() {
         this.PendingBookList = FXCollections.observableArrayList();
-        this.HiredBookList = FXCollections.observableArrayList();
+        this.BorrowedBookList = FXCollections.observableArrayList();
         avatar = new SimpleObjectProperty<>();
         name = new SimpleStringProperty();
     }
@@ -73,7 +73,7 @@ public class User {
     }
 
     public String getName() {
-        if(name.get().isEmpty()) {
+        if (name.get().isEmpty()) {
             return username;
         }
         return name.get();
@@ -84,7 +84,7 @@ public class User {
     }
 
     public LocalDate getBirthDate() {
-        if(birthDate == null) {
+        if (birthDate == null) {
             return LocalDate.now().plusDays(1);
         }
         return birthDate;
@@ -106,11 +106,17 @@ public class User {
         this.ID = ID;
     }
 
-    public Image getAvatar() { return avatar.get(); }
+    public Image getAvatar() {
+        return avatar.get();
+    }
 
-    public void setAvatar(Image avatar) { this.avatar.set(avatar); }
+    public void setAvatar(Image avatar) {
+        this.avatar.set(avatar);
+    }
 
-    public SimpleObjectProperty<Image> avatarProperty() { return avatar; }
+    public SimpleObjectProperty<Image> avatarProperty() {
+        return avatar;
+    }
 
     public ObservableList<UserBookInfo> getPendingBookList() {
         return PendingBookList;
@@ -120,44 +126,53 @@ public class User {
         this.PendingBookList = bookList;
     }
 
-    public ObservableList<UserBookInfo> getHiredBookList() {
-        return HiredBookList;
+    public ObservableList<UserBookInfo> getBorrowedBookList() {
+        return BorrowedBookList;
     }
 
-    public void setHiredBookList(ObservableList<UserBookInfo> hiredBookList) {
-        this.HiredBookList = hiredBookList;
+    public void setBorrowedBookList(ObservableList<UserBookInfo> borrowedBookList) {
+        this.BorrowedBookList = borrowedBookList;
     }
 
+    /**
+     * Loads user information from the given ResultSet.
+     *
+     * @param resultSet The ResultSet containing user information.
+     * @throws SQLException If an SQL error occurs.
+     */
     public void loadUserInfo(ResultSet resultSet) throws SQLException {
-            this.username = resultSet.getString("username");
-            this.password = resultSet.getString("password");
-            String fetchedName = (resultSet.getString("name") == null) ? "" : resultSet.getString("name");
-            this.name.set(fetchedName);
-            this.birthDate = (resultSet.getDate("birthDate") == null) ? LocalDate.now().plusDays(1) : resultSet.getDate("birthDate").toLocalDate();
-            this.ID = resultSet.getInt("ID");
-            Blob blob = resultSet.getBlob("imageView");
+        this.username = resultSet.getString("username");
+        this.password = resultSet.getString("password");
+        String fetchedName = (resultSet.getString("name") == null) ? "" : resultSet.getString("name");
+        this.name.set(fetchedName);
+        this.birthDate = (resultSet.getDate("birthDate") == null) ? LocalDate.now().plusDays(1) : resultSet.getDate("birthDate").toLocalDate();
+        this.ID = resultSet.getInt("ID");
+        Blob blob = resultSet.getBlob("imageView");
 
-            if (blob != null && blob.length() > 0) {
-                byte[] imageBytes = blob.getBytes(1, (int) blob.length());
-                this.avatar.set(ImageUtils.byteArrayToImage(imageBytes));
-                if (this.getAvatar() == null) {
-                    System.out.println("Avatar image is null");
-                } else {
-                    // Convert the avatar image to a byte array
-                    byte[] imageBytes1 = ImageUtils.imageToByteArray(this.getAvatar());
-                    // Check if the byte array is empty
-                    if (imageBytes1.length == 0) {
-                        System.out.println("Converted byte array is empty");
-                    } else {
-                        System.out.println(Arrays.toString(imageBytes1).charAt(30));
-                    }
-                }
+        if (blob != null && blob.length() > 0) {
+            byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+            this.avatar.set(ImageUtils.byteArrayToImage(imageBytes));
+            if (this.getAvatar() == null) {
+                System.out.println("Avatar image is null");
             } else {
-                this.avatar.set(new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/avatar.png")).toExternalForm()));
+                // Convert the avatar image to a byte array
+                byte[] imageBytes1 = ImageUtils.imageToByteArray(this.getAvatar());
+                // Check if the byte array is empty
+                if (imageBytes1.length == 0) {
+                    System.out.println("Converted byte array is empty");
+                } else {
+                    System.out.println(Arrays.toString(imageBytes1).charAt(30));
+                }
             }
-            resultSet.close();
+        } else {
+            this.avatar.set(new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/avatar.png")).toExternalForm()));
+        }
+        resultSet.close();
     }
 
+    /**
+     * Loads user information from the database.
+     */
     public void loadUserInfo() {
         DBQuery dbQuery = new DBQuery("select * " +
                 "from users where username = ?", this.username);
@@ -178,6 +193,9 @@ public class User {
 
     }
 
+    /**
+     * Loads the list of pending books for the user from the database.
+     */
     public void loadPendingBooks() {
         DBQuery dbQuery = new DBQuery("select\n" +
                 "    r.username,\n" +
@@ -218,7 +236,10 @@ public class User {
         thread.start();
     }
 
-    public void loadHiredBooks() {
+    /**
+     * Loads the list of hired books for the user from the database.
+     */
+    public void loadBorrowedBook() {
         DBQuery dbQuery = new DBQuery("select\n" +
                 "    r.username,\n" +
                 "    r.bookName,\n" +
@@ -227,8 +248,8 @@ public class User {
                 "    r.pickedDate,\n" +
                 "    r.returnDate,\n" +
                 "    r.cost,\n" +
-                "    r.requestStatus,\n"+
-                "    r.isRated, \n"+
+                "    r.requestStatus,\n" +
+                "    r.isRated, \n" +
                 "    b.imageView\n" +
                 "from  userRequest r\n" +
                 "join bookStore b using(bookId)\n" +
@@ -247,7 +268,7 @@ public class User {
                     UserBookInfo userBookInfo = new UserBookInfo(resultSet.getString("bookName"), resultSet.getString("authorName"),
                             resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
                             resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"), resultSet.getBoolean("isRated"), imageView);
-                    this.HiredBookList.add(userBookInfo);
+                    this.BorrowedBookList.add(userBookInfo);
                 }
                 DashboardModel.getInstance().getUserDashboardInfo().onDashBoardSetUp();
                 resultSet.close();
@@ -261,9 +282,11 @@ public class User {
         thread.start();
     }
 
-
+    /**
+     * Processes user payment and updates the database with the new pending requests.
+     */
     public void userPayment() {
-        for(CartEntityController cartEntityController : CartModel.getInstance().getUserCartInfo().getCartList()) {
+        for (CartEntityController cartEntityController : CartModel.getInstance().getUserCartInfo().getCartList()) {
             LibraryModel.getInstance().getUser().getPendingBookList()
                     .add(cartEntityController.getUserBookInfo());
 
@@ -284,9 +307,12 @@ public class User {
         }
     }
 
+    /**
+     * Resets all user information and clears the book lists.
+     */
     public void resetAll() {
         this.PendingBookList.clear();
-        this.HiredBookList.clear();
+        this.BorrowedBookList.clear();
         CartModel.getInstance().getUserCartInfo().getCartList().clear();
 
         this.username = null;
@@ -295,7 +321,9 @@ public class User {
         CartModel.getInstance().getUserCartInfo().clear();
     }
 
-    public double getTotalPaid() { return totalPaid; }
+    public double getTotalPaid() {
+        return totalPaid;
+    }
 
     public void setTotalPaid(int totalPaid) {
         this.totalPaid = totalPaid;

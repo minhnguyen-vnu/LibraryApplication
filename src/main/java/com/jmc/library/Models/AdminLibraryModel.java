@@ -9,6 +9,9 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Model class for the admin library view.
+ */
 public class AdminLibraryModel {
     private static AdminLibraryModel model;
     private ObservableList<BookInfo> bookList;

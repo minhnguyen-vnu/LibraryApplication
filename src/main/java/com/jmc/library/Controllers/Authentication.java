@@ -8,6 +8,9 @@ import javafx.scene.layout.BorderPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing the authentication view, including displaying the login and sign up views.
+ */
 public class Authentication implements Initializable {
     public BorderPane parent;
 

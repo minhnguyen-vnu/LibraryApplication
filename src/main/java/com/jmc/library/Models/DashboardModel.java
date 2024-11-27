@@ -2,6 +2,9 @@ package com.jmc.library.Models;
 
 import com.jmc.library.Assets.UserDashboardInfo;
 
+/**
+ * Model class for the dashboard view.
+ */
 public class DashboardModel {
     private static DashboardModel dashboardModel;
     private UserDashboardInfo userDashboardInfo;

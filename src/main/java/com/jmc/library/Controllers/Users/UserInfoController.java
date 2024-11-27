@@ -15,9 +15,13 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing user information including name, date of birth, student ID, password,
+ * and avatar. Implements the Initializable interface to initialize the controller after its root
+ * element has been completely processed.
+ */
 public class UserInfoController implements Initializable {
 
     public ImageView avatar_img;
@@ -40,15 +44,22 @@ public class UserInfoController implements Initializable {
         cancel_btn.setOnAction(actionEvent -> handleCancel());
     }
 
+    /**
+     * Sets the initial values for the user information fields.
+     */
     private void setMaterialListener() {
         name_txt.setText(LibraryModel.getInstance().getUser().getName());
         dob_txt.setValue(LibraryModel.getInstance().getUser().getBirthDate());
         mssv_txt.setText(String.valueOf(LibraryModel.getInstance().getUser().getID()));
         avatar_img.setImage(LibraryModel.getInstance().getUser().getAvatar());
-        Circle clip = new Circle(avatar_img.getFitWidth() / 2, avatar_img.getFitHeight() / 2, Math.min(avatar_img.getFitWidth(), avatar_img.getFitHeight()) / 2);
+        Circle clip = new Circle(avatar_img.getFitWidth() / 2, avatar_img.getFitHeight() / 2,
+                Math.min(avatar_img.getFitWidth(), avatar_img.getFitHeight()) / 2);
         avatar_img.setClip(clip);
     }
 
+    /**
+     * Handles the action of changing the user's photo.
+     */
     private void handleChangePhoto() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose Image");
@@ -60,12 +71,13 @@ public class UserInfoController implements Initializable {
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             Image image = new Image(selectedFile.toURI().toString());
-//            LibraryModel.getInstance().getUser()
-//                    .setAvatar(image);
             avatar_img.setImage(image);
         }
     }
 
+    /**
+     * Handles the action of saving changes to the user's information.
+     */
     private void handleSaveChanges() {
         String name = name_txt.getText();
         LocalDate dob = dob_txt.getValue();
@@ -75,17 +87,17 @@ public class UserInfoController implements Initializable {
         String confirmPassword = confirmPassword_txt.getText();
         ImageView avatar = avatar_img;
 
-        if(password == null) {
+        if (password == null) {
             password = "";
         }
-        if(newPassword == null) {
+        if (newPassword == null) {
             newPassword = "";
         }
-        if(confirmPassword == null) {
+        if (confirmPassword == null) {
             confirmPassword = "";
         }
 
-        if(!newPassword.isEmpty() || !confirmPassword.isEmpty()) {
+        if (!newPassword.isEmpty() || !confirmPassword.isEmpty()) {
             if (!newPassword.equals(confirmPassword)) {
                 setStatusMessage("Wrong new password", "red");
                 return;
@@ -104,19 +116,16 @@ public class UserInfoController implements Initializable {
         if (!newPassword.isEmpty()) {
             LibraryModel.getInstance().getUser().setPassword(newPassword);
             password = newPassword;
-        }
-        else {
+        } else {
             password = LibraryModel.getInstance().getUser().getPassword();
         }
 
-
         byte[] imageBytes = ImageUtils.imageToByteArray(avatar_img.getImage());
         if (imageBytes.length > 0) {
-            DBUpdate dbUpdate = new DBUpdate("Update users set name = ?, birthDate = ?, password = ?, ID = ?, imageView = ? where username = ?",
-                    name, dob,  password, mssv,
+            DBUpdate dbUpdate = new DBUpdate("Update users set name = ?, birthDate = ?, password = ?, ID = ?, " +
+                    "imageView = ? where username = ?", name, dob, password, mssv,
                     ImageUtils.imageToByteArray(avatar.getImage()),
-                    LibraryModel.getInstance().getUser().getUsername()
-            );
+                    LibraryModel.getInstance().getUser().getUsername());
             dbUpdate.setOnSucceeded(event -> {
                 LibraryModel.getInstance().getUser().loadUserInfo();
                 setStatusMessage("Saved completed", "green");
@@ -124,12 +133,10 @@ public class UserInfoController implements Initializable {
             Thread thread = new Thread(dbUpdate);
             thread.setDaemon(true);
             thread.start();
-        }
-        else {
-            DBUpdate dbUpdate = new DBUpdate("Update users set name = ?, birthDate = ?, password = ?, ID = ? where username = ?",
-                    name, dob,  password, mssv,
-                    LibraryModel.getInstance().getUser().getUsername()
-            );
+        } else {
+            DBUpdate dbUpdate = new DBUpdate("Update users set name = ?, birthDate = ?, password = ?, ID = ? " +
+                    "where username = ?", name, dob, password, mssv,
+                    LibraryModel.getInstance().getUser().getUsername());
             dbUpdate.setOnSucceeded(event -> {
                 LibraryModel.getInstance().getUser().loadUserInfo();
                 setStatusMessage("Saved completed", "green");
@@ -140,11 +147,20 @@ public class UserInfoController implements Initializable {
         }
     }
 
+    /**
+     * Handles the action of canceling changes to the user's information.
+     */
     private void handleCancel() {
         setMaterialListener();
         setStatusMessage("", "transparent");
     }
 
+    /**
+     * Sets the status message to be displayed to the user.
+     *
+     * @param message The status message.
+     * @param color   The color of the status message.
+     */
     private void setStatusMessage(String message, String color) {
         status_label.setText(message);
         status_label.setStyle("-fx-text-fill: " + color + "; -fx-font-weight: bold; -fx-font-size: 14px;");

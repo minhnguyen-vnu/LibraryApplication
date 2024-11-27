@@ -19,6 +19,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing the user cart, including displaying books and handling checkout.
+ */
 public class UserCartController implements Initializable {
     public Button back_library_btn;
     public ChoiceBox<String> sort_choice_box;
@@ -36,6 +39,9 @@ public class UserCartController implements Initializable {
         addBinding();
     }
 
+    /**
+     * Adds bindings to the UI components.
+     */
     private void addBinding() {
         setListBookVBox();
         sub_total_lbl.setText(CartModel.getInstance().getUserCartInfo().getTotal());
@@ -60,6 +66,9 @@ public class UserCartController implements Initializable {
         });
     }
 
+    /**
+     * Sets the button listeners for navigation and actions.
+     */
     private void setButtonListener() {
         back_library_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
@@ -78,6 +87,9 @@ public class UserCartController implements Initializable {
         });
     }
 
+    /**
+     * Sets the list of books in the VBox.
+     */
     private void setListBookVBox() {
         list_book_vbox.getChildren().clear();
 
@@ -94,6 +106,9 @@ public class UserCartController implements Initializable {
         list_book_vbox.layout();
     }
 
+    /**
+     * Sets the initial values for the cart fields and choice box.
+     */
     private void setMaterialListener() {
         sort_choice_box.getItems().addAll("Sort by name", "Sort by author", "Sort by price");
         sort_choice_box.getSelectionModel().selectFirst();

@@ -27,6 +27,9 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+/**
+ * Controller class for managing the user's pending book requests, including displaying and updating the list.
+ */
 public class UserPendingController extends UserLibraryTable implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,7 +57,7 @@ public class UserPendingController extends UserLibraryTable implements Initializ
                 "    r.requestDate,\n" +
                 "    r.returnDate,\n" +
                 "    r.cost,\n" +
-                "    r.requestStatus, \n"+
+                "    r.requestStatus, \n" +
                 "    b.imageView\n" +
                 "from PendingRequest r\n" +
                 "join bookStore b using(bookId)\n" +

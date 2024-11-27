@@ -2,12 +2,20 @@ package com.jmc.library.Database;
 
 import java.sql.*;
 
+/**
+ * Utility class for database operations.
+ */
 public class DBUtlis {
     static String User = "admin";
     static String password = "minhcbg123";
     static String url = "jdbc:mysql://database-1.c3me0eu06bvo.ap-southeast-2.rds.amazonaws.com:3306/login";
     static String driver = "com.mysql.cj.jdbc.Driver";
 
+    /**
+     * Gets a connection to the database.
+     *
+     * @return the connection
+     */
     public static Connection getConnection() {
         Connection con = null;
         try {
@@ -19,6 +27,13 @@ public class DBUtlis {
         return con;
     }
 
+    /**
+     * Closes the resources.
+     *
+     * @param preparedStatement the prepared statement
+     * @param resultSet         the result set
+     * @param con               the connection
+     */
     public static void closeResources(PreparedStatement preparedStatement, ResultSet resultSet, Connection con) {
         if (resultSet != null) {
             try {
@@ -43,6 +58,12 @@ public class DBUtlis {
         }
     }
 
+    /**
+     * Executes an update query.
+     *
+     * @param query  the query
+     * @param params the parameters
+     */
     public static void executeUpdate(String query, Object... params) {
         Connection con = null;
         PreparedStatement preparedStatement = null;
@@ -62,6 +83,14 @@ public class DBUtlis {
         }
     }
 
+    /**
+     * Executes a query.
+     *
+     * @param query  the query
+     * @param params the parameters
+     * @return the result set
+     * @throws SQLException if an error occurs
+     */
     public static ResultSet executeQuery(String query, Object... params) throws SQLException {
         Connection con = getConnection();
         PreparedStatement preparedStatement = con.prepareStatement(query);
