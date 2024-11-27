@@ -31,9 +31,7 @@ public class ShowRateController implements Initializable {
     }
 
     public ShowRateController() {
-     //   disPlay(rate);
-//        setMaterialListener();
-//        disPlay(rate);
+
     }
 
     private void setMaterialListener() {
@@ -113,5 +111,10 @@ public class ShowRateController implements Initializable {
             star1.setImage(fullStar);
             star2.setImage(fullStar);
         }
+
+        if(rate <= 0) {
+            star1.setImage(emptyStar);
+        }
+
     }
 }

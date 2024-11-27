@@ -1,9 +1,17 @@
 package com.jmc.library.Controllers.Assets;
 
+import com.jmc.library.Assets.BookInfo;
+import com.jmc.library.Assets.LibraryTable;
+import com.jmc.library.Database.DBUpdate;
+import com.jmc.library.Models.LibraryModel;
+import com.jmc.library.Models.Model;
+import javafx.animation.PauseTransition;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.Objects;
@@ -27,16 +35,22 @@ public class RatingController implements Initializable {
     public Button accept_btn;
     public Button cancel_btn;
 
+    private int bookId;
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addListener();
         setMaterialListener();
     }
 
-    public boolean isRated() {
-        return rating != 0;
-    }
-    
     private void addListener() {
         btn1.setOnAction(e -> {
             star1.setImage(fullStar);
@@ -45,6 +59,7 @@ public class RatingController implements Initializable {
             star4.setImage(emptyStar);
             star5.setImage(emptyStar);
             rating = 1;
+            closeStage();
         });
         btn2.setOnAction(e -> {
             star1.setImage(fullStar);
@@ -53,6 +68,7 @@ public class RatingController implements Initializable {
             star4.setImage(emptyStar);
             star5.setImage(emptyStar);
             rating = 2;
+            closeStage();
         });
         btn3.setOnAction(e -> {
             star1.setImage(fullStar);
@@ -61,6 +77,7 @@ public class RatingController implements Initializable {
             star4.setImage(emptyStar);
             star5.setImage(emptyStar);
             rating = 3;
+            closeStage();
         });
         btn4.setOnAction(e -> {
             star1.setImage(fullStar);
@@ -69,6 +86,7 @@ public class RatingController implements Initializable {
             star4.setImage(fullStar);
             star5.setImage(emptyStar);
             rating = 4;
+            closeStage();
         });
         btn5.setOnAction(e -> {
             star1.setImage(fullStar);
@@ -77,9 +95,47 @@ public class RatingController implements Initializable {
             star4.setImage(fullStar);
             star5.setImage(fullStar);
             rating = 5;
+            closeStage();
         });
     }
-    
+
+    private void closeStage() {
+        System.out.println(bookId);
+        DBUpdate dbUpdate = new DBUpdate("update userRequest set isRated = true where username = ? and bookId = ? and isRated = false",
+                LibraryModel.getInstance().getUser().getUsername(), bookId);
+        dbUpdate.setOnSucceeded(e -> {
+            System.out.println("update success 1");
+        });
+        Thread thread = new Thread(dbUpdate);
+        thread.setDaemon(true);
+        thread.start();
+
+        DBUpdate dbUpdate1 = new DBUpdate("UPDATE bookStore SET rateQuantities = rateQuantities + 1, " +
+                "rate = ((rate * (rateQuantities - 1)) + ?) / rateQuantities " +
+                "WHERE bookId = ?",
+                rating, bookId);
+        dbUpdate1.setOnSucceeded(e -> {
+            System.out.println("update success 2");
+            ObservableList<BookInfo> bookList = LibraryTable.bookList;
+            for (BookInfo book : bookList) {
+                if (book.getBookId() == bookId) {
+                    book.setRateQuantities(book.getRateQuantities() + 1);
+                    book.setRating((book.getRating() * (book.getRateQuantities() - 1) + rating) / book.getRateQuantities());
+                    break;
+                }
+            }
+        });
+        Thread thread1 = new Thread(dbUpdate1);
+        thread1.setDaemon(true);
+        thread1.start();
+
+        PauseTransition pause = new PauseTransition(Duration.millis(2000));
+        pause.setOnFinished(e -> {
+            star1.getScene().getWindow().hide();
+        });
+        pause.play();
+    }
+
     private void setMaterialListener() {
         emptyStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/IMAGES/EmptyStar.png")));
         halfStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/IMAGES/HalfStar.png")));
@@ -89,78 +145,6 @@ public class RatingController implements Initializable {
         star3.setImage(emptyStar);
         star4.setImage(emptyStar);
         star5.setImage(emptyStar);
-        
+
     }
-
-    public void disPlay(double rate) {
-        // make rate is multiple of 0.5
-        rate = Math.round(rate * 2) / 2.0;
-        if (rate == 0) {
-            star1.setImage(emptyStar);
-            star2.setImage(emptyStar);
-            star3.setImage(emptyStar);
-            star4.setImage(emptyStar);
-            star5.setImage(emptyStar);
-        } else if (rate == 0.5) {
-            star1.setImage(halfStar);
-            star2.setImage(emptyStar);
-            star3.setImage(emptyStar);
-            star4.setImage(emptyStar);
-            star5.setImage(emptyStar);
-        } else if (rate == 1) {
-            star1.setImage(fullStar);
-            star2.setImage(emptyStar);
-            star3.setImage(emptyStar);
-            star4.setImage(emptyStar);
-            star5.setImage(emptyStar);
-        } else if (rate == 1.5) {
-            star1.setImage(fullStar);
-            star2.setImage(halfStar);
-            star3.setImage(emptyStar);
-            star4.setImage(emptyStar);
-            star5.setImage(emptyStar);
-        } else if (rate == 2) {
-            star1.setImage(fullStar);
-            star2.setImage(fullStar);
-            star3.setImage(emptyStar);
-            star4.setImage(emptyStar);
-            star5.setImage(emptyStar);
-        } else if (rate == 2.5) {
-            star1.setImage(fullStar);
-            star2.setImage(fullStar);
-            star3.setImage(halfStar);
-            star4.setImage(emptyStar);
-            star5.setImage(emptyStar);
-        } else if (rate == 3) {
-            star1.setImage(fullStar);
-            star2.setImage(fullStar);
-            star3.setImage(fullStar);
-            star4.setImage(emptyStar);
-            star5.setImage(emptyStar);
-        } else if (rate == 3.5) {
-            star1.setImage(fullStar);
-            star2.setImage(fullStar);
-            star3.setImage(fullStar);
-            star4.setImage(halfStar);
-            star5.setImage(emptyStar);
-        } else if (rate == 4) {
-            star1.setImage(fullStar);
-            star2.setImage(fullStar);
-            star3.setImage(fullStar);
-            star4.setImage(fullStar);
-            star5.setImage(emptyStar);
-        } else if (rate == 4.5) {
-            star1.setImage(fullStar);
-            star2.setImage(fullStar);
-            star3.setImage(fullStar);
-            star4.setImage(fullStar);
-            star5.setImage(halfStar);
-        } else if (rate == 5) {
-            star1.setImage(fullStar);
-            star2.setImage(fullStar);
-        }
-    }
-
-
-
 }

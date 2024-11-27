@@ -31,7 +31,7 @@ public class LibraryTable {
     public TableColumn<BookInfo, Double> least_price_tb_cl;
     public TableColumn<BookInfo, LocalDate> published_date_tb_cl;
     public TableView<BookInfo> store_tb;
-    public ObservableList<BookInfo> bookList;
+    public static ObservableList<BookInfo> bookList = FXCollections.observableArrayList();
 
     private void addLoading() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
@@ -55,7 +55,6 @@ public class LibraryTable {
     }
 
     protected void setTable() {
-        bookList = FXCollections.observableArrayList();
         store_tb.setItems(bookList);
 
 
@@ -91,11 +90,22 @@ public class LibraryTable {
                     ImageView imageView = new ImageView(image);
                     imageView.setFitHeight(75);
                     imageView.setFitWidth(50);
-                    BookInfo currentBook = new BookInfo(resultSet.getInt("bookId"), resultSet.getString("bookName"),
-                            resultSet.getString("authorName"), resultSet.getInt("quantityInStock"), resultSet.getDouble("leastPrice"),
-                            resultSet.getDate("publishDate").toLocalDate(), resultSet.getString("ISBN"), resultSet.getString("publisher"),
-                            resultSet.getString("genre"), resultSet.getString("originalLanguage"), resultSet.getString("description"),
-                            resultSet.getString("thumbnail"), imageView);
+                    BookInfo currentBook = new BookInfo(resultSet.getInt(
+                            "bookId"),
+                            resultSet.getString("bookName"),
+                            resultSet.getString("authorName"),
+                            resultSet.getInt("quantityInStock"),
+                            resultSet.getDouble("leastPrice"),
+                            resultSet.getDate("publishDate").toLocalDate(),
+                            resultSet.getString("ISBN"),
+                            resultSet.getString("publisher"),
+                            resultSet.getString("genre"),
+                            resultSet.getString("originalLanguage"),
+                            resultSet.getString("description"),
+                            resultSet.getString("thumbnail"),
+                            imageView,
+                            resultSet.getDouble("rate"),
+                            resultSet.getInt("rateQuantities"));
                     bookList.add(currentBook);
                 }
                 resultSet.close();
