@@ -57,6 +57,7 @@ public class UserDashboardController extends com.jmc.library.Controllers.Users.U
     public BarChart<String, Number> read_and_hired_bar_chart;
     public NumberAxis read_hired_bar_chart_na;
     public CategoryAxis month_total_read_hired_ca;
+    public Button reload_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
