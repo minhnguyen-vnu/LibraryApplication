@@ -38,6 +38,7 @@ public class UserPendingController extends UserLibraryTable implements Initializ
 
     @Override
     protected void setTable() {
+        returnLoading();
         bookList = LibraryModel.getInstance().getUser().getPendingBookList();
     }
 

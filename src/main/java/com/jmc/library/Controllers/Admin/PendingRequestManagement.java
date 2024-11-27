@@ -33,6 +33,7 @@ public class PendingRequestManagement extends RequestManagement implements Initi
 
     @Override
     protected void showLibrary() {
+        addLoading();
         bookList.clear();
         store_tb.setItems(bookList);
         DBQuery dbQuery = new DBQuery("select * from PendingRequest");
@@ -47,6 +48,7 @@ public class PendingRequestManagement extends RequestManagement implements Initi
                     bookList.add(currentBook);
                 }
                 resultSet.close();
+                returnLoading();
             } catch (SQLException e){
                 throw new RuntimeException(e);
             }
