@@ -83,17 +83,18 @@ public class BookDisplayController implements Initializable {
         preview_txt_flw.setText(BookModel.getInstance().getBookInfo().getDescription());
         book_img.setImage(BookModel.getInstance().getBookInfo().getImageView().getImage());
 
+        rate_holder.getChildren().clear();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ShowRate.fxml"));
-
-        loader.setController(new ShowRateController(BookModel.getInstance().getBookInfo().getRating()));
-//        try {
-////            Node newNode = loader.load();
-//            rate_holder.getChildren().add(loader.load());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
+        ShowRateController controller = new ShowRateController(BookModel.getInstance().getBookInfo().getRating());
+        System.out.println("input " + BookModel.getInstance().getBookInfo().getRating());
+        loader.setController(controller);
+        try {
+            Node newNode = loader.load();
+            rate_holder.getChildren().add(newNode);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         BookModel.getInstance().bookInfoProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

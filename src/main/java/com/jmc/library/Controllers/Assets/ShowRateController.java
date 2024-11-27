@@ -40,7 +40,9 @@ public class ShowRateController implements Initializable {
 
     public void disPlay(double rate) {
         // make rate is multiple of 0.5
+        System.out.println("rate: " + rate);
         rate = Math.round(rate * 2) / 2.0;
+        System.out.println(rate);
         if (rate == 0) {
             star1 = new ImageView(emptyStar);
             star2 = new ImageView(emptyStar);
