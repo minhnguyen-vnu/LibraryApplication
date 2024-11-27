@@ -16,16 +16,16 @@ public class UserDashboardInfo {
 
     public Label total_read_book_lbl;
     public Label new_books_read_lbl;
-    public Label total_hired_book_lbl;
+    public Label total_borrowed_book_lbl;
 
     int countReadBook;
-    int countHiredBook;
+    int countBorrowedBook;
     int countNewReadBook;
 
     public UserDashboardInfo() {
         borrowedBooks = new SimpleListProperty<>(FXCollections.observableArrayList());
         readBooks = new SimpleListProperty<>(FXCollections.observableArrayList());
-        total_hired_book_lbl = new Label();
+        total_borrowed_book_lbl = new Label();
         new_books_read_lbl = new Label();
         total_read_book_lbl = new Label();
     }
@@ -77,15 +77,15 @@ public class UserDashboardInfo {
     }
 
     public Label getTotal_borrowed_book_lbl() {
-        return total_hired_book_lbl;
+        return total_borrowed_book_lbl;
     }
 
-    public void setTotal_hired_book_lbl(Label total_hired_book_lbl) {
-        this.total_hired_book_lbl = total_hired_book_lbl;
+    public void setTotal_borrowed_book_lbl(Label total_borrowed_book_lbl) {
+        this.total_borrowed_book_lbl = total_borrowed_book_lbl;
     }
 
-    public void setCountBorrowedBook(int countHiredBook) {
-        this.countHiredBook = countHiredBook;
+    public void setCountBorrowedBook(int countBorrowedBook) {
+        this.countBorrowedBook = countBorrowedBook;
     }
 
     public void setCountReadBook(int countReadBook) {
@@ -97,7 +97,7 @@ public class UserDashboardInfo {
     }
 
     public int getCountBorrowedBook() {
-        return countHiredBook;
+        return countBorrowedBook;
     }
 
     public int getCountReadBook() {
@@ -126,23 +126,23 @@ public class UserDashboardInfo {
                 }
                 tempReadBooks.set(month, tempReadBooks.get(month) + 1);
             }
-            countHiredBook ++;
+            countBorrowedBook++;
             tempBorrowedBooks.set(month, tempBorrowedBooks.get(month) + 1);
         }
         total_read_book_lbl.setText(String.valueOf(countReadBook));
         new_books_read_lbl.setText(String.valueOf(countNewReadBook));
-        total_hired_book_lbl.setText(String.valueOf(countHiredBook));
+        total_borrowed_book_lbl.setText(String.valueOf(countBorrowedBook));
         setReadBooks(FXCollections.observableArrayList(tempReadBooks));
         setBorrowedBooks(FXCollections.observableArrayList(tempBorrowedBooks));
     }
 
     public void clear() {
         countReadBook = 0;
-        countHiredBook = 0;
+        countBorrowedBook = 0;
         countNewReadBook = 0;
         borrowedBooks.clear();
         readBooks.clear();
-        total_hired_book_lbl.setText("");
+        total_borrowed_book_lbl.setText("");
         new_books_read_lbl.setText("");
         total_read_book_lbl.setText("");
     }

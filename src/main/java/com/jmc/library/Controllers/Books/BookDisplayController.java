@@ -118,7 +118,7 @@ public class BookDisplayController implements Initializable {
                 .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())
                 && LibraryModel.getInstance().getUser().getBorrowedBookList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getReturnDate().isAfter(LocalDate.now()))) {
-            NotificationOverlay overlay = new NotificationOverlay("Book already hired.", get_book_btn.getScene());
+            NotificationOverlay overlay = new NotificationOverlay("Book already borrowed.", get_book_btn.getScene());
             return;
         }
 
