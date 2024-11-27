@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -64,6 +65,8 @@ public abstract class UserLibraryTable {
         return_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
         book_cover_tb_cl.setCellValueFactory(new PropertyValueFactory<>("imageView"));
         account_avatar_img.imageProperty().bind(image);
+        Circle clip = new Circle(account_avatar_img.getFitWidth() / 2, account_avatar_img.getFitHeight() / 2, Math.min(account_avatar_img.getFitWidth(), account_avatar_img.getFitHeight()) / 2);
+        account_avatar_img.setClip(clip);
         store_tb.setItems(bookList);
     }
 
@@ -168,7 +171,7 @@ public abstract class UserLibraryTable {
     }
 
     protected void setUsername_lbl() {
-        username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
+        username_lbl.setText(LibraryModel.getInstance().getUser().getName());
     }
 
     protected void setAccount_avatar_img() {

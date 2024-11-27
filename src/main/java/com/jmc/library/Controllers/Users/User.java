@@ -68,7 +68,7 @@ public class User {
     }
 
     public String getName() {
-        if(name == null) {
+        if(name == null || name.isEmpty()) {
             return username;
         }
         return name;

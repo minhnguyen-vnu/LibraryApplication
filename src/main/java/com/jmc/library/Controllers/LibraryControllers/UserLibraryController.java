@@ -20,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -62,6 +63,8 @@ public class UserLibraryController extends LibraryController implements Initiali
         super.addBinding();
         book_cover_tb_cl.setCellValueFactory(new PropertyValueFactory<>("imageView"));
         account_avatar_img.imageProperty().bind(image);
+        Circle clip = new Circle(account_avatar_img.getFitWidth()/2, account_avatar_img.getFitHeight()/2, Math.min(account_avatar_img.getFitHeight()/2, account_avatar_img.getFitWidth()/2));
+        account_avatar_img.setClip(clip);
 
     }
 
@@ -122,7 +125,7 @@ public class UserLibraryController extends LibraryController implements Initiali
     }
 
     private void setUsername_lbl() {
-        username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
+        username_lbl.setText(LibraryModel.getInstance().getUser().getName());
     }
 
     private void setNum_row_shown() {

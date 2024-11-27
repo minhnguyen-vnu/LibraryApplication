@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -42,6 +43,8 @@ public class UserInfoController {
         dob_txt.setValue(LibraryModel.getInstance().getUser().getBirthDate());
         mssv_txt.setText(String.valueOf(LibraryModel.getInstance().getUser().getID()));
         avatar_img.setImage(LibraryModel.getInstance().getUser().getAvatar());
+        Circle clip = new Circle(avatar_img.getFitWidth() / 2, avatar_img.getFitHeight() / 2, Math.min(avatar_img.getFitWidth(), avatar_img.getFitHeight()) / 2);
+        avatar_img.setClip(clip);
     }
 
     private void handleChangePhoto() {
