@@ -212,7 +212,7 @@ public class User {
                 "    b.imageView\n" +
                 "from  userRequest r\n" +
                 "join bookStore b using(bookId)\n" +
-                "where r.username = ? and r.requestStatus = 'Borrowing'" +
+                "where r.username = ? " +
                 "order by r.requestStatus;", LibraryModel.getInstance().getUser().getUsername());
         dbQuery.setOnSucceeded(event -> {
             ResultSet resultSet = dbQuery.getValue();

@@ -33,7 +33,7 @@ public class CartEntityController implements Initializable {
         this.userBookInfo = userBookInfo;
         this.day_borrow  = (int) java.time.temporal.ChronoUnit.DAYS.between(
                 userBookInfo.getPickedDate(),
-                userBookInfo.getReturnDate()) + 1;
+                userBookInfo.getReturnDate());
     }
 
     public UserBookInfo getUserBookInfo() {
@@ -60,7 +60,7 @@ public class CartEntityController implements Initializable {
 
     private void updCost() {
         cost_lbl.setText(String.valueOf(String.format("%.2f", userBookInfo.getSingleCost() * day_borrow)));
-        userBookInfo.setReturnDate(userBookInfo.getPickedDate().plusDays(day_borrow - 1));
+        userBookInfo.setReturnDate(userBookInfo.getPickedDate().plusDays(day_borrow));
         userBookInfo.setTotalCost(userBookInfo.getSingleCost() * day_borrow);
         CartModel.getInstance().getUserCartInfo().CartUpdate();
     }
@@ -97,7 +97,7 @@ public class CartEntityController implements Initializable {
             } catch (NumberFormatException e) {
                 day_borrow = (int) java.time.temporal.ChronoUnit.DAYS.between(
                         userBookInfo.getPickedDate(),
-                        userBookInfo.getReturnDate()) + 1;
+                        userBookInfo.getReturnDate());
             }
         });
 

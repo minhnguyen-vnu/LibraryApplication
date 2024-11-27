@@ -17,6 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminLibraryController extends LibraryController implements Initializable {
+    private static final Log log = LogFactory.getLog(AdminLibraryController.class);
     public Button settings_btn;
     public ImageView account_avatar_img;
     public Label account_name_lbl;

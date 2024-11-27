@@ -12,6 +12,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+import java.text.DecimalFormat;
+
 public class UserCartInfo {
     private ObservableList<CartEntityController> cartList;
     private Label show_total_lbl;
@@ -83,7 +85,7 @@ public class UserCartInfo {
 
     public String getSubTotal() {
         double total = cartList.stream().mapToDouble(cartEntityController -> cartEntityController.getUserBookInfo().getTotalCost()).sum();
-        return String.format("%.2f", total);
+        return Double.toString(total);
     }
 
     public String getAdditional() {

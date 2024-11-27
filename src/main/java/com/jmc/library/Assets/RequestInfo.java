@@ -18,7 +18,7 @@ public class RequestInfo {
         this.username = username;
         this.returnDate = returnDate;
         this.pickedDate = pickedDate;
-        this.totalCost = Double.parseDouble(String.format("%.2f", totalCost));
+        this.totalCost =Math.round(totalCost * 100.0) / 100.0;
         this.requestStatus = requestStatus;
     }
 

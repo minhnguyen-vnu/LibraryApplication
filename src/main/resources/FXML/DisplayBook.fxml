@@ -32,7 +32,7 @@
                               <Image url="@../IMAGES/UnknownBookCover.png" />
                            </image>
                         </ImageView>
-                        <HBox fx:id="rate_holder" prefHeight="40.0" prefWidth="200.0" />
+                        <HBox fx:id="rate_holder" alignment="CENTER" prefHeight="40.0" prefWidth="200.0" />
                         <Button fx:id="get_book_btn" mnemonicParsing="false" styleClass="GetButton" text="Get book" />
                      </children>
                   </VBox>
