@@ -23,6 +23,9 @@ import java.time.LocalDate;
 import  javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 
+/**
+ * Class for managing the library table.
+ */
 public class LibraryTable {
     public TableColumn<BookInfo, Integer> book_id_tb_cl;
     public TableColumn<BookInfo, String> book_name_tb_cl;
@@ -33,6 +36,9 @@ public class LibraryTable {
     public TableView<BookInfo> store_tb;
     public static ObservableList<BookInfo> bookList = FXCollections.observableArrayList();
 
+    /**
+     * Constructor for the LibraryTable class.
+     */
     private void addLoading() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
         try {
@@ -44,6 +50,9 @@ public class LibraryTable {
         }
     }
 
+    /**
+     * Constructor for the LibraryTable class.
+     */
     private void returnLoading() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
         try {
@@ -54,6 +63,9 @@ public class LibraryTable {
         }
     }
 
+    /**
+     * Constructor for the LibraryTable class.
+     */
     protected void setTable() {
         store_tb.setItems(bookList);
 
@@ -66,6 +78,9 @@ public class LibraryTable {
         });
     }
 
+    /**
+     * Constructor for the LibraryTable class.
+     */
     protected void addBinding() {
         book_id_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookId"));
         book_name_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookName"));
@@ -75,6 +90,9 @@ public class LibraryTable {
         published_date_tb_cl.setCellValueFactory(new PropertyValueFactory<>("publishedDate"));
     }
 
+    /**
+     * Constructor for the LibraryTable class.
+     */
     protected void showLibrary() {
         addLoading();
         bookList.clear();

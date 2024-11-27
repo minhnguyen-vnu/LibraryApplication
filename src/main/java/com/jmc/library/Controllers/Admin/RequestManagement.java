@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
+/**
+ * Abstract class for managing the requests in the library.
+ */
 public abstract class RequestManagement {
     public TextField get_customer_name_txt_fld;
     public DatePicker get_borrowed_date;
@@ -40,6 +43,9 @@ public abstract class RequestManagement {
 
     protected abstract void ChoiceBoxInitialization();
 
+    /**
+     * Adds the loading placeholder to the table.
+     */
     protected void addLoading() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
         try {
@@ -50,6 +56,9 @@ public abstract class RequestManagement {
         }
     }
 
+    /**
+     * Adds the no data placeholder to the table.
+     */
     protected void returnLoading() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
         try {
@@ -60,11 +69,17 @@ public abstract class RequestManagement {
         }
     }
 
+    /**
+     * Sets up the table with the list of books.
+     */
     protected void setTable() {
         bookList = FXCollections.observableArrayList();
         store_tb.setItems(bookList);
     }
 
+    /**
+     * Adds bindings to the UI components.
+     */
     protected void addBinding() {
         issue_id_cl.setCellValueFactory(new PropertyValueFactory<>("issueId"));
         book_id_cl.setCellValueFactory(new PropertyValueFactory<>("bookId"));
@@ -75,6 +90,9 @@ public abstract class RequestManagement {
         status_cl.setCellValueFactory(new PropertyValueFactory<>("requestStatus"));
     }
 
+    /**
+     * Shows the library of books.
+     */
     protected void showLibrary() {
         addLoading();
         bookList.clear();
@@ -104,6 +122,9 @@ public abstract class RequestManagement {
         thread.start();
     }
 
+    /**
+     * Searches for a book in the library.
+     */
     protected void search() {
         String issueID = get_request_id_txt_fld.getText();
         String customerName = get_customer_name_txt_fld.getText();
@@ -121,6 +142,9 @@ public abstract class RequestManagement {
         store_tb.setItems(filteredList);
     }
 
+    /**
+     * Initializes the controller and sets up the initial state.
+     */
     protected void onAction() {
         return_btn.setOnAction(actionEvent -> {
             get_customer_name_txt_fld.clear();

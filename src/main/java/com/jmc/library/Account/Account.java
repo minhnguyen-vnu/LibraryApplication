@@ -1,5 +1,8 @@
 package com.jmc.library.Account;
 
+/**
+ * Abstract class for managing the account information.
+ */
 public abstract class Account {
     protected String username;
     protected String token;

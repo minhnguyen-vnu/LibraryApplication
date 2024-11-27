@@ -20,6 +20,9 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing the book display view, including displaying the book's information and preview.
+ */
 public class BookDisplayController implements Initializable {
     public TextFlow book_name_txt_flw;
     public Label publication_date_lbl;
@@ -34,6 +37,12 @@ public class BookDisplayController implements Initializable {
     public ImageView book_img;
     public HBox rate_holder;
 
+    /**
+     * Initializes the controller and sets up the initial state.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addListeners();
@@ -44,6 +53,9 @@ public class BookDisplayController implements Initializable {
         setButtonListener();
     }
 
+    /**
+     * Sets the action to be executed when the button is clicked.
+     */
     private void setButtonListener() {
         go_to_back_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
@@ -66,7 +78,9 @@ public class BookDisplayController implements Initializable {
         });
     }
 
-
+    /**
+     * Adds listeners to the book information.
+     */
     private void addListeners() {
         book_name_txt_flw.getChildren().setAll(new Label(BookModel.getInstance().getBookInfo().getBookName()));
         author_lbl.setText("Author: " + BookModel.getInstance().getBookInfo().getAuthorName());
@@ -100,6 +114,12 @@ public class BookDisplayController implements Initializable {
         });
     }
 
+    /**
+     * Adds a book to the user's cart.
+     *
+     * @param addedBook The book to add.
+     * @throws IOException If the FXML file for the notification overlay cannot be found.
+     */
     public void addBookForUser(UserBookInfo addedBook) throws IOException {
         if(CartModel.getInstance().getUserCartInfo().getCartList().stream()
                 .anyMatch(cartEntityController -> cartEntityController

@@ -19,6 +19,9 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.time.LocalDate;
 
+/**
+ * Class for managing the Google book information.
+ */
 public class GoogleBookInfo {
     private int bookId;
     private String bookName;

@@ -28,7 +28,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-
+/**
+ * Controller class for managing the user's library view, including displaying and updating the list of books.
+ */
 public class UserLibraryController extends LibraryController implements Initializable {
     public Button go_to_setting_btn;
     public Button go_to_user_library_btn;
@@ -47,6 +49,12 @@ public class UserLibraryController extends LibraryController implements Initiali
     public AnchorPane user_info_pane;
     public Button reload_btn;
 
+    /**
+     * Initializes the controller and sets up the initial state.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addBinding();
@@ -57,6 +65,9 @@ public class UserLibraryController extends LibraryController implements Initiali
         showLibrary();
     }
 
+    /**
+     * Adds bindings to the UI components.
+     */
     @Override
     protected void addBinding() {
         super.addBinding();
@@ -66,6 +77,9 @@ public class UserLibraryController extends LibraryController implements Initiali
         account_avatar_img.setClip(clip);
     }
 
+    /**
+     * Sets up the button listeners for various actions.
+     */
     private void setButtonListener() {
         go_to_user_library_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
@@ -112,6 +126,9 @@ public class UserLibraryController extends LibraryController implements Initiali
         });
     }
 
+    /**
+     * Sets up listeners for various UI components.
+     */
     private void setMaterialListener() {
         setUsername_lbl();
         setNum_row_shown();
@@ -120,10 +137,16 @@ public class UserLibraryController extends LibraryController implements Initiali
         }));
     }
 
+    /**
+     * Sets the username label with the current user's name.
+     */
     private void setUsername_lbl() {
         username_lbl.setText(LibraryModel.getInstance().getUser().getName());
     }
 
+    /**
+     * Sets up the choice box for selecting the number of rows to be shown in the table.
+     */
     private void setNum_row_shown() {
         num_row_shown.getItems().addAll("5", "10", "15", "20", "All");
         num_row_shown.setValue("All");

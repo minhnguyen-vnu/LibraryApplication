@@ -23,6 +23,9 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+/**
+ * Controller class for managing the users in the library.
+ */
 public class ManageUserController implements Initializable {
     public TextField username_txt_fld;
     public TextField full_name_txt_fld;
@@ -49,6 +52,9 @@ public class ManageUserController implements Initializable {
         onAction();
     }
 
+    /**
+     * Adds the loading placeholder to the table.
+     */
     protected void addLoading() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
         try {
@@ -59,6 +65,9 @@ public class ManageUserController implements Initializable {
         }
     }
 
+    /**
+     * Adds the no data placeholder to the table.
+     */
     protected void returnLoading() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
         try {
@@ -69,6 +78,9 @@ public class ManageUserController implements Initializable {
         }
     }
 
+    /**
+     * Sets up the table with the list of users.
+     */
     private void addBinding() {
         username_tb_cl.setCellValueFactory(new PropertyValueFactory<>("username"));
         full_name_tb_cl.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -78,16 +90,25 @@ public class ManageUserController implements Initializable {
         status_tb_cl.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
 
+    /**
+     * Sets up the table with the list of users.
+     */
     private void setTable() {
         userList = FXCollections.observableArrayList();
         store_tb.setItems(userList);
     }
 
+    /**
+     * Sets the action to be executed when the button is clicked.
+     */
     private void onAction() {
         reload_btn.setOnAction(actionEvent -> showUsers());
         return_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View"));
     }
 
+    /**
+     * Shows the list of users in the library.
+     */
     private void showUsers() {
         addLoading();
         userList.clear();

@@ -176,7 +176,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Label prefHeight="42.0" styleClass="Title" text="Hired book list">
+                        <Label prefHeight="42.0" styleClass="Title" text="Borrowed book list">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>

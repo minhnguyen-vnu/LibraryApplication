@@ -21,11 +21,17 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+/**
+ * Controller class for managing the library view, including searching and displaying books.
+ */
 public class LibraryController extends LibraryTable {
     public TextField search_fld;
     public Button search_btn;
     public TableColumn<BookInfo, ImageView> book_cover_tb_cl;
 
+    /**
+     * Initializes the controller and sets up the initial actions.
+     */
     protected void initialAction(){
         search_btn.setOnAction(actionEvent -> searchBook(search_fld.getText()));
         search_fld.setOnKeyPressed(event -> {
@@ -35,6 +41,11 @@ public class LibraryController extends LibraryTable {
         });
     }
 
+    /**
+     * Searches for books based on the provided text.
+     *
+     * @param text The text to search for.
+     */
     private void searchBook(String text) {
         if (text.isEmpty()) {
             store_tb.setItems(bookList);
@@ -44,6 +55,12 @@ public class LibraryController extends LibraryTable {
         }
     }
 
+    /**
+     * Sorts the given string in alphabetical order.
+     *
+     * @param str The string to sort.
+     * @return The sorted string.
+     */
     private String sortString(String str) {
         str = str.toLowerCase();
         char[] charArray = str.toCharArray();
@@ -51,6 +68,13 @@ public class LibraryController extends LibraryTable {
         return new String(charArray);
     }
 
+    /**
+     * Calculates the difference between two strings.
+     *
+     * @param a The first string.
+     * @param b The second string.
+     * @return The number of differing characters.
+     */
     private int getDifference(String a, String b) {
         int end = Math.min(a.length(), b.length());
         int cnt = 0;
@@ -67,6 +91,14 @@ public class LibraryController extends LibraryTable {
         return cnt;
     }
 
+    /**
+     * Extracts a substring from the given string.
+     *
+     * @param a The string to extract from.
+     * @param l The starting index.
+     * @param r The ending index.
+     * @return The extracted substring.
+     */
     private String subString(String a, int l, int r) {
         StringBuilder res = new StringBuilder();
         for (int i = l; i <= r; i++) {
@@ -75,6 +107,11 @@ public class LibraryController extends LibraryTable {
         return res.toString();
     }
 
+    /**
+     * Searches for books by name.
+     *
+     * @param text The name to search for.
+     */
     private void searchBookByName(String text) {
         ObservableList<BookInfo> filteredList = FXCollections.observableArrayList();
 
@@ -115,6 +152,11 @@ public class LibraryController extends LibraryTable {
     }
 
 
+    /**
+     * Searches for books by ID.
+     *
+     * @param text The ID to search for.
+     */
     private void searchBookById(String text) {
         if(text.contains(" ")){
             return;
@@ -132,7 +174,9 @@ public class LibraryController extends LibraryTable {
         });
     }
 
-
+    /**
+     * Adds a click listener to the table.
+     */
     protected void addTableClickListener() {
         store_tb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -141,6 +185,11 @@ public class LibraryController extends LibraryTable {
         });
     }
 
+    /**
+     * Displays the selected book.
+     *
+     * @param bookInfo The book to display.
+     */
     protected void BookDisplay(BookInfo bookInfo) {
         BookViewingModel.getInstance().setBookInfo(bookInfo);
         Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Book Viewing");

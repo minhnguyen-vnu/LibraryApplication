@@ -14,6 +14,9 @@ import javafx.scene.layout.VBox;
 
 import java.text.DecimalFormat;
 
+/**
+ * Class for managing the user cart information.
+ */
 public class UserCartInfo {
     private ObservableList<CartEntityController> cartList;
     private Label show_total_lbl;
@@ -83,6 +86,10 @@ public class UserCartInfo {
         this.additional_lbl = additional_lbl;
     }
 
+    /**
+     * Gets the subtotal of the cart.
+     * @return the subtotal of the cart
+     */
     public String getSubTotal() {
         double total = cartList.stream().mapToDouble(cartEntityController -> cartEntityController.getUserBookInfo().getTotalCost()).sum();
         total = Math.round(total * 100.0) / 100.0;
@@ -93,10 +100,17 @@ public class UserCartInfo {
         return "0.00";
     }
 
+    /**
+     * Gets the total of the cart.
+     * @return the total of the cart
+     */
     public String getTotal() {
         return String.format("%.2f",Double.parseDouble(getSubTotal()) + Double.parseDouble(getAdditional()));
     }
 
+    /**
+     * Sets the list of books in the cart.
+     */
     public void setListBookVBox() {
         list_book_vbox.get().getChildren().clear();
 
@@ -113,6 +127,9 @@ public class UserCartInfo {
         list_book_vbox.get().layout();
     }
 
+    /**
+     * Updates the cart summary.
+     */
     public void updateCartSummary() {
         sub_total_lbl.setText(getSubTotal() + " $");
         additional_lbl.setText(getAdditional() + " $");
@@ -124,17 +141,28 @@ public class UserCartInfo {
         updateCartSummary();
     }
 
+    /**
+     * Deletes a cart entity.
+     * @param cartEntityController the cart entity controller
+     */
     public void DeleteCartEntity(CartEntityController cartEntityController) {
         cartList.remove(cartEntityController);
         setListBookVBox();
         updateCartSummary();
     }
 
+    /**
+     * Adds a cart entity.
+     * @param cartEntityController the cart entity controller
+     */
     public void AddCartEntity(CartEntityController cartEntityController) {
         setListBookVBox();
         updateCartSummary();
     }
 
+    /**
+     * Clears the cart.
+     */
     public void clear() {
         cartList.clear();
         setListBookVBox();

@@ -2,6 +2,9 @@ package com.jmc.library.Assets;
 
 import java.time.LocalDate;
 
+/**
+ * Class for managing the request information.
+ */
 public class RequestInfo {
     private int issueId;
     private int bookId;

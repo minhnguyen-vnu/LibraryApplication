@@ -14,6 +14,9 @@ import javafx.scene.text.TextFlow;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing the book display view (for admin), including displaying the book's information and preview.
+ */
 public class BookDisplayController implements Initializable {
     public ImageView book_img;
     public Button get_book_btn;
@@ -27,6 +30,12 @@ public class BookDisplayController implements Initializable {
     public TextArea preview_txt_flw;
     public Button go_to_back_btn;
 
+    /**
+     * Initializes the controller and sets up the initial state.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         onAction();
@@ -34,6 +43,9 @@ public class BookDisplayController implements Initializable {
         addListeners();
     }
 
+    /**
+     * Sets the value of the book information to be displayed.
+     */
     private void setValue() {
         BookInfo bookInfo = BookViewingModel.getInstance().getBookInfo();
         if (bookInfo != null) {
@@ -42,10 +54,16 @@ public class BookDisplayController implements Initializable {
         }
     }
 
+    /**
+     * Sets the action to be executed when the button is clicked.
+     */
     private void onAction() {
         go_to_back_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View"));
     }
 
+    /**
+     * Adds listeners to the book information.
+     */
     private void addListeners() {
         BookViewingModel.getInstance().bookInfoProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

@@ -7,6 +7,9 @@ import javafx.scene.layout.BorderPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing the admin view.
+ */
 public class AdminView implements Initializable {
     public BorderPane admin_parent;
 

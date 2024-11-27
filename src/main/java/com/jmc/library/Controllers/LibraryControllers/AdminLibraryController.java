@@ -16,6 +16,9 @@ import org.apache.commons.logging.LogFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing the admin library view, including displaying and updating the list of books.
+ */
 public class AdminLibraryController extends LibraryController implements Initializable {
     private static final Log log = LogFactory.getLog(AdminLibraryController.class);
     public Button settings_btn;
@@ -29,6 +32,12 @@ public class AdminLibraryController extends LibraryController implements Initial
     public Button reload_btn;
     public Button user_management_btn;
 
+    /**
+     * Initializes the controller and sets up the initial state.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialAction();
@@ -39,18 +48,27 @@ public class AdminLibraryController extends LibraryController implements Initial
         showLibrary();
     }
 
+    /**
+     * Adds bindings to the UI components.
+     */
     @Override
     protected void addBinding() {
         super.addBinding();
         book_cover_tb_cl.setCellValueFactory(new PropertyValueFactory<>("imageView"));
     }
 
+    /**
+     * Sets up the table with the list of books.
+     */
     @Override
     protected void setTable() {
         bookList = AdminLibraryModel.getInstance().getBookList();
         store_tb.setItems(bookList);
     }
 
+    /**
+     * Sets up the button listeners for various actions.
+     */
     public void onAction() {
         settings_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Managemental Book"));
         go_to_dashboard_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Dashboard View"));
@@ -60,6 +78,9 @@ public class AdminLibraryController extends LibraryController implements Initial
         log_out_btn.setOnAction(actionEvent -> stageTransforming());
     }
 
+    /**
+     * Handles the stage transformation when logging out.
+     */
     private void stageTransforming() {
         Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
         Model.getInstance().getViewFactory().closeStage(currentStage);

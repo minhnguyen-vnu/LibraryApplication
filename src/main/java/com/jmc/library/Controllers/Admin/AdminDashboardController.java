@@ -19,7 +19,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-
+/**
+ * Controller class for the admin dashboard.
+ */
 public class AdminDashboardController implements Initializable {
     public Button go_to_dashboard_btn;
     public Button manage_btn;
@@ -41,6 +43,9 @@ public class AdminDashboardController implements Initializable {
         onAction();
     }
 
+    /**
+     * Shows the total number of customers, the difference between the total number of customers and the total number of customers in the previous 30 days, and the total number of borrowed books.
+     */
     private void show() {
         Thread UIThread = new Thread(() -> {
             while (true) {
@@ -107,6 +112,9 @@ public class AdminDashboardController implements Initializable {
         customers_line_chart.getData().add(series);
     }
 
+    /**
+     * Adds the action to be executed when the button is clicked.
+     */
     private void onAction() {
         manage_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View"));
         go_to_request_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Request Management"));
@@ -114,6 +122,9 @@ public class AdminDashboardController implements Initializable {
         log_out_btn.setOnAction(actionEvent -> stageTransforming());
     }
 
+    /**
+     * Transforms the stage to the authentication window.
+     */
     private void stageTransforming() {
         Stage currentStage = (Stage) log_out_btn.getScene().getWindow();
         Model.getInstance().getViewFactory().closeStage(currentStage);

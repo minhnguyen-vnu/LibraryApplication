@@ -8,6 +8,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+/**
+ * Class for managing the table items in the admin panel.
+ */
 public class AdminTableItiem {
     private CheckBox checkOut;
     private String avatarImagePath;
@@ -34,6 +37,12 @@ public class AdminTableItiem {
         this.action = createButtonWithImage(this.actionImagePath);
     }
 
+    /**
+     * Creates a button with an image.
+     *
+     * @param imagePath the path to the image.
+     * @return the button with the image.
+     */
     private Button createButtonWithImage(String imagePath) {
         ImageView imageView = new ImageView(new Image(imagePath));
         imageView.setFitWidth(16);
@@ -43,6 +52,13 @@ public class AdminTableItiem {
         return button;
     }
 
+    /**
+     * Creates a HBox with an image and text.
+     *
+     * @param imagePath the path to the image.
+     * @param text      the text to display.
+     * @return the HBox with the image and text.
+     */
     private HBox createHBoxWithImageAndText(String imagePath, String text) {
         ImageView imageView = new ImageView(new Image(imagePath));
         imageView.setFitWidth(30);
