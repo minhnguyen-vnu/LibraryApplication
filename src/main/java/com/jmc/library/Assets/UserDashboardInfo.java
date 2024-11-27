@@ -1,5 +1,6 @@
 package com.jmc.library.Assets;
 
+import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Models.LibraryModel;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
@@ -9,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -111,8 +113,8 @@ public class UserDashboardInfo {
     }
 
     public void onDashBoardSetUp() {
-        List<Integer> tempBorrowedBooks = FXCollections.observableArrayList();;
-        List<Integer> tempReadBooks = FXCollections.observableArrayList();;
+        List<Integer> tempBorrowedBooks = FXCollections.observableArrayList();
+        List<Integer> tempReadBooks = FXCollections.observableArrayList();
 
         for (int i = 0; i < 12; i++) {
             tempReadBooks.add(0);
@@ -136,13 +138,6 @@ public class UserDashboardInfo {
         total_hired_book_lbl.setText(String.valueOf(countHiredBook));
         setReadBooks(FXCollections.observableArrayList(tempReadBooks));
         setBorrowedBooks(FXCollections.observableArrayList(tempBorrowedBooks));
-    }
-
-    // chi dung khi them sach moi
-    public void onDashboardUpdate(int month) {
-        countHiredBook ++;
-        total_hired_book_lbl.setText(String.valueOf(countHiredBook));
-        setBorrowedBooks(month);
     }
 
     public void clear() {

@@ -7,6 +7,7 @@ import com.jmc.library.Controllers.Assets.ShowRateController;
 import com.jmc.library.Controllers.Notification.NotificationOverlay;
 import com.jmc.library.Controllers.Users.CartEntityController;
 import com.jmc.library.Models.*;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -35,10 +36,14 @@ public class BookDisplayController implements Initializable {
     public Button get_book_btn;
     public Button go_to_back_btn;
     public ImageView book_img;
+    public static HBox rateHolder;
+
+    @FXML
     public HBox rate_holder;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        rateHolder = rate_holder;
         addListeners();
         if (BookModel.getInstance().getBookInfo() == null) {
             System.out.println("No book selected.");
@@ -69,7 +74,20 @@ public class BookDisplayController implements Initializable {
         });
     }
 
+    public static void setRateHolder() {
+        FXMLLoader loader = new FXMLLoader(BookDisplayController.class.getResource("/FXML/ShowRate.fxml"));
+        try {
+            Node rate = loader.load();
+            ShowRateController controller = loader.getController();
+            System.out.println(BookModel.getInstance().getBookInfo().getRating());
+            controller.disPlay(BookModel.getInstance().getBookInfo().getRating());
+            rateHolder.getChildren().clear();
+            rateHolder.getChildren().add(rate);
 
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void addListeners() {
         book_name_txt_flw.getChildren().setAll(new Label(BookModel.getInstance().getBookInfo().getBookName()));
         author_lbl.setText("Author: " + BookModel.getInstance().getBookInfo().getAuthorName());
@@ -83,19 +101,7 @@ public class BookDisplayController implements Initializable {
         preview_txt_flw.setText(BookModel.getInstance().getBookInfo().getDescription());
         book_img.setImage(BookModel.getInstance().getBookInfo().getImageView().getImage());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ShowRate.fxml"));
-        try {
-            Node rate = loader.load();
-            ShowRateController controller = loader.getController();
-            System.out.println(BookModel.getInstance().getBookInfo().getRating());
-            controller.disPlay(BookModel.getInstance().getBookInfo().getRating());
-            rate_holder.getChildren().clear();
-            rate_holder.getChildren().add(rate);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        setRateHolder();
 
         BookModel.getInstance().bookInfoProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
