@@ -1,5 +1,6 @@
 package com.jmc.library.Controllers;
 
+import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Controllers.Users.UserLibraryTable;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Database.DBUpdate;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {

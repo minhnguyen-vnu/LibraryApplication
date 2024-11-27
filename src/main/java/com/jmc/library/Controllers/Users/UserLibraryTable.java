@@ -2,6 +2,7 @@ package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.UserBookInfo;
+import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
@@ -39,7 +40,6 @@ public abstract class UserLibraryTable {
     public Button go_to_library_btn;
     public Button back_to_dashboard_btn;
 
-    private static ObjectProperty<Image> image = new SimpleObjectProperty<>();
     public ImageView account_avatar_img;
 
     public TextField search_fld;

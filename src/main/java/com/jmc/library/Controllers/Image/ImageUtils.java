@@ -18,8 +18,10 @@ public class ImageUtils {
         try {
             bufferedImage = ImageIO.read(byteArrayInputStream);
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
+        assert bufferedImage != null;
         return SwingFXUtils.toFXImage(bufferedImage, null);
     }
 
@@ -32,24 +34,5 @@ public class ImageUtils {
             e.printStackTrace();
         }
         return byteArrayOutputStream.toByteArray();
-    }
-
-    public static Image enhanceImageQuality(Image image) {
-        ImageView imageView = new ImageView(image);
-        ColorAdjust colorAdjust = new ColorAdjust();
-        colorAdjust.setBrightness(0.1);
-        colorAdjust.setContrast(0.1);
-        colorAdjust.setHue(0.05);
-        colorAdjust.setSaturation(0.2);
-        imageView.setEffect(colorAdjust);
-        return imageView.snapshot(null, null);
-    }
-
-    public static ImageView scaleImage(Image image, double width, double height) {
-        ImageView imageView = new ImageView(image);
-        imageView.setPreserveRatio(true);
-        imageView.setFitWidth(width);
-        imageView.setFitHeight(height);
-        return imageView;
     }
 }

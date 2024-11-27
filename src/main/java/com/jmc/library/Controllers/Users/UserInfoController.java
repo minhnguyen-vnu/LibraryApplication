@@ -5,6 +5,7 @@ import com.jmc.library.Controllers.LibraryControllers.UserLibraryController;
 import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Models.LibraryModel;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,10 +13,12 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.ResourceBundle;
 
-public class UserInfoController {
+public class UserInfoController implements Initializable {
 
     public ImageView avatar_img;
     public Button changePhoto_btn;
@@ -29,8 +32,8 @@ public class UserInfoController {
     public Button cancel_btn;
     public Label status_label;
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         setMaterialListener();
         changePhoto_btn.setOnAction(actionEvent -> handleChangePhoto());
         save_btn.setOnAction(actionEvent -> handleSaveChanges());
@@ -57,8 +60,8 @@ public class UserInfoController {
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             Image image = new Image(selectedFile.toURI().toString());
-            LibraryModel.getInstance().getUser()
-                    .setAvatar(image);
+//            LibraryModel.getInstance().getUser()
+//                    .setAvatar(image);
             avatar_img.setImage(image);
         }
     }
@@ -106,22 +109,35 @@ public class UserInfoController {
             password = LibraryModel.getInstance().getUser().getPassword();
         }
 
-        DBUpdate dbUpdate = new DBUpdate("Update users set name = ?, birthDate = ?, password = ?, ID = ?, imageView = ? where username = ?",
-                name,
-                dob,
-                password,
-                mssv,
-                ImageUtils.imageToByteArray(avatar.getImage()),
-                LibraryModel.getInstance().getUser().getUsername()
-        );
-        dbUpdate.setOnSucceeded(event -> {
-            System.out.println(LibraryModel.getInstance().getUser().getUsername());
-            LibraryModel.getInstance().getUser().loadUserInfo();
-            setStatusMessage("Saved completed", "green");
-        });
-        Thread thread = new Thread(dbUpdate);
-        thread.setDaemon(true);
-        thread.start();
+
+        byte[] imageBytes = ImageUtils.imageToByteArray(avatar_img.getImage());
+        if (imageBytes.length > 0) {
+            DBUpdate dbUpdate = new DBUpdate("Update users set name = ?, birthDate = ?, password = ?, ID = ?, imageView = ? where username = ?",
+                    name, dob,  password, mssv,
+                    ImageUtils.imageToByteArray(avatar.getImage()),
+                    LibraryModel.getInstance().getUser().getUsername()
+            );
+            dbUpdate.setOnSucceeded(event -> {
+                LibraryModel.getInstance().getUser().loadUserInfo();
+                setStatusMessage("Saved completed", "green");
+            });
+            Thread thread = new Thread(dbUpdate);
+            thread.setDaemon(true);
+            thread.start();
+        }
+        else {
+            DBUpdate dbUpdate = new DBUpdate("Update users set name = ?, birthDate = ?, password = ?, ID = ? where username = ?",
+                    name, dob,  password, mssv,
+                    LibraryModel.getInstance().getUser().getUsername()
+            );
+            dbUpdate.setOnSucceeded(event -> {
+                LibraryModel.getInstance().getUser().loadUserInfo();
+                setStatusMessage("Saved completed", "green");
+            });
+            Thread thread = new Thread(dbUpdate);
+            thread.setDaemon(true);
+            thread.start();
+        }
     }
 
     private void handleCancel() {
