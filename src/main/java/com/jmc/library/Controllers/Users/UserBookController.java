@@ -140,7 +140,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
                             UserBookInfo bookInfo = getTableView().getItems().get(getIndex());
                             if (!checkBox.isSelected()) return;
 
-                            boolean rated = showRatingDialog();
+                            boolean rated = showRatingDialog(bookInfo.getBookId());
 
                             if (rated) {
                                 bookInfo.setRated(true);
@@ -169,19 +169,19 @@ public class UserBookController extends UserLibraryTable implements Initializabl
             }
         });
     }
-    private boolean showRatingDialog() {
+    private boolean showRatingDialog(int bookID) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/RateStar.fxml"));
             Parent ratingRoot = loader.load();
+            RatingController ratingController = loader.getController();
+            ratingController.setBookId(bookID);
             Stage ratingStage = new Stage();
             ratingStage.setTitle("Rate the Book");
             ratingStage.setScene(new Scene(ratingRoot));
             ratingStage.initModality(Modality.APPLICATION_MODAL);
-
-            RatingController controller = loader.getController();
             ratingStage.show();
 
-            return controller.isRated();
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
             return false;
