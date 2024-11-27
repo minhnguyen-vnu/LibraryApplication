@@ -47,7 +47,6 @@ public class UserPendingController extends UserLibraryTable implements Initializ
     protected void showLibrary() {
         addLoading();
         bookList.clear();
-        LibraryModel.getInstance().getUser().getPendingBookList().clear();
         store_tb.setItems(bookList);
         DBQuery dbQuery = new DBQuery("select\n" +
                 "    r.username,\n" +
@@ -76,7 +75,6 @@ public class UserPendingController extends UserLibraryTable implements Initializ
                             resultSet.getInt("bookId"), resultSet.getDate("requestDate").toLocalDate(),
                             resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"), imageView);
                     bookList.add(userBookInfo);
-                    LibraryModel.getInstance().getUser().getPendingBookList().add(userBookInfo);
                 }
                 resultSet.close();
                 returnLoading();
