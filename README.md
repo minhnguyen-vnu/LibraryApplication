@@ -1,4 +1,4 @@
-# Library System Manager 
+# Library Management System
 
 # Giới thiệu
 
