@@ -24,6 +24,8 @@ public class RatingController implements Initializable {
     public Button btn3;
     public Button btn4;
     public Button btn5;
+    public Button accept_btn;
+    public Button cancel_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
