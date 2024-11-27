@@ -53,10 +53,6 @@ public abstract class UserLibraryTable {
     public ChoiceBox<String> num_row_shown;
     public Label username_lbl;
 
-    public static void setImage(Image newImage) {
-        image.set(newImage);
-    }
-
     protected void addBinding() {
         book_name_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookName"));
         author_tb_cl.setCellValueFactory(new PropertyValueFactory<>("authorName"));
@@ -64,7 +60,7 @@ public abstract class UserLibraryTable {
         picked_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("pickedDate"));
         return_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
         book_cover_tb_cl.setCellValueFactory(new PropertyValueFactory<>("imageView"));
-        account_avatar_img.imageProperty().bind(image);
+        account_avatar_img.imageProperty().bind(LibraryModel.getInstance().getUser().avatarProperty());
         Circle clip = new Circle(account_avatar_img.getFitWidth() / 2, account_avatar_img.getFitHeight() / 2, Math.min(account_avatar_img.getFitWidth(), account_avatar_img.getFitHeight()) / 2);
         account_avatar_img.setClip(clip);
         store_tb.setItems(bookList);
@@ -75,7 +71,6 @@ public abstract class UserLibraryTable {
         try {
             ImageView loading_img = loader.load();
             store_tb.setPlaceholder(loading_img);
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -174,10 +169,6 @@ public abstract class UserLibraryTable {
         username_lbl.setText(LibraryModel.getInstance().getUser().getName());
     }
 
-    protected void setAccount_avatar_img() {
-        setImage(LibraryModel.getInstance().getUser().getAvatar());
-    }
-
     protected void setNum_row_shown() {
         num_row_shown.getItems().addAll("5", "10", "15", "20", "All");
         num_row_shown.setValue("All");
@@ -194,7 +185,9 @@ public abstract class UserLibraryTable {
     protected void setListenerMaterial() {
         setUsername_lbl();
         setNum_row_shown();
-        setAccount_avatar_img();
+        LibraryModel.getInstance().getUser().nameProperty().addListener(((observableValue, s, t1) -> {
+            username_lbl.setText(t1);
+        }));
     }
 
     protected void setButtonListener() {

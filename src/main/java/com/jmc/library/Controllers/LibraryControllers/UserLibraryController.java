@@ -62,14 +62,9 @@ public class UserLibraryController extends LibraryController implements Initiali
     protected void addBinding() {
         super.addBinding();
         book_cover_tb_cl.setCellValueFactory(new PropertyValueFactory<>("imageView"));
-        account_avatar_img.imageProperty().bind(image);
+        account_avatar_img.imageProperty().bind(LibraryModel.getInstance().getUser().avatarProperty());
         Circle clip = new Circle(account_avatar_img.getFitWidth()/2, account_avatar_img.getFitHeight()/2, Math.min(account_avatar_img.getFitHeight()/2, account_avatar_img.getFitWidth()/2));
         account_avatar_img.setClip(clip);
-
-    }
-
-    public static void setImage(Image newImage) {
-        image.set(newImage);
     }
 
     private void setButtonListener() {
@@ -121,7 +116,9 @@ public class UserLibraryController extends LibraryController implements Initiali
     private void setMaterialListener() {
         setUsername_lbl();
         setNum_row_shown();
-        setAccount_avatar_img();
+        LibraryModel.getInstance().getUser().nameProperty().addListener(((observableValue, s, t1) -> {
+            username_lbl.setText(t1);
+        }));
     }
 
     private void setUsername_lbl() {
@@ -139,9 +136,5 @@ public class UserLibraryController extends LibraryController implements Initiali
                 store_tb.setItems(FXCollections.observableArrayList(bookList.stream().limit(Integer.parseInt(newVal)).collect(Collectors.toList())));
             }
         });
-    }
-
-    private void setAccount_avatar_img() {
-        setImage(LibraryModel.getInstance().getUser().getAvatar());
     }
 }
