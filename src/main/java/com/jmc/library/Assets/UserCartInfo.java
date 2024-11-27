@@ -85,6 +85,7 @@ public class UserCartInfo {
 
     public String getSubTotal() {
         double total = cartList.stream().mapToDouble(cartEntityController -> cartEntityController.getUserBookInfo().getTotalCost()).sum();
+        total = Math.round(total * 100.0) / 100.0;
         return Double.toString(total);
     }
 
