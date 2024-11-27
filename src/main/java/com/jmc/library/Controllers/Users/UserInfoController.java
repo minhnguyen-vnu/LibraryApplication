@@ -1,6 +1,7 @@
 package com.jmc.library.Controllers.Users;
 
 import com.jmc.library.Controllers.Image.ImageUtils;
+import com.jmc.library.Controllers.LibraryControllers.UserLibraryController;
 import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Models.LibraryModel;
 import javafx.fxml.FXML;
@@ -113,6 +114,8 @@ public class UserInfoController {
         );
         dbUpdate.setOnSucceeded(event -> {
             LibraryModel.getInstance().getUser().loadUserInfo();
+            UserLibraryTable.setImage(avatar.getImage());
+            UserLibraryController.setImage(avatar.getImage());
             setStatusMessage("Saved completed", "green");
         });
         Thread thread = new Thread(dbUpdate);

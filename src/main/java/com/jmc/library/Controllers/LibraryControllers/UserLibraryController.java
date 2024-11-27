@@ -38,6 +38,8 @@ public class UserLibraryController extends LibraryController implements Initiali
     public Button log_out_btn;
 
     public Label username_lbl;
+
+    private static SimpleObjectProperty<Image> image = new SimpleObjectProperty<>();
     public ImageView account_avatar_img;
     public ChoiceBox<String> num_row_shown;
 
@@ -59,7 +61,12 @@ public class UserLibraryController extends LibraryController implements Initiali
     protected void addBinding() {
         super.addBinding();
         book_cover_tb_cl.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+        account_avatar_img.imageProperty().bind(image);
 
+    }
+
+    public static void setImage(Image newImage) {
+        image.set(newImage);
     }
 
     private void setButtonListener() {
@@ -132,6 +139,6 @@ public class UserLibraryController extends LibraryController implements Initiali
     }
 
     private void setAccount_avatar_img() {
-        account_avatar_img.setImage(LibraryModel.getInstance().getUser().getAvatar());
+        setImage(LibraryModel.getInstance().getUser().getAvatar());
     }
 }

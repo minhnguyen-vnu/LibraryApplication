@@ -5,12 +5,16 @@ import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
@@ -34,6 +38,7 @@ public abstract class UserLibraryTable {
     public Button go_to_library_btn;
     public Button back_to_dashboard_btn;
 
+    private static ObjectProperty<Image> image = new SimpleObjectProperty<>();
     public ImageView account_avatar_img;
 
     public TextField search_fld;
@@ -47,6 +52,10 @@ public abstract class UserLibraryTable {
     public ChoiceBox<String> num_row_shown;
     public Label username_lbl;
 
+    public static void setImage(Image newImage) {
+        image.set(newImage);
+    }
+
     protected void addBinding() {
         book_name_tb_cl.setCellValueFactory(new PropertyValueFactory<>("bookName"));
         author_tb_cl.setCellValueFactory(new PropertyValueFactory<>("authorName"));
@@ -54,7 +63,7 @@ public abstract class UserLibraryTable {
         picked_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("pickedDate"));
         return_day_tb_cl.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
         book_cover_tb_cl.setCellValueFactory(new PropertyValueFactory<>("imageView"));
-
+        account_avatar_img.imageProperty().bind(image);
         store_tb.setItems(bookList);
     }
 
@@ -166,7 +175,7 @@ public abstract class UserLibraryTable {
     }
 
     protected void setAccount_avatar_img() {
-        account_avatar_img.setImage(LibraryModel.getInstance().getUser().getAvatar());
+        setImage(LibraryModel.getInstance().getUser().getAvatar());
     }
 
     protected void setNum_row_shown() {
