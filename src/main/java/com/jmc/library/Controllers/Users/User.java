@@ -6,6 +6,7 @@ import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Controllers.LibraryControllers.UserLibraryController;
 import com.jmc.library.Database.*;
 import com.jmc.library.Models.CartModel;
+import com.jmc.library.Models.DashboardModel;
 import com.jmc.library.Models.LibraryModel;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -228,6 +229,7 @@ public class User {
                             resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"), resultSet.getBoolean("isRated"), imageView);
                     this.HiredBookList.add(userBookInfo);
                 }
+                DashboardModel.getInstance().getUserDashboardInfo().onDashBoardSetUp();
                 resultSet.close();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -267,6 +269,9 @@ public class User {
         this.HiredBookList.clear();
 
         this.username = null;
+
+        DashboardModel.getInstance().getUserDashboardInfo().clear();
+        CartModel.getInstance().getUserCartInfo().clear();
     }
 
     public double getTotalPaid() { return totalPaid; }

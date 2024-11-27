@@ -63,6 +63,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
     protected void showLibrary() {
         addLoading();
         bookList.clear();
+        LibraryModel.getInstance().getUser().getHiredBookList().clear();
         store_tb.setItems(bookList);
         DBQuery dbQuery = new DBQuery("select\n" +
                 "    r.username,\n" +
@@ -93,6 +94,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
                             resultSet.getInt("bookId"), resultSet.getDate("pickedDate").toLocalDate(),
                             resultSet.getDate("returnDate").toLocalDate(), resultSet.getDouble("cost"), resultSet.getString("requestStatus"), resultSet.getBoolean("isRated"), imageView);
                     bookList.add(userBookInfo);
+                    LibraryModel.getInstance().getUser().getHiredBookList().add(userBookInfo);
                 }
                 resultSet.close();
                 returnLoading();
