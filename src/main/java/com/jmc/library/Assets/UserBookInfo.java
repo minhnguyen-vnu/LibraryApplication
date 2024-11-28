@@ -131,11 +131,11 @@ public class UserBookInfo {
         this.requestStatus = status;
     }
 
-    public boolean getRated() {
+    public boolean getRate() {
         return isRated;
     }
 
-    public void setRated(boolean isRated) {
+    public void setRate(boolean isRated) {
         this.isRated = isRated;
     }
 

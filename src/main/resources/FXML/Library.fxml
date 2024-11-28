@@ -153,7 +153,7 @@
                            <TableColumn fx:id="author_tb_cl" prefWidth="155.0" text="Author " />
                            <TableColumn fx:id="quantity_tb_cl" prefWidth="132.0" text="Quantity" />
                            <TableColumn fx:id="least_price_tb_cl" prefWidth="110.0" text="Least Price" />
-                           <TableColumn fx:id="published_date_tb_cl" prefWidth="113.0" text="Published Date" />
+                           <TableColumn fx:id="genre_tb_cl" prefWidth="113.0" text="Genre" />
                         </columns>
                      <stylesheets>
                         <URL value="@../STYLES/TableView.css" />

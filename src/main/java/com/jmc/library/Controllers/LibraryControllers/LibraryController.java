@@ -50,7 +50,8 @@ public class LibraryController extends LibraryTable {
         if (text.isEmpty()) {
             store_tb.setItems(bookList);
         } else {
-            if (text.charAt(0) != '#') searchBookByName(text);
+            if (text.charAt(0) == '@') searchBookByAuthor(text.substring(1));
+            else if (text.charAt(0) != '#') searchBookByName(text);
             else searchBookById(text.substring(1));
         }
     }
@@ -172,6 +173,46 @@ public class LibraryController extends LibraryTable {
                 filteredList.clear();
             }
         });
+    }
+
+    private void searchBookByAuthor(String text) {
+        ObservableList<BookInfo> filteredList = FXCollections.observableArrayList();
+
+        for (BookInfo bookInfo : bookList) {
+            int end;
+
+            if (text.length() > bookInfo.getAuthorName().length()) {
+                end = bookInfo.getAuthorName().length();
+                for (int start = 0; start <= text.length() - end; start++) {
+                    String new_string = subString(text, start, start + end - 1);
+                    if (new_string.equalsIgnoreCase(bookInfo.getAuthorName())) {
+                        filteredList.add(bookInfo);
+                        break;
+                    }
+                    else if (getDifference(text, bookInfo.getAuthorName()) <= 2) {
+                        filteredList.add(bookInfo);
+                        break;
+                    }
+                }
+            }
+            else {
+                end = text.length();
+                for (int start = 0; start <= bookInfo.getAuthorName().length() - end; start++) {
+                    String new_string = subString(bookInfo.getAuthorName(), start, start + end - 1);
+                    if (new_string.equalsIgnoreCase(text)) {
+                        filteredList.add(bookInfo);
+                        break;
+                    }
+                    else if (getDifference(text, bookInfo.getAuthorName()) == 0) {
+                        filteredList.add(bookInfo);
+                        break;
+                    }
+                }
+            }
+        }
+
+        store_tb.setItems(filteredList);
+
     }
 
     /**

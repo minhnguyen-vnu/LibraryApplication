@@ -1,22 +1,16 @@
 package com.jmc.library.Assets;
 
-import com.jmc.library.Controllers.Assets.LoadingController;
 import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Database.DBQuery;
-import com.jmc.library.Database.DBUtlis;
-import javafx.animation.RotateTransition;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 
-import java.awt.*;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,7 +27,7 @@ public class LibraryTable {
     public TableColumn<BookInfo, String> author_tb_cl;
     public TableColumn<BookInfo, Integer> quantity_tb_cl;
     public TableColumn<BookInfo, Double> least_price_tb_cl;
-    public TableColumn<BookInfo, LocalDate> published_date_tb_cl;
+    public TableColumn<BookInfo, String> genre_tb_cl;
     public TableView<BookInfo> store_tb;
     public static ObservableList<BookInfo> bookList = FXCollections.observableArrayList();
     public Button reload_btn;
@@ -82,7 +76,7 @@ public class LibraryTable {
         author_tb_cl.setCellValueFactory(new PropertyValueFactory<>("authorName"));
         quantity_tb_cl.setCellValueFactory(new PropertyValueFactory<>("quantityInStock"));
         least_price_tb_cl.setCellValueFactory(new PropertyValueFactory<>("leastPrice"));
-        published_date_tb_cl.setCellValueFactory(new PropertyValueFactory<>("publishedDate"));
+        genre_tb_cl.setCellValueFactory(new PropertyValueFactory<>("genre"));
     }
 
     /**
