@@ -118,8 +118,12 @@ public abstract class UserLibraryTable {
      * @param text The text to search for.
      */
     private void searchBook(String text) {
-        if (!text.isEmpty())
+        if (!text.isEmpty()) {
             searchBookByName(text);
+        }
+        else {
+            store_tb.setItems(bookList);
+        }
 
     }
 
