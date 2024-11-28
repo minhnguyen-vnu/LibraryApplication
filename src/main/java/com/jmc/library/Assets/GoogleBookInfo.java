@@ -44,7 +44,16 @@ public class GoogleBookInfo {
     private String thumbnail;
     private ImageView imageView;
 
-    public GoogleBookInfo() {};
+    private GoogleBookAPIMethod googleBookAPIMethod;
+
+    // Constructor Injection
+    public GoogleBookInfo(GoogleBookAPIMethod googleBookAPIMethod) {
+        this.googleBookAPIMethod = googleBookAPIMethod;
+    }
+
+    public GoogleBookInfo() {
+        this.googleBookAPIMethod = new GoogleBookAPIMethod(); // default
+    }
 
     public GoogleBookInfo(int bookId, int quantityInStock, double leastPrice, String ISBN) {
         this.bookId = bookId;
@@ -136,7 +145,7 @@ public class GoogleBookInfo {
         }
     }
 
-    private void getInfo() {
+    public void getInfo() {
         this.bookInfo = new GoogleBookAPIMethod().searchBook(this.ISBN);
         int indexes = new GoogleBookAPIMethod().getTotalItems(bookInfo) - 1;
         this.items = bookInfo.getJSONArray("items");

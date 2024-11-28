@@ -25,7 +25,7 @@ public class BookInfo {
     private String description;
     private String thumbnail;
     private boolean exist;
-    private ObjectProperty<ImageView> imageView;
+    private ObjectProperty<ImageView> imageView = new SimpleObjectProperty<>();
     private SimpleDoubleProperty rating = new SimpleDoubleProperty();
     private int rateQuantities;
 
