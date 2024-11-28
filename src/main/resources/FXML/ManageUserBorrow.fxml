@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -83,7 +84,7 @@
                </children>
             </HBox>
             <Button fx:id="return_btn" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" styleClass="TextButton" text="Back" />
-            <Label fx:id="noiti_lbl" layoutX="59.0" layoutY="666.0" textFill="#f4f4f4">
+            <Label fx:id="noti_lbl" layoutX="59.0" layoutY="666.0" textFill="#f4f4f4">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

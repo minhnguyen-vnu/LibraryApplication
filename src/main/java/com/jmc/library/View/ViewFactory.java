@@ -335,12 +335,12 @@ public class ViewFactory {
         userPending = null;
         bookDetail = null;
         notificationView = null;
-//        adminDashboard = null;
-//        adminBookViewing = null;
-//        adminUserManagement = null;
-//        adminSettings = null;
-//        adminLibrary = null;
-//        adminRequestManagement = null;
+        adminDashboard = null;
+        adminBookViewing = null;
+        adminUserManagement = null;
+        adminSettings = null;
+        adminLibrary = null;
+        adminRequestManagement = null;
 
     }
 

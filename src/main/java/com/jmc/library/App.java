@@ -18,6 +18,14 @@ import java.time.LocalDate;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+            DBUpdate dbUpdate2 = new DBUpdate("UPDATE bookStore bs\n" +
+                    "    JOIN userRequest ur ON bs.bookName = ur.bookName\n" +
+                    "SET bs.quantityInStock = bs.quantityInStock + 1\n" +
+                    "WHERE ur.returnDate = DATE_SUB(?, interval 1 day) and ur.requestStatus = 'Borrowing';", LocalDate.now());
+        Thread thread2 = new Thread(dbUpdate2);
+        thread2.setDaemon(true);
+        thread2.start();
+
         DBUpdate dbUpdate = new DBUpdate("update userRequest\n" +
                 "set requestStatus = 'Returned'\n" +
                 "where returnDate < ?; ", LocalDate.now());
@@ -30,14 +38,6 @@ public class App extends Application {
         Thread thread1 = new Thread(dbUpdate1);
         thread1.setDaemon(true);
         thread1.start();
-
-        DBUpdate dbUpdate2 = new DBUpdate("UPDATE bookStore bs\n" +
-                "    JOIN userRequest ur ON bs.bookName = ur.bookName\n" +
-                "SET bs.quantityInStock = bs.quantityInStock + 1\n" +
-                "WHERE ur.requestStatus = 'Returned';");
-        Thread thread2 = new Thread(dbUpdate2);
-        thread2.setDaemon(true);
-        thread2.start();
 
         Model.getInstance().getViewFactory().showAuthenticationWindow();
     }

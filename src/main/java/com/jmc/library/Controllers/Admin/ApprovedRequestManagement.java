@@ -27,9 +27,6 @@ import java.util.stream.Collectors;
 public class ApprovedRequestManagement extends RequestManagement implements Initializable {
     public Button update_book_btn;
 
-    public Label noiti_lbl;
-    public Button return_book_btn;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ChoiceBoxInitialization();
@@ -92,6 +89,13 @@ public class ApprovedRequestManagement extends RequestManagement implements Init
                             bookInfo.setQuantityInStock(bookInfo.getQuantityInStock() + 1);
                             break;
                         }
+                    }
+                    noti_lbl.setText("");
+                }
+                else {
+                    if (!new_status.equals("Returned")) noti_lbl.setText("Invalid Status");
+                    else {
+                        noti_lbl.setText("The book is already returned");
                     }
                 }
             }

@@ -24,8 +24,6 @@ import java.util.ResourceBundle;
  */
 public class PendingRequestManagement extends RequestManagement implements Initializable {
     public Button update_btn;
-    public Label noiti_lbl;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -140,8 +138,33 @@ public class PendingRequestManagement extends RequestManagement implements Initi
                         thread2.start();
                         bookList.remove(foundElement);
                         store_tb.setItems(bookList);
+
+                        noti_lbl.setText("");
+
+                    }
+                    else {
+                        noti_lbl.setText("Invalid Status");
                     }
                 }
+                else {
+                    String new_status = status_choice_box.getValue();
+                    if (new_status.equals("Accepted")) {
+                        noti_lbl.setText("The book is sold out");
+                    }
+                    else {
+                        DBUpdate dbUpdate2 = new DBUpdate("delete from PendingRequest\n" +
+                                "where RequestId = ?;", foundElement.getIssueId());
+                        Thread thread2 = new Thread(dbUpdate2);
+                        thread2.setDaemon(true);
+                        thread2.start();
+                        bookList.remove(foundElement);
+                        store_tb.setItems(bookList);
+                        noti_lbl.setText("");
+                    }
+                }
+            }
+            else {
+                noti_lbl.setText("Book info not found");
             }
         });
 

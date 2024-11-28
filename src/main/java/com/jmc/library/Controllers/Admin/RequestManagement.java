@@ -27,7 +27,7 @@ public abstract class RequestManagement {
     public Button search_btn;
     public Button return_btn;
     public Button reload_btn;
-
+    public Label noti_lbl;
 
     public TableView<RequestInfo> store_tb;
     public ObservableList<RequestInfo> bookList;
@@ -159,6 +159,7 @@ public abstract class RequestManagement {
             get_request_id_txt_fld.clear();
             status_choice_box.setValue(null);
             store_tb.setItems(bookList);
+            noti_lbl.setText("");
             Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View");
         });
         search_btn.setOnAction(actionEvent -> search());
