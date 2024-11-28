@@ -140,6 +140,12 @@ public abstract class RequestManagement {
                         (status == null || status.isEmpty() || request.getRequestStatus().equals(status)))
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
         store_tb.setItems(filteredList);
+
+        get_request_id_txt_fld.clear();
+        get_customer_name_txt_fld.clear();
+        get_borrowed_date.setValue(null);
+        get_due_date.setValue(null);
+        status_choice_box.setValue("");
     }
 
     /**

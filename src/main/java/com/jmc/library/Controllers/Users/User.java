@@ -152,18 +152,6 @@ public class User {
         if (blob != null && blob.length() > 0) {
             byte[] imageBytes = blob.getBytes(1, (int) blob.length());
             this.avatar.set(ImageUtils.byteArrayToImage(imageBytes));
-            if (this.getAvatar() == null) {
-                System.out.println("Avatar image is null");
-            } else {
-                // Convert the avatar image to a byte array
-                byte[] imageBytes1 = ImageUtils.imageToByteArray(this.getAvatar());
-                // Check if the byte array is empty
-                if (imageBytes1.length == 0) {
-                    System.out.println("Converted byte array is empty");
-                } else {
-                    System.out.println(Arrays.toString(imageBytes1).charAt(30));
-                }
-            }
         } else {
             this.avatar.set(new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/avatar.png")).toExternalForm()));
         }
@@ -253,7 +241,7 @@ public class User {
                 "    b.imageView\n" +
                 "from  userRequest r\n" +
                 "join bookStore b using(bookId)\n" +
-                "where r.username = ? " +
+                "where r.username = ? and r.requestStatus = 'Borrowing'" +
                 "order by r.requestStatus;", LibraryModel.getInstance().getUser().getUsername());
         dbQuery.setOnSucceeded(event -> {
             ResultSet resultSet = dbQuery.getValue();

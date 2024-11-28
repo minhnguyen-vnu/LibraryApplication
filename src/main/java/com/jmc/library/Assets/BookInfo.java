@@ -1,8 +1,6 @@
 package com.jmc.library.Assets;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.scene.image.ImageView;
 import java.awt.*;
 import java.time.LocalDate;
@@ -15,7 +13,7 @@ public class BookInfo {
     private int bookId;
     private String bookName;
     private String authorName;
-    private int quantityInStock;
+    private IntegerProperty quantityInStock = new SimpleIntegerProperty();
     private double leastPrice;
     private LocalDate publishedDate;
     private String ISBN;
@@ -33,7 +31,7 @@ public class BookInfo {
         this.bookId = bookId;
         this.bookName = bookName;
         this.authorName = authorName;
-        this.quantityInStock = quantityInStock;
+        this.quantityInStock.set(quantityInStock);
         this.leastPrice = leastPrice;
         this.publishedDate = publishedDate;
     }
@@ -46,7 +44,7 @@ public class BookInfo {
         this.bookId = bookId;
         this.bookName = bookName;
         this.authorName = authorName;
-        this.quantityInStock = quantityInStock;
+        this.quantityInStock.set(quantityInStock);
         this.leastPrice = leastPrice;
         this.publishedDate = publishedDate;
         this.ISBN = ISBN;
@@ -57,7 +55,7 @@ public class BookInfo {
         this.bookId = bookId;
         this.bookName = bookName;
         this.authorName = authorName;
-        this.quantityInStock = quantityInStock;
+        this.quantityInStock.set(quantityInStock);
         this.leastPrice = leastPrice;
         this.publishedDate = publishedDate;
         this.ISBN = ISBN;
@@ -69,7 +67,7 @@ public class BookInfo {
         this.bookId = bookId;
         this.bookName = bookName;
         this.authorName = authorName;
-        this.quantityInStock = quantityInStock;
+        this.quantityInStock.set(quantityInStock);
         this.leastPrice = leastPrice;
         this.publishedDate = publishedDate;
         this.ISBN = ISBN;
@@ -86,7 +84,7 @@ public class BookInfo {
         this.bookId = bookId;
         this.bookName = bookName;
         this.authorName = authorName;
-        this.quantityInStock = quantityInStock;
+        this.quantityInStock.set(quantityInStock);
         this.leastPrice = leastPrice;
         this.publishedDate = publishedDate;
         this.ISBN = ISBN;
@@ -126,11 +124,15 @@ public class BookInfo {
     }
 
     public int getQuantityInStock() {
-        return quantityInStock;
+        return quantityInStock.get();
     }
 
     public void setQuantityInStock(int quantityInStock) {
-        this.quantityInStock = quantityInStock;
+        this.quantityInStock.set(quantityInStock);
+    }
+
+    public IntegerProperty quantityInStockProperty() {
+        return quantityInStock;
     }
 
     public double getLeastPrice() {
