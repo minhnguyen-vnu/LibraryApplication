@@ -12,6 +12,7 @@ import com.jmc.library.Models.Model;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -38,6 +39,7 @@ public class ManageBookController extends LibraryTable implements Initializable 
     public Button return_btn;
     public Button clear_btn;
     public Button reload_btn;
+    public Label noiti_lbl;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

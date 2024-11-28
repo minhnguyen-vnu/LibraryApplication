@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
  */
 public class PendingRequestManagement extends RequestManagement implements Initializable {
     public Button update_btn;
+    public Label noiti_lbl;
 
 
     @Override

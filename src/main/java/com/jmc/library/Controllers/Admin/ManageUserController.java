@@ -43,6 +43,7 @@ public class ManageUserController implements Initializable {
     public TableColumn<User, Double> total_paid_tb_cl;
     public TableColumn<User, Integer> total_borrowed_tb_cl;
     public TableColumn<User, String> status_tb_cl;
+    public Label noiti_lbl;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
