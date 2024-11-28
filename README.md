@@ -48,4 +48,8 @@
   + Lưu trữ trên Cloud giúp người dùng thuận tiện hơn trong việc kết nối thông tin đến người quản lý.
   + Với việc lưu trữ hệ cơ sở dữ liệu trên Cloud làm việc xử lý đa luồng càng trở nên ý nghĩa vì việc kết nối với database trên Cloud chắc chắn sẽ tốn thời gian hơn việc tương tác trên localhost. 
 
+# UML Diagram
+![LibrarySystem](https://github.com/user-attachments/assets/8f668a89-05ab-473b-af1d-bcbb8baa203c)
+
+
 
