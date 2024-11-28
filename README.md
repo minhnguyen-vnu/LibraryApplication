@@ -1,4 +1,4 @@
-# Library Management System
+![LibrarySystem](https://github.com/user-attachments/assets/44bb887a-ee89-447c-b314-21d262b2b5f3)# Library Management System
 
 # Giới thiệu
 
@@ -47,5 +47,10 @@
   + Lưu trữ hệ quản trị dữ liệu trên Cloud, được host bằng dịch vụ của AWS giúp người dùng và người quản lý có thể tương tác trực tiếp với nhau trong thời gian thực.
   + Lưu trữ trên Cloud giúp người dùng thuận tiện hơn trong việc kết nối thông tin đến người quản lý.
   + Với việc lưu trữ hệ cơ sở dữ liệu trên Cloud làm việc xử lý đa luồng càng trở nên ý nghĩa vì việc kết nối với database trên Cloud chắc chắn sẽ tốn thời gian hơn việc tương tác trên localhost. 
+
+# UML Diagram
+
+![LibrarySystem](https://github.com/user-attachments/assets/8f668a89-05ab-473b-af1d-bcbb8baa203c)
+
 
 
