@@ -1,0 +1,172 @@
+.DarkCountBoard{
+    -fx-background-color: #2F314B;
+    -fx-background-radius: 10;
+    -fx-alignment: center;
+
+}
+
+.DarkCountBoard .image-view{
+    -fx-background-radius: 10;
+}
+
+.LightCountBoard{
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-alignment: center;
+
+}
+
+.BigTitleText {
+    -fx-font-family: sans-serif, Arial, Helvetica;
+    -fx-font-weight: bold;
+    -fx-font-size: 40;
+    -fx-text-fill: black;
+    -fx-font-style: italic;
+}
+
+.TitleText{
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+}
+
+.SmallCountText{
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+}
+
+.CountNumber{
+    -fx-font-size: 60;
+    -fx-font-weight: bold;
+}
+
+.HotBookList{
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-alignment: center;
+}
+
+.HotBookList .list-view{
+    -fx-background-color: transparent;
+}
+
+.HotBookList .list-view .row-cell{
+    -fx-background-color: transparent;
+}
+
+.HotBookList .list-view .row-cell:odd{
+    -fx-background-color: transparent;
+}
+
+.LinkLabel{
+    -fx-font-size: 12;
+    -fx-text-fill: #0000FF;
+}
+
+.LinkLabel:hover{
+    -fx-text-fill: #579ae8;
+}
+
+.LineChart {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+}
+
+.LineChart .chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.LineChart .chart-legend {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d0d0d0;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+
+.LineChart .chart-legend-item-symbol {
+    -fx-background-color: #0000ff, #ffffff;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5;
+}
+
+.LineChart .chart-series-line {
+    -fx-stroke-width: 2px;
+}
+
+.LineChart .chart-series-line.series0 {
+    -fx-stroke: #ff0000;
+}
+
+.LineChart .chart-series-line.series1 {
+    -fx-stroke: #00ff00;
+}
+
+.LineChart .chart-series-line.series2 {
+    -fx-stroke: #0000ff;
+}
+
+.LineChart .axis {
+    -fx-tick-label-fill: #333333;
+    -fx-tick-mark-length: 5;
+    -fx-tick-mark-stroke: #333333;
+    -fx-tick-label-font-size: 12px;
+}
+
+.LineChart .axis .axis-label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.BarChart {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+}
+
+.BarChart .chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.BarChart .chart-legend {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+
+.BarChart .chart-legend-item-symbol {
+    -fx-background-color: #0000ff, #ffffff;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5;
+}
+
+.BarChart .chart-bar {
+    -fx-bar-fill: #ff0000;
+}
+
+.BarChart .chart-bar.series0 {
+    -fx-bar-fill: #ff0000;
+}
+
+.BarChart .chart-bar.series1 {
+    -fx-bar-fill: #00ff00;
+}
+
+.BarChart .chart-bar.series2 {
+    -fx-bar-fill: #0000ff;
+}
+
+.BarChart .axis {
+    -fx-tick-label-fill: #333333;
+    -fx-tick-mark-length: 5;
+    -fx-tick-mark-stroke: #333333;
+    -fx-tick-label-font-size: 12px;
+}
+
+.BarChart .axis .axis-label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}

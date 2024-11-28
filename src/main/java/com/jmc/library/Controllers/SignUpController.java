@@ -1,21 +1,26 @@
 package com.jmc.library.Controllers;
 
-import com.jmc.library.DBUtlis;
+import com.jmc.library.Database.DBUpdate;
+import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Models.Model;
+import javafx.animation.RotateTransition;
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing the sign-up view, including user registration and account creation.
+ */
 public class SignUpController implements Initializable {
     public ChoiceBox acc_selector;
     public TextField username_su;
@@ -24,11 +29,19 @@ public class SignUpController implements Initializable {
     public Label error_lbl;
     public PasswordField confirm_su;
     public Label back_lbl;
+    public ImageView loading_img;
+    public RotateTransition rotateTransition;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {addListener();}
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        addListener();
+        setRotateTransition();
+    }
 
-    public void addListener(){
+    /**
+     * Adds listeners for the sign-up button, back label, and text fields.
+     */
+    public void addListener() {
         sign_up_btn.setOnAction(actionEvent -> signUp());
         back_lbl.setOnMouseClicked(mouseEvent -> {
             Model.getInstance().getViewFactory().getSelectedAuthenticatonMode().set("Log In");
@@ -37,60 +50,94 @@ public class SignUpController implements Initializable {
             confirm_su.clear();
             password_su.clear();
         });
+        username_su.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                password_su.requestFocus();
+            }
+        });
+        password_su.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                confirm_su.requestFocus();
+            }
+        });
+        confirm_su.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                signUp();
+            }
+        });
+
     }
 
-    public void signUp(){
-        System.out.println(Objects.equals(password_su.getText(), confirm_su.getText()));
-        if(!Objects.equals(password_su.getText(), confirm_su.getText())){
+    /**
+     * Sets the rotation transition for the loading image.
+     */
+    public void setRotateTransition() {
+        rotateTransition = new RotateTransition();
+        rotateTransition.setNode(loading_img);
+        rotateTransition.setByAngle(360);
+        rotateTransition.setCycleCount(1000);
+        rotateTransition.setAutoReverse(false);
+        rotateTransition.play();
+    }
+
+    /**
+     * Authenticates the user and signs up.
+     */
+    public void signUp() {
+        loading_img.setVisible(true);
+        rotateTransition.play();
+        if (!Objects.equals(password_su.getText(), confirm_su.getText())) {
             error_lbl.setText("Your Confirmation Password didn't match the Password");
             error_lbl.setStyle("-fx-text-fill: red");
-        }
-        else {
-            PreparedStatement preparedStatement = null;
-            ResultSet resultSet = null;
-            Connection con = DBUtlis.getConnection();
-            try {
-                PreparedStatement checking = con.prepareStatement("select * from users where username = ?");
-                checking.setString(1, username_su.getText());
-                resultSet = checking.executeQuery();
-
-                if (!resultSet.next()) {
-                    preparedStatement = con.prepareStatement("insert into users values(?, ?)");
-                    preparedStatement.setString(1, username_su.getText());
-                    preparedStatement.setString(2, password_su.getText());
-                    preparedStatement.executeUpdate();
-                    error_lbl.setText("Account is created succesfully!");
-                    error_lbl.setStyle("-fx-text-fill: green");
-                } else {
-                    error_lbl.setText("Account name already exists");
-                    error_lbl.setStyle("-fx-text-fill: red;");
-                    BorderPane.setAlignment(error_lbl, Pos.CENTER);
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (resultSet != null) {
+        } else {
+            DBQuery dbQuery = new DBQuery("select * from users where username = ?", username_su.getText());
+            dbQuery.setOnSucceeded(workerStateEvent -> {
+                ResultSet resultSet = dbQuery.getValue();
+                try {
+                    if (!resultSet.next()) {
+                        DBUpdate dbUpdate = new DBUpdate("insert into users (username, password, isAdmin, registeredDate) values(?, ?, ?, ?)", username_su.getText(), password_su.getText(), 0, LocalDate.now());
+                        dbUpdate.setOnSucceeded(event -> {
+                            Platform.runLater(() -> {
+                                System.out.println("Update Successfully");
+                            });
+                        });
+                        dbUpdate.setOnFailed(event -> {
+                            Platform.runLater(() -> {
+                                System.out.println("Update failed");
+                            });
+                        });
+                        Thread thread = new Thread(dbUpdate);
+                        thread.setDaemon(true);
+                        thread.start();
+                        loading_img.setVisible(false);
+                        rotateTransition.stop();
+                        error_lbl.setText("Account is created succesfully!");
+                        error_lbl.setStyle("-fx-text-fill: green");
+                    } else {
+                        loading_img.setVisible(false);
+                        rotateTransition.stop();
+                        error_lbl.setText("Account name already exists");
+                        error_lbl.setStyle("-fx-text-fill: red;");
+                        BorderPane.setAlignment(error_lbl, Pos.CENTER);
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } finally {
                     try {
                         resultSet.close();
                     } catch (SQLException e) {
-                        e.printStackTrace();
+                        throw new RuntimeException(e);
                     }
                 }
-                if (preparedStatement != null) {
-                    try {
-                        preparedStatement.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+            });
+
+            dbQuery.setOnFailed(workerStateEvent -> {
+                System.out.println("Query failed");
+            });
+
+            Thread thread = new Thread(dbQuery);
+            thread.setDaemon(true);
+            thread.start();
         }
     }
 }

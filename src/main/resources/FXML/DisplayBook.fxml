@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.TextFlow?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="Border" stylesheets="@../STYLES/BookDetail.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Books.BookDisplayController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" styleClass="BarGround">
+         <children>
+            <Label styleClass="BigWhiteTitle" text="Book Detail" />
+         </children>
+      </HBox>
+      <AnchorPane prefHeight="630.0" prefWidth="1280.0" styleClass="BackGround">
+         <children>
+            <HBox layoutX="149.0" layoutY="49.0" spacing="80.0">
+               <children>
+                  <VBox spacing="20.0">
+                     <children>
+                        <ImageView fx:id="book_img" fitHeight="400.0" fitWidth="300.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../IMAGES/UnknownBookCover.png" />
+                           </image>
+                        </ImageView>
+                        <HBox fx:id="rate_holder" alignment="CENTER" prefHeight="40.0" prefWidth="200.0" />
+                        <Button fx:id="get_book_btn" mnemonicParsing="false" styleClass="GetButton" text="Get book" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="20.0">
+                     <children>
+                        <TextFlow fx:id="book_name_txt_flw" prefHeight="60.0" prefWidth="550.0" styleClass="BookName" />
+                        <TabPane prefHeight="385.0" prefWidth="680.0" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab text="Book info">
+                                 <content>
+                                    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="680.0">
+                                       <children>
+                                          <VBox alignment="CENTER_LEFT" layoutX="21.0" layoutY="10.0" prefHeight="317.0" prefWidth="650.0" spacing="30.0" styleClass="DetailBook">
+                                             <children>
+                                                <Label fx:id="publication_date_lbl" styleClass="InfoText" text="Ngày công chiếu: 28 tháng 3 năm 2002">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label fx:id="author_lbl" styleClass="InfoText" text="Tác giả: bầu trời đầy sương">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label fx:id="publisher_lbl" styleClass="InfoText" text="Nhà xuất bản: Kim tiền">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label fx:id="isbn_lbl" styleClass="InfoText" text="ISBN: 150TAM">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label fx:id="original_language_lbl" styleClass="InfoText" text="Ngôn ngữ gốc: Việt">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label fx:id="book_genres_lbl" styleClass="InfoText" text="Label">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                            <Tab text="Preview">
+                                 <content>
+                                    <AnchorPane prefHeight="350.0" prefWidth="650.0" styleClass="Null">
+                                       <children>
+                                          <ScrollPane layoutX="25.0" layoutY="26.0" prefHeight="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
+                                             <content>
+                                                <AnchorPane prefHeight="320.0" prefWidth="650.0">
+                                                   <children>
+                                                      <TextArea fx:id="preview_txt_flw" editable="false" layoutY="-5.0" prefWidth="480.0" styleClass="TextArea" text="Tạm gác hết những âu lo lại :v cùng mình giải bài toán này nhé. Mình cho các bạn một xâu kí tự &#10; gồm &#10; chữ cái in thường và một số nguyên &#10;. Bạn hãy giúp mình đếm số xâu kí tự &#10; độ dài &#10; cũng chỉ gồm các chữ cái in thường thỏa mãn điều kiện sau đây: Có chính xác &#10; cặp số nguyên &#10; với &#10; và xâu con liên tiếp của &#10; từ vị trí &#10; đến vị trí &#10; có thứ tự từ điển lớn hơn xâu con liên tiếp của &#10; từ vị trí &#10; đến vị trí &#10;.&#10;&#10;Nhắc lại, xâu &#10; được gọi là có thứ tự từ điển lớn hơn xâu &#10; khi và chỉ khi tồn tại chỉ số &#10; sao cho:&#10;&#10;Với mọi chỉ số &#10; sao cho &#10;, ta luôn có &#10;.&#10;Ví dụ, &quot;tranchau&quot; có thứ tự từ điển lớn hơn &quot;tocotoco&quot;, &quot;anhhanh&quot; có thứ tự từ điển lớn hơn &quot;anhanhh&quot;, &quot;nguvanloi&quot; có thứ tự từ điển lớn hơn &quot;bichphuong&quot;, &quot;thilin&quot; có thứ tự từ điển lớn hơn &quot;thaozi&quot;, &quot;ntha&quot; có thứ tự từ điển lớn hơn &quot;dxmh&quot;.&#10;&#10;Input&#10;Dòng đầu tiên chứa hai số nguyên &#10; và &#10; &#10;. Dòng thứ hai chứa xâu kí tự &#10; gồm &#10; chữ cái in thường.&#10;&#10;Output&#10;In ra một số nguyên duy nhất là số xâu kí tự &#10; thỏa mãn điều kiện trên. Do kết quả có thể rất lớn, bạn chỉ cần in ra đáp số theo modulo &#10;.&#10;&#10;Subtasks&#10;Bộ test của bài được chia làm các subtask như sau:&#10;&#10;Subtask &#10; (&#10; test): &#10;Subtask &#10; (&#10; test): &#10;Subtask &#10; (&#10; test): &#10; và &#10;Subtask &#10; (&#10; test): &#10;Subtask &#10; (&#10; điểm): Xâu &#10; chỉ gồm kí tự &#10;.&#10;Subtask &#10; (&#10; điểm): Không có ràng buộc gì thêm.&#10;Điểm tối đa của bài là &#10; điểm.    " wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Button fx:id="go_to_back_btn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" styleClass="BackButton">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../IMAGES/GoBackIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

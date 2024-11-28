@@ -1,0 +1,103 @@
+
+.TableListView {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 0 0 15 15;
+    -fx-alignment: center;
+    -fx-padding: 0.0em;
+}
+
+/* Style for the table header */
+.TableListView .column-header{
+    -fx-background-color: #ffffff;
+    -fx-opacity: 0.8;
+    -fx-background-insets: 0;
+    -fx-pref-height: 40;
+}
+
+.TableListView .column-header .label {
+    -fx-text-fill: #1b1a1a;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+    -fx-alignment: CENTER;
+    -fx-background-color: transparent;
+
+}
+
+/* Style for the table cells */
+.TableListView .table-cell {
+    -fx-text-fill: #000000;
+    -fx-alignment: CENTER;
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+    -fx-pref-height: 50;
+}
+
+
+.TableListView .table-cell:odd {
+    -fx-background-color: #ffffff;
+}
+
+.TableListView .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+}
+
+.TableListView .table-row-cell:hover{
+    -fx-background-color: #d1d1d1;
+}
+
+/* Style for the scroll bar */
+.TableListView .scroll-bar {
+    -fx-pref-width: 0;
+    -fx-opacity: 0;
+}
+
+/* Style for the CheckBox */
+
+.table-cell .check-box {
+    -fx-background-color: transparent;
+}
+
+.table-cell .check-box:selected {
+    -fx-background-color: transparent;
+}
+
+/* Custom CheckBox icon */
+.check-box .box {
+    -fx-pref-height: 15;
+    -fx-pref-width: 15;
+    -fx-background-color: transparent;
+    -fx-background-radius: 30;
+    -fx-border-color: #b6b8bc;
+    -fx-border-radius: 25;
+    -fx-border-width: 1px;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #bce0ea;
+}
+
+.check-box:hover .box {
+    -fx-background-color: #ccfaee;
+}
+
+.table-cell .button {
+    -fx-background-color: transparent;
+}
+
+.table-cell .button .image-view {
+
+    -fx-blend-mode: src-over;
+}
+
+.table-cell .button:hover .image-view {
+    -fx-blend-mode: src-atop;
+    -fx-effect: innershadow(gaussian, #810a0a, 20, 10, 0, 0);
+}
+
+.table-cell .label {
+    -fx-padding: 0 0 0 10;
+    -fx-text-fill: #000000;
+    -fx-font-size: 12;
+}
+

@@ -1,0 +1,30 @@
+.NoDataLabel {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-text-fill: #4385da;
+}
+
+.TransparentBackground {
+    -fx-background-color: transparent;
+}
+
+.MatteBackground {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}
+
+.Notifications {
+    -fx-background-color: #000000;
+    -fx-border-color: #470097;
+    -fx-border-width: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 15px;
+}
+
+.Notifications .label {
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-text-fill: #05fff7;
+}
+

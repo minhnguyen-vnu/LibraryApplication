@@ -5,10 +5,27 @@ module com.jmc.library {
     requires java.sql;
     requires mysql.connector.j;
     requires java.desktop;
+    requires google.api.services.books.v1.rev114;
+    requires com.google.api.client;
+    requires com.google.api.client.json.gson;
+    requires org.json;
+    requires commons.logging;
+    requires javafx.swing;
 
     opens com.jmc.library to javafx.fxml;
-    exports com.jmc.library.Controllers;
     exports com.jmc.library;
     exports com.jmc.library.Models;
     exports com.jmc.library.View;
+    exports com.jmc.library.Assets;
+    exports com.jmc.library.Database;
+    exports com.jmc.library.Controllers;
+    exports com.jmc.library.Controllers.Users;
+    exports com.jmc.library.Controllers.LibraryControllers;
+    exports com.jmc.library.Controllers.Admin;
+    exports com.jmc.library.Controllers.GoogleBookAPI;
+    exports com.jmc.library.Controllers.Books;
+    exports com.jmc.library.Controllers.Assets;
+    exports com.jmc.library.Controllers.Display;
+    exports com.jmc.library.Controllers.Notification;
+    exports com.jmc.library.Controllers.Image;
 }

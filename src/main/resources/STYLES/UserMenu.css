@@ -1,0 +1,110 @@
+/* Menu Container */
+.MenuContainer {
+    -fx-background-color: #afefe8; /* Light blue */
+    -fx-background-radius: 15;
+}
+
+/* MenuButton Styles */
+.MenuButton {
+    -fx-background-radius: 20;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-background-color: #afefe8; /* Light blue */
+    -fx-text-fill: #000000;
+    -fx-font-size: 20;
+    -fx-alignment: center;
+    -fx-pref-width: 200;
+}
+
+.MenuButton:hover {
+    -fx-background-color: #1c94c8; /* Green */
+}
+
+/* MenuItem Styles */
+.MenuButton .MenuItem {
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-background-color: #82DFFF;
+    -fx-padding: 5 10 5 10;
+    -fx-pref-width: 200;
+}
+
+.MenuButton .MenuItem .label {
+    -fx-text-fill: #FF9000;
+    -fx-font-weight: bold;
+    -fx-font-size: 25;
+}
+
+.MenuButton .MenuItem:hover {
+    -fx-background-color: #A8FFE0;
+}
+
+.MenuButton .MenuItem:disabled {
+    -fx-opacity: 0.5;
+}
+
+.MenuButton .MenuItem:focused {
+    -fx-background-color: #89D5FF;
+}
+
+/*Tile*/
+.TileText {
+    -fx-font-size: 50;
+    -fx-text-fill: #cd3d00;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}
+
+.SubTileText {
+    -fx-font-size: 20;
+    -fx-fill: #ddb050;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}
+
+/*User Menu container*/
+.UserMenuContainer {
+}
+
+/*Search Bar*/
+.SearchBar {
+    -fx-background-color: transparent;
+
+    -fx-bottom-border-color: #1eccac;
+    -fx-border-width: 5;
+
+    -fx-pref-height: 20;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-font-style: italic;
+    -fx-font-size: 15;
+    -fx-text-fill: #282c6a;
+}
+
+.SearchButton {
+    -fx-background-color: #1eccac;
+    -fx-background-radius: 20;
+
+    -fx-border-radius: 16;
+    -fx-border-color: #8ec81c;
+    -fx-border-width: 5;
+
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-font-size: 15;
+    -fx-alignment: center;
+}
+
+/*Table List*/
+.TableList {
+    -fx-background-color: #ddfaf4;
+    -fx-background-radius: 15;
+}
+
+.TableList .column-header {
+    -fx-background-color: #3bb6ba;
+    -fx-border-color: #586bd6;
+
+}
+
+/*View List*/
+.ViewList {
+    -fx-background-color: #ddfaf4;
+    -fx-background-radius: 15;
+}

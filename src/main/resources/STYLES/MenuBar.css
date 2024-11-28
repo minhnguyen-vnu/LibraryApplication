@@ -1,0 +1,45 @@
+
+/**/
+.MenuBackGround {
+    -fx-background-color: #0B0D1B;
+    /*-fx-background-radius: 10 0 0 10;*/
+}
+
+/**/
+.LibrarySymbolPane {
+    -fx-background-color: transparent;
+}
+
+.LibraryName {
+    -fx-font-size: 30;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-font-style: italic;
+}
+
+/**/
+.MenuButton {
+    -fx-font-family: "Calibri", sans-serif;
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20;
+    -fx-alignment: CENTER-LEFT;
+    -fx-pref-width: 200;
+    -fx-pref-height: 35;
+}
+
+.MenuButton .image-view {
+    -fx-blend-mode: src-over;
+    -fx-effect: innershadow(gaussian, #ffffff, 20, 10, 0, 0);
+}
+
+.MenuButton:hover .image-view {
+    -fx-blend-mode: src-atop;
+    -fx-effect: innershadow(gaussian, #ffffff, 20, 10, 0, 0);
+}
+
+.MenuButton:hover {
+    -fx-background-color: #6943CE;
+}
+
+
