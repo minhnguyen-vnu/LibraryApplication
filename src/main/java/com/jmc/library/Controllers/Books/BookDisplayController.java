@@ -36,6 +36,8 @@ public class BookDisplayController implements Initializable {
     public Button go_to_back_btn;
     public ImageView book_img;
     public HBox rate_holder;
+    public ShowRateController showRateController;
+    public Node rate;
 
     /**
      * Initializes the controller and sets up the initial state.
@@ -45,12 +47,26 @@ public class BookDisplayController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadRating();
         addListeners();
         if (BookModel.getInstance().getBookInfo() == null) {
             System.out.println("No book selected.");
             return;
         }
         setButtonListener();
+    }
+
+    /**
+     * Loads the rating FXML file.
+     */
+    private void loadRating() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ShowRate.fxml"));
+        try {
+            rate = loader.load();
+            showRateController  = loader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -94,18 +110,10 @@ public class BookDisplayController implements Initializable {
         preview_txt_flw.setText(BookModel.getInstance().getBookInfo().getDescription());
         book_img.setImage(BookModel.getInstance().getBookInfo().getImageView().getImage());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ShowRate.fxml"));
-        try {
-            Node rate = loader.load();
-            ShowRateController controller = loader.getController();
-            controller.disPlay(BookModel.getInstance().getBookInfo().getRating());
-            rate_holder.getChildren().clear();
-            rate_holder.getChildren().add(rate);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        showRateController.disPlay(BookModel.getInstance().getBookInfo().getRating());
+        rate_holder.getChildren().clear();
+        rate_holder.getChildren().add(rate);
 
         BookModel.getInstance().bookInfoProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
