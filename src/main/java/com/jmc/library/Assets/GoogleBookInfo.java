@@ -148,6 +148,9 @@ public class GoogleBookInfo {
     public void getInfo() {
         this.bookInfo = new GoogleBookAPIMethod().searchBook(this.ISBN);
         int indexes = new GoogleBookAPIMethod().getTotalItems(bookInfo) - 1;
+        if (indexes < 0) {
+            return;
+        }
         this.items = bookInfo.getJSONArray("items");
         if (items != null) {
             this.exist = true;

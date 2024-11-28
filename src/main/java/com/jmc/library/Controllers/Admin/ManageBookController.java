@@ -39,7 +39,7 @@ public class ManageBookController extends LibraryTable implements Initializable 
     public Button return_btn;
     public Button clear_btn;
     public Button reload_btn;
-    public Label noiti_lbl;
+    public Label noti_lbl;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -73,7 +73,7 @@ public class ManageBookController extends LibraryTable implements Initializable 
         String bookISBN = enter_ISBN_txt_fld.getText();
 
         for (BookInfo book : bookList) {
-            if (book.getBookId() == Integer.parseInt(bookId) || book.getISBN().equals(bookISBN)) {
+            if (book.getBookId() == Integer.parseInt(bookId) && book.getISBN().equals(bookISBN)) {
                 ok = false;
                 break;
             }
@@ -137,9 +137,16 @@ public class ManageBookController extends LibraryTable implements Initializable 
                     thread.setDaemon(true);
                     thread.start();
                     bookList.add(bookInfo);
+                    noti_lbl.setText("");
+                }
+                else {
+                    noti_lbl.setText("ISBN is not valid");
                 }
 
                 clear();
+            }
+            else {
+                noti_lbl.setText("Book is already existed");
             }
         });
 
@@ -157,6 +164,10 @@ public class ManageBookController extends LibraryTable implements Initializable 
                 thread.start();
                 bookList.remove(bookInfo);
                 clear();
+                noti_lbl.setText("");
+            }
+            else {
+                noti_lbl.setText("Book doesn't exist");
             }
         });
 
@@ -183,6 +194,10 @@ public class ManageBookController extends LibraryTable implements Initializable 
                 }
                 store_tb.refresh();
                 clear();
+                noti_lbl.setText("");
+            }
+            else {
+                noti_lbl.setText("Please fill out all the field");
             }
         });
 
