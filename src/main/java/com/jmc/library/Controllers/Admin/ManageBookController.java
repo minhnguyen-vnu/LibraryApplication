@@ -12,6 +12,7 @@ import com.jmc.library.Models.Model;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -24,6 +25,9 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Controller class for managing the books in the library.
+ */
 public class ManageBookController extends LibraryTable implements Initializable {
     public TextField enter_book_id_txt_fld;
     public TextField enter_quantity_txt_fld;
@@ -35,6 +39,7 @@ public class ManageBookController extends LibraryTable implements Initializable 
     public Button return_btn;
     public Button clear_btn;
     public Button reload_btn;
+    public Label noiti_lbl;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -50,11 +55,17 @@ public class ManageBookController extends LibraryTable implements Initializable 
         store_tb.setItems(bookList);
     }
 
+    /**
+     * return all information is filled.
+     */
     private boolean isFilled() {
         return !enter_book_id_txt_fld.getText().isEmpty() && !enter_quantity_txt_fld.getText().isEmpty() &&
                 !enter_price_txt_fld.getText().isEmpty() && !enter_ISBN_txt_fld.getText().isEmpty();
     }
 
+    /**
+     * return the record is not existing.
+     */
     private boolean isNotExisting() {
         boolean ok = true;
 
@@ -71,6 +82,9 @@ public class ManageBookController extends LibraryTable implements Initializable 
         return ok;
     }
 
+    /**
+     * Clears the text fields.
+     */
     private void clear() {
         enter_ISBN_txt_fld.clear();
         enter_book_id_txt_fld.clear();
@@ -78,6 +92,9 @@ public class ManageBookController extends LibraryTable implements Initializable 
         enter_price_txt_fld.clear();
     }
 
+    /**
+     * Adds the action to be executed when the button is clicked.
+     */
     private void onAction() {
         return_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View"));
 

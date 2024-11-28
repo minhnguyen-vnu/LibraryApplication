@@ -8,7 +8,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
+/**
+ * Class for handling Google Books API methods.
+ */
 public class GoogleBookAPIMethod {
     public JSONObject searchBook(String ISBN) {
         try {
@@ -40,6 +42,12 @@ public class GoogleBookAPIMethod {
         return new JSONObject();
     }
 
+    /**
+     * Gets the items array from the JSON object.
+     *
+     * @param jsonObject The JSON object.
+     * @return The items array.
+     */
     public int getTotalItems(JSONObject jsonObject) {
         return jsonObject.getInt("totalItems");
     }

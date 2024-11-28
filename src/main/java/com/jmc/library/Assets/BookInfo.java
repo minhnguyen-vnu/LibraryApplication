@@ -6,6 +6,9 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * Class for managing the book information.
+ */
 public class BookInfo {
     private int bookId;
     private String bookName;

@@ -8,6 +8,7 @@ import com.jmc.library.Models.AdminLibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,6 +24,9 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+/**
+ * Controller class for managing the users in the library.
+ */
 public class ManageUserController implements Initializable {
     public TextField username_txt_fld;
     public TextField full_name_txt_fld;
@@ -40,6 +44,7 @@ public class ManageUserController implements Initializable {
     public TableColumn<User, Double> total_paid_tb_cl;
     public TableColumn<User, Integer> total_borrowed_tb_cl;
     public TableColumn<User, String> status_tb_cl;
+    public Label noiti_lbl;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -50,6 +55,35 @@ public class ManageUserController implements Initializable {
         showUsers();
     }
 
+    /**
+     * Adds the loading placeholder to the table.
+     */
+    protected void addLoading() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
+        try {
+            ImageView loading_img = loader.load();
+            store_tb.setPlaceholder(loading_img);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Adds the no data placeholder to the table.
+     */
+    protected void returnLoading() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
+        try {
+            Label label = loader.load();
+            store_tb.setPlaceholder(label);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Sets up the table with the list of users.
+     */
     private void addBinding() {
         username_tb_cl.setCellValueFactory(new PropertyValueFactory<>("username"));
         full_name_tb_cl.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -59,11 +93,17 @@ public class ManageUserController implements Initializable {
         status_tb_cl.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
 
+    /**
+     * Sets up the table with the list of users.
+     */
     private void setTable() {
         userList = FXCollections.observableArrayList();
         store_tb.setItems(userList);
     }
 
+    /**
+     * Sets the action to be executed when the button is clicked.
+     */
     private void onAction() {
         reload_btn.setOnAction(actionEvent -> showUsers());
         return_btn.setOnAction(actionEvent -> {
@@ -96,7 +136,11 @@ public class ManageUserController implements Initializable {
         store_tb.setItems(filteredList);
     }
 
+    /**
+     * Shows the list of users in the library.
+     */
     private void showUsers() {
+        addLoading();
         userList.clear();
         store_tb.setItems(userList);
         DBQuery dbQuery = new DBQuery("select\n" +
@@ -141,11 +185,12 @@ public class ManageUserController implements Initializable {
                     }
                     User user = new User(resultSet.getString("username"), resultSet.getString("password"),
                             name, birthdate, id,
-                            image, resultSet.getDouble("totalPaid"),
+                            image, Math.round(resultSet.getDouble("totalPaid") * 100.0 )/100.0,
                             resultSet.getInt("totalBorrowed"), resultSet.getString("status"));
                     userList.add(user);
                 }
                 resultSet.close();
+                returnLoading();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

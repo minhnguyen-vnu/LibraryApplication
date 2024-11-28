@@ -7,6 +7,9 @@ import java.awt.*;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 
+/**
+ * Class for managing the user book information.
+ */
 public class UserBookInfo {
     private String bookName;
     private String authorName;

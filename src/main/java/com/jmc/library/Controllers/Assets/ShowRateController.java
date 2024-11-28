@@ -10,6 +10,9 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing the display of the book's rating.
+ */
 public class ShowRateController implements Initializable {
     public ImageView star5;
     public ImageView star4;
@@ -23,9 +26,13 @@ public class ShowRateController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("Show Rate Controller Initialized");
         setMaterialListener();
     }
 
+    /**
+     * Sets the listener for the rating.
+     */
     private void setMaterialListener() {
         emptyStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/IMAGES/EmptyStar.png")));
         halfStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/IMAGES/HalfStar.png")));
@@ -41,6 +48,11 @@ public class ShowRateController implements Initializable {
         }));
     }
 
+    /**
+     * Displays the rating of the book.
+     *
+     * @param rate The rating of the book.
+     */
     public void disPlay(double rate) {
         rate = Math.round(rate * 2) / 2.0;
         star1.setImage(fullStar);

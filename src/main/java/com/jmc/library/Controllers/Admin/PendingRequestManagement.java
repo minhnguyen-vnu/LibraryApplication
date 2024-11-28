@@ -19,8 +19,12 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing the pending requests in the library.
+ */
 public class PendingRequestManagement extends RequestManagement implements Initializable {
     public Button update_btn;
+    public Label noiti_lbl;
 
 
     @Override
@@ -63,6 +67,9 @@ public class PendingRequestManagement extends RequestManagement implements Initi
         thread.start();
     }
 
+    /**
+     * Adds the action to be executed when the button is clicked.
+     */
     private RequestInfo getElement() {
         int requestID = Integer.parseInt(get_request_id_txt_fld.getText());
         String customer = get_customer_name_txt_fld.getText();
@@ -83,6 +90,9 @@ public class PendingRequestManagement extends RequestManagement implements Initi
         return null;
     }
 
+    /**
+     * Adds the action to be executed when the button is clicked.
+     */
     private void addedAction() {
         update_btn.setOnAction(actionEvent -> {
             RequestInfo foundElement = getElement();

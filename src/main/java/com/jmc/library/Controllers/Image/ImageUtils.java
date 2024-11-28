@@ -11,7 +11,17 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+/**
+ * Utility class for converting images to byte arrays and vice versa.
+ */
 public class ImageUtils {
+
+    /**
+     * Converts a byte array to an image.
+     *
+     * @param byteArray The byte array to convert.
+     * @return The image.
+     */
     public static Image byteArrayToImage(byte[] byteArray) {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
         BufferedImage bufferedImage = null;
@@ -25,6 +35,12 @@ public class ImageUtils {
         return SwingFXUtils.toFXImage(bufferedImage, null);
     }
 
+    /**
+     * Converts an image to a byte array.
+     *
+     * @param image The image to convert.
+     * @return The byte array.
+     */
     public static byte[] imageToByteArray(Image image) {
         BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

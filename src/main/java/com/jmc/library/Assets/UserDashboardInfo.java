@@ -10,6 +10,9 @@ import javafx.scene.control.Label;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Class for managing the user dashboard information.
+ */
 public class UserDashboardInfo {
     public ListProperty<Integer> borrowedBooks;
     public ListProperty<Integer> readBooks;
@@ -22,6 +25,9 @@ public class UserDashboardInfo {
     int countBorrowedBook;
     int countNewReadBook;
 
+    /**
+     * Constructor for the UserDashboardInfo class.
+     */
     public UserDashboardInfo() {
         borrowedBooks = new SimpleListProperty<>(FXCollections.observableArrayList());
         readBooks = new SimpleListProperty<>(FXCollections.observableArrayList());
@@ -108,6 +114,9 @@ public class UserDashboardInfo {
         return countNewReadBook;
     }
 
+    /**
+     * Sets up the dashboard.
+     */
     public void onDashBoardSetUp() {
         List<Integer> tempBorrowedBooks = FXCollections.observableArrayList();
         List<Integer> tempReadBooks = FXCollections.observableArrayList();

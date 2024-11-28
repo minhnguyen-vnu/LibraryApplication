@@ -18,6 +18,10 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+
+/**
+ * Controller class for managing the rating of the book.
+ */
 public class RatingController implements Initializable {
     public ImageView star5;
     public ImageView star4;
@@ -48,10 +52,14 @@ public class RatingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("Rating Controller Initialized");
         addListener();
         setMaterialListener();
     }
 
+    /**
+     * Sets the listener for the rating.
+     */
     private void addListener() {
         btn1.setOnAction(e -> {
             star1.setImage(fullStar);
@@ -100,10 +108,16 @@ public class RatingController implements Initializable {
         cancel_btn.setOnAction(e -> closeStage());
     }
 
+    /**
+     * Closes the current stage.
+     */
     private void closeStage() {
         star1.getScene().getWindow().hide();
     }
 
+    /**
+     * Updates the database with the new rating.
+     */
     private void UpdateDB() {
         DBUpdate dbUpdate = new DBUpdate("update userRequest set isRated = true where username = ? and bookId = ? and isRated = false",
                 LibraryModel.getInstance().getUser().getUsername(), bookId);
@@ -134,6 +148,9 @@ public class RatingController implements Initializable {
         thread1.start();
     }
 
+    /**
+     * Sets the listener for the material design.
+     */
     private void setMaterialListener() {
         emptyStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/IMAGES/EmptyStar.png")));
         halfStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/IMAGES/HalfStar.png")));

@@ -7,6 +7,9 @@ import javafx.scene.image.ImageView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing the loading animation.
+ */
 public class LoadingController implements Initializable {
 
     public ImageView loading_img;
@@ -17,6 +20,9 @@ public class LoadingController implements Initializable {
         setRotate();
     }
 
+    /**
+     * Sets the rotation animation for the loading image.
+     */
     public void setRotate() {
         rotate = new RotateTransition();
         rotate.setNode(loading_img);

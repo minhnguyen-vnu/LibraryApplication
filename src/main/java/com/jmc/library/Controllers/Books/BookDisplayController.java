@@ -20,6 +20,9 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing the book display view, including displaying the book's information and preview.
+ */
 public class BookDisplayController implements Initializable {
     public TextFlow book_name_txt_flw;
     public Label publication_date_lbl;
@@ -33,9 +36,19 @@ public class BookDisplayController implements Initializable {
     public Button go_to_back_btn;
     public ImageView book_img;
     public HBox rate_holder;
+    public ShowRateController showRateController;
+    public Node rate;
 
+    /**
+     * Initializes the controller and sets up the initial state.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("Book Display Controller Initialized");
+        prepareListener();
         addListeners();
         if (BookModel.getInstance().getBookInfo() == null) {
             System.out.println("No book selected.");
@@ -44,6 +57,27 @@ public class BookDisplayController implements Initializable {
         setButtonListener();
     }
 
+    /**
+     * Loads the rating FXML file.
+     */
+    private void prepareListener() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ShowRate.fxml"));
+        try {
+            rate = loader.load();
+            showRateController  = loader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        BookModel.getInstance().bookInfoProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                addListeners();
+            }
+        });
+    }
+
+    /**
+     * Sets the action to be executed when the button is clicked.
+     */
     private void setButtonListener() {
         go_to_back_btn.setOnAction(actionEvent -> {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
@@ -66,7 +100,9 @@ public class BookDisplayController implements Initializable {
         });
     }
 
-
+    /**
+     * Adds listeners to the book information.
+     */
     private void addListeners() {
         book_name_txt_flw.getChildren().setAll(new Label(BookModel.getInstance().getBookInfo().getBookName()));
         author_lbl.setText("Author: " + BookModel.getInstance().getBookInfo().getAuthorName());
@@ -80,26 +116,20 @@ public class BookDisplayController implements Initializable {
         preview_txt_flw.setText(BookModel.getInstance().getBookInfo().getDescription());
         book_img.setImage(BookModel.getInstance().getBookInfo().getImageView().getImage());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ShowRate.fxml"));
-        try {
-            Node rate = loader.load();
-            ShowRateController controller = loader.getController();
-            controller.disPlay(BookModel.getInstance().getBookInfo().getRating());
-            rate_holder.getChildren().clear();
-            rate_holder.getChildren().add(rate);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        showRateController.disPlay(BookModel.getInstance().getBookInfo().getRating());
+        rate_holder.getChildren().clear();
+        rate_holder.getChildren().add(rate);
 
 
-        BookModel.getInstance().bookInfoProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                addListeners();
-            }
-        });
     }
 
+    /**
+     * Adds a book to the user's cart.
+     *
+     * @param addedBook The book to add.
+     * @throws IOException If the FXML file for the notification overlay cannot be found.
+     */
     public void addBookForUser(UserBookInfo addedBook) throws IOException {
         if(CartModel.getInstance().getUserCartInfo().getCartList().stream()
                 .anyMatch(cartEntityController -> cartEntityController

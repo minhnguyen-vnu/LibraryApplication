@@ -21,8 +21,14 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+/**
+ * Controller class for managing the approved requests in the library.
+ */
 public class ApprovedRequestManagement extends RequestManagement implements Initializable {
     public Button update_book_btn;
+
+    public Label noiti_lbl;
+    public Button return_book_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
