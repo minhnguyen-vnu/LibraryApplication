@@ -267,6 +267,7 @@ public abstract class UserLibraryTable {
             Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
         });
         log_out_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().resetAll();
             DBUpdate dbUpdate = new DBUpdate("update users\n" +
                     "set status = ?\n" +
                     "where username = ?;", "offline", LibraryModel.getInstance().getUser().getUsername());

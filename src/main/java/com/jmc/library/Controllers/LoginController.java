@@ -95,8 +95,6 @@ public class LoginController implements Initializable {
                             error_lbl.setAlignment(Pos.CENTER_LEFT);
                         });
                         LibraryModel.getInstance().getUser().loadUserInfo(resultSet);
-                        acc_address_fld.clear();
-                        password_fld.clear();
                         LibraryModel.getInstance().getUser().loadPendingBooks();
                         LibraryModel.getInstance().getUser().loadBorrowedBook();
                         DBUpdate dbUpdate = new DBUpdate("update users\n" +
@@ -106,10 +104,15 @@ public class LoginController implements Initializable {
                         thread.setDaemon(true);
                         thread.start();
                     }
-                    Platform.runLater(() -> stageTransforming(isAdmin));
+                    acc_address_fld.clear();
+                    password_fld.clear();
+                    Platform.runLater(() -> {
+                        stageTransforming(isAdmin);
+                        error_lbl.setText("");
+                    });
                 } else {
                     Platform.runLater(() -> {
-                        error_lbl.setText("Login Failed"); /// ket thuc quay o day, neu mat khau sai
+                        error_lbl.setText("Login Failed");
                         loading_img.setVisible(false);
                         rotateTransition.stop();
                         error_lbl.setStyle("-fx-text-fill: red");

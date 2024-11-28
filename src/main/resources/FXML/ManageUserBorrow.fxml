@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -13,7 +17,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="BorderContainer" stylesheets="@../STYLES/ManageBookBar.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Admin.ApprovedRequestManagement">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="BorderContainer" stylesheets="@../STYLES/ManageBookBar.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Admin.ApprovedRequestManagement">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="750.0" prefWidth="400.0" styleClass="BarBackground" stylesheets="@../STYLES/ManageBookBar.css">
          <children>
@@ -74,7 +78,7 @@
             <HBox alignment="CENTER" layoutY="600.0" prefWidth="400.0" spacing="30.0">
                <children>
                   <Button fx:id="search_btn" mnemonicParsing="false" styleClass="ManageBarButton" text="Search" />
-                  <Button fx:id="return_book_btn" mnemonicParsing="false" styleClass="ManageBarButton" text="Return" />
+                  <Button fx:id="update_book_btn" mnemonicParsing="false" styleClass="ManageBarButton" text="Update" />
                </children>
             </HBox>
             <Button fx:id="return_btn" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" styleClass="TextButton" text="Back" />

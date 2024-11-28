@@ -1,5 +1,6 @@
 package com.jmc.library.Controllers.Admin;
 
+import com.jmc.library.Assets.RequestInfo;
 import com.jmc.library.Controllers.Image.ImageUtils;
 import com.jmc.library.Controllers.Users.User;
 import com.jmc.library.Database.DBQuery;
@@ -7,7 +8,6 @@ import com.jmc.library.Models.AdminLibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,7 +27,7 @@ public class ManageUserController implements Initializable {
     public TextField username_txt_fld;
     public TextField full_name_txt_fld;
     public DatePicker date_of_birth_date_picker;
-    public ChoiceBox status_choice_box;
+    public ChoiceBox<String> status_choice_box;
     public Button search_btn;
     public Button return_btn;
     public Button reload_btn;
@@ -45,28 +45,9 @@ public class ManageUserController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setTable();
         addBinding();
-        showUsers();
         onAction();
-    }
-
-    protected void addLoading() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
-        try {
-            ImageView loading_img = loader.load();
-            store_tb.setPlaceholder(loading_img);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    protected void returnLoading() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
-        try {
-            Label label = loader.load();
-            store_tb.setPlaceholder(label);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        ChoiceBoxInitialization();
+        showUsers();
     }
 
     private void addBinding() {
@@ -85,11 +66,37 @@ public class ManageUserController implements Initializable {
 
     private void onAction() {
         reload_btn.setOnAction(actionEvent -> showUsers());
-        return_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View"));
+        return_btn.setOnAction(actionEvent -> {
+            username_txt_fld.clear();
+            full_name_txt_fld.clear();
+            date_of_birth_date_picker.setValue(null);
+            store_tb.setItems(userList);
+            Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View");
+        });
+        search_btn.setOnAction(actionEvent -> search());
+    }
+
+    private void ChoiceBoxInitialization() {
+        status_choice_box.setItems(FXCollections.observableArrayList("online", "offline", ""));
+    }
+
+    private void search() {
+        String username = username_txt_fld.getText();
+        String fullname = full_name_txt_fld.getText();
+        LocalDate doB = date_of_birth_date_picker.getValue();
+        String status = status_choice_box.getValue();
+
+        ObservableList<User> filteredList = userList.stream()
+                .filter(request ->
+                        (username.isEmpty() || request.getUsername().equals(username)) &&
+                                (fullname.isEmpty() || request.getName().equals(fullname)) &&
+                                (doB == null || request.getBirthDate().equals(doB)) &&
+                                (status == null || status.isEmpty() || request.getStatus().equals(status)))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        store_tb.setItems(filteredList);
     }
 
     private void showUsers() {
-        addLoading();
         userList.clear();
         store_tb.setItems(userList);
         DBQuery dbQuery = new DBQuery("select\n" +
@@ -134,12 +141,11 @@ public class ManageUserController implements Initializable {
                     }
                     User user = new User(resultSet.getString("username"), resultSet.getString("password"),
                             name, birthdate, id,
-                            image, Math.round(resultSet.getDouble("totalPaid") * 100.0 )/100.0,
+                            image, resultSet.getDouble("totalPaid"),
                             resultSet.getInt("totalBorrowed"), resultSet.getString("status"));
                     userList.add(user);
                 }
                 resultSet.close();
-                returnLoading();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

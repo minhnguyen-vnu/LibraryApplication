@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,8 +33,9 @@ public class LibraryTable {
     public TableColumn<BookInfo, LocalDate> published_date_tb_cl;
     public TableView<BookInfo> store_tb;
     public static ObservableList<BookInfo> bookList = FXCollections.observableArrayList();
+    public Button reload_btn;
 
-    private void addLoading() {
+    protected void addLoading() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
         try {
             ImageView loading_img = loader.load();
@@ -44,7 +46,7 @@ public class LibraryTable {
         }
     }
 
-    private void returnLoading() {
+    protected void returnLoading() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NoDataPlaceHolder.fxml"));
         try {
             Label label = loader.load();
@@ -56,14 +58,7 @@ public class LibraryTable {
 
     protected void setTable() {
         store_tb.setItems(bookList);
-
-
-        bookList.addListener(new ListChangeListener<BookInfo>() {
-            @Override
-            public void onChanged(Change<? extends BookInfo> change) {
-                System.out.println("-23");
-            }
-        });
+        reload_btn.setOnAction(actionEvent -> showLibrary());
     }
 
     protected void addBinding() {

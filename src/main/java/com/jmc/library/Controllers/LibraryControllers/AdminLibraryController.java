@@ -1,8 +1,10 @@
 package com.jmc.library.Controllers.LibraryControllers;
 
+import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Models.AdminLibraryModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -17,7 +19,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminLibraryController extends LibraryController implements Initializable {
-    private static final Log log = LogFactory.getLog(AdminLibraryController.class);
     public Button settings_btn;
     public ImageView account_avatar_img;
     public Label account_name_lbl;
@@ -49,6 +50,16 @@ public class AdminLibraryController extends LibraryController implements Initial
     protected void setTable() {
         bookList = AdminLibraryModel.getInstance().getBookList();
         store_tb.setItems(bookList);
+
+        bookList.addListener((ListChangeListener<? super BookInfo>) change -> {
+            while (change.next()) {
+                if (change.wasUpdated() || change.wasAdded() || change.wasRemoved()) {
+                    System.out.println(-1);
+                    store_tb.refresh();
+                    break;
+                }
+            }
+        });
     }
 
     public void onAction() {

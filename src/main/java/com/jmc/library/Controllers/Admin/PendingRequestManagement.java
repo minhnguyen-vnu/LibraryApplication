@@ -1,9 +1,11 @@
 package com.jmc.library.Controllers.Admin;
 
+import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.RequestInfo;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Database.DBUtlis;
+import com.jmc.library.Models.AdminLibraryModel;
 import com.jmc.library.Models.DashboardModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
@@ -85,31 +87,50 @@ public class PendingRequestManagement extends RequestManagement implements Initi
         update_btn.setOnAction(actionEvent -> {
             RequestInfo foundElement = getElement();
             if (foundElement != null && status_choice_box.getValue() != null) {
-                String new_status = status_choice_box.getValue();
-                if (!new_status.equals(foundElement.getRequestStatus()) && !new_status.isEmpty()) {
-                    if (new_status.equals("Accepted")) {
-                        System.out.println(foundElement);
-                        DBUpdate dbUpdate = new DBUpdate("insert into userRequest(bookId, bookName, username, pickedDate, returnDate, cost, requestStatus)\n" +
-                                "values(?, ?, ?, ?, ?, ?, ?); ", foundElement.getBookId(), foundElement.getBookName(), foundElement.getUsername(),
-                                foundElement.getPickedDate(), foundElement.getReturnDate(), foundElement.getTotalCost(), "Borrowing");
-                        Thread thread = new Thread(dbUpdate);
-                        thread.setDaemon(true);
-                        thread.start();
-
-                        DBUpdate dbUpdate1 = new DBUpdate("update bookStore\n" +
-                                "set quantityInStock = quantityInStock - 1\n" +
-                                "where bookId = ?;", foundElement.getBookId());
-                        Thread thread1 = new Thread(dbUpdate1);
-                        thread1.setDaemon(true);
-                        thread1.start();
+                boolean isOK = true;
+                for (BookInfo bookInfo : AdminLibraryModel.getInstance().getBookList()) {
+                    if (foundElement.getBookId() == bookInfo.getBookId()) {
+                        if (bookInfo.getQuantityInStock() == 0) {
+                            isOK = false;
+                            break;
+                        }
                     }
-                    DBUpdate dbUpdate2 = new DBUpdate("delete from PendingRequest\n" +
-                            "where RequestId = ?;", foundElement.getIssueId());
-                    Thread thread2 = new Thread(dbUpdate2);
-                    thread2.setDaemon(true);
-                    thread2.start();
-                    bookList.remove(foundElement);
-                    store_tb.setItems(bookList);
+                }
+                if (isOK) {
+                    System.out.println("Order Accepted");
+                    String new_status = status_choice_box.getValue();
+                    if (!new_status.equals(foundElement.getRequestStatus()) && !new_status.isEmpty()) {
+                        if (new_status.equals("Accepted")) {
+                            System.out.println(foundElement);
+                            for (BookInfo bookInfo : AdminLibraryModel.getInstance().getBookList()) {
+                                if (foundElement.getBookId() == bookInfo.getBookId()) {
+                                    bookInfo.setQuantityInStock(bookInfo.getQuantityInStock() - 1);
+                                    break;
+                                }
+                            }
+
+                            DBUpdate dbUpdate = new DBUpdate("insert into userRequest(bookId, bookName, username, pickedDate, returnDate, cost, requestStatus)\n" +
+                                    "values(?, ?, ?, ?, ?, ?, ?); ", foundElement.getBookId(), foundElement.getBookName(), foundElement.getUsername(),
+                                    foundElement.getPickedDate(), foundElement.getReturnDate(), foundElement.getTotalCost(), "Borrowing");
+                            Thread thread = new Thread(dbUpdate);
+                            thread.setDaemon(true);
+                            thread.start();
+
+                            DBUpdate dbUpdate1 = new DBUpdate("update bookStore\n" +
+                                    "set quantityInStock = quantityInStock - 1\n" +
+                                    "where bookId = ?;", foundElement.getBookId());
+                            Thread thread1 = new Thread(dbUpdate1);
+                            thread1.setDaemon(true);
+                            thread1.start();
+                        }
+                        DBUpdate dbUpdate2 = new DBUpdate("delete from PendingRequest\n" +
+                                "where RequestId = ?;", foundElement.getIssueId());
+                        Thread thread2 = new Thread(dbUpdate2);
+                        thread2.setDaemon(true);
+                        thread2.start();
+                        bookList.remove(foundElement);
+                        store_tb.setItems(bookList);
+                    }
                 }
             }
         });
