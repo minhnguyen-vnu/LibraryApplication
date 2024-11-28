@@ -127,30 +127,23 @@ public class UserBookController extends UserLibraryTable implements Initializabl
         });
 
         get_rate_tb_cl.setCellValueFactory(param -> {
-            UserBookInfo userBookInfo = param.getValue();
-            return new SimpleObjectProperty<>(new CheckBox());
+            UserBookInfo bookInfo = param.getValue();
+            CheckBox checkBox = new CheckBox();
+            checkBox.setSelected(bookInfo.getRate());
+            checkBox.setDisable(bookInfo.getRate());
+            checkBox.setOnAction(event -> {
+                if (!bookInfo.getRate()) {
+                    showRatingDialog(bookInfo, checkBox);
+                }
+            });
+            return new SimpleObjectProperty<>(checkBox);
         });
+
         get_rate_tb_cl.setCellFactory(new Callback<TableColumn<UserBookInfo, CheckBox>, TableCell<UserBookInfo, CheckBox>>() {
             @Override
             public TableCell<UserBookInfo, CheckBox> call(TableColumn<UserBookInfo, CheckBox> param) {
                 return new TableCell<UserBookInfo, CheckBox>() {
                     private final CheckBox checkBox = new CheckBox();
-
-                    {
-                        checkBox.setOnAction(event -> {
-                            UserBookInfo bookInfo = getTableView().getItems().get(getIndex());
-                            if (!checkBox.isSelected()) return;
-
-                            boolean rated = showRatingDialog(bookInfo.getBookId());
-
-                            if (rated) {
-                                bookInfo.setRated(true);
-                                checkBox.setDisable(true);
-                            } else {
-                                checkBox.setSelected(false);
-                            }
-                        });
-                    }
 
                     @Override
                     protected void updateItem(CheckBox item, boolean empty) {
@@ -162,27 +155,29 @@ public class UserBookController extends UserLibraryTable implements Initializabl
                         }
 
                         UserBookInfo bookInfo = getTableView().getItems().get(getIndex());
-                        checkBox.setSelected(bookInfo.getRated());
-                        checkBox.setDisable(bookInfo.getRated());
+
+                        checkBox.setSelected(bookInfo.getRate());
+                        checkBox.setDisable(bookInfo.getRate());
                         setGraphic(checkBox);
+
+                        checkBox.setOnAction(event -> {
+                            if (!bookInfo.getRate()) {
+                                showRatingDialog(bookInfo, checkBox);
+                            }
+                        });
                     }
                 };
             }
         });
-    }
 
-    /**
-     * Shows the rating dialog for a book.
-     *
-     * @param bookID The ID of the book to be rated.
-     * @return true if the dialog was shown successfully, false otherwise.
-     */
-    private boolean showRatingDialog(int bookID) {
+    }
+    private boolean showRatingDialog(UserBookInfo bookInfo,CheckBox checkBox) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/RateStar.fxml"));
             Parent ratingRoot = loader.load();
             RatingController ratingController = loader.getController();
-            ratingController.setBookId(bookID);
+            ratingController.setUserBookInfo(bookInfo);
+            ratingController.setCheckBox(checkBox);
             Stage ratingStage = new Stage();
             ratingStage.setTitle("Rate the Book");
             ratingStage.setScene(new Scene(ratingRoot));
