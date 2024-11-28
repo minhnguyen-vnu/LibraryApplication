@@ -2,7 +2,9 @@ package com.jmc.library.Controllers.Assets;
 
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Assets.LibraryTable;
+import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.Books.BookDisplayController;
+import com.jmc.library.Controllers.Users.User;
 import com.jmc.library.Database.DBUpdate;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
@@ -10,6 +12,7 @@ import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
@@ -18,10 +21,6 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-
-/**
- * Controller class for managing the rating of the book.
- */
 public class RatingController implements Initializable {
     public ImageView star5;
     public ImageView star4;
@@ -40,26 +39,31 @@ public class RatingController implements Initializable {
     public Button accept_btn;
     public Button cancel_btn;
 
-    private int bookId;
+    private UserBookInfo userBookInfo;
+    private CheckBox checkBox;
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setUserBookInfo(UserBookInfo userBookInfo) {
+        this.userBookInfo = userBookInfo;
     }
 
-    public int getBookId() {
-        return bookId;
+    public UserBookInfo getUserBookInfo() {
+        return userBookInfo;
+    }
+
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
+    }
+
+    public CheckBox getCheckBox() {
+        return checkBox;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Rating Controller Initialized");
         addListener();
         setMaterialListener();
     }
 
-    /**
-     * Sets the listener for the rating.
-     */
     private void addListener() {
         btn1.setOnAction(e -> {
             star1.setImage(fullStar);
@@ -105,23 +109,23 @@ public class RatingController implements Initializable {
             UpdateDB();
             closeStage();
         });
-        cancel_btn.setOnAction(e -> closeStage());
+        cancel_btn.setOnAction(e -> {
+            checkBox.setSelected(false);
+            closeStage();
+        });
     }
 
-    /**
-     * Closes the current stage.
-     */
     private void closeStage() {
         star1.getScene().getWindow().hide();
     }
-
-    /**
-     * Updates the database with the new rating.
-     */
     private void UpdateDB() {
+        checkBox.setSelected(true);
+        checkBox.setDisable(true);
+
         DBUpdate dbUpdate = new DBUpdate("update userRequest set isRated = true where username = ? and bookId = ? and isRated = false",
-                LibraryModel.getInstance().getUser().getUsername(), bookId);
+                LibraryModel.getInstance().getUser().getUsername(), userBookInfo.getBookId());
         dbUpdate.setOnSucceeded(e -> {
+            userBookInfo.setRate(true);
             System.out.println("update success 1");
         });
         Thread thread = new Thread(dbUpdate);
@@ -131,12 +135,12 @@ public class RatingController implements Initializable {
         DBUpdate dbUpdate1 = new DBUpdate("UPDATE bookStore SET rateQuantities = rateQuantities + 1, " +
                 "rate = ((rate * (rateQuantities - 1)) + ?) / rateQuantities " +
                 "WHERE bookId = ?",
-                rating, bookId);
+                rating, userBookInfo.getBookId());
         dbUpdate1.setOnSucceeded(e -> {
             System.out.println("update success 2");
             ObservableList<BookInfo> bookList = LibraryTable.bookList;
             for (BookInfo book : bookList) {
-                if (book.getBookId() == bookId) {
+                if (book.getBookId() == userBookInfo.getBookId()) {
                     book.setRateQuantities(book.getRateQuantities() + 1);
                     book.setRating((book.getRating() * (book.getRateQuantities() - 1) + rating) / book.getRateQuantities());
                     break;
@@ -148,9 +152,7 @@ public class RatingController implements Initializable {
         thread1.start();
     }
 
-    /**
-     * Sets the listener for the material design.
-     */
+
     private void setMaterialListener() {
         emptyStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/IMAGES/EmptyStar.png")));
         halfStar = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/IMAGES/HalfStar.png")));
