@@ -47,7 +47,8 @@ public class BookDisplayController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadRating();
+        System.out.println("Book Display Controller Initialized");
+        prepareListener();
         addListeners();
         if (BookModel.getInstance().getBookInfo() == null) {
             System.out.println("No book selected.");
@@ -59,7 +60,7 @@ public class BookDisplayController implements Initializable {
     /**
      * Loads the rating FXML file.
      */
-    private void loadRating() {
+    private void prepareListener() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ShowRate.fxml"));
         try {
             rate = loader.load();
@@ -67,6 +68,11 @@ public class BookDisplayController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        BookModel.getInstance().bookInfoProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                addListeners();
+            }
+        });
     }
 
     /**
@@ -115,11 +121,7 @@ public class BookDisplayController implements Initializable {
         rate_holder.getChildren().clear();
         rate_holder.getChildren().add(rate);
 
-        BookModel.getInstance().bookInfoProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                addListeners();
-            }
-        });
+
     }
 
     /**

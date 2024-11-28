@@ -52,6 +52,7 @@ public class RatingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("Rating Controller Initialized");
         addListener();
         setMaterialListener();
     }

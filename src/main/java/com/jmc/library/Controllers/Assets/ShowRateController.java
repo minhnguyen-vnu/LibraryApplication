@@ -26,6 +26,7 @@ public class ShowRateController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("Show Rate Controller Initialized");
         setMaterialListener();
     }
 
