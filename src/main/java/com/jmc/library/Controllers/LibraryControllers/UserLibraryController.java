@@ -81,6 +81,11 @@ public class UserLibraryController extends LibraryController implements Initiali
         account_avatar_img.setClip(clip);
     }
 
+    @Override
+    protected void setTable() {
+        bookList = LibraryModel.getInstance().getBookList();
+    }
+
     /**
      * Sets up the button listeners for various actions.
      */

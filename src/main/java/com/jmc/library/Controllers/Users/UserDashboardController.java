@@ -69,7 +69,7 @@ public class UserDashboardController implements Initializable {
      */
     private void setMaterialListener() {
         view_all_lbl.setOnMouseClicked(mouseEvent -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Store");
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("Hot Books");
         });
 
         welcome_username_lbl.setText(LibraryModel.getInstance().getUser().getUsername());
@@ -273,7 +273,7 @@ public class UserDashboardController implements Initializable {
      * Sets the list of hot books.
      */
     private void setHotBookList() {
-        DBQuery dbQuery = new DBQuery("select bookName from bookStore order by quantityInStock DESC limit 3;");
+        DBQuery dbQuery = new DBQuery("select bookName from bookStore where quantityInStock > 0 order by rate DESC limit 10;");
         dbQuery.setOnSucceeded(event -> {
             try {
                 ResultSet resultSet = dbQuery.getValue();

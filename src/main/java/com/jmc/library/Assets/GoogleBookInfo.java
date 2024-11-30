@@ -1,6 +1,8 @@
 package com.jmc.library.Assets;
 
 import com.jmc.library.Controllers.GoogleBookAPI.GoogleBookAPIMethod;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.PixelFormat;
 import javafx.scene.image.WritableImage;
 import org.json.JSONArray;
@@ -22,87 +24,37 @@ import java.time.LocalDate;
 /**
  * Class for managing the Google book information.
  */
-public class GoogleBookInfo {
-    private int bookId;
-    private String bookName;
-    private String authorName;
-    private int quantityInStock;
-    private double leastPrice;
-    private LocalDate publishedDate;
-    private String ISBN;
-    private boolean exist;
+public class GoogleBookInfo extends GeneralBookInfo {
     private boolean loaded;
 
     private JSONObject bookInfo;
     private JSONArray items;
     private JSONObject volumeInfo;
 
-    private String publisher;
-    private String genre;
-    private String originalLanguage;
-    private String description;
-    private String thumbnail;
     private ImageView imageView;
 
     private GoogleBookAPIMethod googleBookAPIMethod;
 
     // Constructor Injection
     public GoogleBookInfo(GoogleBookAPIMethod googleBookAPIMethod) {
+        super();
         this.googleBookAPIMethod = googleBookAPIMethod;
     }
 
     public GoogleBookInfo() {
+        super();
         this.googleBookAPIMethod = new GoogleBookAPIMethod(); // default
     }
 
     public GoogleBookInfo(int bookId, int quantityInStock, double leastPrice, String ISBN) {
-        this.bookId = bookId;
-        this.quantityInStock = quantityInStock;
-        this.leastPrice = leastPrice;
-        this.ISBN = ISBN;
+        super(bookId, quantityInStock, leastPrice, ISBN);
         getInfo();
     }
 
-    public int getBookId() { return bookId; }
-
-    public void setBookId(int bookId) { this.bookId = bookId; }
-
-    public String getBookName() { return bookName; }
-
-    public String getAuthorName() { return authorName; }
-
-    public int getQuantityInStock() { return quantityInStock; }
-
-    public void setQuantityInStock(int quantityInStock) { this.quantityInStock = quantityInStock; }
-
-    public double getLeastPrice() { return leastPrice; }
-
-    public void setLeastPrice(double leastPrice) { this.leastPrice = leastPrice; }
-
-    public LocalDate getPublishedDate() { return publishedDate; }
-
-    public String getISBN() { return ISBN; }
-
-    public void setISBN(String ISBN) { this.ISBN = ISBN; }
-
-    public boolean isExist() { return exist; }
-
-    public void setExist(boolean exist) { this.exist = exist; }
-
     public boolean isLoaded() { return loaded; }
-
-    public void setLoaded(boolean loaded) { this.loaded = loaded; }
-
-    public String getPublisher() {
-        return publisher;
-    }
 
     public void setPublisher() {
         this.publisher = volumeInfo.has("publisher") ? volumeInfo.getString("publisher") : "N/A";
-    }
-
-    public String getGenre() {
-        return genre;
     }
 
     public void setGenre() {
@@ -114,19 +66,13 @@ public class GoogleBookInfo {
         }
     }
 
-    public String getOriginalLanguage() { return originalLanguage; }
-
     public void setOriginalLanguage() {
         originalLanguage = volumeInfo.has("language") ? volumeInfo.getString("language") : "N/A";
     }
 
-    public String getDescription() { return description; }
-
     public void setDescription() {
         description = volumeInfo.has("description") ? volumeInfo.getString("description") : "No description available";
     }
-
-    public String getThumbnail() { return thumbnail; }
 
     public void setThumbnail() {
         thumbnail = volumeInfo.has("imageLinks") ? volumeInfo.getJSONObject("imageLinks").getString("thumbnail") : null;
@@ -148,6 +94,9 @@ public class GoogleBookInfo {
     public void getInfo() {
         this.bookInfo = new GoogleBookAPIMethod().searchBook(this.ISBN);
         int indexes = new GoogleBookAPIMethod().getTotalItems(bookInfo) - 1;
+        if (indexes < 0) {
+            return;
+        }
         this.items = bookInfo.getJSONArray("items");
         if (items != null) {
             this.exist = true;

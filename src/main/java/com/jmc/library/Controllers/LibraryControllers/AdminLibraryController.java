@@ -2,6 +2,7 @@ package com.jmc.library.Controllers.LibraryControllers;
 
 import com.jmc.library.Assets.BookInfo;
 import com.jmc.library.Models.AdminLibraryModel;
+import com.jmc.library.Models.BookViewingModel;
 import com.jmc.library.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -87,6 +88,7 @@ public class AdminLibraryController extends LibraryController implements Initial
         go_to_pending_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Pending Request Management"));
         user_management_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin User Management"));
         log_out_btn.setOnAction(actionEvent -> stageTransforming());
+        reload_btn.setOnAction(actionEvent -> showLibrary());
     }
 
     /**
@@ -98,5 +100,26 @@ public class AdminLibraryController extends LibraryController implements Initial
         Model.getInstance().getViewFactory().showAuthenticationWindow();
         Model.getInstance().getViewFactory().getSelectedAuthenticatonMode().set("Login");
         Model.getInstance().getViewFactory().getSelectedAdminMode().set("");
+    }
+
+    /**
+     * Adds a click listener to the table.
+     */
+    protected void addTableClickListener() {
+        store_tb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                BookDisplay(newValue);
+            }
+        });
+    }
+
+    /**
+     * Displays the selected book.
+     *
+     * @param bookInfo The book to display.
+     */
+    protected void BookDisplay(BookInfo bookInfo) {
+        BookViewingModel.getInstance().setBookInfo(bookInfo);
+        Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Book Viewing");
     }
 }

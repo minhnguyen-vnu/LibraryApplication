@@ -214,25 +214,4 @@ public class LibraryController extends LibraryTable {
         store_tb.setItems(filteredList);
 
     }
-
-    /**
-     * Adds a click listener to the table.
-     */
-    protected void addTableClickListener() {
-        store_tb.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                BookDisplay(newValue);
-            }
-        });
-    }
-
-    /**
-     * Displays the selected book.
-     *
-     * @param bookInfo The book to display.
-     */
-    protected void BookDisplay(BookInfo bookInfo) {
-        BookViewingModel.getInstance().setBookInfo(bookInfo);
-        Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Book Viewing");
-    }
 }

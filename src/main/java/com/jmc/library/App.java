@@ -21,7 +21,7 @@ public class App extends Application {
             DBUpdate dbUpdate2 = new DBUpdate("UPDATE bookStore bs\n" +
                     "    JOIN userRequest ur ON bs.bookName = ur.bookName\n" +
                     "SET bs.quantityInStock = bs.quantityInStock + 1\n" +
-                    "WHERE ur.returnDate = DATE_SUB(?, interval 1 day) and ur.requestStatus = 'Borrowing';", LocalDate.now());
+                    "WHERE ur.returnDate < ? and ur.requestStatus = 'Borrowing';", LocalDate.now());
         Thread thread2 = new Thread(dbUpdate2);
         thread2.setDaemon(true);
         thread2.start();
