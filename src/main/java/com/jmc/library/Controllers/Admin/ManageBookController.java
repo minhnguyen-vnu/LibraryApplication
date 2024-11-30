@@ -21,8 +21,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -137,7 +136,7 @@ public class ManageBookController extends LibraryTable implements Initializable 
                     thread.setDaemon(true);
                     thread.start();
                     bookList.add(bookInfo);
-                    noti_lbl.setText("");
+                    noti_lbl.setText("Successfully");
                 }
                 else {
                     noti_lbl.setText("ISBN is not valid");
@@ -164,7 +163,7 @@ public class ManageBookController extends LibraryTable implements Initializable 
                 thread.start();
                 bookList.remove(bookInfo);
                 clear();
-                noti_lbl.setText("");
+                noti_lbl.setText("Successfully");
             }
             else {
                 noti_lbl.setText("Book doesn't exist");
@@ -194,7 +193,7 @@ public class ManageBookController extends LibraryTable implements Initializable 
                 }
                 store_tb.refresh();
                 clear();
-                noti_lbl.setText("");
+                noti_lbl.setText("Successfully");
             }
             else {
                 noti_lbl.setText("Please fill out all the field");
