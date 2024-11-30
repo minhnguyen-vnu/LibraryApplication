@@ -1,5 +1,6 @@
 package com.jmc.library.Controllers.Assets;
 
+import com.jmc.library.Models.Model;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,7 +19,15 @@ public class ViewHotBookController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addListener();
         addBookList();
+    }
+
+
+    public void addListener() {
+        back_btn.setOnMouseClicked(e -> {
+            Model.getInstance().getViewFactory().getSelectedUserMode().setValue("User Dashboard");
+        });
     }
 
     public void addBookList() {
