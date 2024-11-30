@@ -28,3 +28,18 @@
     -fx-text-fill: #05fff7;
 }
 
+.NoneScrollBar .scroll-bar {
+    -fx-pref-width: 0;
+    -fx-opacity: 0;
+}
+
+.MainWhiteTitle {
+    -fx-font-size: 50;
+    -fx-text-fill: rgba(72, 155, 243, 0.95);
+    -fx-font-family: "Comic Sans MS", cursive, sans-serif;
+    -fx-font-weight: bold;
+}
+
+.MenuBackGround {
+    -fx-background-color: #dcdcdc;
+}
