@@ -43,11 +43,6 @@ public class NotificationOverlay {
         double overlayWidth = notificationPane.getPrefWidth();
         double overlayHeight = notificationPane.getPrefHeight();
 
-        System.out.println("senceWidth: " + senceWidth);
-        System.out.println("senceHeight: " + senceHeight);
-        System.out.println("overlayWidth: " + overlayWidth);
-        System.out.println("overlayHeight: " + overlayHeight);
-
         AnchorPane.setTopAnchor(notificationPane, senceHeight / 2 - overlayHeight / 2);
         AnchorPane.setRightAnchor(notificationPane, senceWidth / 2 - overlayWidth / 2);
 //        AnchorPane.setBottomAnchor(notificationPane, senceHeight / 2 - overlayHeight / 2);

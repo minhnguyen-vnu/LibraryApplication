@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Assets.ViewHotBookController">
+<VBox styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Assets.ViewHotBookController">
    <children>
       <AnchorPane prefHeight="150.0" prefWidth="1300.0" styleClass="MenuBackGround" stylesheets="@../STYLES/MenuBar.css">
          <children>
-            <Label layoutX="354.0" layoutY="20.0" styleClass="MainWhiteTitle" stylesheets="@../STYLES/Stuff.css" text="This week hot book list" AnchorPane.topAnchor="20.0" />
+            <Label layoutX="443.0" layoutY="20.0" styleClass="MainWhiteTitle" stylesheets="@../STYLES/Stuff.css" text="Top rated Books" AnchorPane.topAnchor="20.0" />
             <Label fx:id="back_btn" layoutX="24.0" layoutY="20.0" styleClass="TextButton" stylesheets="@../STYLES/ManageBookBar.css" text="back" />
          </children>
       </AnchorPane>

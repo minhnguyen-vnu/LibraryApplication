@@ -5,7 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 /**
- * Model class for the book view.
+ * Model class for the book view.g
  */
 public class BookModel {
     private static BookModel bookModel;
