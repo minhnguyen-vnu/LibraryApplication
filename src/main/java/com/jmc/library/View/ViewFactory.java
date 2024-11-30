@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -38,6 +39,7 @@ public class ViewFactory {
     private HBox adminPendingRequestManagement;
     private VBox adminBookViewing;
     private HBox adminUserManagement;
+    private VBox hotBookView;
     private final StringProperty selectedAuthenticatonMode;
     private final StringProperty selectedUserMode;
     private final StringProperty selectedAdminMode;
@@ -252,6 +254,17 @@ public class ViewFactory {
             }
         }
         return adminBookViewing;
+    }
+
+    public VBox getHotBookView() {
+        if (hotBookView == null) {
+            try {
+                hotBookView = new FXMLLoader(getClass().getResource("/FXML/HotBookView.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return hotBookView;
     }
 
     /**

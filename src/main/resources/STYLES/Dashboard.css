@@ -57,6 +57,14 @@
     -fx-background-color: transparent;
 }
 
+.list-view .scroll-bar:vertical {
+    -fx-opacity: 0;
+}
+
+.list-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+}
+
 .LinkLabel{
     -fx-font-size: 12;
     -fx-text-fill: #0000FF;
