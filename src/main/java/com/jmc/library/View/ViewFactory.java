@@ -39,7 +39,7 @@ public class ViewFactory {
     private HBox adminPendingRequestManagement;
     private VBox adminBookViewing;
     private HBox adminUserManagement;
-    private AnchorPane hotBookView;
+    private VBox hotBookView;
     private final StringProperty selectedAuthenticatonMode;
     private final StringProperty selectedUserMode;
     private final StringProperty selectedAdminMode;
@@ -256,7 +256,7 @@ public class ViewFactory {
         return adminBookViewing;
     }
 
-    public AnchorPane getHotBookView() {
+    public VBox getHotBookView() {
         if (hotBookView == null) {
             try {
                 hotBookView = new FXMLLoader(getClass().getResource("/FXML/HotBookView.fxml")).load();

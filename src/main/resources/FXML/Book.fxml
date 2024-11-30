@@ -7,15 +7,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" spacing="5.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Assets.HotBookController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" spacing="10.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Assets.HotBookController">
    <children>
       <ImageView fx:id="cover_book_img" fitHeight="225.0" fitWidth="165.0" pickOnBounds="true">
          <image>
-            <Image url="@../IMAGES/avatar.png" />
+            <Image url="@../IMAGES/UnknownBookCover.png" />
          </image>
       </ImageView>
-      <TextFlow fx:id="book_name_txt_flow" prefWidth="200.0" textAlignment="CENTER" />
-      <Label fx:id="book_author_lbl" text="Label" />
-      <Button fx:id="get_book_btn" mnemonicParsing="false" text="Button" />
+      <TextFlow fx:id="book_name_txt_flow" prefWidth="200.0" styleClass="BookName" stylesheets="@../STYLES/Cart.css" textAlignment="CENTER" />
+      <Label fx:id="book_author_lbl" styleClass="AuthorName" stylesheets="@../STYLES/Cart.css" text="Label" />
+      <Button fx:id="get_book_btn" mnemonicParsing="false" styleClass="GetButton" stylesheets="@../STYLES/BookDetail.css" text="Get book" />
    </children>
 </VBox>

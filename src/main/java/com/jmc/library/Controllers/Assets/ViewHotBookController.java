@@ -1,7 +1,9 @@
 package com.jmc.library.Controllers.Assets;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 
 import java.net.URL;
@@ -9,7 +11,10 @@ import java.util.ResourceBundle;
 
 public class ViewHotBookController implements Initializable {
 
+    @FXML
     public FlowPane book_holder_flow;
+    @FXML
+    public Label back_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
