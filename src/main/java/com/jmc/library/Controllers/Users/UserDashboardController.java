@@ -10,6 +10,7 @@ import com.jmc.library.Models.TopBookModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
@@ -18,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -64,13 +66,34 @@ public class UserDashboardController implements Initializable {
     public CategoryAxis month_total_read_borrowed_ca;
     public Button reload_btn;
     public ImageView most_liked_book;
+    public ImageView loading_img;
+    public VBox place_holder;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addLoading();
         addBinding();
         topBookSuggestion();
         setButtonListener();
         setMaterialListener();
+    }
+
+    public void addLoading() {
+        if(loading_img == null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Loading.fxml"));
+            try {
+                loading_img = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        place_holder.setVisible(true);
+        place_holder.getChildren().add(loading_img);
+    }
+
+    void returnLoading() {
+        place_holder.getChildren().remove(loading_img);
+        place_holder.setVisible(false);
     }
 
     /**
@@ -314,6 +337,7 @@ public class UserDashboardController implements Initializable {
                 }
                 resultSet.close();
                 most_liked_book.setImage(TopBookModel.getInstance().getTopBookList().getFirst().getImageView().getImage());
+                returnLoading();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
