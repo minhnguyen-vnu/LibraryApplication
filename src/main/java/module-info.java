@@ -11,6 +11,8 @@ module com.jmc.library {
     requires org.json;
     requires commons.logging;
     requires javafx.swing;
+    requires com.google.zxing;
+    requires com.google.zxing.javase;
 
     opens com.jmc.library to javafx.fxml;
     exports com.jmc.library;

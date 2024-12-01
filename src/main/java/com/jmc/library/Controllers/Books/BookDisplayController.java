@@ -40,6 +40,7 @@ public class BookDisplayController implements Initializable {
     public HBox rate_holder;
     public ShowRateController showRateController;
     public Node rate;
+    public Label qr_lbl;
     public VBox comment_container;
 
     /**
@@ -121,9 +122,18 @@ public class BookDisplayController implements Initializable {
 
 
         showRateController.disPlay(BookModel.getInstance().getBookInfo().getRating());
+
         rate_holder.getChildren().clear();
         rate_holder.getChildren().add(rate);
 
+        qr_lbl.setText("QR Code: " + BookModel.getInstance().getBookInfo().getISBN());
+        qr_lbl.setOnMouseClicked(mouseEvent -> {
+            try {
+                NotificationOverlay.QRScreen(qr_lbl.getScene());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
         for (int i = 0; i < 5; i++) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/CommentEntity.fxml"));
             try {
@@ -144,13 +154,13 @@ public class BookDisplayController implements Initializable {
         if(CartModel.getInstance().getUserCartInfo().getCartList().stream()
                 .anyMatch(cartEntityController -> cartEntityController
                         .getUserBookInfo().getBookId() == addedBook.getBookId())) {
-            NotificationOverlay overlay = new NotificationOverlay("Book already in cart.", get_book_btn.getScene());
+            NotificationOverlay.notificationScreen("Book already in cart.", get_book_btn.getScene());
             return;
         }
 
         if(LibraryModel.getInstance().getUser().getPendingBookList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())) {
-            NotificationOverlay overlay = new NotificationOverlay("Book already requested.", get_book_btn.getScene());
+            NotificationOverlay.notificationScreen("Book already requested.", get_book_btn.getScene());
             return;
         }
 
@@ -158,14 +168,14 @@ public class BookDisplayController implements Initializable {
                 .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())
                 && LibraryModel.getInstance().getUser().getBorrowedBookList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getReturnDate().isAfter(LocalDate.now()))) {
-            NotificationOverlay overlay = new NotificationOverlay("Book already borrowed.", get_book_btn.getScene());
+            NotificationOverlay.notificationScreen("Book already borrowed.", get_book_btn.getScene());
             return;
         }
 
         CartModel.getInstance().getUserCartInfo().getCartList().add(new CartEntityController(addedBook));
         CartModel.getInstance().getUserCartInfo().AddCartEntity(new CartEntityController(addedBook));
 
-        NotificationOverlay overlay = new NotificationOverlay("Book added to cart.", get_book_btn.getScene());
+        NotificationOverlay.notificationScreen("Book added to cart.", get_book_btn.getScene());
     }
 }
 
