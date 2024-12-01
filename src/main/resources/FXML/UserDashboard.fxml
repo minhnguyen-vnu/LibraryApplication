@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -15,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserDashboardController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserDashboardController">
     <children>
         <VBox prefHeight="200.0" prefWidth="200.0">
             <children>
@@ -114,8 +120,8 @@
                         </HBox>
                         <AnchorPane layoutX="21.0" layoutY="117.0" prefHeight="172.0" prefWidth="200.0" styleClass="HotBookList" stylesheets="@../STYLES/Dashboard.css">
                             <children>
-                                <ListView fx:id="hot_book_list" layoutY="52.0" prefHeight="138.0" prefWidth="200.0" styleClass="HotBookList" />
-                                <Label layoutX="14.0" layoutY="23.0" text="The Newest Book">
+                        <ImageView fx:id="most_liked_book" fitHeight="120.0" fitWidth="129.0" layoutX="47.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="24.0" />
+                                <Label layoutX="14.0" layoutY="23.0" text="Must Read">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
                                     </font></Label>
