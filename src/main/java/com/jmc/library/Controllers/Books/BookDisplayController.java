@@ -5,6 +5,7 @@ import com.jmc.library.Controllers.Assets.ShowRateController;
 import com.jmc.library.Controllers.Notification.NotificationOverlay;
 import com.jmc.library.Controllers.Users.CartEntityController;
 import com.jmc.library.Models.*;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -13,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 
 import java.io.IOException;
@@ -38,6 +40,7 @@ public class BookDisplayController implements Initializable {
     public HBox rate_holder;
     public ShowRateController showRateController;
     public Node rate;
+    public VBox comment_container;
 
     /**
      * Initializes the controller and sets up the initial state.
@@ -121,7 +124,14 @@ public class BookDisplayController implements Initializable {
         rate_holder.getChildren().clear();
         rate_holder.getChildren().add(rate);
 
-
+        for (int i = 0; i < 5; i++) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/CommentEntity.fxml"));
+            try {
+                comment_container.getChildren().add(loader.load());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     /**

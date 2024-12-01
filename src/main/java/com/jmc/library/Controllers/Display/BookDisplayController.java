@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 
 import java.net.URL;
@@ -29,6 +30,7 @@ public class BookDisplayController implements Initializable {
     public Label book_genres_lbl;
     public TextArea preview_txt_flw;
     public Button go_to_back_btn;
+    public VBox comment_container_vbox;
 
     /**
      * Initializes the controller and sets up the initial state.

@@ -100,6 +100,23 @@
                                     </AnchorPane>
                                  </content>
                               </Tab>
+                              <Tab text="Comment">
+                                 <content>
+                                    <AnchorPane prefHeight="350.0" prefWidth="650.0" styleClass="Null">
+                                       <children>
+                                          <ScrollPane layoutX="25.0" layoutY="26.0" prefHeight="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
+                                             <content>
+                                                <AnchorPane prefHeight="320.0" prefWidth="650.0">
+                                                   <children>
+                                                      <VBox fx:id="comment_container" alignment="CENTER_LEFT" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
                           </tabs>
                         </TabPane>
                      </children>

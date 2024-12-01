@@ -9,8 +9,11 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.LibraryControllers.AdminLibraryController">
@@ -95,23 +98,33 @@
          <children>
             <AnchorPane prefHeight="80.0" prefWidth="1100.0" styleClass="SubBackground">
                <children>
-                  <HBox layoutX="23.0" layoutY="20.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="257.0" styleClass="SearchBarContainer">
+                  <GridPane layoutX="23.0" layoutY="20.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
-                        <Button fx:id="search_btn" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="30.0" styleClass="SearchButton">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
-                                 <image>
-                                    <Image url="@../IMAGES/SearchBarIcon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Button>
-                        <TextField fx:id="search_fld" prefHeight="40.0" prefWidth="220.0" promptText="Search book in store" styleClass="SearchBar" />
+                        <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="257.0" styleClass="SearchBarContainer">
+                           <children>
+                              <Button fx:id="search_btn" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="30.0" styleClass="SearchButton">
+                                 <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../IMAGES/SearchBarIcon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Button>
+                              <TextField fx:id="search_fld" prefHeight="40.0" prefWidth="220.0" promptText="Search book in store" styleClass="SearchBar" />
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
+                  </GridPane>
                   <HBox alignment="CENTER_RIGHT" layoutX="440.0" layoutY="15.0" prefHeight="50.0" prefWidth="625.0">
                      <children>
                         <Label fx:id="account_name_lbl" text="NguyenLeMinh" HBox.hgrow="ALWAYS">
