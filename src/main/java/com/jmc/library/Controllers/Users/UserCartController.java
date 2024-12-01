@@ -79,7 +79,7 @@ public class UserCartController implements Initializable {
             CartModel.getInstance().getUserCartInfo().getCartList().clear();
             setListBookVBox();
             try {
-                NotificationOverlay overlay = new NotificationOverlay("Payment Successful!!", check_out_btn.getScene());
+                NotificationOverlay.notificationScreen("Payment Successful!!", check_out_btn.getScene());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

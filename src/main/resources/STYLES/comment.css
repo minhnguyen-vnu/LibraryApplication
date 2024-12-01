@@ -1,0 +1,34 @@
+.CommentTextFeild {
+    -fx-background-color: transparent;
+    -fx-background-radius: 5;
+    -fx-text-fill: #0066ed;
+    -fx-wrap-text: true;
+}
+
+/*design text area inner*/
+.CommentTextFeild .content {
+    -fx-background-color: #bababa;
+    -fx-background-radius: 15;
+    -fx-padding: 15, 0 , 0, 10;
+}
+
+.CommentTextFeild .scroll-bar {
+    -fx-background-color: transparent;
+    -fx-opacity: 0;
+}
+
+.TextButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: #66ace6;
+    -fx-opacity: 0.8;
+}
+
+.TextButton:hover {
+    -fx-font-weight: bold;
+    -fx-opacity: 1;
+}
+
+.BorderedContainer {
+    -fx-border-color: #a1b6e1;
+    -fx-border-width: 5 0 0 0;
+}

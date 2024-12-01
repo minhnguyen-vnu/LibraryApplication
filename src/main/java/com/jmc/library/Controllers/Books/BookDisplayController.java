@@ -5,6 +5,7 @@ import com.jmc.library.Controllers.Assets.ShowRateController;
 import com.jmc.library.Controllers.Notification.NotificationOverlay;
 import com.jmc.library.Controllers.Users.CartEntityController;
 import com.jmc.library.Models.*;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -13,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 
 import java.io.IOException;
@@ -38,6 +40,9 @@ public class BookDisplayController implements Initializable {
     public HBox rate_holder;
     public ShowRateController showRateController;
     public Node rate;
+    public Label qr_lbl;
+    public VBox comment_container;
+    public VBox new_comment_container;
 
     /**
      * Initializes the controller and sets up the initial state.
@@ -118,10 +123,32 @@ public class BookDisplayController implements Initializable {
 
 
         showRateController.disPlay(BookModel.getInstance().getBookInfo().getRating());
+
         rate_holder.getChildren().clear();
         rate_holder.getChildren().add(rate);
 
-
+        qr_lbl.setText("QR Code: " + BookModel.getInstance().getBookInfo().getISBN());
+        qr_lbl.setOnMouseClicked(mouseEvent -> {
+            try {
+                NotificationOverlay.QRScreen(qr_lbl.getScene());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        for (int i = 0; i < 5; i++) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/CommentEntity.fxml"));
+            try {
+                comment_container.getChildren().add(loader.load());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NewComment.fxml"));
+        try {
+            new_comment_container.getChildren().add(loader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -134,13 +161,13 @@ public class BookDisplayController implements Initializable {
         if(CartModel.getInstance().getUserCartInfo().getCartList().stream()
                 .anyMatch(cartEntityController -> cartEntityController
                         .getUserBookInfo().getBookId() == addedBook.getBookId())) {
-            NotificationOverlay overlay = new NotificationOverlay("Book already in cart.", get_book_btn.getScene());
+            NotificationOverlay.notificationScreen("Book already in cart.", get_book_btn.getScene());
             return;
         }
 
         if(LibraryModel.getInstance().getUser().getPendingBookList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())) {
-            NotificationOverlay overlay = new NotificationOverlay("Book already requested.", get_book_btn.getScene());
+            NotificationOverlay.notificationScreen("Book already requested.", get_book_btn.getScene());
             return;
         }
 
@@ -148,14 +175,14 @@ public class BookDisplayController implements Initializable {
                 .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())
                 && LibraryModel.getInstance().getUser().getBorrowedBookList().stream()
                 .anyMatch(userBookInfo -> userBookInfo.getReturnDate().isAfter(LocalDate.now()))) {
-            NotificationOverlay overlay = new NotificationOverlay("Book already borrowed.", get_book_btn.getScene());
+            NotificationOverlay.notificationScreen("Book already borrowed.", get_book_btn.getScene());
             return;
         }
 
         CartModel.getInstance().getUserCartInfo().getCartList().add(new CartEntityController(addedBook));
         CartModel.getInstance().getUserCartInfo().AddCartEntity(new CartEntityController(addedBook));
 
-        NotificationOverlay overlay = new NotificationOverlay("Book added to cart.", get_book_btn.getScene());
+        NotificationOverlay.notificationScreen("Book added to cart.", get_book_btn.getScene());
     }
 }
 
