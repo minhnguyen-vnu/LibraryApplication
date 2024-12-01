@@ -42,18 +42,6 @@ public class CartEntityController implements Initializable {
         return userBookInfo;
     }
 
-    public void setUserBookInfo(UserBookInfo userBookInfo) {
-        this.userBookInfo = userBookInfo;
-    }
-
-    public int getDay_borrow() {
-        return day_borrow;
-    }
-
-    public void setDay_borrow(int day_borrow) {
-        this.day_borrow = day_borrow;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setButtonListener();
