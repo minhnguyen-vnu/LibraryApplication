@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -259,7 +258,7 @@ public class ViewFactory {
     public VBox getHotBookView() {
         if (hotBookView == null) {
             try {
-                hotBookView = new FXMLLoader(getClass().getResource("/FXML/HotBookView.fxml")).load();
+                hotBookView = new FXMLLoader(getClass().getResource("/FXML/TopRatedBooks.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -10,30 +10,26 @@ import javafx.scene.layout.FlowPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ViewHotBookController implements Initializable {
-
-    @FXML
+public class TopRatedBooksController implements Initializable {
     public FlowPane book_holder_flow;
-    @FXML
     public Label back_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        addListener();
+        addAction();
         addBookList();
     }
 
-
-    public void addListener() {
-        back_btn.setOnMouseClicked(e -> {
-            Model.getInstance().getViewFactory().getSelectedUserMode().setValue("User Dashboard");
+    private void addAction() {
+        back_btn.setOnMouseClicked(mouseEvent -> {
+            Model.getInstance().getViewFactory().getSelectedUserMode().set("User Library");
         });
     }
 
-    public void addBookList() {
+    private void addBookList() {
         for(int i = 0; i < 15; i++) {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Book.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/TopRatedBook.fxml"));
                 book_holder_flow.getChildren().add(fxmlLoader.load());
             } catch (Exception e) {
                 e.printStackTrace();

@@ -114,19 +114,19 @@ public class UserCartController implements Initializable {
         sort_choice_box.getSelectionModel().selectFirst();
 
         sort_choice_box.getSelectionModel().selectedItemProperty()
-                .addListener((observableValue, oldValue, newValue) -> {
-                    switch (newValue) {
-                        case "Sort by name":
-                            CartModel.getInstance().getUserCartInfo().getCartList().sort((o1, o2) -> o1.getUserBookInfo().getBookName().compareTo(o2.getUserBookInfo().getBookName()));
-                            break;
-                        case "Sort by author":
-                            CartModel.getInstance().getUserCartInfo().getCartList().sort((o1, o2) -> o1.getUserBookInfo().getAuthorName().compareTo(o2.getUserBookInfo().getAuthorName()));
-                            break;
-                        case "Sort by price":
-                            CartModel.getInstance().getUserCartInfo().getCartList().sort((o1, o2) -> Double.compare(o1.getUserBookInfo().getTotalCost(), o2.getUserBookInfo().getTotalCost()));
-                            break;
-                    }
-                    setListBookVBox();
-                });
+            .addListener((observableValue, oldValue, newValue) -> {
+                switch (newValue) {
+                    case "Sort by name":
+                        CartModel.getInstance().getUserCartInfo().getCartList().sort((o1, o2) -> o1.getUserBookInfo().getBookName().compareTo(o2.getUserBookInfo().getBookName()));
+                        break;
+                    case "Sort by author":
+                        CartModel.getInstance().getUserCartInfo().getCartList().sort((o1, o2) -> o1.getUserBookInfo().getAuthorName().compareTo(o2.getUserBookInfo().getAuthorName()));
+                        break;
+                    case "Sort by price":
+                        CartModel.getInstance().getUserCartInfo().getCartList().sort((o1, o2) -> Double.compare(o1.getUserBookInfo().getTotalCost(), o2.getUserBookInfo().getTotalCost()));
+                        break;
+                }
+                setListBookVBox();
+            });
     }
 }

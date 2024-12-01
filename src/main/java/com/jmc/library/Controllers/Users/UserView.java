@@ -19,7 +19,7 @@ public class UserView implements Initializable {
             try {
                 if (user_parent != null) {
                     switch (newVal) {
-                        case "Hot Books" -> user_parent.setCenter(Model.getInstance().getViewFactory().getHotBookView());
+                        case "Top Rated Books" -> user_parent.setCenter(Model.getInstance().getViewFactory().getHotBookView());
                         case "User Library" ->
                                 user_parent.setCenter(Model.getInstance().getViewFactory().getUserBorrowedBook());
                         case "User Dashboard" ->

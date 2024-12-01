@@ -86,6 +86,22 @@ public class SignUpController implements Initializable {
     public void signUp() {
         loading_img.setVisible(true);
         rotateTransition.play();
+
+        if (password_su.getText().isEmpty()) {
+            error_lbl.setText("Password must contain at least 6 characters");
+            loading_img.setVisible(false);
+            rotateTransition.stop();
+            return;
+        }
+        else {
+            if (username_su.getText().isEmpty()) {
+                error_lbl.setText("Username must contain at least 6 characters");
+                loading_img.setVisible(false);
+                rotateTransition.stop();
+                return;
+            }
+        }
+
         if (!Objects.equals(password_su.getText(), confirm_su.getText())) {
             error_lbl.setText("Your Confirmation Password didn't match the Password");
             error_lbl.setStyle("-fx-text-fill: red");
