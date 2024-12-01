@@ -1,11 +1,13 @@
 package com.jmc.library.Controllers.Assets;
 
 import com.jmc.library.Models.Model;
+import com.jmc.library.Models.TopBookModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,10 +29,13 @@ public class TopRatedBooksController implements Initializable {
     }
 
     private void addBookList() {
-        for(int i = 0; i < 15; i++) {
+        for(int i = 0; i < TopBookModel.getInstance().getTopBookList().size(); i++) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/TopRatedBook.fxml"));
-                book_holder_flow.getChildren().add(fxmlLoader.load());
+                VBox bookPane = fxmlLoader.load();
+                TopBookController controller = fxmlLoader.getController();
+                controller.setBookInfo(TopBookModel.getInstance().getTopBookList().get(i));
+                book_holder_flow.getChildren().add(bookPane);
             } catch (Exception e) {
                 e.printStackTrace();
             }
