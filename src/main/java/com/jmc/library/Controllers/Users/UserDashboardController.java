@@ -7,6 +7,8 @@ import com.jmc.library.Models.DashboardModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import com.jmc.library.Models.TopBookModel;
+import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -68,6 +70,7 @@ public class UserDashboardController implements Initializable {
     public ImageView most_liked_book;
     public ImageView loading_img;
     public VBox place_holder;
+    public TranslateTransition transition;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -91,9 +94,23 @@ public class UserDashboardController implements Initializable {
         place_holder.getChildren().add(loading_img);
     }
 
-    void returnLoading() {
+    public void returnLoading() {
         place_holder.getChildren().remove(loading_img);
         place_holder.setVisible(false);
+    }
+
+    public void addTransition() {
+        if(transition == null) {
+            // Create a new transition for image view
+            // the image transition from left to right, when it's position is over the right side, it will be reset to the left side
+            transition = new TranslateTransition();
+            transition.setNode(most_liked_book);
+            transition.setByX(200);
+            transition.setCycleCount(Transition.INDEFINITE);
+            transition.setDuration(javafx.util.Duration.seconds(2));
+
+        }
+        transition.play();
     }
 
     /**
@@ -338,6 +355,7 @@ public class UserDashboardController implements Initializable {
                 resultSet.close();
                 most_liked_book.setImage(TopBookModel.getInstance().getTopBookList().getFirst().getImageView().getImage());
                 returnLoading();
+                addTransition();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
