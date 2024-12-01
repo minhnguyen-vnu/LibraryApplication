@@ -7,6 +7,7 @@ import com.jmc.library.Models.DashboardModel;
 import com.jmc.library.Models.LibraryModel;
 import com.jmc.library.Models.Model;
 import com.jmc.library.Models.TopBookModel;
+import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
@@ -21,9 +22,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Blob;
@@ -33,6 +37,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.scene.shape.Rectangle;
 
 /**
  * Controller class for managing the user dashboard, including statistics and navigation.
@@ -67,10 +72,9 @@ public class UserDashboardController implements Initializable {
     public NumberAxis read_borrowed_bar_chart_na;
     public CategoryAxis month_total_read_borrowed_ca;
     public Button reload_btn;
-    public ImageView most_liked_book;
     public ImageView loading_img;
     public VBox place_holder;
-    public TranslateTransition transition;
+    public HBox image_container;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -99,18 +103,29 @@ public class UserDashboardController implements Initializable {
         place_holder.setVisible(false);
     }
 
+    /**
+     * Adds a transition to the hot book list.
+     */
     public void addTransition() {
-        if(transition == null) {
-            // Create a new transition for image view
-            // the image transition from left to right, when it's position is over the right side, it will be reset to the left side
-            transition = new TranslateTransition();
-            transition.setNode(most_liked_book);
-            transition.setByX(200);
-            transition.setCycleCount(Transition.INDEFINITE);
-            transition.setDuration(javafx.util.Duration.seconds(2));
+        TranslateTransition transition;
 
-        }
+        Rectangle clip = new Rectangle(0, 0 , 166, 100);
+        image_container.setClip(clip);
+        int c = 400 - 85;
+        int duration = 5;
+
+        transition = new TranslateTransition(Duration.seconds(duration),clip);
+        transition.setByX(c);
+        transition.setCycleCount(Transition.INDEFINITE);
+        transition.setInterpolator(Interpolator.LINEAR);
+
+        TranslateTransition containerTransition = new TranslateTransition(Duration.seconds(duration), image_container);
+        containerTransition.setByX(-c);
+        containerTransition.setCycleCount(Transition.INDEFINITE);
+        containerTransition.setInterpolator(Interpolator.LINEAR);
+
         transition.play();
+        containerTransition.play();
     }
 
     /**
@@ -353,7 +368,14 @@ public class UserDashboardController implements Initializable {
                     TopBookModel.getInstance().getTopBookList().add(currentBook);
                 }
                 resultSet.close();
-                most_liked_book.setImage(TopBookModel.getInstance().getTopBookList().getFirst().getImageView().getImage());
+                for(int j = 0; j < 2; j++) {
+                    for (int i = 0; i < 3; i++) {
+                        ImageView book = new ImageView(TopBookModel.getInstance().getTopBookList().get(i).getImageView().getImage());
+                        book.setFitHeight(100);
+                        book.setFitWidth(85);
+                        image_container.getChildren().add(book);
+                    }
+                }
                 returnLoading();
                 addTransition();
             } catch (SQLException e) {

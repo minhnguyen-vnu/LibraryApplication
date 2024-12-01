@@ -113,11 +113,6 @@
                         </HBox>
                         <AnchorPane layoutX="21.0" layoutY="117.0" prefHeight="172.0" prefWidth="200.0" styleClass="HotBookList" stylesheets="@../STYLES/Dashboard.css">
                             <children>
-                        <HBox alignment="CENTER" layoutX="47.20000076293945" layoutY="54.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="60.0">
-                           <children>
-                              <ImageView fx:id="most_liked_book" fitHeight="100.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </HBox>
                                 <Label layoutX="14.0" layoutY="23.0" text="Must Read">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
@@ -193,6 +188,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <HBox fx:id="image_container" alignment="CENTER" layoutX="37.2" layoutY="233.2" spacing="20.0" AnchorPane.leftAnchor="37.0" AnchorPane.topAnchor="180.0" />
                     </children>
                 </AnchorPane>
             </children>
