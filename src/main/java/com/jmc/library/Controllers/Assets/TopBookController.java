@@ -28,6 +28,12 @@ public class TopBookController implements Initializable {
         book_name_text.setText(bookInfo.getBookName());
         book_cover_img.setImage(bookInfo.getImageView().getImage());
         book_author_lbl.setText(bookInfo.getAuthorName());
+
+        get_book_btn.setOnAction(actionEvent -> handleGetBookButton());
+    }
+
+    private void handleGetBookButton() {
+        System.out.println(this.bookInfo);
     }
 
     @Override

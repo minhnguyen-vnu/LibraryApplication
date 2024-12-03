@@ -353,6 +353,8 @@ public class ViewFactory {
         adminSettings = null;
         adminLibrary = null;
         adminRequestManagement = null;
+        adminPendingRequestManagement = null;
+        hotBookView = null;
 
     }
 

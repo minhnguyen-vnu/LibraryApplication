@@ -6,6 +6,7 @@ import com.jmc.library.Database.*;
 import com.jmc.library.Models.CartModel;
 import com.jmc.library.Models.DashboardModel;
 import com.jmc.library.Models.LibraryModel;
+import com.jmc.library.Models.TopBookModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -302,11 +303,10 @@ public class User {
         this.PendingBookList.clear();
         this.BorrowedBookList.clear();
         CartModel.getInstance().getUserCartInfo().getCartList().clear();
-
         this.username = null;
-
         DashboardModel.getInstance().getUserDashboardInfo().clear();
         CartModel.getInstance().getUserCartInfo().clear();
+        TopBookModel.getInstance().getTopBookList().clear();
     }
 
     public double getTotalPaid() {

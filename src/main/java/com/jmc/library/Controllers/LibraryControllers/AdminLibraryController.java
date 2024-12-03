@@ -87,7 +87,10 @@ public class AdminLibraryController extends LibraryController implements Initial
         go_to_request_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Request Management"));
         go_to_pending_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Pending Request Management"));
         user_management_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin User Management"));
-        log_out_btn.setOnAction(actionEvent -> stageTransforming());
+        log_out_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().resetAll();
+            stageTransforming();
+        });
         reload_btn.setOnAction(actionEvent -> showLibrary());
     }
 

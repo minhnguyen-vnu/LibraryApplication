@@ -1,5 +1,6 @@
 package com.jmc.library.Controllers.Admin;
 
+import com.google.zxing.qrcode.decoder.Mode;
 import com.jmc.library.Database.DBQuery;
 import com.jmc.library.Models.AdminLibraryModel;
 import com.jmc.library.Models.Model;
@@ -119,7 +120,10 @@ public class AdminDashboardController implements Initializable {
         manage_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Library View"));
         go_to_request_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Request Management"));
         go_to_pending_btn.setOnAction(actionEvent -> Model.getInstance().getViewFactory().getSelectedAdminMode().set("Admin Pending Request Management"));
-        log_out_btn.setOnAction(actionEvent -> stageTransforming());
+        log_out_btn.setOnAction(actionEvent -> {
+            Model.getInstance().getViewFactory().resetAll();
+            stageTransforming();
+        });
     }
 
     /**

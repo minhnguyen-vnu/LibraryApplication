@@ -180,6 +180,7 @@ public class UserDashboardController implements Initializable {
             thread.setDaemon(true);
             thread.start();
             LibraryModel.getInstance().getUser().resetAll();
+            Model.getInstance().getViewFactory().resetAll();
             stageTransforming();
         });
     }
