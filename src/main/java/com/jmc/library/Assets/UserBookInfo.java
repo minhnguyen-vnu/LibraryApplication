@@ -59,6 +59,21 @@ public class UserBookInfo {
         this.imageView = imageView;
     }
 
+    public UserBookInfo(String bookName, String authorName,
+                        int bookId, LocalDate pickedDate,
+                        LocalDate returnDate, double totalCost,
+                        String status, boolean isRated, double singleCost) {
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.bookId = bookId;
+        this.pickedDate = pickedDate;
+        this.returnDate = returnDate;
+        this.requestStatus = status;
+        this.totalCost = totalCost;
+        this.isRated = isRated;
+        this.singleCost = singleCost;
+    }
+
     public String getISBN() {
         return ISBN;
     }
