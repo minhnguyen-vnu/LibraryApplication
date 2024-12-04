@@ -56,6 +56,18 @@ public class User {
         this.status = status;
     }
 
+    public User(String username, String password, String name, LocalDate birthDate, int ID, double totalPaid, int totalBorrowed, String status) {
+        this.username = username;
+        this.password = password;
+        this.name = new SimpleStringProperty(name);
+        this.birthDate = birthDate;
+        this.ID = ID;
+        this.totalPaid = totalPaid;
+        this.totalBorrowed = totalBorrowed;
+        this.status = status;
+        this.avatar = null;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -313,11 +325,11 @@ public class User {
         return totalPaid;
     }
 
-    public void setTotalPaid(int totalPaid) {
+    public void setTotalPaid(double totalPaid) {
         this.totalPaid = totalPaid;
     }
 
-    public int getTotalBorrowed() {
+    public double getTotalBorrowed() {
         return totalBorrowed;
     }
 
