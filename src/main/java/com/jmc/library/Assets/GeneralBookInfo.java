@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 
 import java.time.LocalDate;
 
-public abstract class GeneralBookInfo {
+public class GeneralBookInfo {
     protected int bookId;
     protected String bookName;
     protected String authorName;

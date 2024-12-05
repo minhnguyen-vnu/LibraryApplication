@@ -30,6 +30,20 @@ public class UserBookInfo {
     public UserBookInfo(String bookName, String authorName,
                         int bookId, LocalDate pickedDate,
                         LocalDate returnDate, double totalCost,
+                        String status) {
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.bookId = bookId;
+        this.pickedDate = pickedDate;
+        this.returnDate = returnDate;
+        this.totalCost = totalCost;
+        this.requestStatus = status;
+        this.singleCost = totalCost;
+    }
+
+    public UserBookInfo(String bookName, String authorName,
+                        int bookId, LocalDate pickedDate,
+                        LocalDate returnDate, double totalCost,
                         String status, ImageView imageView) {
         this.bookName = bookName;
         this.authorName = authorName;

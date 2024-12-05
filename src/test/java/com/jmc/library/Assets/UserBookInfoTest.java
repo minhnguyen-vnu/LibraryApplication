@@ -19,9 +19,7 @@ class UserBookInfoTest {
                 LocalDate.of(2024, 12, 1),
                 LocalDate.of(2024, 12, 15),
                 50.0,
-                "Pending",
-                true,
-                25.0
+                "Pending"
         );
     }
 
@@ -34,8 +32,8 @@ class UserBookInfoTest {
         assertEquals(LocalDate.of(2024, 12, 15), userBook.getReturnDate());
         assertEquals(50.0, userBook.getTotalCost(), 0.01);
         assertEquals("Pending", userBook.getRequestStatus());
-        assertTrue(userBook.getRate());
-        assertEquals(25.0, userBook.getSingleCost(), 0.01);
+        assertFalse(userBook.getRate());
+        assertEquals(50.0, userBook.getSingleCost(), 0.01);
     }
 
     @Test
