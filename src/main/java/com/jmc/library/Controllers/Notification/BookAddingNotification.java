@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public interface BookAddingNotification {
+
     /**
      * Adds a book to the user's cart.
      *

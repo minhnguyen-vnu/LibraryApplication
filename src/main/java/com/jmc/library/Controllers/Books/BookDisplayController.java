@@ -2,6 +2,7 @@ package com.jmc.library.Controllers.Books;
 
 import com.jmc.library.Assets.UserBookInfo;
 import com.jmc.library.Controllers.Assets.ShowRateController;
+import com.jmc.library.Controllers.Notification.BookAddingNotification;
 import com.jmc.library.Controllers.Notification.NotificationOverlay;
 import com.jmc.library.Controllers.Users.CartEntityController;
 import com.jmc.library.Models.*;
@@ -98,7 +99,7 @@ public class BookDisplayController implements Initializable {
                     new ImageView(BookModel.getInstance().getBookInfo().getImageView().getImage())
             );
             try {
-                addBookForUser(userBookInfo);
+                BookAddingNotification.addBookForUser(userBookInfo, get_book_btn.getScene());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -149,40 +150,6 @@ public class BookDisplayController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Adds a book to the user's cart.
-     *
-     * @param addedBook The book to add.
-     * @throws IOException If the FXML file for the notification overlay cannot be found.
-     */
-    public void addBookForUser(UserBookInfo addedBook) throws IOException {
-        if(CartModel.getInstance().getUserCartInfo().getCartList().stream()
-                .anyMatch(cartEntityController -> cartEntityController
-                        .getUserBookInfo().getBookId() == addedBook.getBookId())) {
-            NotificationOverlay.notificationScreen("Book already in cart.", get_book_btn.getScene());
-            return;
-        }
-
-        if(LibraryModel.getInstance().getUser().getPendingBookList().stream()
-                .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())) {
-            NotificationOverlay.notificationScreen("Book already requested.", get_book_btn.getScene());
-            return;
-        }
-
-        if(LibraryModel.getInstance().getUser().getBorrowedBookList().stream()
-                .anyMatch(userBookInfo -> userBookInfo.getBookId() == addedBook.getBookId())
-                && LibraryModel.getInstance().getUser().getBorrowedBookList().stream()
-                .anyMatch(userBookInfo -> userBookInfo.getReturnDate().isAfter(LocalDate.now()))) {
-            NotificationOverlay.notificationScreen("Book already borrowed.", get_book_btn.getScene());
-            return;
-        }
-
-        CartModel.getInstance().getUserCartInfo().getCartList().add(new CartEntityController(addedBook));
-        CartModel.getInstance().getUserCartInfo().AddCartEntity(new CartEntityController(addedBook));
-
-        NotificationOverlay.notificationScreen("Book added to cart.", get_book_btn.getScene());
     }
 }
 

@@ -10,6 +10,7 @@ import com.jmc.library.Models.TopBookModel;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -43,8 +44,6 @@ import javafx.scene.shape.Rectangle;
  * Controller class for managing the user dashboard, including statistics and navigation.
  */
 public class UserDashboardController implements Initializable {
-
-
     public Button go_to_library_btn;
     public Button go_to_store_btn;
     public Button go_to_setting_btn;
@@ -58,8 +57,6 @@ public class UserDashboardController implements Initializable {
     public Label total_read_book_lbl;
     public Label new_books_read_lbl;
     public Label total_borrowed_book_lbl;
-
-    public ListView<String> hot_book_list;
 
     public List<Integer> borrowedBooks;
     public List<Integer> readBooks;
@@ -206,9 +203,12 @@ public class UserDashboardController implements Initializable {
                     countBorrowedBook++;
                 }
                 resultSet.close();
-                DashboardModel.getInstance().getUserDashboardInfo().setBorrowedBooks(
-                        (ObservableList<Integer>) borrowedBooks);
-                DashboardModel.getInstance().getUserDashboardInfo().setCountBorrowedBook(countBorrowedBook);
+                int finalCountBorrowedBook = countBorrowedBook;
+                Platform.runLater(() -> {
+                    DashboardModel.getInstance().getUserDashboardInfo().setBorrowedBooks(
+                            (ObservableList<Integer>) borrowedBooks);
+                    DashboardModel.getInstance().getUserDashboardInfo().setCountBorrowedBook(finalCountBorrowedBook);
+                });
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -216,6 +216,23 @@ public class UserDashboardController implements Initializable {
         Thread thread = new Thread(dbQuery);
         thread.setDaemon(true);
         thread.start();
+
+        DBQuery dbQuery1 = new DBQuery("select count(*) cnt from userRequest\n" +
+                "where username = ? and pickedDate < ?;", LibraryModel.getInstance().getUser().getUsername(), LocalDate.now());
+        dbQuery1.setOnSucceeded(event -> {
+            ResultSet resultSet = dbQuery1.getValue();
+            try {
+                if (resultSet.next()) {
+                    System.out.println(resultSet.getInt("cnt"));
+                    DashboardModel.getInstance().getUserDashboardInfo().setCountReadBook(resultSet.getInt("cnt"));
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        Thread thread1 = new Thread(dbQuery1);
+        thread1.setDaemon(true);
+        thread1.start();
     }
 
     /**

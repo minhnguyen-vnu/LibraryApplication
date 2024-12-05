@@ -76,7 +76,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
                 "    b.imageView\n" +
                 "from  userRequest r\n" +
                 "join bookStore b using(bookId)\n" +
-                "where r.username = ? " +
+                "where r.username = ? and r.requestStatus = 'Borrowing'" +
                 "order by r.requestStatus;", LibraryModel.getInstance().getUser().getUsername());
         dbQuery.setOnSucceeded(event -> {
             ResultSet resultSet = dbQuery.getValue();
@@ -171,6 +171,7 @@ public class UserBookController extends UserLibraryTable implements Initializabl
         });
 
     }
+
     private boolean showRatingDialog(UserBookInfo bookInfo,CheckBox checkBox) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/RateStar.fxml"));

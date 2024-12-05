@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -14,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserDashboardController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" styleClass="WorldBackground" stylesheets="@../STYLES/UserLibraryStore.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.library.Controllers.Users.UserDashboardController">
     <children>
         <VBox prefHeight="200.0" prefWidth="200.0">
             <children>
@@ -127,7 +133,7 @@
                                     <image>
                                         <Image url="@../IMAGES/DashboardBoardBG.png" />
                                     </image></ImageView>
-                                <Label layoutX="14.0" layoutY="14.0" styleClass="TitleText" text="Returned Books" textFill="WHITE">
+                                <Label layoutX="14.0" layoutY="14.0" styleClass="TitleText" text="Currently Borrowing" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="17.0" />
                                     </font></Label>
@@ -150,7 +156,7 @@
                                         <Image url="@../IMAGES/LightDashBoardBG.png" />
                                     </image></ImageView>
                                 <Label fx:id="total_borrowed_book_lbl" layoutX="29.0" layoutY="56.0" styleClass="CountNumber" text="10" />
-                                <Label layoutX="22.0" layoutY="14.0" styleClass="TitleText" text="borrowed Books" textFill="#716f6f" />
+                                <Label layoutX="22.0" layoutY="14.0" styleClass="TitleText" text="Borrowed Books" textFill="#716f6f" />
                             </children>
                         </AnchorPane>
                         <AnchorPane layoutX="20.0" layoutY="360.0" prefHeight="319.0" prefWidth="480.0" styleClass="LightCountBoard" stylesheets="@../STYLES/Dashboard.css">
