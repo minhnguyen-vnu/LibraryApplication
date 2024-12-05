@@ -1,7 +1,9 @@
 //package com.jmc.library.Assets;
 
-package com.jmc.library.Assets;
+package library.Assets;
 
+import com.jmc.library.Assets.BookInfo;
+import com.jmc.library.Assets.LibraryTable;
 import com.jmc.library.Database.DBQuery;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -10,16 +12,16 @@ import javafx.scene.image.ImageView;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import java.sql.Blob;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Date;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class LibraryTableMockitoTest {
 

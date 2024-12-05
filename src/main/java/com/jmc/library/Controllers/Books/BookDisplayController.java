@@ -136,20 +136,6 @@ public class BookDisplayController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
-        for (int i = 0; i < 5; i++) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/CommentEntity.fxml"));
-            try {
-                comment_container.getChildren().add(loader.load());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/NewComment.fxml"));
-        try {
-            new_comment_container.getChildren().add(loader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
 

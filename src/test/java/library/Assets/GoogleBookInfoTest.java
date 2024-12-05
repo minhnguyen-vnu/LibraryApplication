@@ -1,5 +1,6 @@
-package com.jmc.library.Assets;
+package library.Assets;
 
+import com.jmc.library.Assets.GoogleBookInfo;
 import com.jmc.library.Controllers.GoogleBookAPI.GoogleBookAPIMethod;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,7 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.when;
 
 class GoogleBookInfoTest {
 
